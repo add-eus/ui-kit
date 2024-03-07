@@ -1,0 +1,18 @@
+name: Design System
+id: 'ari:cloud:compass:ea7b0120-05a8-4240-b8f3-9fdee2f8c220:component/7012b4c0-35d1-40a2-bab8-8585c83db3bb/c96f47e6-9dc0-42a9-8508-a52bd1d3cd6b'
+description: null
+configVersion: 1
+typeId: UI_ELEMENT
+ownerId: 'ari:cloud:teams::team/1e1441f2-ba65-4d8a-acd1-a9695bad77be'
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: 'https://github.com/add-eus/ui-kit'
+relationships: {}
+labels: null
+customFields: null
+
+# En savoir plus sur le formatage compass.yml :
+# https://go.atlassian.com/compass-yml-format
