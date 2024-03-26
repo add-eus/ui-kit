@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
 button {
-    color: red;
+    color: green;
 }
 </style>
 
