@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/add-eus/ui-kit#readme",
   "dependencies": {
-    "@addeus/vue3-stores": "bitbucket:addeus/vue3-stores#master"
+    "@addeus/vue3-stores": "bitbucket:addeus/vue3-stores#master",
+    "material-symbols": "^0.17.1"
   }
 }
