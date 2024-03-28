@@ -27,6 +27,8 @@
     "@histoire/plugin-vue": "^0.17.14",
     "@vitejs/plugin-vue": "^4.1.0",
     "histoire": "^0.17.14",
-    "vite": "^4.4.12"
+    "vite": "^4.4.12",
+    "vue-i18n": "^9.10.2",
+    "vue-router": "^4.3.0"
   }
 }
