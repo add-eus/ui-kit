@@ -40,12 +40,12 @@ export type Colors =
 
 export function useColor(color: Ref<Colors> | Colors) {
     return useCssVar(() => {
-        return `--${toValue(color)}`;
+        return `--ad-${toValue(color)}`;
     }, document.body);
 }
 
 export function useInvertedColor(color: Ref<Colors> | Colors) {
     return useCssVar(() => {
-        return `--${toValue(color)}-invert`;
+        return `--ad-${toValue(color)}-invert`;
     }, document.body);
 }

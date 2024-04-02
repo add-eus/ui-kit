@@ -3,10 +3,9 @@ import { computed } from "vue";
 import type { RouteLocationOptions } from "vue-router";
 import { useRoute } from "vue-router";
 // import { useI18n } from "vue-i18n";
-import ADFlex from "./ADFlex.vue";
 import ADIcon from "./ADIcon.vue";
 
-export interface ADFlexPaginationProps {
+export interface ADPaginationProps {
     itemPerPage: number;
     totalItems: number;
     currentPage?: number;
@@ -15,12 +14,12 @@ export interface ADFlexPaginationProps {
     routerQueryKey?: string;
 }
 
-export interface ADFlexPaginationEmits {
+export interface ADPaginationEmits {
     (e: "update:currentPage", currentPage: number): void;
 }
 
-const emits = defineEmits<ADFlexPaginationEmits>();
-const props = withDefaults(defineProps<ADFlexPaginationProps>(), {
+const emits = defineEmits<ADPaginationEmits>();
+const props = withDefaults(defineProps<ADPaginationProps>(), {
     currentPage: 1,
     maxLinksDisplayed: 2,
     useRouter: true,
@@ -99,14 +98,11 @@ const handleLinkClick = (e: MouseEvent, page = 1) => {
 </script>
 
 <template>
-    <ADFlex
-        role="navigation"
-        class="container-pagination"
-        aria-label="pagination">
+    <div class="container-pagination">
         <ul class="pagination-list">
 
             <!-- BEFORE -->
-            <slot name="before-pagination">
+            <div name="before-pagination">
                 <li class="pagination-arrow">
                     <RouterLink
                         :to="paginatedLink(currentPage - 1)"
@@ -116,7 +112,7 @@ const handleLinkClick = (e: MouseEvent, page = 1) => {
                         <ADIcon icon="arrow_back_ios_new" color="var(--ad-blue)"/>
                     </RouterLink>
                 </li>
-            </slot>
+            </div>
 
             <li class="pagination-case">
                 <!-- :aria-label="t('goto-page-title', { page: 1 })" -->
@@ -167,7 +163,7 @@ const handleLinkClick = (e: MouseEvent, page = 1) => {
             </li>
 
             <!-- AFTER -->
-            <slot name="after-pagination">  
+            <div name="after-pagination">  
                 <li class="pagination-arrow">
                     <RouterLink
                         :to="paginatedLink(currentPage + 1)"
@@ -177,13 +173,13 @@ const handleLinkClick = (e: MouseEvent, page = 1) => {
                         <ADIcon icon="arrow_forward_ios" color="var(--ad-blue)"/>
                     </RouterLink>
                 </li>
-            </slot>
+            </div>
 
         </ul>
 
-        <slot name="before-navigation"></slot>
-        <slot name="after-navigation"></slot>
-    </ADFlex>
+        <div name="before-navigation"></div>
+        <div name="after-navigation"></div>
+    </div>
 </template>
 
 <style lang="scss" scoped>

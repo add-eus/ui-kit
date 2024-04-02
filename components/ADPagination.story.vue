@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import ADFlexPagination from "./ADFlexPagination.vue";
+import ADPagination from "./ADPagination.vue";
 import '../scss/_color.scss'; 
 </script>
 
 <template>
     <Story :layout="{ type: 'grid', width: 400 }">
         <Variant title="default">
-            <ADFlexPagination
+            <ADPagination
                 :current-page="1"
                 class="mt-6"
                 :item-per-page="1"
@@ -18,7 +18,7 @@ import '../scss/_color.scss';
 </template>
 
 <docs lang="md">
-# ADFlexPagination
+# ADPagination
 
 This is a pagination component.
 

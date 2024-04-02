@@ -26,7 +26,7 @@ git clone https://github.com/add-eus/ui-kit.git
 Import a component:
 
 ```ts
-import "@addeus/ui-kit/components/Button.vue";
+import "@addeus/ui-kit/components/ADButton.vue";
 ```
 
 ## Contributing
