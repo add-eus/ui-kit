@@ -6,7 +6,7 @@ import '../scss/_color.scss';
 
 <template>
     <Story :layout="{ type: 'grid', width: 200 }">
-        <Variant title="default">
+        <Variant title="default/grey">
             <ADButton>ADButton</ADButton>
         </Variant>
         <Variant title="primary ">

@@ -1,5 +1,5 @@
 import { toValue, useCssVar } from "@vueuse/core";
-import type { Ref } from "vue";
+import type { Ref, MaybeRef } from "vue";
 
 export type Colors =
     | "primary"
@@ -38,14 +38,17 @@ export type Colors =
     | "purple"
     | "red";
 
-export function useColor(color: Ref<Colors> | Colors) {
-    return useCssVar(() => {
-        return `--ad-${toValue(color)}`;
-    }, document.body);
-}
+export type Hues = "default"
+    | "dark"
+    | "darker"
+    | "light"
+    | "lighter";
 
-export function useInvertedColor(color: Ref<Colors> | Colors) {
+export function useColor(color: MaybeRef<Colors> | Colors, hue: MaybeRef<Hues> = 'default', isInverted: MaybeRef<boolean> = false) {
     return useCssVar(() => {
-        return `--ad-${toValue(color)}-invert`;
+        const colorValue = toValue(color);
+        const hueValue = toValue(hue);
+        const isInvertedValue = toValue(hueValue);
+        return `--ad-${colorValue}${hueValue === 'default' ? '' : `-${hueValue}`}${isInverted ? '-invert' : ''}`;
     }, document.body);
 }

@@ -1,0 +1,109 @@
+$xl: (min-width: 1224px); // large screen
+$lg: (min-width: 1024px); // desktop
+$md: (min-width: 768px); // tablet
+$sm: (min-width: 576px); // phablet
+$xs: (min-width: 320px); // mobile
+
+$breakpoints: (
+    "xl": $xl,
+    "lg": $lg,
+    "md": $md,
+    "sm": $sm,
+    "xs": $xs
+);
+
+@mixin breakpoints($className) {
+    @each $breakpointName, $breakpoint in $breakpoints {
+        @media ($breakpoint) {
+            .#{$breakpointName}:#{$className} {
+                @content;
+            }
+        }
+    }
+}
+
+//Using Case ==> md:flex
+
+//Display
+@include breakpoints(inline) {
+    display:inline;
+}
+@include breakpoints(flex) {
+    display:flex;
+}
+@include breakpoints(inline-flex) {
+    display:inline-flex;
+}
+@include breakpoints(block) {
+    display:block;
+}
+@include breakpoints(inline-block) {
+    display:inline-block;
+}
+@include breakpoints(grid) {
+    display:grid;
+}
+@include breakpoints(inline-grid) {
+    display:inline-grid;
+}
+
+//justify-content
+@include breakpoints(justify-start) {
+    justify-content: flex-start;
+}
+@include breakpoints(justify-center) {
+    justify-content: center;
+}
+@include breakpoints(justify-end) {
+    justify-content: flex-end;
+}
+@include breakpoints(justify-between) {
+    justify-content: space-between;
+}
+@include breakpoints(justify-around) {
+    justify-content: space-around;
+}
+@include breakpoints(justify-evenly) {
+    justify-content: space-evenly;
+}
+
+//align-items
+@include breakpoints(align-start) {
+    align-items: flex-start;
+}
+@include breakpoints(align-center) {
+    align-items: center;
+}
+@include breakpoints(align-end) {
+    align-items: flex-end;
+}
+@include breakpoints(align-stretch) {
+    align-items: stretch;
+}
+
+//flex-direction
+@include breakpoints(flex-row) {
+    flex-direction: row;
+}
+@include breakpoints(flex-row-reverse) {
+    flex-direction: row-reverse;
+}
+
+@include breakpoints(flex-column) {
+    flex-direction: column;
+}
+
+@include breakpoints(flex-column-reverse) {
+    flex-direction: column-reverse;
+}
+
+//flex-wrap
+@include breakpoints(flex-wrap) {
+    flex-wrap: wrap;
+}
+@include breakpoints(flex-nowrap) {
+    flex-wrap: nowrap;
+}
+@include breakpoints(flex-wrap-reverse) {
+    flex-wrap: wrap-reverse;
+}

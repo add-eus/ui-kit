@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
-// import { useColor } from "../stores/color.ts";
+import { defineProps, computed, PropType } from 'vue';
+import { useColor } from "../stores/color";
+import type { Colors } from "../stores/color";
 
 const props = defineProps({
   color: {
-    type: String,
-    default: undefined,
+    type: Object as PropType<Colors>,
+    default: 'grey',
     validator: (value) => {
-      return ['primary', 'danger', 'success'].includes(value);
+      return ['grey', 'primary', 'danger', 'success'].includes(value);
     },
   },
 });
 
-// const colorClass = computed(() => {
-//   return props.color ? useColor(props.color) : '';
-// });
+const mainColor = computed(() => props.color);
+
+const color = useColor(mainColor);
+const colorInvert = useColor(mainColor, 'default', true);
+
+const colorLight = useColor(mainColor, 'light');
+const colorLightInvert = useColor(mainColor, 'light', true);
+
+
+const colorDarker = useColor(mainColor, 'darker');
+const colorDarkerInvert = useColor(mainColor, 'darker', true);
+
 </script>
 
 <template>
@@ -23,7 +33,8 @@ const props = defineProps({
     </button>
 </template>
   
-<style scoped lang="scss">
+<style lang="scss" scoped>
+
 .ad-button {
   border: none;
   border-radius: 50px;
@@ -35,57 +46,28 @@ const props = defineProps({
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   
-  //DEFAULT
-  background-color: var(--ad-grey-light);
-  color: var(--ad-black);
-  /* color: v-bind(color); */
+  background-color: v-bind(colorLight);
+  color: v-bind(colorInvert);
 
   i {
-    color: var(--ad-grey-light);
+    color: v-bind(colorInvert);
     transition: color 0.15s ease-in-out;
   }
 
   &:hover {
-    background-color: var(--ad-grey);
-    color: var(--ad-black);
+    background-color: v-bind(color);
+    color: v-bind(colorInvert);
     i {
-      color: var(--ad-black);
+      color: v-bind(color);
     }
   }
   
   &:active {
-    background-color: var(--ad-black);
-    color: var(--ad-white);
+    background-color: v-bind(colorDarker);
+    color: v-bind(colorDarkerInvert);
     i {
-      color: var(--ad-white);
+      color: v-bind(colorDarkerInvert);
     }
   }
-
-  @each $color in primary, danger, success {
-    &.#{$color} {
-      background-color: var(--ad-#{$color});
-      color: var(--ad-white);
-
-      i {
-        color: var(--ad-white);
-      }
-
-      &:hover {
-        background-color: var(--ad-#{$color}-light);
-        color: var(--ad-white);
-        i {
-          color: var(--ad-white);
-        }
-      }
-
-      &:active {
-        background-color: var(--ad-white);
-        color: var(--ad-#{$color});
-        i {
-          color: var(--ad-#{$color});
-        }
-      }
-    }
-  }  
 }
 </style>
