@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, } from "vue";
+import { ref } from "vue";
 import ADIcon from "./ADIcon.vue";
 
 const props = defineProps({
@@ -37,27 +37,35 @@ const dotButtonClick = (index: number) => {
 const nextMedia = () => {
     if (activeButtonIndex.value < props.medias.length - 1) {
         activeButtonIndex.value++;
-        mediaContainerTranslate.value =
-            (-props.containerWidth + borderSpace.value) * activeButtonIndex.value;
+        setActiveMedia(activeButtonIndex.value);
     }
 };
 
 const prevMedia = () => {
     if (activeButtonIndex.value > 0) {
         activeButtonIndex.value--;
-        mediaContainerTranslate.value =
-            (-props.containerWidth + borderSpace.value) * activeButtonIndex.value;
+        setActiveMedia(activeButtonIndex.value);
     }
 };
 
 const deleteMedia = () => {
-    const deleted = emits("delete", activeButtonIndex.value);
-    if (deleted && activeButtonIndex.value == props.medias.length - 1) {
-        activeButtonIndex.value--;
-        mediaContainerTranslate.value =
-            (-props.containerWidth + borderSpace.value) * activeButtonIndex.value;
+    emits("delete", activeButtonIndex.value);
+    if (activeButtonIndex.value == props.medias.length - 1) {
+        prevMedia();
     }
 };
+
+const setActiveMedia = (index: number) => {
+    if(index < 0 || index >= props.medias.length) throw new Error("Index out of range");
+    activeButtonIndex.value = index;
+    mediaContainerTranslate.value = (-props.containerWidth + borderSpace.value) * index;
+};
+
+defineExpose({
+    nextMedia,
+    prevMedia,
+    setActiveMedia
+});
 </script>
 
 <template>
@@ -68,6 +76,7 @@ const deleteMedia = () => {
             '--height': containerHeight + 'px',
             '--media-container-translate': mediaContainerTranslate + 'px',
             '--border-space': borderSpace + 'px',
+            '--index': medias.length > 0 ? medias.length : 1,
         }">
         <!-- Media Container -->
         <div class="media-container">
@@ -77,8 +86,9 @@ const deleteMedia = () => {
                 <div
                     v-for="(imageSrc, index) in medias"
                     :key="index"
-                    class="upload-container">
-                        <slot name="medias" :imageSrc="imageSrc">
+                    class="upload-container"
+                    >
+                    <slot name="medias" :imageSrc="imageSrc">
                             <img v-if="imageSrc" class="output" :src="imageSrc" alt="Post img" />
                         </slot>
                 </div>
@@ -92,11 +102,6 @@ const deleteMedia = () => {
                 </transition>
             </div>
         </div>
-
-        <!-- current media input -->
-        <slot name="input" :index="activeButtonIndex">
-            <input type="file" />
-        </slot>
         <!-- Dot Container -->
         <div class="dot-container">
             <transition name="fade-slow">
@@ -122,10 +127,20 @@ const deleteMedia = () => {
         <button v-if="medias.length >= 1" class="icon-add">
             <ADIcon icon="add_to_photos" color="var(--ad-grey)"/>
         </button>
-        <!-- new media Input File -->
-        <div :class="medias.length >= 1 ? 'input-icon' : 'input-media-cover'">
+        <!-- Add media Input File -->
+        <div :class="medias.length >= 1 ? 'input-icon-add' : 'input-media-cover'">
             <slot name="input">
-                <input type="file" />
+                <input type="file"/>
+            </slot>
+        </div>
+        <!-- Icon Edit -->
+        <button v-if="medias.length >= 1" class="icon-edit">
+            <ADIcon icon="edit" color="var(--ad-grey)"/>
+        </button>
+        <!-- Edit media input -->
+        <div v-if="medias.length >= 1" :class="medias.length >= 1 ? 'input-icon-edit' : 'input-icon-edit-disable'">
+            <slot name="input" :index="activeButtonIndex">
+                <input type="file"/>
             </slot>
         </div>
         <!-- Icon Back -->
@@ -163,17 +178,25 @@ const deleteMedia = () => {
             position: relative;
             display: flex;
             height: calc(var(--height) - var(--border-space));
-            width: calc(var(--width) - var(--border-space));
+            width: calc((var(--width) * var(--index)) - var(--border-space));
             transition: transform 0.5s ease-in-out;
 
             .upload-container {
-                img {
+                height: calc(var(--height) - var(--border-space));
+                width: calc(var(--width) - var(--border-space));
+                object-fit: contain;
+                max-width: inherit;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                /* img {
                     height: calc(var(--height) - var(--border-space));
                     width: calc(var(--width) - var(--border-space));
                     object-fit: contain;
                     max-width: inherit;
                     overflow: hidden;
-                }
+                } */
             }
         }
     }
@@ -220,11 +243,10 @@ const deleteMedia = () => {
     }
 
 
-    //INPUT FILE
-    .input-icon {
+    //INPUT FILE ADD / EDIT
+    .input-icon-add, .input-icon-edit{
         position: absolute;
         top: calc(var(--height) - var(--border-space));
-        right: calc((var(--border-space) / 2) + 30px);
         opacity: 0;
 
         :slotted(input) {
@@ -235,6 +257,14 @@ const deleteMedia = () => {
 
         :slotted(input[type=file]::file-selector-button) {
             cursor: pointer;
+        }
+
+        &.input-icon-add {
+            right: calc((var(--border-space) / 2) + 30px);
+        }
+
+        &.input-icon-edit {
+            right: calc((var(--border-space) / 2) + 60px);
         }
     }
 
@@ -262,27 +292,30 @@ const deleteMedia = () => {
     }
 
     //ICON
-    .icon-delete, .icon-add, .icon-next, .icon-back {
+    .icon-delete, .icon-add, .icon-next, .icon-back, .icon-edit {
         background: transparent;
         border: none;
     }
     
-    //ICON ADD DELETE
-    .icon-add, .icon-delete {
+    //ICON ADD / DELETE / EDIT
+    .icon-add, .icon-delete, .icon-edit {
         position: absolute;
         height: 30px;
         width: 30px;
         padding: 0;
         cursor: pointer;
+        top: calc(var(--height) - var(--border-space));
 
         &.icon-add {
-            top: calc(var(--height) - var(--border-space));
             right: calc((var(--border-space) / 2) + 30px);
         }
 
         &.icon-delete {
-            top: calc(var(--height) - var(--border-space));
             right: calc((var(--border-space) / 2));
+        }
+
+        &.icon-edit {
+            right: calc((var(--border-space) / 2) + 60px);
         }
     }
 
@@ -333,9 +366,9 @@ const deleteMedia = () => {
         border-radius: 8px;
         color: var(--ad-grey);
         box-shadow: 5px 5px 5px 0 #0000001a;
-        opacity: 0;
         transition: opacity 0.5s ease;
         pointer-events: none;
+        opacity: 0;
     }
 
     .inspiration-media {
