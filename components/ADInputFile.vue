@@ -49,8 +49,9 @@ const prevMedia = () => {
 };
 
 const deleteMedia = () => {
+    const isLastMedia = activeButtonIndex.value == props.medias.length - 1;
     emits("delete", activeButtonIndex.value);
-    if (activeButtonIndex.value == props.medias.length - 1) {
+    if (isLastMedia) {
         prevMedia();
     }
 };
