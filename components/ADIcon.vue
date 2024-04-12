@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '../scss/_color.scss';
+
   import { defineProps } from 'vue';
   
   const props = defineProps({
