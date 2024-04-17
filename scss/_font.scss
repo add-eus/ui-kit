@@ -1,0 +1,22 @@
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+:root {
+  --font-jakarta: "Plus Jakarta Sans", sans-serif;
+}
+
+// Mixin Variants
+@mixin font-variant($font-family, $weight, $style) {
+  font-family: #{$font-family};
+  font-weight: $weight;
+  font-style: $style;
+}
+
+// Mulitples Variants
+.jacquarda-jakarta {
+  @include font-variant(var(--font-jakarta), 400, normal);
+}
+
+.jacquarda-jakarta-b {
+  @include font-variant(var(--font-jakarta), bold, normal);
+}
