@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ADInputFile from "./ADInputFile.vue";
 import { ref } from 'vue';
-import '../scss/_color.scss'; 
+// import '../scss/_color.scss'; 
 
 const inputFileRef = ref<any>(null);
 </script>
