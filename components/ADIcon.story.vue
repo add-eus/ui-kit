@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ADIcon from "./ADIcon.vue";
-import '../scss/_color.scss';
+import '../index.scss';
+
 </script>
 
 <template>

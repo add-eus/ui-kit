@@ -191,6 +191,7 @@ defineExpose({
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding-top: 5px;
                 /* img {
                     height: calc(var(--height) - var(--border-space));
                     width: calc(var(--width) - var(--border-space));

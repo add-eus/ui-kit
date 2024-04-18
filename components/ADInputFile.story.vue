@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ADInputFile from "./ADInputFile.vue";
 import { ref } from 'vue';
-import '../scss/_color.scss'; 
+import '../index.scss';
 
 const inputFileRef = ref<any>(null);
 </script>
@@ -11,7 +11,7 @@ const inputFileRef = ref<any>(null);
         <Variant title="default">
             <ADInputFile
                 ref="inputFileRef"
-                :container-width="375"
+                :container-width="350"
                 :container-height="300"
                 inspiration="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwSUsk_uu2KuNZRT5PintWjwyul4AujUgWNxZlExHB5Q&s">
                 <input
