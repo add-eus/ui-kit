@@ -89,6 +89,7 @@ defineExpose({
                     :key="index"
                     class="upload-container"
                     >
+                    <ADIcon v-if="medias.length >= 2" class="icon-carousel" icon="filter_none" color="var(--ad-white)"/>
                     <slot name="medias" :imageSrc="imageSrc">
                             <img v-if="imageSrc" class="output" :src="imageSrc" alt="Post img" />
                         </slot>
@@ -119,7 +120,13 @@ defineExpose({
             </transition>
         </div>
         <!-- Icon Carousel -->
-        <ADIcon v-if="medias.length >= 2" class="icon-carousel" icon="note_stack" color="var(--ad-grey)"/>
+        <!-- <ADIcon v-if="medias.length >= 2" class="icon-carousel" icon="filter_none" color="var(--ad-white)"/> -->
+
+            <!-- animated_images
+            icon-carousel
+            filter_none
+            movie
+            video_library -->
         <!-- Icon Delete -->
         <button v-if="medias.length >= 1" class="icon-delete" @click="deleteMedia">
             <ADIcon icon="close" color="var(--ad-danger)"/>
@@ -191,6 +198,8 @@ defineExpose({
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding-top: 5px;
+                position: relative;
                 /* img {
                     height: calc(var(--height) - var(--border-space));
                     width: calc(var(--width) - var(--border-space));
@@ -325,7 +334,10 @@ defineExpose({
     .icon-carousel {
         position: absolute;
         top: 10px;
-        right: calc((var(--border-space) / 2) + 10px);
+        /* right: calc((var(--border-space) / 2) + 10px); */
+        right: 10px;
+        transform: scaleX(-1);
+        font-variation-settings: 'FILL' 1;
     }
 
     //ICON ARROW
