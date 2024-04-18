@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ADButton from "./ADButton.vue";
 import ADIcon from "./ADIcon.vue";
+import '../index.scss'; 
 // import '../scss/_color.scss'; 
 // import '../scss/_color-declaration.scss'; 
 </script>
