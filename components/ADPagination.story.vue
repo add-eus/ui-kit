@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ADPagination from "./ADPagination.vue";
-import '../scss/_color.scss'; 
+import '../index.scss';
+
 </script>
 
 <template>
