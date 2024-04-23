@@ -1,0 +1,76 @@
+//PRIMARY
+$ad-primary: #007bff;
+$ad-primary-invert: #fff;
+
+$ad-primary-dark: darken($ad-primary, 10%);
+$ad-primary-dark-invert: #fff;
+
+$ad-primary-darker: darken($ad-primary, 20%);
+$ad-primary-darker-invert: #fff;
+
+$ad-primary-light: lighten($ad-primary, 10%);
+$ad-primary-light-invert: #000;
+
+$ad-primary-lighter: lighten($ad-primary, 20%);
+$ad-primary-lighter-invert: #000;
+
+//DANGER
+$ad-danger: #dc3545;
+$ad-danger-invert: #fff;
+
+$ad-danger-dark: darken($ad-danger, 10%);
+$ad-danger-dark-invert: #fff;
+
+$ad-danger-darker: darken($ad-danger, 20%);
+$ad-danger-darker-invert: #fff;
+
+$ad-danger-light: lighten($ad-danger, 10%);
+$ad-danger-light-invert: #000;
+
+$ad-danger-lighter: lighten($ad-danger, 20%);
+$ad-danger-lighter-invert: #000;
+
+//SUCCESS
+$ad-success: #28a745;
+$ad-success-invert: #fff;
+
+$ad-success-dark: darken($ad-success, 10%);
+$ad-success-dark-invert: #fff;
+
+$ad-success-darker: darken($ad-success, 20%);
+$ad-success-darker-invert: #fff;
+
+$ad-success-light: lighten($ad-success, 10%);
+$ad-success-light-invert: #000;
+
+$ad-success-lighter: lighten($ad-success, 20%);
+$ad-success-lighter-invert: #000;
+
+
+$ad-info: #17a2b8;
+$ad-info-light: lighten($ad-info, 10%);
+$ad-info-dark: darken($ad-info, 10%);
+$ad-warning: #ffc107;
+$ad-warning-light: lighten($ad-warning, 10%);
+$ad-warning-dark: darken($ad-warning, 10%);
+$ad-black: #000;
+$ad-grey-darker: #363636;
+$ad-grey-dark: #999999;
+$ad-white: #fff;
+$ad-grey: #7A7A7A;
+$ad-grey-light: #e5e5e5;
+$ad-grey-lighter: #f5f5f5;
+$ad-white-ter: #f8f8f8;
+$ad-white-bis: #ffffff;
+$ad-gold: #ffd700;
+$ad-silver: #c0c0c0;
+$ad-bronze: #cd7f32;
+$ad-orange: #ff8c00;
+$ad-yellow: #ffff00;
+$ad-green: #008000;
+$ad-turquoise: #40e0d0;
+$ad-cyan: #00ffff;
+$ad-blue: #303778;
+$ad-purple: #800080;
+$ad-red: #ff0000;
+$ad-pink: #ff0088;
