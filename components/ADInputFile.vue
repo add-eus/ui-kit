@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import ADIcon from "./ADIcon.vue";
 
 const props = defineProps({
@@ -98,6 +98,19 @@ defineExpose({
               alt="Post img"
             />
           </slot>
+          <!-- Switch between image and video icon -->
+          <ADIcon
+            v-if="medias.length >= 2"
+            class="icon-carousel media-img"
+            icon="filter_none"
+            color="var(--ad-white)"
+          />
+          <ADIcon
+            v-if="medias.length >= 2"
+            class="icon-carousel media-video"
+            icon="video_library"
+            color="var(--ad-white)"
+          />
         </div>
         <!-- Inspiration Media -->
         <transition name="fade-slow">
@@ -138,12 +151,12 @@ defineExpose({
       </transition>
     </div>
     <!-- Icon Carousel -->
-    <ADIcon
+    <!-- <ADIcon
       v-if="medias.length >= 2"
       class="icon-carousel"
       icon="note_stack"
       color="var(--ad-grey)"
-    />
+    /> -->
     <!-- Icon Delete -->
     <button v-if="medias.length >= 1" class="icon-delete" @click="deleteMedia">
       <ADIcon icon="close" color="var(--ad-danger)" />
@@ -201,6 +214,18 @@ defineExpose({
   </div>
 </template>
 
+<style lang="scss">
+//If v-image-firebase content video his next brother element media-img is display: none
+.container-input-file {
+  .v-image-firebase:has(> video) + .media-img {
+    display: none;
+  }
+  .v-image-firebase:has(> img) + .media-video {
+    display: none;
+  }
+}
+</style>
+
 <style scoped lang="scss">
 //MEDIA CONTAINER
 .container-input-file {
@@ -233,6 +258,7 @@ defineExpose({
         justify-content: center;
         align-items: center;
         padding-top: 5px;
+        position: relative;
         /* img {
                     height: calc(var(--height) - var(--border-space));
                     width: calc(var(--width) - var(--border-space));
@@ -371,7 +397,11 @@ defineExpose({
   .icon-carousel {
     position: absolute;
     top: 10px;
-    right: calc((var(--border-space) / 2) + 10px);
+    /* right: calc((var(--border-space) / 2) + 10px); */
+    right: 10px;
+    z-index: 1;
+    transform: scaleX(-1);
+    font-variation-settings: "FILL" 1;
   }
 
   //ICON ARROW
