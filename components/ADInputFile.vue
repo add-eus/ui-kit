@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import type { PropType } from 'vue';
 import ADIcon from "./ADIcon.vue";
 
 const props = defineProps({
@@ -16,7 +17,7 @@ const props = defineProps({
         default: "",
     },
     medias: {
-        type: Array<String>,
+        type: Object as PropType<Array<String> | String>,
         default: [],
     }
 });
@@ -85,7 +86,7 @@ defineExpose({
                 class="media-content"
                 :style="{ transform: `translateX(var(--media-container-translate))` }">
                 <div
-                    v-for="(imageSrc, index) in medias"
+                    v-for="(imageSrc, index) in (Array.isArray(medias) ? medias : [medias])"
                     :key="index"
                     class="upload-container"
                     >
