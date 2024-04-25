@@ -102,7 +102,7 @@ defineExpose({
   </Teleport>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../scss/color";
 
 .ad-modal {
@@ -155,7 +155,7 @@ defineExpose({
     // bottom: 0;
     position: absolute;
 
-    .modal-card {
+    .ad-card {
       max-width: 100%;
       margin: 0 auto;
 
@@ -163,11 +163,10 @@ defineExpose({
         border-radius: 12px;
       }
 
-      .card-head {
+      .ad-card-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 20px;
         /* background: var(--ad-white);
         border-bottom-color: var(--fade-grey-dark-3);
 
@@ -180,7 +179,7 @@ defineExpose({
         }
       }
 
-      .card-body {
+      .ad-card-body {
         .modal-form {
           padding: 10px 0 20px;
         }
@@ -208,8 +207,7 @@ defineExpose({
         }
       }
 
-      .card-foot {
-        padding: 15px 20px;
+      .ad-card-foot {
         border-top: 1px solid var(--fade-grey-dark-3);
 
         &:empty {

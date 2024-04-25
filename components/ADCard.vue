@@ -65,7 +65,6 @@ withDefaults(defineProps<ADCardProps>(), {
 
   .ad-card-foot {
     display: flex;
-    justify-content: center;
     margin: 0;
     gap: 1em;
 

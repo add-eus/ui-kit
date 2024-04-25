@@ -31,6 +31,7 @@ const open = ref(false);
         @close="open = false"
         size="small"
         title=".smallTitle"
+        actionAlignment="center"
       >
         <template #content> Content test </template>
         <template #action>
@@ -47,6 +48,7 @@ const open = ref(false);
         @close="open = false"
         size="medium"
         title=".mediumTitle"
+        actionAlignment="right"
       >
         <template #content> Content test </template>
         <template #action>
@@ -79,6 +81,7 @@ const open = ref(false);
         @close="open = false"
         size="big"
         title=".bigTitle"
+        actionAlignment="center"
       >
         <template #content> Content test </template>
         <template #action>
@@ -95,6 +98,7 @@ const open = ref(false);
         @close="open = false"
         size="giant"
         title=".giantTitle"
+        actionAlignment="right"
       >
         <template #content> Content test </template>
         <template #action>
