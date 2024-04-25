@@ -45,6 +45,7 @@ withDefaults(defineProps<ADCardProps>(), {
 @import "../scss/color";
 
 .ad-modal-card {
+  position: relative;
   background-color: $ad-white;
   border-radius: 0.5rem;
   box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);

@@ -120,6 +120,9 @@ defineExpose({
   }
 
   .ad-modal-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
     cursor: pointer;
   }
 
