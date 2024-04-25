@@ -88,7 +88,7 @@ defineExpose({
                     <template #content>
                         <slot name="content"></slot>
                     </template>
-                    <template #actions>
+                    <template #action>
                         <slot name="action" :close="() => emit('close')"></slot>
                     </template>
                 </ADCard>
