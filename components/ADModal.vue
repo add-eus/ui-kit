@@ -93,7 +93,7 @@ defineExpose({
           <template #content>
             <slot name="content"></slot>
           </template>
-          <template #actions>
+          <template #action>
             <slot name="action" :close="() => emit('close')"></slot>
           </template>
         </ADCard>
@@ -126,10 +126,8 @@ defineExpose({
     cursor: pointer;
   }
 
-  .ad-modal-card {
+  .ad-card {
     width: 100%;
-    //background: var(--white);
-    //border: 1px solid var(--fade-grey);
     border-radius: 8px;
     padding: 40px;
   }
@@ -165,7 +163,7 @@ defineExpose({
         border-radius: 12px;
       }
 
-      .modal-card-head {
+      .card-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -178,14 +176,11 @@ defineExpose({
         } */
 
         h3 {
-          /* font-family: var(--font-alt);
-          color: var(--dark-text); */
           font-weight: bold;
-          /* font-size: 1rem; */
         }
       }
 
-      .modal-card-body {
+      .card-body {
         .modal-form {
           padding: 10px 0 20px;
         }
@@ -213,8 +208,7 @@ defineExpose({
         }
       }
 
-      .modal-card-foot {
-        background: var(--ad-white);
+      .card-foot {
         padding: 15px 20px;
         border-top: 1px solid var(--fade-grey-dark-3);
 

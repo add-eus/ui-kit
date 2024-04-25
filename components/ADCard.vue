@@ -13,11 +13,11 @@ withDefaults(defineProps<ADCardProps>(), {
 </script>
 
 <template>
-  <div class="ad-modal-card">
-    <header class="modal-card-head">
+  <div class="ad-card">
+    <header class="ad-card-head">
       <slot name="header"></slot>
     </header>
-    <div class="modal-card-body">
+    <div class="ad-card-body">
       <div class="inner-content">
         <Suspense>
           <template #default>
@@ -30,7 +30,7 @@ withDefaults(defineProps<ADCardProps>(), {
       </div>
     </div>
     <div
-      class="modal-card-foot"
+      class="ad-card-foot"
       :class="[
         actionAlignment === 'center' && 'is-centered',
         actionAlignment === 'right' && 'is-end',
@@ -44,7 +44,7 @@ withDefaults(defineProps<ADCardProps>(), {
 <style lang="scss" scoped>
 @import "../scss/color";
 
-.ad-modal-card {
+.ad-card {
   position: relative;
   background-color: $ad-white;
   border-radius: 0.5rem;
@@ -54,5 +54,24 @@ withDefaults(defineProps<ADCardProps>(), {
   max-height: 100%;
   overflow: hidden;
   width: 100%;
+
+  .ad-card-body {
+    margin: 0;
+
+    &:not(:empty) {
+      margin: 1em 0;
+    }
+  }
+
+  .ad-card-foot {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    gap: 1em;
+
+    &:not(:empty) {
+      margin: 1em 0 0 0;
+    }
+  }
 }
 </style>

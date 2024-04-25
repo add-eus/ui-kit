@@ -17,8 +17,13 @@ const open = ref(false);
         title=".defaultTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
+
     <Variant title="small">
       <ADButton @click="open = 'small'">Open Small Modal</ADButton>
       <ADModal
@@ -28,8 +33,13 @@ const open = ref(false);
         title=".smallTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
+
     <Variant title="medium">
       <ADButton @click="open = 'medium'">Open Medium Modal</ADButton>
       <ADModal
@@ -39,8 +49,13 @@ const open = ref(false);
         title=".mediumTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
+
     <Variant title="large">
       <ADButton @click="open = 'large'">Open Large Modal</ADButton>
       <ADModal
@@ -50,8 +65,13 @@ const open = ref(false);
         title=".largeTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
+
     <Variant title="big">
       <ADButton @click="open = 'big'">Open Big Modal</ADButton>
       <ADModal
@@ -61,8 +81,13 @@ const open = ref(false);
         title=".bigTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
+
     <Variant title="giant">
       <ADButton @click="open = 'giant'">Open Giant Modal</ADButton>
       <ADModal
@@ -72,6 +97,10 @@ const open = ref(false);
         title=".giantTitle"
       >
         <template #content> Content test </template>
+        <template #action>
+          <ADButton>Close</ADButton>
+          <ADButton color="success">Open</ADButton>
+        </template>
       </ADModal>
     </Variant>
   </Story>
