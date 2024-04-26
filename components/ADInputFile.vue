@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, inject, computed, provide } from "vue";
 import type { PropType } from "vue";
 import ADIcon from "./ADIcon.vue";
 
@@ -61,6 +61,8 @@ const setActiveMedia = (index: number) => {
   mediaContainerTranslate.value =
     (-props.containerWidth + borderSpace.value) * index;
 };
+
+provide('inputMedias', computed(() => props.medias));
 
 defineExpose({
   nextMedia,
