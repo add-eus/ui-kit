@@ -4,13 +4,18 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -21,9 +26,11 @@ jobs:
 
       - name: Build
         run: npm run story:dev
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./.histoire/dist
+          # Upload entire repository
+          path: "./.histoire/dist"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
