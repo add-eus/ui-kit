@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import ADIcon from "./ADIcon.vue";
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
     default: 300,
   },
   medias: {
-    type: Array<String>,
+    type: Array<string>,
     default: [],
   },
 });
@@ -118,6 +118,7 @@ defineExpose({
             v-if="medias.length == 0 && inspiration != ''"
             class="inspiration-media"
           >
+          kjlkj
             <slot name="inspi">
               <!-- <img v-if="imageSrc" class="output" :src="inspiration" alt="Inspiration img" /> -->
             </slot>
