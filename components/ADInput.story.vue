@@ -1,40 +1,31 @@
 <script setup lang="ts">
-// import '../scss/_color.scss';
-
-  import { defineProps } from 'vue';
-  
-  const props = defineProps({
-    color: {
-      type: String,
-      default: undefined,
-    },
-    icon: {
-      type: String,
-      default: 'circle',
-    },
-    type: {
-        type: String,
-        default: 'rounded',
-        validator: (value) => {
-            return ['rounded', 'sharp', 'outlined'].includes(value);
-        },
-    },
-  });
+import ADInput from "./ADInput.vue";
+import "../index.scss";
 </script>
 
 <template>
-    <span :class="['ad-icon', 'material-symbols-'+type]" :style="{color:color}">{{ icon }}</span>
+  <Story :layout="{ type: 'grid', width: 200 }">
+    <Variant title="default">
+      <ADInput />
+    </Variant>
+    <Variant title="violet">
+      <ADInput color="var(--ad-violet)" placeholder="Violet type.." />
+    </Variant>
+    <Variant title="primary">
+      <ADInput color="var(--ad-primary)" placeholder="Primary type.." />
+    </Variant>
+  </Story>
 </template>
 
+<docs lang="md">
+# ADIcon
 
-<style scoped lang="scss">
-@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200";
-@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200";
-@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200";
+This is a icon component.
 
-.ad-icon {
-    display: inline-flex;
-    font-size: 20px;
-    /* font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48; */
-}
-</style>
+## Usage
+
+The `ADIcon` component provides the following options:
+
+- `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `var(--ad-primary)`.
+- `placeholder` (string, optional): Specifies the placeholder of the button. Possible values are any valid text like `Type your text here..`.
+</docs>
