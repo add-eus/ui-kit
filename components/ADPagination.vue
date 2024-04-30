@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import type { RouteLocationOptions } from "vue-router";
 import { useRoute } from "vue-router";
-// import { useI18n } from "vue-i18n";
 import ADIcon from "./ADIcon.vue";
 
 export interface ADPaginationProps {
@@ -26,7 +25,6 @@ const props = withDefaults(defineProps<ADPaginationProps>(), {
     routerQueryKey: "page",
 });
 
-// const { t } = useI18n();
 const route = useRoute();
 const lastPage = computed(() => Math.ceil(props.totalItems / props.itemPerPage) || 1);
 const totalPageDisplayed = computed(() =>
@@ -35,7 +33,7 @@ const totalPageDisplayed = computed(() =>
         : lastPage.value
 );
 const pages = computed(() => {
-    const _pages = [];
+    const _pages: number[] = [];
     let firstButton = props.currentPage - Math.floor(totalPageDisplayed.value / 2);
     let lastButton =
         firstButton +
@@ -95,6 +93,17 @@ const handleLinkClick = (e: MouseEvent, page = 1) => {
         return false;
     }
 };
+if(props.noRouter !== true) {
+    watch(() => route.query.page, (page) => {
+        if(typeof page !== "undefined" && typeof page !== "string") {
+            return;
+        }
+        const pageNumber = parseInt(page || "1");
+        if(pageNumber !== props.currentPage) { 
+            emits("update:currentPage", pageNumber);
+        }
+    }, {immediate: true});
+}
 </script>
 
 <template>
