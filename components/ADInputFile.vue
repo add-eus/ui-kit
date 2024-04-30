@@ -13,7 +13,7 @@ const props = defineProps({
     default: 300,
   },
   medias: {
-    type: Object as PropType<Array<String> | String>,
+    type: Object as PropType<Array<string> | string>,
     default: [],
   },
 });
