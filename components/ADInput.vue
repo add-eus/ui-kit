@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, PropType } from "vue";
+import { Colors } from "../stores/color";
 
-const props = defineProps({
-  color: {
-    type: String,
-    default: undefined,
+defineProps({
+    color: {
+    type: String as PropType<Colors>,
+    default: 'grey',
+    validator: (value) => {
+      return ['grey', 'primary', 'danger', 'success'].includes(value);
+    },
   },
   placeholder: {
     type: String,
