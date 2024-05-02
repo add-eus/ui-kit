@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ADInputFile from "./ADInputFile.vue";
+import ADInputFile from "../../components/ADInputFile.vue";
 import { ref } from 'vue';
-import '../index.scss';
+import '../../index.scss';
 
 const inputFileRef = ref<any>(null);
 </script>

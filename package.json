@@ -20,14 +20,16 @@
   },
   "homepage": "https://github.com/add-eus/ui-kit#readme",
   "dependencies": {
+    "@addeus/vue3-stores": "github:add-eus/vue3-stores#master",
     "@vueuse/core": "^10.9.0",
-    "material-symbols": "^0.17.1"
+    "material-symbols": "^0.17.1",
+    "notyf": "^3.10.0"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.17.14",
     "@vitejs/plugin-vue": "^4.1.0",
     "histoire": "^0.17.14",
-    "vite": "^4.4.12",
+    "vite": "^4.5.3",
     "vue-i18n": "^9.10.2",
     "vue-router": "^4.3.0"
   }

@@ -73,5 +73,9 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
       color: v-bind(colorDarkerInvert);
     }
   }
+
+  &:disabled {
+    pointer-events: none;
+  }
 }
 </style>
