@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ADIcon from "./ADIcon.vue";
-import '../index.scss';
+import ADIcon from "../../components/ADIcon.vue";
+import '../../index.scss';
 
 </script>
 

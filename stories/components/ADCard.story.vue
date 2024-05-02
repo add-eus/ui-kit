@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ADCard from "./ADCard.vue";
-import ADButton from "./ADButton.vue";
+import ADCard from "../../components/ADCard.vue";
+import ADButton from "../../components/ADButton.vue";
 import { ref } from "vue";
-import "../index.scss";
+import "../../index.scss";
 
 const open = ref(false);
 </script>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ADModal from "./ADModal.vue";
-import ADButton from "./ADButton.vue";
+import ADModal from "../../components/ADModal.vue";
+import ADButton from "../../components/ADButton.vue";
 import { ref } from "vue";
-import "../index.scss";
+import "../../index.scss";
 
-const open = ref(false);
+const open = ref<string | false>(false);
 </script>
 
 <template>
