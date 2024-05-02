@@ -2,15 +2,20 @@
 import { defineProps, computed, PropType } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
+import ADLoader from "./ADLoader.vue";
 
 const props = defineProps({
   color: {
-    type: Object as PropType<Colors>,
-    default: "grey",
+    type: String as PropType<Colors>,
+    default: 'grey',
     validator: (value) => {
       return ["grey", "primary", "danger", "success"].includes(value);
     },
   },
+  loading: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const mainColor = computed(() => props.color);
@@ -27,9 +32,10 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 </script>
 
 <template>
-  <button :class="['ad-button', color]">
-    <slot></slot>
-  </button>
+    <button :class="['ad-button', color]" v-bind="$attrs">
+      <slot></slot>
+      <ADLoader v-if="loading"></ADLoader>
+    </button>
 </template>
 
 <style lang="scss" scoped>

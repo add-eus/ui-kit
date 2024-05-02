@@ -20,6 +20,7 @@ export interface ADModalProps {
   noscroll?: boolean;
   noclose?: boolean;
   cancelLabel?: string;
+  classList?: string;
 }
 
 const emit = defineEmits<ADModalEmits>();
@@ -61,8 +62,8 @@ defineExpose({
 <template>
   <Teleport to="body">
     <div
-      :class="[open && 'is-active', `is-${size}`]"
-      class="ad-modal"
+      :class="[open && 'is-active', `is-${size}`, `${classList}`]"
+      class="modal ad-modal"
       v-if="open"
     >
       <button

@@ -1,8 +1,8 @@
-$xl: (min-width: 1224px); // large screen
-$lg: (min-width: 1024px); // desktop
-$md: (min-width: 768px); // tablet
-$sm: (min-width: 576px); // phablet
-$xs: (min-width: 320px); // mobile
+$xl: 1224px; // large screen
+$lg: 1024px; // desktop
+$md: 768px; // tablet
+$sm: 576px; // phablet
+$xs: 320px; // mobile
 
 $breakpoints: (
     "xl": $xl,
@@ -14,11 +14,15 @@ $breakpoints: (
 
 @mixin breakpoints($className) {
     @each $breakpointName, $breakpoint in $breakpoints {
-        @media ($breakpoint) {
+        @media (min-width: $breakpoint) {
             .#{$breakpointName}:#{$className} {
                 @content;
             }
         }
+    }
+
+    .#{$className} {
+        @content;
     }
 }
 
@@ -83,17 +87,21 @@ $breakpoints: (
 
 //flex-direction
 @include breakpoints(flex-row) {
+    display: flex;
     flex-direction: row;
 }
 @include breakpoints(flex-row-reverse) {
+    display: flex;
     flex-direction: row-reverse;
 }
 
 @include breakpoints(flex-column) {
+    display: flex;
     flex-direction: column;
 }
 
 @include breakpoints(flex-column-reverse) {
+    display: flex;
     flex-direction: column-reverse;
 }
 
