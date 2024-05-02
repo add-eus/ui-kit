@@ -67,12 +67,12 @@ defineExpose({
       v-if="open"
     >
       <button
-        class="modal-background ad-modal-close"
+        class="ad-modal-background ad-modal-close"
         tabindex="0"
         @keydown.space.prevent="() => noclose === false && emit('close')"
         @click="() => noclose === false && emit('close')"
       ></button>
-      <div class="modal-content">
+      <div class="ad-modal-content">
         <ADCard :action-alignment="actionAlignment">
           <template #header>
             <h3>
@@ -81,7 +81,7 @@ defineExpose({
               >
             </h3>
             <ADButton
-              class="ad-modal-close ml-auto"
+              class="ad-modal-close"
               icon="close"
               circle
               :disabled="noclose"
@@ -106,70 +106,9 @@ defineExpose({
 <style lang="scss">
 @import "../scss/color";
 
-.modal {
+.ad-modal {
   transition: all 0.5s;
 
-  &.is-giant {
-    .modal-content {
-      width: 100%;
-      max-width: 1100px;
-
-      .modal-card {
-        width: 100%;
-      }
-    }
-  }
-
-  &.is-big {
-    .modal-content {
-      width: 100%;
-      max-width: 840px;
-
-      .modal-card {
-        width: 100%;
-      }
-    }
-  }
-
-  &.is-large {
-    .modal-content {
-      width: 100%;
-      max-width: 720px;
-
-      .modal-card {
-        width: 100%;
-      }
-    }
-  }
-
-  &.is-medium {
-    .modal-content {
-      width: 100%;
-      max-width: 640px;
-
-      .modal-card {
-        width: 100%;
-      }
-    }
-  }
-
-  &.is-small {
-    .modal-content {
-      width: 100%;
-      max-width: 420px;
-
-      .modal-card {
-        width: 100%;
-      }
-    }
-  }
-
-  .modal-content {
-    transition: all 0.4s;
-  }
-}
-
-.ad-modal {
   &.is-active {
     z-index: 200 !important;
     height: 100vh;
@@ -179,33 +118,34 @@ defineExpose({
     left: 0;
     right: 0;
     bottom: 0;
-
-    .ad-modal-close {
-      cursor: pointer;
-    }
   }
 
-  .ad-modal-card {
+  .ad-modal-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+  }
+
+  .ad-card {
     width: 100%;
-    //background: var(--white);
-    //border: 1px solid var(--fade-grey);
     border-radius: 8px;
     padding: 40px;
   }
 
-  .modal-background {
+  .ad-modal-background {
     height: 100%;
     width: 100%;
-    background-color: $ad-grey;
+    background: $ad-grey;
     opacity: 0.5;
     backdrop-filter: blur(5px);
   }
 
-  .modal-content {
+  .ad-modal-content {
     transform: scale(1) translate(-50%, -50%) !important;
     opacity: 1 !important;
     max-width: 540px;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     animation: fadeInDown 0.5s;
     margin: 0;
     padding: 0 10px;
@@ -216,7 +156,7 @@ defineExpose({
     // bottom: 0;
     position: absolute;
 
-    .modal-card {
+    .ad-card {
       max-width: 100%;
       margin: 0 auto;
 
@@ -224,27 +164,23 @@ defineExpose({
         border-radius: 12px;
       }
 
-      .modal-card-head {
+      .ad-card-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 20px;
-        background: var(--white);
+        /* background: var(--ad-white);
         border-bottom-color: var(--fade-grey-dark-3);
 
         &.no-border {
           border-bottom-color: transparent;
-        }
+        } */
 
         h3 {
-          font-family: var(--font-alt);
-          color: var(--dark-text);
-          font-weight: 600;
-          font-size: 1rem;
+          font-weight: bold;
         }
       }
 
-      .modal-card-body {
+      .ad-card-body {
         .modal-form {
           padding: 10px 0 20px;
         }
@@ -272,9 +208,7 @@ defineExpose({
         }
       }
 
-      .modal-card-foot {
-        background-color: var(--white);
-        padding: 15px 20px;
+      .ad-card-foot {
         border-top: 1px solid var(--fade-grey-dark-3);
 
         &:empty {
@@ -303,15 +237,69 @@ defineExpose({
       }
     }
   }
-}
 
-.is-dark {
-  .ad-modal {
-    .modal-background {
+  //SIZING
+  &.is-giant {
+    .ad-modal-content {
+      width: 100%;
+      max-width: 1100px;
+
+      .modal-card {
+        width: 100%;
+      }
+    }
+  }
+
+  &.is-big {
+    .ad-modal-content {
+      width: 100%;
+      max-width: 840px;
+
+      .modal-card {
+        width: 100%;
+      }
+    }
+  }
+
+  &.is-large {
+    .ad-modal-content {
+      width: 100%;
+      max-width: 720px;
+
+      .modal-card {
+        width: 100%;
+      }
+    }
+  }
+
+  &.is-medium {
+    .ad-modal-content {
+      width: 100%;
+      max-width: 640px;
+
+      .modal-card {
+        width: 100%;
+      }
+    }
+  }
+
+  &.is-small {
+    .ad-modal-content {
+      width: 100%;
+      max-width: 420px;
+
+      .modal-card {
+        width: 100%;
+      }
+    }
+  }
+
+  &.is-dark {
+    .ad-modal-background {
       background: rgb(101 101 104 / 80%) !important;
     }
 
-    .modal-content {
+    .ad-modal-content {
       .modal-card {
         .modal-card-head {
           background: var(--dark-sidebar-light-6) !important;
@@ -346,14 +334,14 @@ defineExpose({
 @media screen and (min-width: 769px) {
   .modal.modal-lg {
     .modal-card,
-    .modal-content {
+    .ad-modal-content {
       width: 800px !important;
     }
   }
 
   .modal.modal-sm {
     .modal-card,
-    .modal-content {
+    .ad-modal-content {
       width: 400px !important;
     }
   }
