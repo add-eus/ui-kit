@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ADPagination from "./ADPagination.vue";
-import '../index.scss';
+import ADPagination from "../../components/ADPagination.vue";
+import '../../index.scss';
 
 </script>
 
