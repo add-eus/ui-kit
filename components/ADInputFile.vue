@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, inject, computed, provide } from "vue";
+import { ref, provide, computed } from "vue";
 import type { PropType } from "vue";
 import ADIcon from "./ADIcon.vue";
+import { useVModel } from "@vueuse/core";
+
 
 const props = defineProps({
   containerWidth: {
@@ -12,6 +14,10 @@ const props = defineProps({
     type: Number,
     default: 300,
   },
+  multiple: {
+    type: Boolean,
+    default: false
+  },
   medias: {
     type: Object as PropType<Array<string> | string>,
     default: [],
@@ -19,12 +25,15 @@ const props = defineProps({
 });
 interface ADInputFileEmits {
   (e: "delete", index: number): boolean;
+  (e: "update:medias", medias: Array<string> | string): boolean;
 }
 const emits = defineEmits<ADInputFileEmits>();
 
 const mediaContainerTranslate = ref(0);
 const activeButtonIndex = ref(0);
 const borderSpace = ref(40);
+
+const medias = useVModel(props, 'medias', emits);
 
 const dotButtonClick = (index: number) => {
   mediaContainerTranslate.value =
@@ -33,7 +42,7 @@ const dotButtonClick = (index: number) => {
 };
 
 const nextMedia = () => {
-  if (activeButtonIndex.value < props.medias.length - 1) {
+  if (activeButtonIndex.value < medias.value.length - 1) {
     activeButtonIndex.value++;
     setActiveMedia(activeButtonIndex.value);
   }
@@ -47,7 +56,7 @@ const prevMedia = () => {
 };
 
 const deleteMedia = () => {
-  const isLastMedia = activeButtonIndex.value == props.medias.length - 1;
+  const isLastMedia = activeButtonIndex.value == medias.value.length - 1;
   emits("delete", activeButtonIndex.value);
   if (isLastMedia) {
     prevMedia();
@@ -55,14 +64,15 @@ const deleteMedia = () => {
 };
 
 const setActiveMedia = (index: number) => {
-  if (index < 0 || index >= props.medias.length)
+  if (index < 0 || index >= medias.value.length)
     throw new Error("Index out of range");
   activeButtonIndex.value = index;
   mediaContainerTranslate.value =
     (-props.containerWidth + borderSpace.value) * index;
 };
 
-provide('inputMedias', computed(() => props.medias));
+provide('inputMedias', medias);
+provide('multiple', computed(() => props.multiple));
 
 defineExpose({
   nextMedia,
@@ -79,7 +89,7 @@ defineExpose({
       '--height': containerHeight + 'px',
       '--media-container-translate': mediaContainerTranslate + 'px',
       '--border-space': borderSpace + 'px',
-      '--index': medias.length > 0 ? medias.length : 1,
+      '--index': multiple ? medias.length : 1,
     }"
   >
     <!-- Media Container -->
@@ -89,7 +99,7 @@ defineExpose({
         :style="{ transform: `translateX(var(--media-container-translate))` }"
       >
         <div
-          v-for="(imageSrc, index) in medias"
+          v-for="(imageSrc, index) in (multiple ? medias : [medias])"
           :key="index"
           class="upload-container"
         >
@@ -103,13 +113,13 @@ defineExpose({
           </slot>
           <!-- Switch between image and video icon -->
           <ADIcon
-            v-if="medias.length >= 2"
+            v-if="multiple && medias.length >= 2"
             class="icon-carousel media-img"
             icon="filter_none"
             color="var(--ad-white)"
           />
           <ADIcon
-            v-if="medias.length >= 2"
+            v-if="multiple && medias.length >= 2"
             class="icon-carousel media-video"
             icon="video_library"
             color="var(--ad-white)"
@@ -118,18 +128,18 @@ defineExpose({
         <!-- Inspiration Media -->
         <transition name="fade-slow">
           <div
-            v-if="medias.length == 0 && inspiration != ''"
-            class="inspiration-media"
+            v-if="((multiple && medias.length == 0) || medias === undefined) && poster != ''"
+            class="poster-media"
           >
             <slot name="inspi">
-              <!-- <img v-if="imageSrc" class="output" :src="inspiration" alt="Inspiration img" /> -->
+              <!-- <img v-if="imageSrc" class="output" :src="poster" alt="Inspiration img" /> -->
             </slot>
           </div>
         </transition>
         <!-- Icon Upload -->
         <transition name="fade-slow">
           <ADIcon
-            v-if="medias.length == 0"
+            v-if="(multiple && medias.length == 0) || medias == undefined"
             icon="cloud_upload"
             color="var(--ad-grey)"
             class="icon-upload"
@@ -140,7 +150,7 @@ defineExpose({
     <!-- Dot Container -->
     <div class="dot-container">
       <transition name="fade-slow">
-        <div v-if="medias.length >= 2" class="dot-content">
+        <div v-if="multiple && medias.length >= 2" class="dot-content">
           <button
             v-for="(imageSrc, index) in medias"
             :key="index"
@@ -161,26 +171,26 @@ defineExpose({
       color="var(--ad-grey)"
     /> -->
     <!-- Icon Delete -->
-    <button v-if="medias.length >= 1" class="icon-delete" @click="deleteMedia">
+    <button v-if="(multiple && medias.length >= 1) || medias !== undefined" class="icon-delete" @click="deleteMedia">
       <ADIcon icon="close" color="var(--ad-danger)" />
     </button>
     <!-- Icon Add -->
-    <button v-if="medias.length >= 1" class="icon-add">
+    <button v-if="(multiple && medias.length >= 1)" class="icon-add">
       <ADIcon icon="add_to_photos" color="var(--ad-grey)" />
     </button>
     <!-- Add media Input File -->
-    <div :class="medias.length >= 1 ? 'input-icon-add' : 'input-media-cover'">
+    <div :class="(multiple && medias.length >= 1) ? 'input-icon-add' : 'input-media-cover'">
       <slot name="input">
         <input type="file" />
       </slot>
     </div>
     <!-- Icon Edit -->
-    <button v-if="medias.length >= 1" class="icon-edit">
+    <button v-if="multiple && medias.length >= 1" class="icon-edit">
       <ADIcon icon="edit" color="var(--ad-grey)" />
     </button>
     <!-- Edit media input -->
     <div
-      v-if="medias.length >= 1"
+      v-if="multiple && medias.length >= 1"
       :class="
         medias.length >= 1 ? 'input-icon-edit' : 'input-icon-edit-disable'
       "
@@ -191,7 +201,7 @@ defineExpose({
     </div>
     <!-- Icon Back -->
     <button
-      v-if="medias.length >= 2 && activeButtonIndex != 0"
+      v-if="multiple && medias.length >= 2 && activeButtonIndex != 0"
       class="icon-back"
       @click="prevMedia"
     >
@@ -199,7 +209,7 @@ defineExpose({
     </button>
     <!-- Icon Next -->
     <button
-      v-if="medias.length >= 2 && activeButtonIndex != medias.length - 1"
+      v-if="multiple && medias.length >= 2 && activeButtonIndex != medias.length - 1"
       class="icon-next"
       @click="nextMedia"
     >
@@ -208,8 +218,8 @@ defineExpose({
     <!-- Inspiration Sentence -->
     <transition name="fade-slow">
       <div
-        v-if="medias.length == 0 && inspiration != ''"
-        class="inspiration-sentence"
+        v-if="((multiple && medias.length == 0) || medias === undefined) && poster != ''"
+        class="poster-sentence"
       >
         Inspiration image to be replaced with your own content
       </div>
@@ -356,7 +366,7 @@ defineExpose({
     }
 
     &:hover {
-      + .inspiration-sentence {
+      + .poster-sentence {
         opacity: 1;
       }
     }
@@ -435,7 +445,7 @@ defineExpose({
   }
 
   //INSPIRATION
-  .inspiration-sentence {
+  .poster-sentence {
     position: absolute;
     top: calc((var(--height) * 0.8) - var(--border-space));
     right: -10px;
@@ -451,7 +461,7 @@ defineExpose({
     opacity: 0;
   }
 
-  .inspiration-media {
+  .poster-media {
     height: 100%;
     width: 100%;
     opacity: 0.25;
