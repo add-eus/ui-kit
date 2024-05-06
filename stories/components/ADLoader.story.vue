@@ -18,7 +18,5 @@ This is a loader component.
 
 ## Usage
 
-The `ADLoader` component provides the following options:
-
-- `color` (string, optional): Specifies the color of message (danger, warning, success, default to error).
+The `ADLoader` component have no options.
 </docs>

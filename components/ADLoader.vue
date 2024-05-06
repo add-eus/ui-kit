@@ -12,11 +12,12 @@
   justify-content: center;
   align-items: center;
   height: 30px;
+  overflow: hidden;
 
   > .spinner {
-    border: 6px solid #f3f3f3;
+    border: 6px solid var(--ad-grey-lighter);
     border-radius: 50%;
-    border-top: 6px solid #3498db;
+    border-top: 6px solid var(--ad-primary);
     width: 30px;
     height: 30px;
     animation: spin 1s linear infinite;
