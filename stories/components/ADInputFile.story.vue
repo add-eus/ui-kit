@@ -13,6 +13,7 @@ const inputFileRef = ref<any>(null);
                 ref="inputFileRef"
                 :container-width="350"
                 :container-height="300"
+                multiple
                 inspiration="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwSUsk_uu2KuNZRT5PintWjwyul4AujUgWNxZlExHB5Q&s">
                 <input
                     type="file"
