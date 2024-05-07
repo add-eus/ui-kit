@@ -35,10 +35,13 @@ import "../../index.scss";
       </ADButton>
     </Variant>
     <Variant title="full">
-      <ADButton color="pink" full> ADButton Full </ADButton>
+      <ADButton full> ADButton Full </ADButton>
     </Variant>
     <Variant title="squared">
       <ADButton color="pink" squared> ADButton squared </ADButton>
+    </Variant>
+    <Variant title="disabled">
+      <ADButton color="primary" disabled> ADButton Disabled </ADButton>
     </Variant>
   </Story>
 </template>
