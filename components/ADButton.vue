@@ -7,15 +7,23 @@ import ADLoader from "./ADLoader.vue";
 const props = defineProps({
   color: {
     type: String as PropType<Colors>,
-    default: 'grey',
+    default: "grey",
     validator: (value) => {
-      return ["grey", "primary", "danger", "success"].includes(value);
+      return ["grey", "primary", "danger", "success", "pink"].includes(value);
     },
   },
   loading: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
+  full: {
+    type: Boolean,
+    default: false,
+  },
+  squared: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const mainColor = computed(() => props.color);
@@ -32,10 +40,17 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 </script>
 
 <template>
-    <button :class="['ad-button', color]" v-bind="$attrs">
-      <slot></slot>
-      <ADLoader v-if="loading"></ADLoader>
-    </button>
+  <button
+    :class="['ad-button', color]"
+    v-bind="$attrs"
+    :style="{
+      width: full && '100%',
+      borderRadius: squared && '6px',
+    }"
+  >
+    <slot></slot>
+    <ADLoader v-if="loading"></ADLoader>
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -61,6 +76,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   &:hover {
     background-color: v-bind(colorLighter);
     color: v-bind(colorInvert);
+
     i {
       color: v-bind(color);
     }
@@ -69,13 +85,24 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   &:active {
     background-color: v-bind(color);
     color: v-bind(colorDarkerInvert);
+
     i {
       color: v-bind(colorDarkerInvert);
     }
   }
 
   &:disabled {
-    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.25;
+
+    &:hover {
+      background-color: v-bind(colorLight);
+      color: v-bind(colorInvert);
+
+      i {
+        color: v-bind(colorInvert);
+      }
+    }
   }
 }
 </style>

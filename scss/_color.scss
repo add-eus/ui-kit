@@ -46,6 +46,22 @@ $ad-success-light-invert: #000;
 $ad-success-lighter: lighten($ad-success, 20%);
 $ad-success-lighter-invert: #000;
 
+//PINK
+$ad-pink: #ff0088;
+$ad-pink-invert: #fff;
+
+$ad-pink-dark: darken($ad-pink, 10%);
+$ad-pink-dark-invert: #fff;
+
+$ad-pink-darker: darken($ad-pink, 20%);
+$ad-pink-darker-invert: #fff;
+
+$ad-pink-light: lighten($ad-pink, 10%);
+$ad-pink-light-invert: #000;
+
+$ad-pink-lighter: lighten($ad-pink, 20%);
+$ad-pink-lighter-invert: #000;
+
 $ad-info: #17a2b8;
 $ad-info-light: lighten($ad-info, 10%);
 $ad-info-dark: darken($ad-info, 10%);
@@ -69,8 +85,8 @@ $ad-yellow: #ffff00;
 $ad-green: #008000;
 $ad-turquoise: #40e0d0;
 $ad-cyan: #00ffff;
-$ad-blue: #303778;
+$ad-blue-dark: #061237;
+$ad-blue: #0d0c54;
 $ad-purple: #800080;
 $ad-red: #ff0000;
-$ad-pink: #ff0088;
 $ad-violet: #c4b4ff;
