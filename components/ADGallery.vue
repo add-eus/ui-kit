@@ -12,10 +12,17 @@ const props = defineProps({
     default: 300,
   },
   medias: {
-    type: Array<String>,
+    type: Array<string>,
     default: [],
   },
 });
+
+interface ADGalleryEmits {
+  (e: "click-media", index: number): void;
+  (e: "click-empty"): void;
+}
+
+const emits = defineEmits<ADGalleryEmits>();
 
 const mediaContainerTranslate = ref(0);
 const activeButtonIndex = ref(0);
@@ -49,6 +56,14 @@ const setActiveMedia = (index: number) => {
     (-props.containerWidth + borderSpace.value) * index;
 };
 
+const clickMedia = () => {
+  emits("click-media", activeButtonIndex.value);
+};
+
+const clickEmpty = () => {
+  emits("click-empty");
+};
+
 defineExpose({
   nextMedia,
   prevMedia,
@@ -77,6 +92,7 @@ defineExpose({
           v-for="(imageSrc, index) in medias"
           :key="index"
           class="upload-container"
+          @click="clickMedia(index)"
         >
           <slot name="medias" :imageSrc="imageSrc">
             <img
@@ -100,15 +116,14 @@ defineExpose({
             color="var(--ad-white)"
           />
         </div>
-        <!-- Inspiration Media -->
+        <!-- Placeholder -->
         <transition name="fade-slow">
           <div
-            v-if="medias.length == 0 && inspiration != ''"
+            v-if="medias === undefined || medias.length == 0"
             class="inspiration-media"
+            @click="clickEmpty"
           >
-            <slot name="inspi">
-              <!-- <img v-if="imageSrc" class="output" :src="inspiration" alt="Inspiration img" /> -->
-            </slot>
+            <slot name="placeholder"> </slot>
           </div>
         </transition>
       </div>
@@ -145,6 +160,7 @@ defineExpose({
     >
       <ADIcon icon="keyboard_arrow_right" color="var(--ad-grey)" />
     </button>
+    <slot name="actions" :index="activeButtonIndex" :setActiveMedia="setActiveMedia"></slot>
   </div>
 </template>
 
