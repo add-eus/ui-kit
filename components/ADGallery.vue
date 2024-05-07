@@ -119,7 +119,7 @@ defineExpose({
         <!-- Placeholder -->
         <transition name="fade-slow">
           <div
-            v-if="medias === undefined || medias.length == 0"
+            v-if="medias.length == 0"
             class="inspiration-media"
             @click="clickEmpty"
           >
