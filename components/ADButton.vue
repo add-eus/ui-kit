@@ -48,8 +48,8 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
       borderRadius: squared && '6px',
     }"
   >
-    <slot></slot>
-    <ADLoader v-if="loading"></ADLoader>
+    <slot v-if="!loading"></slot>
+    <ADLoader v-else></ADLoader>
   </button>
 </template>
 
@@ -64,9 +64,12 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-
   background-color: v-bind(colorLight);
   color: v-bind(colorInvert);
+
+  .loader-icon {
+    position: absolute;
+  }
 
   i {
     color: v-bind(colorInvert);

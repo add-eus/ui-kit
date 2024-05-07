@@ -1,5 +1,5 @@
 <template>
-  <div class="loader">
+  <div class="loader-icon">
     <div class="spinner"></div>
   </div>
 </template>
@@ -7,19 +7,19 @@
 <script></script>
 
 <style scoped>
-.loader {
+.loader-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
+  height: 22px;
   overflow: hidden;
 
   > .spinner {
-    border: 6px solid var(--ad-grey-lighter);
+    border: 4px solid var(--ad-grey-lighter);
     border-radius: 50%;
-    border-top: 6px solid var(--ad-primary);
-    width: 30px;
-    height: 30px;
+    border-top: 4px solid var(--ad-pink);
+    width: 22px;
+    height: 22px;
     animation: spin 1s linear infinite;
     -webkit-animation: spin 1s linear infinite;
   }
