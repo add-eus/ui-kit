@@ -20,7 +20,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  squared: {
+  transparent: {
     type: Boolean,
     default: false,
   },
@@ -45,7 +45,8 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
     v-bind="$attrs"
     :style="{
       width: full && '100%',
-      borderRadius: squared && '6px',
+      background: transparent && 'transparent',
+      color: transparent && '#000',
     }"
   >
     <slot v-if="!loading"></slot>
@@ -56,7 +57,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 <style lang="scss" scoped>
 .ad-button {
   border: none;
-  border-radius: 50px;
+  border-radius: 6px;
   padding: 3px 8px;
   height: 35px;
   display: inline-flex;
