@@ -54,5 +54,4 @@ The `ADButton` component provides the following options:
 
 - `color` (string, optional): Specifies the color of the button. Possible values are `grey`,`primary`, `danger`,`success` or `pink`
 - `full` (boolean, optional): Specifies the size
-- `squared` (boolean, optional): Specifies border radius
 </docs>

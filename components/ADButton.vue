@@ -20,10 +20,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  transparent: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const mainColor = computed(() => props.color);
@@ -45,8 +41,6 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
     v-bind="$attrs"
     :style="{
       width: full && '100%',
-      background: transparent && 'transparent',
-      color: transparent && '#000',
     }"
   >
     <slot v-if="!loading"></slot>
