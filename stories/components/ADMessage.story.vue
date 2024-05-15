@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import ADMessage from "./ADMessage.vue";
-import '../index.scss';
+import ADMessage from "../../components/ADMessage.vue";
+import "../../index.scss";
 </script>
 
 <template>
-    <Story :layout="{ type: 'grid', width: 200 }">
-        <Variant title="default">
-            <ADMessage>error message</ADMessage>
-        </Variant>
-        <Variant title="danger">
-            <ADMessage color="danger">error message</ADMessage>
-        </Variant>
-        <Variant title="warning">
-            <ADMessage color="warning">warning message</ADMessage>
-        </Variant>
-        <Variant title="success">
-            <ADMessage color="success">success message</ADMessage>
-        </Variant>
-    </Story>
+  <Story :layout="{ type: 'grid', width: 200 }">
+    <Variant title="default">
+      <ADMessage>error message</ADMessage>
+    </Variant>
+    <Variant title="danger">
+      <ADMessage color="danger">error message</ADMessage>
+    </Variant>
+    <Variant title="warning">
+      <ADMessage color="warning">warning message</ADMessage>
+    </Variant>
+    <Variant title="success">
+      <ADMessage color="success">success message</ADMessage>
+    </Variant>
+  </Story>
 </template>
 
 <docs lang="md">

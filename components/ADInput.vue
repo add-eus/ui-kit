@@ -3,16 +3,20 @@ import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
-    color: {
+  color: {
     type: String as PropType<Colors>,
-    default: 'grey',
+    default: "grey",
     validator: (value) => {
-      return ['grey', 'primary', 'danger', 'success'].includes(value);
+      return ["grey", "primary", "danger", "success"].includes(value);
     },
   },
   placeholder: {
     type: String,
     default: "Type here..",
+  },
+  full: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -24,7 +28,11 @@ const color = useColor(computed(() => {
 <template>
   <input
     v-bind="$attrs"
-    :style="{ borderColor: color }"
+    :style="{
+      borderColor: color,
+      width: full && '100%',
+      '--color': color,
+    }"
     :placeholder="placeholder"
   />
 </template>
@@ -36,6 +44,8 @@ input {
   border-style: solid;
   border-width: 1px;
   max-width: 100%;
+  outline: 1px solid rgba(255, 255, 255, 0);
+  transition: opacity 0.25s, outline 0.25s;
 
   &::placeholder {
     color: var(--ad-grey-light);
@@ -45,6 +55,19 @@ input {
   &::-ms-input-placeholder {
     /* Edge 12 -18 */
     color: var(--ad-grey-light);
+  }
+
+  &:focus {
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    outline-offset: -1px;
+
+    &::placeholder {
+      opacity: 0.75;
+    }
+
+    &::-ms-input-placeholder {
+      opacity: 0.75;
+    }
   }
 }
 </style>

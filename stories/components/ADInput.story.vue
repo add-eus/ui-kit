@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ADInput from "./ADInput.vue";
-import "../index.scss";
+import ADInput from "../../components/ADInput.vue";
+import "../../index.scss";
 </script>
 
 <template>
