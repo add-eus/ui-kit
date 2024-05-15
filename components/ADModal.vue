@@ -122,9 +122,9 @@ defineExpose({
 
   .ad-modal-close {
     position: absolute;
-    top: 1em;
-    right: 1em;
     cursor: pointer;
+    top: 0;
+    right: 0;
   }
 
   .ad-card {
@@ -138,7 +138,7 @@ defineExpose({
     width: 100%;
     background: $ad-grey;
     opacity: 0.5;
-    backdrop-filter: blur(5px);
+    border: none;
   }
 
   .ad-modal-content {
@@ -177,6 +177,7 @@ defineExpose({
 
         h3 {
           font-weight: bold;
+          margin-left: 50px;
         }
       }
 
