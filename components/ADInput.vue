@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineProps, PropType } from "vue";
-import { Colors } from "../stores/color";
+import { defineProps, PropType, computed } from "vue";
+import { Colors, useColor } from "../stores/color";
 
-defineProps({
+const props = defineProps({
     color: {
     type: String as PropType<Colors>,
     default: 'grey',
@@ -15,6 +15,10 @@ defineProps({
     default: "Type here..",
   },
 });
+
+const color = useColor(computed(() => {
+  return props.color;
+}))
 </script>
 
 <template>
