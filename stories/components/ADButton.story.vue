@@ -34,6 +34,9 @@ import "../../index.scss";
         <ADIcon icon="face" />
       </ADButton>
     </Variant>
+    <Variant title="full">
+      <ADButton color="pink" full> ADButton Full </ADButton>
+    </Variant>
     <Variant title="disabled">
       <ADButton color="primary" disabled> ADButton Disabled </ADButton>
     </Variant>
@@ -49,5 +52,6 @@ This is a button component that can be used to trigger an action.
 
 The `ADButton` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are `primary`, `danger` or `success`
+- `color` (string, optional): Specifies the color of the button. Possible values are `grey`,`primary`, `danger`,`success` or `pink`
+- `full` (boolean, optional): Specifies the size
 </docs>

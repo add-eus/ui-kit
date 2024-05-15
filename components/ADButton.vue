@@ -9,10 +9,14 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "grey",
     validator: (value) => {
-      return ["grey", "primary", "danger", "success"].includes(value);
+      return ["grey", "primary", "danger", "success", "pink"].includes(value);
     },
   },
   loading: {
+    type: Boolean,
+    default: false,
+  },
+  full: {
     type: Boolean,
     default: false,
   },
@@ -32,16 +36,22 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 </script>
 
 <template>
-  <button :class="['ad-button', color]" v-bind="$attrs">
-    <slot></slot>
-    <ADLoader v-if="loading"></ADLoader>
+  <button
+    :class="['ad-button', color]"
+    v-bind="$attrs"
+    :style="{
+      width: full && '100%',
+    }"
+  >
+    <slot v-if="!loading"></slot>
+    <ADLoader v-else></ADLoader>
   </button>
 </template>
 
 <style lang="scss" scoped>
 .ad-button {
   border: none;
-  border-radius: 50px;
+  border-radius: 6px;
   padding: 3px 8px;
   height: 35px;
   display: inline-flex;
@@ -49,9 +59,12 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-
   background-color: v-bind(colorLight);
   color: v-bind(colorInvert);
+
+  .loader-icon {
+    position: absolute;
+  }
 
   i {
     color: v-bind(colorInvert);
@@ -61,6 +74,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   &:hover {
     background-color: v-bind(colorLighter);
     color: v-bind(colorInvert);
+
     i {
       color: v-bind(color);
     }
