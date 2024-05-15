@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect, onUnmounted } from "vue";
+import { ref, watchEffect, onUnmounted, watch } from "vue";
 import { ADCardAction } from "./ADCard.vue";
 import ADCard from "./ADCard.vue";
 import ADButton from "./ADButton.vue";
@@ -21,6 +21,7 @@ export interface ADModalProps {
   noclose?: boolean;
   cancelLabel?: string;
   classList?: string;
+  confirmation?: boolean;
 }
 
 const emit = defineEmits<ADModalEmits>();
@@ -29,9 +30,11 @@ const props = withDefaults(defineProps<ADModalProps>(), {
   size: "medium",
   actions: undefined,
   cancelLabel: undefined,
+  confirmation: false,
 });
 
 const wasOpen = ref(false);
+const showConfirmation = ref(false);
 
 const checkScroll = () => {
   if (props.noscroll && props.open) {
@@ -48,10 +51,29 @@ onUnmounted(() => {
   document.documentElement.classList.remove("no-scroll");
 });
 
+const close = (force?: boolean) => {
+  console.log("close", force, props.confirmation, showConfirmation.value);
+  if(props.confirmation && force !== true) {
+    showConfirmation.value = true;
+    return;
+  }
+  emit("close");
+};
+
+const cancelConfirmation = () => {
+  showConfirmation.value = false;
+};
+
+watch(() => props.open, (value) => {
+  if (!value) {
+    showConfirmation.value = false;
+  }
+});
+
 defineExpose({
-  close: () => {
+  close: (force?: boolean) => {
     wasOpen.value = false;
-    emit("close");
+    close(force);
   },
   open: () => {
     wasOpen.value = true;
@@ -69,8 +91,8 @@ defineExpose({
       <button
         class="ad-modal-background ad-modal-close"
         tabindex="0"
-        @keydown.space.prevent="() => noclose === false && emit('close')"
-        @click="() => noclose === false && emit('close')"
+        @keydown.space.prevent="() => noclose === false && close()"
+        @click="() => noclose === false && close()"
       ></button>
       <div class="ad-modal-content">
         <ADCard :action-alignment="actionAlignment">
@@ -85,17 +107,18 @@ defineExpose({
               icon="close"
               circle
               :disabled="noclose"
-              @keydown.space.prevent="emit('close')"
-              @click="emit('close')"
+              @keydown.space.prevent="close()"
+              @click="close()"
             >
               <ADIcon icon="close"></ADIcon>
             </ADButton>
           </template>
           <template #content>
+            <slot v-if="showConfirmation" name="confirmation" :cancel="cancelConfirmation" ></slot>
             <slot name="content"></slot>
           </template>
           <template #action>
-            <slot name="action" :close="() => emit('close')"></slot>
+            <slot name="action" :close="() => close()"></slot>
           </template>
         </ADCard>
       </div>
