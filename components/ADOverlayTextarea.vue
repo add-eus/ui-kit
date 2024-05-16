@@ -35,7 +35,7 @@ const insertText = (text: string) => {
   <div>
     <ADTextarea v-bind="$attrs" v-model="value" ref="ADTextareaRef" />
     <div class="bottom-tools">
-      <slot :insertText="insertText"></slot>
+      <slot :insertText="insertText" :text="value"></slot>
     </div>
   </div>
 </template>
