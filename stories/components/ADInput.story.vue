@@ -9,10 +9,10 @@ import "../../index.scss";
       <ADInput />
     </Variant>
     <Variant title="violet">
-      <ADInput color="var(--ad-violet)" placeholder="Violet type.." />
+      <ADInput color="violet" placeholder="Violet type.." />
     </Variant>
     <Variant title="primary">
-      <ADInput color="var(--ad-primary)" placeholder="Primary type.." />
+      <ADInput color="primary" placeholder="Primary type.." />
     </Variant>
   </Story>
 </template>
