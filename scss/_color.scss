@@ -1,3 +1,19 @@
+// DEFAULT
+$ad-default: rgba(0, 0, 0, 0);
+$ad-default-invert: #000;
+
+$ad-default-dark: rgba(0, 0, 0, 0.2);
+$ad-default-dark-invert: #fff;
+
+$ad-default-darker: rgba(0, 0, 0, 0.3);
+$ad-default-darker-invert: #fff;
+
+$ad-default-light: lighten($ad-default, 10%);
+$ad-default-light-invert: #000;
+
+$ad-default-lighter: lighten($ad-default, 20%);
+$ad-default-lighter-invert: #000;
+
 //PRIMARY
 $ad-primary: #007bff;
 $ad-primary-invert: #fff;
