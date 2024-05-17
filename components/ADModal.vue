@@ -177,7 +177,7 @@ defineExpose({
 
         h3 {
           font-weight: bold;
-          margin-left: 50px;
+          margin-top: -30px;
         }
       }
 
