@@ -2,14 +2,14 @@
 
 :root {
   //PRIMARY
-  --ad-primary: #{$ad-primary};
-  --ad-primary-invert: #{$ad-primary-invert};
+  --ad-primary-darker: #{$ad-primary-darker};
+  --ad-primary-darker-invert: #{$ad-primary-darker-invert};
 
   --ad-primary-dark: #{$ad-primary-dark};
   --ad-primary-dark-invert: #{$ad-primary-dark-invert};
 
-  --ad-primary-darker: #{$ad-primary-darker};
-  --ad-primary-darker-invert: #{$ad-primary-darker-invert};
+  --ad-primary: #{$ad-primary};
+  --ad-primary-invert: #{$ad-primary-invert};
 
   --ad-primary-light: #{$ad-primary-light};
   --ad-primary-light-invert: #{$ad-primary-light-invert};
@@ -17,15 +17,56 @@
   --ad-primary-lighter: #{$ad-primary-lighter};
   --ad-primary-lighter-invert: #{$ad-primary-lighter-invert};
 
+  --ad-primary-lightest: #{$ad-primary-lightest};
+  --ad-primary-lightest-invert: #{$ad-primary-lightest-invert};
+
+  //SECONDARY
+  --ad-secondary-darker: #{$ad-secondary-darker};
+  --ad-secondary-darker-invert: #{$ad-secondary-darker-invert};
+
+  --ad-secondary-dark: #{$ad-secondary-dark};
+  --ad-secondary-dark-invert: #{$ad-secondary-dark-invert};
+
+  --ad-secondary: #{$ad-secondary};
+  --ad-secondary-invert: #{$ad-secondary-invert};
+
+  --ad-secondary-light: #{$ad-secondary-light};
+  --ad-secondary-light-invert: #{$ad-secondary-light-invert};
+
+  --ad-secondary-lighter: #{$ad-secondary-lighter};
+  --ad-secondary-lighter-invert: #{$ad-secondary-lighter-invert};
+
+  --ad-secondary-lightest: #{$ad-secondary-lightest};
+  --ad-secondary-lightest-invert: #{$ad-secondary-lightest-invert};
+
+  //TERTIARY
+  --ad-tertiary-darker: #{$ad-tertiary-darker};
+  --ad-tertiary-darker-invert: #{$ad-tertiary-darker-invert};
+
+  --ad-tertiary-dark: #{$ad-tertiary-dark};
+  --ad-tertiary-dark-invert: #{$ad-tertiary-dark-invert};
+
+  --ad-tertiary: #{$ad-tertiary};
+  --ad-tertiary-invert: #{$ad-tertiary-invert};
+
+  --ad-tertiary-light: #{$ad-tertiary-light};
+  --ad-tertiary-light-invert: #{$ad-tertiary-light-invert};
+
+  --ad-tertiary-lighter: #{$ad-tertiary-lighter};
+  --ad-tertiary-lighter-invert: #{$ad-tertiary-lighter-invert};
+
+  --ad-tertiary-lightest: #{$ad-tertiary-lightest};
+  --ad-tertiary-lightest-invert: #{$ad-tertiary-lightest-invert};
+
   //DANGER
-  --ad-danger: #{$ad-danger};
-  --ad-danger-invert: #{$ad-danger-invert};
+  --ad-danger-darker: #{$ad-danger-darker};
+  --ad-danger-darker-invert: #{$ad-danger-darker-invert};
 
   --ad-danger-dark: #{$ad-danger-dark};
   --ad-danger-dark-invert: #{$ad-danger-dark-invert};
 
-  --ad-danger-darker: #{$ad-danger-darker};
-  --ad-danger-darker-invert: #{$ad-danger-darker-invert};
+  --ad-danger: #{$ad-danger};
+  --ad-danger-invert: #{$ad-danger-invert};
 
   --ad-danger-light: #{$ad-danger-light};
   --ad-danger-light-invert: #{$ad-danger-light-invert};
@@ -33,15 +74,37 @@
   --ad-danger-lighter: #{$ad-danger-lighter};
   --ad-danger-lighter-invert: #{$ad-danger-lighter-invert};
 
+  --ad-danger-lightest: #{$ad-danger-lightest};
+  --ad-danger-lightest-invert: #{$ad-danger-lightest-invert};
+
+  //WARNING
+  --ad-warning-darker: #{$ad-warning-darker};
+  --ad-warning-darker-invert: #{$ad-warning-darker-invert};
+
+  --ad-warning-dark: #{$ad-warning-dark};
+  --ad-warning-dark-invert: #{$ad-warning-dark-invert};
+
+  --ad-warning: #{$ad-warning};
+  --ad-warning-invert: #{$ad-warning-invert};
+
+  --ad-warning-light: #{$ad-warning-light};
+  --ad-warning-light-invert: #{$ad-warning-light-invert};
+
+  --ad-warning-lighter: #{$ad-warning-lighter};
+  --ad-warning-lighter-invert: #{$ad-warning-lighter-invert};
+
+  --ad-warning-lightest: #{$ad-warning-lightest};
+  --ad-warning-lightest-invert: #{$ad-warning-lightest-invert};
+
   //SUCCESS
-  --ad-success: #{$ad-success};
-  --ad-success-invert: #{$ad-success-invert};
+  --ad-success-darker: #{$ad-success-darker};
+  --ad-success-darker-invert: #{$ad-success-darker-invert};
 
   --ad-success-dark: #{$ad-success-dark};
   --ad-success-dark-invert: #{$ad-success-dark-invert};
 
-  --ad-success-darker: #{$ad-success-darker};
-  --ad-success-darker-invert: #{$ad-success-darker-invert};
+  --ad-success: #{$ad-success};
+  --ad-success-invert: #{$ad-success-invert};
 
   --ad-success-light: #{$ad-success-light};
   --ad-success-light-invert: #{$ad-success-light-invert};
@@ -49,43 +112,43 @@
   --ad-success-lighter: #{$ad-success-lighter};
   --ad-success-lighter-invert: #{$ad-success-lighter-invert};
 
-  //PINK
-  --ad-pink: #{$ad-pink};
-  --ad-pink-invert: #{$ad-pink-invert};
+  --ad-success-lightest: #{$ad-success-lightest};
+  --ad-success-lightest-invert: #{$ad-success-lightest-invert};
 
-  --ad-pink-dark: #{$ad-pink-dark};
-  --ad-pink-dark-invert: #{$ad-pink-dark-invert};
+  //INFO
+  --ad-info-darker: #{$ad-info-darker};
+  --ad-info-darker-invert: #{$ad-info-darker-invert};
 
-  --ad-pink-darker: #{$ad-pink-darker};
-  --ad-pink-darker-invert: #{$ad-pink-darker-invert};
-
-  --ad-pink-light: #{$ad-pink-light};
-  --ad-pink-light-invert: #{$ad-pink-light-invert};
-
-  --ad-pink-lighter: #{$ad-pink-lighter};
-  --ad-pink-lighter-invert: #{$ad-pink-lighter-invert};
+  --ad-info-dark: #{$ad-info-dark};
+  --ad-info-dark-invert: #{$ad-info-dark-invert};
 
   --ad-info: #{$ad-info};
+  --ad-info-invert: #{$ad-info-invert};
+
   --ad-info-light: #{$ad-info-light};
-  --ad-info-dark: #{$ad-info-dark};
-  --ad-warning: #{$ad-warning};
-  --ad-warning-light: #{$ad-warning-light};
-  --ad-warning-dark: #{$ad-warning-dark};
-  --ad-danger: #{$ad-danger};
-  --ad-danger-light: #{$ad-danger-light};
-  --ad-danger-dark: #{$ad-danger-dark};
-  --ad-success: #{$ad-success};
-  --ad-success-light: #{$ad-success-light};
-  --ad-success-dark: #{$ad-success-dark};
+  --ad-info-light-invert: #{$ad-info-light-invert};
+
+  --ad-info-lighter: #{$ad-info-lighter};
+  --ad-info-lighter-invert: #{$ad-info-lighter-invert};
+
+  --ad-info-lightest: #{$ad-info-lightest};
+  --ad-info-lightest-invert: #{$ad-info-lightest-invert};
+
+  //BLACK
   --ad-black: #{$ad-black};
+
+  //GREY
   --ad-grey-darker: #{$ad-grey-darker};
   --ad-grey-dark: #{$ad-grey-dark};
-  --ad-white: #{$ad-white};
   --ad-grey: #{$ad-grey};
   --ad-grey-light: #{$ad-grey-light};
   --ad-grey-lighter: #{$ad-grey-lighter};
-  --ad-white-ter: #{$ad-white-ter};
-  --ad-white-bis: #{$ad-white-bis};
+  --ad-grey-lightest: #{$ad-grey-lightest};
+
+  //WHITE
+  --ad-white: #{$ad-white};
+
+  //OTHER
   --ad-gold: #{$ad-gold};
   --ad-silver: #{$ad-silver};
   --ad-bronze: #{$ad-bronze};
