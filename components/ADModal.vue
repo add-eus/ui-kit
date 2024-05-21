@@ -53,7 +53,6 @@ onUnmounted(() => {
 });
 
 const close = (force?: boolean) => {
-  console.log("close", force, props.confirmation, showConfirmation.value);
   if (props.confirmation && force !== true) {
     showConfirmation.value = true;
     return;
@@ -185,15 +184,12 @@ defineExpose({
     transform: scale(1) translate(-50%, -50%) !important;
     opacity: 1 !important;
     max-width: 540px;
-    /* overflow-x: hidden; */
     animation: fadeInDown 0.5s;
     margin: 0;
     padding: 0 10px;
     z-index: 300;
     top: 50%;
     left: 50%;
-    // right: 0;
-    // bottom: 0;
     position: absolute;
 
     .ad-card {
@@ -211,17 +207,10 @@ defineExpose({
         justify-content: space-between;
         align-items: center;
         padding-bottom: 20px;
-        /* background: var(--ad-white);
-        border-bottom-color: var(--fade-grey-dark-3);
-
-        &.no-border {
-          border-bottom-color: transparent;
-        } */
 
         h3 {
           font-weight: bold;
           color: var(--ad-grey-darker);
-          /* margin-left: 50px; */
         }
 
         &.is-start {

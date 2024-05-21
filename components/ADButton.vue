@@ -10,12 +10,15 @@ const props = defineProps({
     default: undefined,
     validator: (value) => {
       return [
+        "default",
         "grey",
         "primary",
         "secondary",
         "terciary",
         "danger",
+        "warning",
         "success",
+        "info",
       ].includes(value);
     },
   },

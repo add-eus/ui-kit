@@ -2,13 +2,14 @@
 import ADButton from "../../components/ADButton.vue";
 import ADIcon from "../../components/ADIcon.vue";
 import "../../index.scss";
-// import '../scss/_color.scss';
-// import '../scss/_color-declaration.scss';
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
-    <Variant title="default/grey">
+    <Variant title="default">
+      <ADButton>ADButton</ADButton>
+    </Variant>
+    <Variant title="grey" color="grey">
       <ADButton>ADButton</ADButton>
     </Variant>
     <Variant title="primary ">
@@ -29,16 +30,28 @@ import "../../index.scss";
         <ADIcon icon="check" />
       </ADButton>
     </Variant>
+    <Variant title="warning/paddingxl">
+      <ADButton color="warning" paddingxl>
+        ADButton
+        <ADIcon icon="check" />
+      </ADButton>
+    </Variant>
+    <Variant title="info">
+      <ADButton color="info">
+        ADButton
+        <ADIcon icon="check" />
+      </ADButton>
+    </Variant>
     <Variant title="icon">
       <ADButton color="primary">
         <ADIcon icon="face" />
       </ADButton>
     </Variant>
     <Variant title="full">
-      <ADButton color="pink" full> ADButton Full </ADButton>
+      <ADButton color="secondary" full> ADButton Full </ADButton>
     </Variant>
     <Variant title="disabled">
-      <ADButton color="primary" disabled> ADButton Disabled </ADButton>
+      <ADButton color="terciary" disabled> ADButton Disabled </ADButton>
     </Variant>
   </Story>
 </template>
@@ -52,6 +65,7 @@ This is a button component that can be used to trigger an action.
 
 The `ADButton` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are `grey`,`primary`, `danger`,`success` or `pink`
+- `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `terciary`, `danger`, `warning`, `success` & `info`
 - `full` (boolean, optional): Specifies the size
+- `paddingxl` (boolean, optional): Specifies big padding
 </docs>
