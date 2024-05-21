@@ -2,7 +2,7 @@
 import { defineProps, computed, PropType } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
-import ADLoader from "./ADLoader.vue";
+import ALoader from "./ALoader.vue";
 
 const props = defineProps({
   color: {
@@ -14,7 +14,7 @@ const props = defineProps({
         "grey",
         "primary",
         "secondary",
-        "terciary",
+        "tertiary",
         "danger",
         "warning",
         "success",
@@ -59,7 +59,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
     }"
   >
     <slot v-if="!loading"></slot>
-    <ADLoader v-else></ADLoader>
+    <ALoader v-else></ALoader>
   </button>
 </template>
 

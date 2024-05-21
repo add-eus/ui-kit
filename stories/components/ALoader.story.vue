@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import ADLoader from "../../components/ADLoader.vue";
+import ALoader from "../../components/ALoader.vue";
 import "../../index.scss";
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ADLoader />
+      <ALoader />
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# ADLoader
+# ALoader
 
 This is a loader component.
 
 ## Usage
 
-The `ADLoader` component have no options.
+The `ALoader` component have no options.
 </docs>

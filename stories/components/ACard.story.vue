@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ADCard from "../../components/ADCard.vue";
-import ADButton from "../../components/ADButton.vue";
+import ACard from "../../components/ACard.vue";
+import AButton from "../../components/AButton.vue";
 import { ref } from "vue";
 import "../../index.scss";
 
@@ -10,28 +10,28 @@ const open = ref(false);
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ADCard>
+      <ACard>
         <template #header>
           <h3>Header Title</h3>
         </template>
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton>Validate</ADButton>
+          <AButton>Close</AButton>
+          <AButton>Validate</AButton>
         </template>
-      </ADCard>
+      </ACard>
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# ADCard
+# ACard
 
 This is a card component.
 
 ## Usage
 
-The `ADCard` component provides the following options:
+The `ACard` component provides the following options:
 
 - `actionAlignment` (string, optional): Specifies the position of the actions. Possible values are `center` and `right`.
 </docs>

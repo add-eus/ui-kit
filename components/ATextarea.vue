@@ -2,17 +2,17 @@
 import { useFocus } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
 
-export interface ADTextareaEmits {
+export interface ATextareaEmits {
   (event: "update:modelValue", value?: any): void;
 }
-export interface ADTextareaProps {
+export interface ATextareaProps {
   raw?: boolean;
   modelValue?: any;
   disabled?: boolean;
 }
 
-const emits = defineEmits<ADTextareaEmits>();
-const props = withDefaults(defineProps<ADTextareaProps>(), { modelValue: "" });
+const emits = defineEmits<ATextareaEmits>();
+const props = withDefaults(defineProps<ATextareaProps>(), { modelValue: "" });
 const value = ref(props.modelValue);
 
 const textarea = ref<HTMLTextAreaElement | null>(null);

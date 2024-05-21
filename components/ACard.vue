@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-export type ADCardTitle = "center" | "right";
-export type ADCardAction = "center" | "right";
+export type ACardTitle = "center" | "right";
+export type ACardAction = "center" | "right";
 
-export interface ADCardProps {
-  titleAlignement?: ADCardTitle;
-  actionAlignement?: ADCardAction;
+export interface ACardProps {
+  titleAlignement?: ACardTitle;
+  actionAlignement?: ACardAction;
 }
 
-withDefaults(defineProps<ADCardProps>(), {
+withDefaults(defineProps<ACardProps>(), {
   titleAlignement: undefined,
   actionAlignement: undefined,
 });
@@ -55,7 +55,7 @@ withDefaults(defineProps<ADCardProps>(), {
 
 .ad-card {
   position: relative;
-  background-color: $ad-white;
+  background-color: $a-white;
   border-radius: 0.5rem;
   box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);
   display: flex;

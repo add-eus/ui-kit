@@ -2,164 +2,175 @@
 
 :root {
   //PRIMARY
-  --ad-primary-darker: #{$ad-primary-darker};
-  --ad-primary-darker-invert: #{$ad-primary-darker-invert};
+  --a-primary-darker: #{$a-primary-darker};
+  --a-primary-darker-invert: #{$a-primary-darker-invert};
 
-  --ad-primary-dark: #{$ad-primary-dark};
-  --ad-primary-dark-invert: #{$ad-primary-dark-invert};
+  --a-primary-dark: #{$a-primary-dark};
+  --a-primary-dark-invert: #{$a-primary-dark-invert};
 
-  --ad-primary: #{$ad-primary};
-  --ad-primary-invert: #{$ad-primary-invert};
+  --a-primary: #{$a-primary};
+  --a-primary-invert: #{$a-primary-invert};
 
-  --ad-primary-light: #{$ad-primary-light};
-  --ad-primary-light-invert: #{$ad-primary-light-invert};
+  --a-primary-light: #{$a-primary-light};
+  --a-primary-light-invert: #{$a-primary-light-invert};
 
-  --ad-primary-lighter: #{$ad-primary-lighter};
-  --ad-primary-lighter-invert: #{$ad-primary-lighter-invert};
+  --a-primary-lighter: #{$a-primary-lighter};
+  --a-primary-lighter-invert: #{$a-primary-lighter-invert};
 
-  --ad-primary-lightest: #{$ad-primary-lightest};
-  --ad-primary-lightest-invert: #{$ad-primary-lightest-invert};
+  --a-primary-lightest: #{$a-primary-lightest};
+  --a-primary-lightest-invert: #{$a-primary-lightest-invert};
 
   //SECONDARY
-  --ad-secondary-darker: #{$ad-secondary-darker};
-  --ad-secondary-darker-invert: #{$ad-secondary-darker-invert};
+  --a-secondary-darker: #{$a-secondary-darker};
+  --a-secondary-darker-invert: #{$a-secondary-darker-invert};
 
-  --ad-secondary-dark: #{$ad-secondary-dark};
-  --ad-secondary-dark-invert: #{$ad-secondary-dark-invert};
+  --a-secondary-dark: #{$a-secondary-dark};
+  --a-secondary-dark-invert: #{$a-secondary-dark-invert};
 
-  --ad-secondary: #{$ad-secondary};
-  --ad-secondary-invert: #{$ad-secondary-invert};
+  --a-secondary: #{$a-secondary};
+  --a-secondary-invert: #{$a-secondary-invert};
 
-  --ad-secondary-light: #{$ad-secondary-light};
-  --ad-secondary-light-invert: #{$ad-secondary-light-invert};
+  --a-secondary-light: #{$a-secondary-light};
+  --a-secondary-light-invert: #{$a-secondary-light-invert};
 
-  --ad-secondary-lighter: #{$ad-secondary-lighter};
-  --ad-secondary-lighter-invert: #{$ad-secondary-lighter-invert};
+  --a-secondary-lighter: #{$a-secondary-lighter};
+  --a-secondary-lighter-invert: #{$a-secondary-lighter-invert};
 
-  --ad-secondary-lightest: #{$ad-secondary-lightest};
-  --ad-secondary-lightest-invert: #{$ad-secondary-lightest-invert};
+  --a-secondary-lightest: #{$a-secondary-lightest};
+  --a-secondary-lightest-invert: #{$a-secondary-lightest-invert};
 
   //TERTIARY
-  --ad-tertiary-darker: #{$ad-tertiary-darker};
-  --ad-tertiary-darker-invert: #{$ad-tertiary-darker-invert};
+  --a-tertiary-darker: #{$a-tertiary-darker};
+  --a-tertiary-darker-invert: #{$a-tertiary-darker-invert};
 
-  --ad-tertiary-dark: #{$ad-tertiary-dark};
-  --ad-tertiary-dark-invert: #{$ad-tertiary-dark-invert};
+  --a-tertiary-dark: #{$a-tertiary-dark};
+  --a-tertiary-dark-invert: #{$a-tertiary-dark-invert};
 
-  --ad-tertiary: #{$ad-tertiary};
-  --ad-tertiary-invert: #{$ad-tertiary-invert};
+  --a-tertiary: #{$a-tertiary};
+  --a-tertiary-invert: #{$a-tertiary-invert};
 
-  --ad-tertiary-light: #{$ad-tertiary-light};
-  --ad-tertiary-light-invert: #{$ad-tertiary-light-invert};
+  --a-tertiary-light: #{$a-tertiary-light};
+  --a-tertiary-light-invert: #{$a-tertiary-light-invert};
 
-  --ad-tertiary-lighter: #{$ad-tertiary-lighter};
-  --ad-tertiary-lighter-invert: #{$ad-tertiary-lighter-invert};
+  --a-tertiary-lighter: #{$a-tertiary-lighter};
+  --a-tertiary-lighter-invert: #{$a-tertiary-lighter-invert};
 
-  --ad-tertiary-lightest: #{$ad-tertiary-lightest};
-  --ad-tertiary-lightest-invert: #{$ad-tertiary-lightest-invert};
+  --a-tertiary-lightest: #{$a-tertiary-lightest};
+  --a-tertiary-lightest-invert: #{$a-tertiary-lightest-invert};
 
   //DANGER
-  --ad-danger-darker: #{$ad-danger-darker};
-  --ad-danger-darker-invert: #{$ad-danger-darker-invert};
+  --a-danger-darker: #{$a-danger-darker};
+  --a-danger-darker-invert: #{$a-danger-darker-invert};
 
-  --ad-danger-dark: #{$ad-danger-dark};
-  --ad-danger-dark-invert: #{$ad-danger-dark-invert};
+  --a-danger-dark: #{$a-danger-dark};
+  --a-danger-dark-invert: #{$a-danger-dark-invert};
 
-  --ad-danger: #{$ad-danger};
-  --ad-danger-invert: #{$ad-danger-invert};
+  --a-danger: #{$a-danger};
+  --a-danger-invert: #{$a-danger-invert};
 
-  --ad-danger-light: #{$ad-danger-light};
-  --ad-danger-light-invert: #{$ad-danger-light-invert};
+  --a-danger-light: #{$a-danger-light};
+  --a-danger-light-invert: #{$a-danger-light-invert};
 
-  --ad-danger-lighter: #{$ad-danger-lighter};
-  --ad-danger-lighter-invert: #{$ad-danger-lighter-invert};
+  --a-danger-lighter: #{$a-danger-lighter};
+  --a-danger-lighter-invert: #{$a-danger-lighter-invert};
 
-  --ad-danger-lightest: #{$ad-danger-lightest};
-  --ad-danger-lightest-invert: #{$ad-danger-lightest-invert};
+  --a-danger-lightest: #{$a-danger-lightest};
+  --a-danger-lightest-invert: #{$a-danger-lightest-invert};
 
   //WARNING
-  --ad-warning-darker: #{$ad-warning-darker};
-  --ad-warning-darker-invert: #{$ad-warning-darker-invert};
+  --a-warning-darker: #{$a-warning-darker};
+  --a-warning-darker-invert: #{$a-warning-darker-invert};
 
-  --ad-warning-dark: #{$ad-warning-dark};
-  --ad-warning-dark-invert: #{$ad-warning-dark-invert};
+  --a-warning-dark: #{$a-warning-dark};
+  --a-warning-dark-invert: #{$a-warning-dark-invert};
 
-  --ad-warning: #{$ad-warning};
-  --ad-warning-invert: #{$ad-warning-invert};
+  --a-warning: #{$a-warning};
+  --a-warning-invert: #{$a-warning-invert};
 
-  --ad-warning-light: #{$ad-warning-light};
-  --ad-warning-light-invert: #{$ad-warning-light-invert};
+  --a-warning-light: #{$a-warning-light};
+  --a-warning-light-invert: #{$a-warning-light-invert};
 
-  --ad-warning-lighter: #{$ad-warning-lighter};
-  --ad-warning-lighter-invert: #{$ad-warning-lighter-invert};
+  --a-warning-lighter: #{$a-warning-lighter};
+  --a-warning-lighter-invert: #{$a-warning-lighter-invert};
 
-  --ad-warning-lightest: #{$ad-warning-lightest};
-  --ad-warning-lightest-invert: #{$ad-warning-lightest-invert};
+  --a-warning-lightest: #{$a-warning-lightest};
+  --a-warning-lightest-invert: #{$a-warning-lightest-invert};
 
   //SUCCESS
-  --ad-success-darker: #{$ad-success-darker};
-  --ad-success-darker-invert: #{$ad-success-darker-invert};
+  --a-success-darker: #{$a-success-darker};
+  --a-success-darker-invert: #{$a-success-darker-invert};
 
-  --ad-success-dark: #{$ad-success-dark};
-  --ad-success-dark-invert: #{$ad-success-dark-invert};
+  --a-success-dark: #{$a-success-dark};
+  --a-success-dark-invert: #{$a-success-dark-invert};
 
-  --ad-success: #{$ad-success};
-  --ad-success-invert: #{$ad-success-invert};
+  --a-success: #{$a-success};
+  --a-success-invert: #{$a-success-invert};
 
-  --ad-success-light: #{$ad-success-light};
-  --ad-success-light-invert: #{$ad-success-light-invert};
+  --a-success-light: #{$a-success-light};
+  --a-success-light-invert: #{$a-success-light-invert};
 
-  --ad-success-lighter: #{$ad-success-lighter};
-  --ad-success-lighter-invert: #{$ad-success-lighter-invert};
+  --a-success-lighter: #{$a-success-lighter};
+  --a-success-lighter-invert: #{$a-success-lighter-invert};
 
-  --ad-success-lightest: #{$ad-success-lightest};
-  --ad-success-lightest-invert: #{$ad-success-lightest-invert};
+  --a-success-lightest: #{$a-success-lightest};
+  --a-success-lightest-invert: #{$a-success-lightest-invert};
 
   //INFO
-  --ad-info-darker: #{$ad-info-darker};
-  --ad-info-darker-invert: #{$ad-info-darker-invert};
+  --a-info-darker: #{$a-info-darker};
+  --a-info-darker-invert: #{$a-info-darker-invert};
 
-  --ad-info-dark: #{$ad-info-dark};
-  --ad-info-dark-invert: #{$ad-info-dark-invert};
+  --a-info-dark: #{$a-info-dark};
+  --a-info-dark-invert: #{$a-info-dark-invert};
 
-  --ad-info: #{$ad-info};
-  --ad-info-invert: #{$ad-info-invert};
+  --a-info: #{$a-info};
+  --a-info-invert: #{$a-info-invert};
 
-  --ad-info-light: #{$ad-info-light};
-  --ad-info-light-invert: #{$ad-info-light-invert};
+  --a-info-light: #{$a-info-light};
+  --a-info-light-invert: #{$a-info-light-invert};
 
-  --ad-info-lighter: #{$ad-info-lighter};
-  --ad-info-lighter-invert: #{$ad-info-lighter-invert};
+  --a-info-lighter: #{$a-info-lighter};
+  --a-info-lighter-invert: #{$a-info-lighter-invert};
 
-  --ad-info-lightest: #{$ad-info-lightest};
-  --ad-info-lightest-invert: #{$ad-info-lightest-invert};
+  --a-info-lightest: #{$a-info-lightest};
+  --a-info-lightest-invert: #{$a-info-lightest-invert};
 
   //BLACK
-  --ad-black: #{$ad-black};
+  --a-black: #{$a-black};
 
   //GREY
-  --ad-grey-darker: #{$ad-grey-darker};
-  --ad-grey-dark: #{$ad-grey-dark};
-  --ad-grey: #{$ad-grey};
-  --ad-grey-light: #{$ad-grey-light};
-  --ad-grey-lighter: #{$ad-grey-lighter};
-  --ad-grey-lightest: #{$ad-grey-lightest};
+  --a-grey-darker: #{$a-grey-darker};
+  --a-grey-darker-invert: #{$a-grey-darker-invert};
+
+  --a-grey-dark: #{$a-grey-dark};
+  --a-grey-dark-invert: #{$a-grey-dark-invert};
+
+  --a-grey: #{$a-grey};
+  --a-grey-invert: #{$a-grey-invert};
+
+  --a-grey-light: #{$a-grey-light};
+  --a-grey-light-invert: #{$a-grey-light-invert};
+
+  --a-grey-lighter: #{$a-grey-lighter};
+  --a-grey-lighter-invert: #{$a-grey-lighter-invert};
+
+  --a-grey-lightest: #{$a-grey-lightest};
+  --a-grey-lightest-invert: #{$a-grey-lightest-invert};
 
   //WHITE
-  --ad-white: #{$ad-white};
+  --a-white: #{$a-white};
 
   //OTHER
-  --ad-gold: #{$ad-gold};
-  --ad-silver: #{$ad-silver};
-  --ad-bronze: #{$ad-bronze};
-  --ad-orange: #{$ad-orange};
-  --ad-yellow: #{$ad-yellow};
-  --ad-green: #{$ad-green};
-  --ad-turquoise: #{$ad-turquoise};
-  --ad-cyan: #{$ad-cyan};
-  --ad-blue-dark: #{$ad-blue-dark};
-  --ad-blue: #{$ad-blue};
-  --ad-purple: #{$ad-purple};
-  --ad-red: #{$ad-red};
-  --ad-violet: #{$ad-violet};
+  --a-gold: #{$a-gold};
+  --a-silver: #{$a-silver};
+  --a-bronze: #{$a-bronze};
+  --a-orange: #{$a-orange};
+  --a-yellow: #{$a-yellow};
+  --a-green: #{$a-green};
+  --a-turquoise: #{$a-turquoise};
+  --a-cyan: #{$a-cyan};
+  --a-blue-dark: #{$a-blue-dark};
+  --a-blue: #{$a-blue};
+  --a-purple: #{$a-purple};
+  --a-red: #{$a-red};
+  --a-violet: #{$a-violet};
 }

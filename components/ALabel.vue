@@ -8,6 +8,6 @@
 
 <style scoped lang="scss">
 label {
-  color: var(--ad-grey-darker);
+  color: var(--a-grey-darker);
 }
 </style>
