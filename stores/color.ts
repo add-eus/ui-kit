@@ -44,11 +44,12 @@ export type Hues = "default"
     | "light"
     | "lighter";
 
-export function useColor(color: MaybeRef<Colors> | Colors, hue: MaybeRef<Hues> = 'default', isInverted: MaybeRef<boolean> = false) {
+export function useColor(color: MaybeRef<Colors | undefined> | Colors, hue: MaybeRef<Hues> = 'default', isInverted: MaybeRef<boolean> = false) {
     return useCssVar(() => {
         const colorValue = toValue(color);
         const hueValue = toValue(hue);
         const isInvertedValue = toValue(hueValue);
+        if (!colorValue) return 'default';
         return `--ad-${colorValue}${hueValue === 'default' ? '' : `-${hueValue}`}${isInverted ? '-invert' : ''}`;
     }, document.body);
 }

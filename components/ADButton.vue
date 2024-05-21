@@ -7,7 +7,7 @@ import ADLoader from "./ADLoader.vue";
 const props = defineProps({
   color: {
     type: String as PropType<Colors>,
-    default: "grey",
+    default: undefined,
     validator: (value) => {
       return [
         "grey",
