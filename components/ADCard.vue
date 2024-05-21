@@ -1,20 +1,29 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+export type ADCardTitle = "center" | "right";
 export type ADCardAction = "center" | "right";
 
 export interface ADCardProps {
-  actionAlignment?: ADCardAction;
+  titleAlignement?: ADCardTitle;
+  actionAlignement?: ADCardAction;
 }
 
 withDefaults(defineProps<ADCardProps>(), {
-  actionAlignment: undefined,
+  titleAlignement: undefined,
+  actionAlignement: undefined,
 });
 </script>
 
 <template>
   <div class="ad-card">
-    <header class="ad-card-head">
+    <header
+      class="ad-card-head"
+      :class="[
+        titleAlignement === 'center' && 'is-centered',
+        titleAlignement === 'right' && 'is-end',
+      ]"
+    >
       <slot name="header"></slot>
     </header>
     <div class="ad-card-body">
@@ -32,8 +41,8 @@ withDefaults(defineProps<ADCardProps>(), {
     <div
       class="ad-card-foot"
       :class="[
-        actionAlignment === 'center' && 'is-centered',
-        actionAlignment === 'right' && 'is-end',
+        actionAlignement === 'center' && 'is-centered',
+        actionAlignement === 'right' && 'is-end',
       ]"
     >
       <slot name="action"></slot>
@@ -52,7 +61,7 @@ withDefaults(defineProps<ADCardProps>(), {
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 
   .ad-card-body {

@@ -48,3 +48,12 @@ defineExpose({
     :disabled="disabled"
   ></textarea>
 </template>
+
+<style lang="scss" scoped>
+.textarea:focus-visible {
+  outline-style: none;
+  /* outline-offset: none;
+  outline-width: none;
+  outline-color: none; */
+}
+</style>

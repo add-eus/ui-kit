@@ -32,7 +32,7 @@ const insertText = (text: string) => {
 </script>
 
 <template>
-  <div>
+  <div class="container-overlay-textarea">
     <ADTextarea v-bind="$attrs" v-model="value" ref="ADTextareaRef" />
     <div class="bottom-tools">
       <slot :insertText="insertText" :text="value"></slot>

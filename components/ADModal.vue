@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect, onUnmounted, watch } from "vue";
-import { ADCardAction } from "./ADCard.vue";
+import { ADCardAction, ADCardTitle } from "./ADCard.vue";
 import ADCard from "./ADCard.vue";
 import ADButton from "./ADButton.vue";
 import ADIcon from "./ADIcon.vue";
@@ -14,7 +14,8 @@ export interface ADModalEmits {
 export interface ADModalProps {
   title?: string;
   size?: ADModalSize;
-  actionAlignment?: ADCardAction;
+  titleAlignement?: ADCardTitle;
+  actionAlignement?: ADCardAction;
   open?: boolean;
   rounded?: boolean;
   noscroll?: boolean;
@@ -53,7 +54,7 @@ onUnmounted(() => {
 
 const close = (force?: boolean) => {
   console.log("close", force, props.confirmation, showConfirmation.value);
-  if(props.confirmation && force !== true) {
+  if (props.confirmation && force !== true) {
     showConfirmation.value = true;
     return;
   }
@@ -64,11 +65,14 @@ const cancelConfirmation = () => {
   showConfirmation.value = false;
 };
 
-watch(() => props.open, (value) => {
-  if (!value) {
-    showConfirmation.value = false;
+watch(
+  () => props.open,
+  (value) => {
+    if (!value) {
+      showConfirmation.value = false;
+    }
   }
-});
+);
 
 defineExpose({
   close: (force?: boolean) => {
@@ -95,7 +99,10 @@ defineExpose({
         @click="() => noclose === false && close()"
       ></button>
       <div class="ad-modal-content">
-        <ADCard :action-alignment="actionAlignment">
+        <ADCard
+          :title-alignement="titleAlignement"
+          :action-alignement="actionAlignement"
+        >
           <template #header>
             <h3>
               <slot name="title"
@@ -114,7 +121,11 @@ defineExpose({
             </ADButton>
           </template>
           <template #content>
-            <slot v-if="showConfirmation" name="confirmation" :cancel="cancelConfirmation" ></slot>
+            <slot
+              v-if="showConfirmation"
+              name="confirmation"
+              :cancel="cancelConfirmation"
+            ></slot>
             <slot name="content"></slot>
           </template>
           <template #action>
@@ -146,14 +157,20 @@ defineExpose({
   .ad-modal-close {
     position: absolute;
     cursor: pointer;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+
+    &.ad-modal-background {
+      top: 0;
+      right: 0;
+    }
   }
 
   .ad-card {
     width: 100%;
     border-radius: 8px;
-    padding: 40px;
+    padding: 20px 40px 40px 40px;
   }
 
   .ad-modal-background {
@@ -182,6 +199,8 @@ defineExpose({
     .ad-card {
       max-width: 100%;
       margin: 0 auto;
+      max-height: 95vh;
+      overflow-y: auto;
 
       &.is-rounded {
         border-radius: 12px;
@@ -191,6 +210,7 @@ defineExpose({
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-bottom: 20px;
         /* background: var(--ad-white);
         border-bottom-color: var(--fade-grey-dark-3);
 
@@ -200,7 +220,20 @@ defineExpose({
 
         h3 {
           font-weight: bold;
-          margin-left: 50px;
+          color: var(--ad-grey-darker);
+          /* margin-left: 50px; */
+        }
+
+        &.is-start {
+          justify-content: flex-start !important;
+        }
+
+        &.is-centered {
+          justify-content: center !important;
+        }
+
+        &.is-end {
+          justify-content: flex-end !important;
         }
       }
 
@@ -331,14 +364,6 @@ defineExpose({
 
           h3 {
             color: var(--dark-dark-text);
-          }
-
-          .ad-modal-close {
-            &:hover {
-              svg {
-                color: var(--primary);
-              }
-            }
           }
         }
 
