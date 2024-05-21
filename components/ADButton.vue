@@ -9,7 +9,17 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: undefined,
     validator: (value) => {
-      return ["grey", "primary", "danger", "success", "pink"].includes(value);
+      return [
+        "default",
+        "grey",
+        "primary",
+        "secondary",
+        "terciary",
+        "danger",
+        "warning",
+        "success",
+        "info",
+      ].includes(value);
     },
   },
   loading: {
@@ -17,6 +27,10 @@ const props = defineProps({
     default: false,
   },
   full: {
+    type: Boolean,
+    default: false,
+  },
+  paddingxl: {
     type: Boolean,
     default: false,
   },
@@ -41,6 +55,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
     v-bind="$attrs"
     :style="{
       width: full && '100%',
+      padding: paddingxl && '3px 20px',
     }"
   >
     <slot v-if="!loading"></slot>
