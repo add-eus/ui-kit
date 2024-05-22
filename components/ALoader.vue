@@ -15,9 +15,9 @@
   overflow: hidden;
 
   > .spinner {
-    border: 4px solid var(--ad-grey-lighter);
+    border: 4px solid var(--a-grey-lighter);
     border-radius: 50%;
-    border-top: 4px solid var(--ad-primary);
+    border-top: 4px solid var(--a-primary);
     width: 22px;
     height: 22px;
     animation: spin 1s linear infinite;

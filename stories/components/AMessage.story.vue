@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import ADMessage from "../../components/ADMessage.vue";
+import AMessage from "../../components/AMessage.vue";
 import "../../index.scss";
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ADMessage>error message</ADMessage>
+      <AMessage>error message</AMessage>
     </Variant>
     <Variant title="danger">
-      <ADMessage color="danger">error message</ADMessage>
+      <AMessage color="danger">error message</AMessage>
     </Variant>
     <Variant title="warning">
-      <ADMessage color="warning">warning message</ADMessage>
+      <AMessage color="warning">warning message</AMessage>
     </Variant>
     <Variant title="success">
-      <ADMessage color="success">success message</ADMessage>
+      <AMessage color="success">success message</AMessage>
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# ADMessage
+# AMessage
 
 This is a message component.
 
 ## Usage
 
-The `ADMessage` component provides the following options:
+The `AMessage` component provides the following options:
 
 - `color` (string, optional): Specifies the color of message (danger, warning, success, default to error).
 </docs>

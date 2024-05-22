@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import ADPagination from "../../components/ADPagination.vue";
-import '../../index.scss';
-
+import APagination from "../../components/APagination.vue";
+import "../../index.scss";
 </script>
 
 <template>
-    <Story :layout="{ type: 'grid', width: 400 }">
-        <Variant title="default">
-            <ADPagination
-                :current-page="1"
-                class="mt-6"
-                :item-per-page="1"
-                :total-items="10"
-                no-router />
-                
-        </Variant>
-    </Story>
+  <Story :layout="{ type: 'grid', width: 400 }">
+    <Variant title="default">
+      <APagination
+        :current-page="1"
+        class="mt-6"
+        :item-per-page="1"
+        :total-items="10"
+        no-router
+      />
+    </Variant>
+  </Story>
 </template>
 
 <docs lang="md">
-# ADPagination
+# APagination
 
 This is a pagination component.
 

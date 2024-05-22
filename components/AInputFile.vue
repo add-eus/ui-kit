@@ -3,7 +3,7 @@ import { useVModel } from "@vueuse/core";
 import type { PropType } from "vue";
 import { ref } from "vue";
 
-interface ADInputFileEmits {
+interface AInputFileEmits {
   (e: "delete", index: number): boolean;
   (e: "update:modelValue", files: Array<string> | string | undefined): boolean;
   (
@@ -28,7 +28,7 @@ const props = defineProps({
     default: undefined,
   },
 });
-const emits = defineEmits<ADInputFileEmits>();
+const emits = defineEmits<AInputFileEmits>();
 
 const filesModel = useVModel(props, "modelValue", emits);
 const lastUploadErrors = ref<string[][]>([]);
@@ -108,5 +108,10 @@ const addFiles = (files: FileUploadResponse[], index?: number) => {
 </script>
 
 <template>
-  <slot :openFileSelector="openFileSelector" :deleteFile="deleteFile" :errors="lastUploadErrors"> </slot>
+  <slot
+    :openFileSelector="openFileSelector"
+    :deleteFile="deleteFile"
+    :errors="lastUploadErrors"
+  >
+  </slot>
 </template>

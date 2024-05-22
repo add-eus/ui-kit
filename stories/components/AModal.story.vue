@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ADModal from "../../components/ADModal.vue";
-import ADButton from "../../components/ADButton.vue";
+import AModal from "../../components/AModal.vue";
+import AButton from "../../components/AButton.vue";
 import { ref } from "vue";
 import "../../index.scss";
 
@@ -10,23 +10,23 @@ const open = ref<string | false>(false);
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ADButton @click="open = 'default'">Open default Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'default'">Open default Modal</AButton>
+      <AModal
         :open="open === 'default'"
         @close="open = false"
         title=".defaultTitle"
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
 
     <Variant title="small">
-      <ADButton @click="open = 'small'">Open Small Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'small'">Open Small Modal</AButton>
+      <AModal
         :open="open === 'small'"
         @close="open = false"
         size="small"
@@ -35,15 +35,15 @@ const open = ref<string | false>(false);
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
 
     <Variant title="medium">
-      <ADButton @click="open = 'medium'">Open Medium Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'medium'">Open Medium Modal</AButton>
+      <AModal
         :open="open === 'medium'"
         @close="open = false"
         size="medium"
@@ -52,15 +52,15 @@ const open = ref<string | false>(false);
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
 
     <Variant title="large">
-      <ADButton @click="open = 'large'">Open Large Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'large'">Open Large Modal</AButton>
+      <AModal
         :open="open === 'large'"
         @close="open = false"
         size="large"
@@ -68,15 +68,15 @@ const open = ref<string | false>(false);
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
 
     <Variant title="big">
-      <ADButton @click="open = 'big'">Open Big Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'big'">Open Big Modal</AButton>
+      <AModal
         :open="open === 'big'"
         @close="open = false"
         size="big"
@@ -85,15 +85,15 @@ const open = ref<string | false>(false);
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
 
     <Variant title="giant">
-      <ADButton @click="open = 'giant'">Open Giant Modal</ADButton>
-      <ADModal
+      <AButton @click="open = 'giant'">Open Giant Modal</AButton>
+      <AModal
         :open="open === 'giant'"
         @close="open = false"
         size="giant"
@@ -102,22 +102,22 @@ const open = ref<string | false>(false);
       >
         <template #content> Content test </template>
         <template #action>
-          <ADButton>Close</ADButton>
-          <ADButton color="success">Open</ADButton>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
         </template>
-      </ADModal>
+      </AModal>
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# ADModal
+# AModal
 
 This is a modal component.
 
 ## Usage
 
-The `ADModal` component provides the following options:
+The `AModal` component provides the following options:
 
 - `title` (string, optional): Specifies the title of modal.
 - `size` (string, optional): Specifies the size of the modal. Possible values are `small`, `medium`, `large`, `big`, and `giant`.

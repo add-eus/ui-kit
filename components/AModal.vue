@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { ref, watchEffect, onUnmounted, watch } from "vue";
-import { ADCardAction, ADCardTitle } from "./ADCard.vue";
-import ADCard from "./ADCard.vue";
-import ADButton from "./ADButton.vue";
-import ADIcon from "./ADIcon.vue";
+import { ACardAction, ACardTitle } from "./ACard.vue";
+import ACard from "./ACard.vue";
+import AButton from "./AButton.vue";
+import AIcon from "./AIcon.vue";
 
-export type ADModalSize = "small" | "medium" | "large" | "big" | "giant";
+export type AModalSize = "small" | "medium" | "large" | "big" | "giant";
 
-export interface ADModalEmits {
+export interface AModalEmits {
   (e: "close"): void;
 }
 
-export interface ADModalProps {
+export interface AModalProps {
   title?: string;
-  size?: ADModalSize;
-  titleAlignement?: ADCardTitle;
-  actionAlignement?: ADCardAction;
+  size?: AModalSize;
+  titleAlignement?: ACardTitle;
+  actionAlignement?: ACardAction;
   open?: boolean;
   rounded?: boolean;
   noscroll?: boolean;
@@ -25,8 +25,8 @@ export interface ADModalProps {
   confirmation?: boolean;
 }
 
-const emit = defineEmits<ADModalEmits>();
-const props = withDefaults(defineProps<ADModalProps>(), {
+const emit = defineEmits<AModalEmits>();
+const props = withDefaults(defineProps<AModalProps>(), {
   title: ".title",
   size: "medium",
   actions: undefined,
@@ -98,7 +98,7 @@ defineExpose({
         @click="() => noclose === false && close()"
       ></button>
       <div class="ad-modal-content">
-        <ADCard
+        <ACard
           :title-alignement="titleAlignement"
           :action-alignement="actionAlignement"
         >
@@ -108,7 +108,7 @@ defineExpose({
                 ><Translate>{{ title }}</Translate></slot
               >
             </h3>
-            <ADButton
+            <AButton
               class="ad-modal-close"
               icon="close"
               circle
@@ -116,8 +116,8 @@ defineExpose({
               @keydown.space.prevent="close()"
               @click="close()"
             >
-              <ADIcon icon="close"></ADIcon>
-            </ADButton>
+              <AIcon icon="close"></AIcon>
+            </AButton>
           </template>
           <template #content>
             <slot
@@ -130,7 +130,7 @@ defineExpose({
           <template #action>
             <slot name="action" :close="() => close()"></slot>
           </template>
-        </ADCard>
+        </ACard>
       </div>
     </div>
   </Teleport>
@@ -175,7 +175,7 @@ defineExpose({
   .ad-modal-background {
     height: 100%;
     width: 100%;
-    background: $ad-grey;
+    background: $a-grey;
     opacity: 0.5;
     border: none;
   }
@@ -210,7 +210,7 @@ defineExpose({
 
         h3 {
           font-weight: bold;
-          color: var(--ad-grey-darker);
+          color: var(--a-grey-darker);
         }
 
         &.is-start {

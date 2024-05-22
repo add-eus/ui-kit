@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import ADIcon from "./ADIcon.vue";
+import AIcon from "./AIcon.vue";
 
 const props = defineProps({
   containerWidth: {
@@ -17,12 +17,12 @@ const props = defineProps({
   },
 });
 
-interface ADGalleryEmits {
+interface AGalleryEmits {
   (e: "click-media", index: number): void;
   (e: "click-empty"): void;
 }
 
-const emits = defineEmits<ADGalleryEmits>();
+const emits = defineEmits<AGalleryEmits>();
 
 const mediaContainerTranslate = ref(0);
 const activeButtonIndex = ref(0);
@@ -103,17 +103,17 @@ defineExpose({
             />
           </slot>
           <!-- Switch between image and video icon -->
-          <ADIcon
+          <AIcon
             v-if="medias.length >= 2"
             class="icon-carousel media-img"
             icon="filter_none"
-            color="var(--ad-white)"
+            color="var(--a-white)"
           />
-          <ADIcon
+          <AIcon
             v-if="medias.length >= 2"
             class="icon-carousel media-video"
             icon="video_library"
-            color="var(--ad-white)"
+            color="var(--a-white)"
           />
         </div>
         <!-- Placeholder -->
@@ -150,7 +150,7 @@ defineExpose({
       class="icon-back"
       @click="prevMedia"
     >
-      <ADIcon icon="keyboard_arrow_left" color="var(--ad-grey)" />
+      <AIcon icon="keyboard_arrow_left" color="var(--a-grey)" />
     </button>
     <!-- Icon Next -->
     <button
@@ -158,9 +158,13 @@ defineExpose({
       class="icon-next"
       @click="nextMedia"
     >
-      <ADIcon icon="keyboard_arrow_right" color="var(--ad-grey)" />
+      <AIcon icon="keyboard_arrow_right" color="var(--a-grey)" />
     </button>
-    <slot name="actions" :index="activeButtonIndex" :setActiveMedia="setActiveMedia"></slot>
+    <slot
+      name="actions"
+      :index="activeButtonIndex"
+      :setActiveMedia="setActiveMedia"
+    ></slot>
   </div>
 </template>
 
@@ -189,7 +193,7 @@ defineExpose({
     margin-left: calc(var(--border-space) / 2);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--ad-grey-light);
+    background: var(--a-grey-light);
 
     .media-content {
       position: relative;
@@ -247,7 +251,7 @@ defineExpose({
           width: 6px;
           height: 6px;
           border-radius: 50px;
-          background: var(--ad-grey);
+          background: var(--a-grey);
         }
 
         &.active {

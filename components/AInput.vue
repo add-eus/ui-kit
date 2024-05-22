@@ -20,9 +20,11 @@ const props = defineProps({
   },
 });
 
-const color = useColor(computed(() => {
-  return props.color;
-}))
+const color = useColor(
+  computed(() => {
+    return props.color;
+  })
+);
 </script>
 
 <template>
@@ -48,13 +50,13 @@ input {
   transition: opacity 0.25s, outline 0.25s;
 
   &::placeholder {
-    color: var(--ad-grey-light);
+    color: var(--a-grey-light);
     opacity: 1; /* Firefox */
   }
 
   &::-ms-input-placeholder {
     /* Edge 12 -18 */
-    color: var(--ad-grey-light);
+    color: var(--a-grey-light);
   }
 
   &:focus {

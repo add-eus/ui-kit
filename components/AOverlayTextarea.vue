@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import ADTextarea from "./ADTextarea.vue";
+import ATextarea from "./ATextarea.vue";
 import { ref, watch } from "vue";
 
-export interface ADOverlayTextareaEmits {
+export interface AOverlayTextareaEmits {
   (event: "update:modelValue", value?: any): void;
 }
-export interface ADOverlayTextareaProps {
+export interface AOverlayTextareaProps {
   modelValue?: any;
 }
 
-const emits = defineEmits<ADOverlayTextareaEmits>();
-const props = withDefaults(defineProps<ADOverlayTextareaProps>(), {
+const emits = defineEmits<AOverlayTextareaEmits>();
+const props = withDefaults(defineProps<AOverlayTextareaProps>(), {
   modelValue: "",
 });
 const value = ref(props.modelValue);
-const ADTextareaRef = ref<InstanceType<typeof ADTextarea> | null>(null);
+const ATextareaRef = ref<InstanceType<typeof ATextarea> | null>(null);
 
 watch(value, (newValue) => {
   emits("update:modelValue", newValue);
 });
 
 const insertText = (text: string) => {
-  const textarea = ADTextareaRef.value?.textarea;
+  const textarea = ATextareaRef.value?.textarea;
   if (textarea) {
     value.value =
       value.value.slice(0, textarea.selectionStart) +
@@ -33,7 +33,7 @@ const insertText = (text: string) => {
 
 <template>
   <div class="container-overlay-textarea">
-    <ADTextarea v-bind="$attrs" v-model="value" ref="ADTextareaRef" />
+    <ATextarea v-bind="$attrs" v-model="value" ref="ATextareaRef" />
     <div class="bottom-tools">
       <slot :insertText="insertText" :text="value"></slot>
     </div>
