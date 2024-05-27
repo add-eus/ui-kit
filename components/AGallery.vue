@@ -15,6 +15,10 @@ const props = defineProps({
     type: Array<string>,
     default: [],
   },
+  tootlip: {
+    type: String,
+    default: "",
+  },
 });
 
 interface AGalleryEmits {
@@ -86,7 +90,9 @@ defineExpose({
     <div class="media-container">
       <div
         class="media-content"
-        :style="{ transform: `translateX(var(--media-container-translate))` }"
+        :style="{
+          transform: `translateX(var(--media-container-translate))`,
+        }"
       >
         <div
           v-for="(imageSrc, index) in medias"
@@ -119,15 +125,25 @@ defineExpose({
         <!-- Placeholder -->
         <transition name="fade-slow">
           <div
-            v-if="medias.length == 0"
+            v-if="medias.length === 0"
             class="inspiration-media"
             @click="clickEmpty"
           >
             <slot name="placeholder"> </slot>
+            <AIcon icon="upload" class="icon-upload" />
           </div>
         </transition>
       </div>
     </div>
+    <!-- Tootlip sentence -->
+    <transition name="fade-slow">
+      <div
+        class="inspiration-sentence"
+        v-if="medias.length === 0 && tootlip !== ''"
+      >
+        <p>{{ tootlip }}</p>
+      </div>
+    </transition>
     <!-- Dot Container -->
     <div class="dot-container">
       <transition name="fade-slow">
@@ -183,7 +199,7 @@ defineExpose({
 <style scoped lang="scss">
 //MEDIA CONTAINER
 .container-gallery {
-  /* overflow: hidden; */
+  overflow: hidden;
   width: var(--width);
   position: relative;
   background: transparent;
@@ -198,6 +214,7 @@ defineExpose({
     .media-content {
       position: relative;
       display: flex;
+      overflow: hidden;
       height: calc(var(--height) - var(--border-space));
       width: calc((var(--width) * var(--index)) - var(--border-space));
       transition: transform 0.5s ease-in-out;
@@ -213,14 +230,32 @@ defineExpose({
         align-items: center;
         padding-top: 5px;
         position: relative;
-        /* img {
-                    height: calc(var(--height) - var(--border-space));
-                    width: calc(var(--width) - var(--border-space));
-                    object-fit: contain;
-                    max-width: inherit;
-                    overflow: hidden;
-                } */
       }
+    }
+
+    &:hover {
+      + .inspiration-sentence {
+        opacity: 1;
+      }
+    }
+  }
+
+  //INSPI SENTENCE
+  .inspiration-sentence {
+    position: absolute;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: var(--a-white);
+    bottom: 65px;
+    right: 7px;
+    opacity: 0;
+    pointer-events: none;
+    font-size: 9px;
+    box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);
+    transition: opacity 0.2s ease-in-out;
+
+    p {
+      margin: 0;
     }
   }
 
@@ -348,13 +383,16 @@ defineExpose({
     height: 100%;
     width: 100%;
     opacity: 0.25;
+    border-radius: 8px;
+    overflow: hidden;
+
     //DEFAULT
     :slotted(img) {
       height: 100%;
       width: 100%;
-      background: red;
       object-fit: cover;
     }
+
     //FIRESTORE
     :slotted(div) {
       height: 100%;
@@ -364,6 +402,15 @@ defineExpose({
         width: 100%;
         object-fit: cover;
       }
+    }
+
+    .icon-upload {
+      color: var(--a-black);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 35px;
+      transform: translate(-50%, -50%);
     }
   }
 }
