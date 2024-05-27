@@ -25,11 +25,14 @@ const color = useColor(
     return props.color;
   })
 );
+
+const model = defineModel();
 </script>
 
 <template>
   <input
     v-bind="$attrs"
+    v-model="model"
     :style="{
       borderColor: color,
       width: full && '100%',
