@@ -15,7 +15,7 @@ const props = defineProps({
     type: Array<string>,
     default: [],
   },
-  sentence: {
+  placeholder: {
     type: String,
     default: "",
   },
@@ -135,12 +135,13 @@ defineExpose({
         </transition>
       </div>
     </div>
+    <!-- Placeholder sentence -->
     <transition name="fade-slow">
       <div
         class="inspiration-sentence"
-        v-if="medias.length === 0 && sentence !== ''"
+        v-if="medias.length === 0 && placeholder !== ''"
       >
-        <p>{{ sentence }}</p>
+        <p>{{ placeholder }}</p>
       </div>
     </transition>
     <!-- Dot Container -->
@@ -252,6 +253,10 @@ defineExpose({
     font-size: 9px;
     box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);
     transition: opacity 0.2s ease-in-out;
+
+    p {
+      margin: 0;
+    }
   }
 
   //DOT
