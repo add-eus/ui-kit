@@ -2,28 +2,34 @@
 import AButton from "../../components/AButton.vue";
 import "../../index.scss";
 import { useNotification } from "../../stores/notification";
-// import '../scss/_color.scss';
-// import '../scss/_color-declaration.scss';
 
-const { success } = useNotification();
+const notification = useNotification();
+
 </script>
-
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="success">
-      <AButton @click="success('Success')" color="success">Success</AButton>
+      <AButton @click="notification.success('Success')" color="success">Success</AButton>
+    </Variant>
+    <Variant title="error">
+      <AButton @click="notification.error('Success')" color="danger">Error</AButton>
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# AButton
+  ## useNotification
 
-This is a button component that can be used to trigger an action.
+  The `useNotification` function is a custom hook that provides methods for displaying success and error notifications.
 
-## Usage
+  ### Methods
 
-The `AButton` component provides the following options:
+  #### success(message: string)
 
-- `color` (string, optional): Specifies the color of the button. Possible values are `primary`, `danger` or `success`
+  Displays a success notification with the specified message.
+
+  #### error(message: string)
+
+  Displays an error notification with the specified message.
+
 </docs>
