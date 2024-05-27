@@ -2,22 +2,42 @@
 import AGallery from "../../components/AGallery.vue";
 import AIcon from "../../components/AIcon.vue";
 import { ref } from "vue";
+import { logEvent } from "histoire/client";
 import "../../index.scss";
 
 const inputFileRef = ref<any>(null);
-
-function handleMediaClick(index) {
-  console.log(`Media at index ${index} clicked`);
-}
-
-function handleEmptyClick() {
-  console.log("Placeholder clicked");
-}
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
-    <Variant title="default">
+    <Variant title="No media">
+      <AGallery
+        class="gallery-container-story"
+        :medias="[]"
+        :container-width="300"
+        :container-height="430"
+        placeholder="This is the placeholder sentence"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
+      >
+        <template #placeholder>
+          <!-- <ImageFirestore
+                  v-if="inspiration !== undefined"
+                  :path="inspiration"
+                  alt="Inspiration image" /> -->
+          <img
+            src="https://thenational-the-national-prod.cdn.arcpublishing.com/resizer/v2/T5ZBPKDG7DCVPV2JI7HQU5UWAM.jpg?smart=true&auth=24ed8dc54447f1b8518c41077a2cfd708fe0c6609b3a2bc3651d44cf482474c3&width=800&height=1000"
+            alt="Inspiration image"
+          />
+        </template>
+        <template #medias="{ imageSrc }">
+          <!-- <ImageFirestore :path="imageSrc" alt="Post media" controls /> -->
+        </template>
+        <template #actions="{ index, setActiveMedia }"> </template>
+      </AGallery>
+    </Variant>
+
+    <Variant title="Media & actions">
       <AGallery
         class="gallery-container-story"
         :medias="[
@@ -27,9 +47,8 @@ function handleEmptyClick() {
         :container-width="300"
         :container-height="430"
         placeholder="This is the placeholder sentence"
-        inspiration="https://thenational-the-national-prod.cdn.arcpublishing.com/resizer/v2/T5ZBPKDG7DCVPV2JI7HQU5UWAM.jpg?smart=true&auth=24ed8dc54447f1b8518c41077a2cfd708fe0c6609b3a2bc3651d44cf482474c3&width=800&height=1000"
-        @click-media="handleMediaClick"
-        @click-empty="handleEmptyClick"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
       >
         <template #placeholder>
           <!-- <ImageFirestore
@@ -65,6 +84,10 @@ function handleEmptyClick() {
 
 <style lang="scss">
 .gallery-container-story {
+  .media-container {
+    cursor: pointer;
+  }
+
   .upload-container {
     padding-top: 0 !important;
   }
@@ -79,6 +102,7 @@ function handleEmptyClick() {
     position: absolute;
     bottom: 0;
     right: 20px;
+    cursor: pointer;
   }
 }
 </style>
