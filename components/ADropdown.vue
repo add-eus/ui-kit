@@ -70,7 +70,7 @@ const closeDropdown = () => {
     max-height: none;
     min-width: 120px;
 
-    > .ad-card-body > .inner-content {
+    > .a-card-body > .inner-content {
         padding: 0;
 
             .a-button {

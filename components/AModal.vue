@@ -166,7 +166,7 @@ defineExpose({
     }
   }
 
-  .ad-card {
+  .a-card {
     width: 100%;
     border-radius: 8px;
     padding: 20px 40px 40px 40px;
@@ -192,7 +192,7 @@ defineExpose({
     left: 50%;
     position: absolute;
 
-    .ad-card {
+    .a-card {
       max-width: 100%;
       margin: 0 auto;
       max-height: 95vh;
@@ -202,7 +202,7 @@ defineExpose({
         border-radius: 12px;
       }
 
-      .ad-card-head {
+      .a-card-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -226,7 +226,7 @@ defineExpose({
         }
       }
 
-      .ad-card-body {
+      .a-card-body {
         .modal-form {
           padding: 10px 0 20px;
         }
@@ -254,7 +254,7 @@ defineExpose({
         }
       }
 
-      .ad-card-foot {
+      .a-card-foot {
         border-top: 1px solid var(--fade-grey-dark-3);
 
         &:empty {
