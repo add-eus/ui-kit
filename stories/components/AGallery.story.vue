@@ -16,7 +16,7 @@ const inputFileRef = ref<any>(null);
         :medias="[]"
         :container-width="300"
         :container-height="430"
-        placeholder="This is the placeholder sentence"
+        tootlip="This is the tootlip sentence"
         @click-media="(index) => logEvent('Media at index', { index })"
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
@@ -46,7 +46,7 @@ const inputFileRef = ref<any>(null);
         ]"
         :container-width="300"
         :container-height="430"
-        placeholder="This is the placeholder sentence"
+        tootlip="This is the placeholder sentence"
         @click-media="(index) => logEvent('Media at index', { index })"
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
@@ -117,7 +117,7 @@ This is a gallery component that displays a series of media items and allows nav
 - `containerWidth` (number, optional, default: 300): Specifies the width of the input container.
 - `containerHeight` (number, optional, default: 300): Specifies the height of the input container.
 - `medias` (Array<string>, optional, default: []): An array of media URLs to be displayed in the gallery.
-- `placeholder` (string, optional, default: ""): Placeholder text to be displayed when there are no media items.
+- `tootlip` (string, optional, default: ""): Tootlip text to be displayed when there are no media items.
 
 ## Events
 

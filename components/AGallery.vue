@@ -15,7 +15,7 @@ const props = defineProps({
     type: Array<string>,
     default: [],
   },
-  placeholder: {
+  tootlip: {
     type: String,
     default: "",
   },
@@ -135,13 +135,13 @@ defineExpose({
         </transition>
       </div>
     </div>
-    <!-- Placeholder sentence -->
+    <!-- Tootlip sentence -->
     <transition name="fade-slow">
       <div
         class="inspiration-sentence"
-        v-if="medias.length === 0 && placeholder !== ''"
+        v-if="medias.length === 0 && tootlip !== ''"
       >
-        <p>{{ placeholder }}</p>
+        <p>{{ tootlip }}</p>
       </div>
     </transition>
     <!-- Dot Container -->
