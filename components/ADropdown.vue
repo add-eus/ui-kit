@@ -73,12 +73,14 @@ const closeDropdown = () => {
     > .a-card-body > .inner-content {
         padding: 0;
 
-            .a-button {
+        .a-button {
             max-width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
             text-align: left;
+            justify-content: flex-start;
+            display: inline;
         }
     }
 }
