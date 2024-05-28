@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useFocus } from "@vueuse/core";
+import { useVModel } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
 
 export interface AInputSizerEmits {
@@ -13,20 +14,12 @@ export interface AInputSizerProps {
 
 const emits = defineEmits<AInputSizerEmits>();
 const props = withDefaults(defineProps<AInputSizerProps>(), { modelValue: "" });
-const value = ref(props.modelValue);
+// const value = ref(props.modelValue);
+
+const value = useVModel(props, "modelValue", emits);
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
 const { focused } = useFocus(textarea);
-
-watch(value, () => {
-  emits("update:modelValue", value.value);
-});
-watch(
-  () => props.modelValue,
-  () => {
-    value.value = props.modelValue;
-  }
-);
 
 const classes = computed(() => {
   if (props.raw) return [];
