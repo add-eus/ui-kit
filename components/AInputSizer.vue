@@ -14,7 +14,6 @@ export interface AInputSizerProps {
 
 const emits = defineEmits<AInputSizerEmits>();
 const props = withDefaults(defineProps<AInputSizerProps>(), { modelValue: "" });
-// const value = ref(props.modelValue);
 
 const value = useVModel(props, "modelValue", emits);
 
@@ -39,7 +38,6 @@ defineExpose({
       ref="textarea"
       v-model="value"
       :class="classes"
-      oninput="parentNode.dataset.value = value"
       rows="1"
       :placeholder="placeholder"
     ></textarea>
