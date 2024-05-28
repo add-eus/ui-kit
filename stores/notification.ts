@@ -3,28 +3,27 @@ import { INotyfNotificationOptions, INotyfOptions } from "notyf";
 import "notyf/notyf.min.css";
 import { Notyf } from "notyf";
 
-export const useNotification = createGlobalState(() => {
-  const options: Partial<INotyfOptions> = {
-    duration: 5000,
-    position: {
-      x: "right",
-      y: "top",
-    },
-  };
-  let notyf: Notyf;
-  try {
-    notyf = new Notyf(options);
-  } catch (error) {
-    notyf = new (require("notyf").Notyf)(options);
+const getNotyf = () => {
+  if(window.notyf === undefined) {
+    window.notyf = new Notyf({
+      duration: 5000,
+      position: {
+        x: "right",
+        y: "top",
+      },
+    });
   }
+  return window.notyf;
+}
 
+export const useNotification = createGlobalState(() => {
   return {
-    dismissAll: () => notyf.dismissAll(),
+    dismissAll: () => getNotyf().dismissAll(),
     success(payload: MaybeRef<string | Partial<INotyfNotificationOptions>>) {
-      return notyf.success(toValue(payload));
+      return getNotyf().success(toValue(payload));
     },
     error: (payload: MaybeRef<string | Partial<INotyfNotificationOptions>>) => {
-      return notyf.error(toValue(payload));
+      return getNotyf().error(toValue(payload));
     },
   };
 });
