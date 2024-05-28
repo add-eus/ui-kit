@@ -51,7 +51,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 
 <template>
   <button
-    :class="['ad-button', color]"
+    class="a-button"
     v-bind="$attrs"
     :style="{
       width: full && '100%',
@@ -64,7 +64,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 </template>
 
 <style lang="scss" scoped>
-.ad-button {
+.a-button {
   border: none;
   border-radius: 6px;
   padding: 3px 8px;

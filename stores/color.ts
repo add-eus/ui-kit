@@ -79,12 +79,22 @@ export function useColor(
   isInverted: MaybeRef<boolean> = false
 ) {
   return useCssVar(() => {
-    const colorValue = toValue(color);
+    let colorValue = toValue(color);
     const hueValue = toValue(hue);
-    const isInvertedValue = toValue(hueValue);
-    if (!colorValue) return "default";
+    let isInvertedValue = toValue(isInverted);
+
+    // If no color defined return transparent main and grey inverted
+    if (!colorValue) {
+      if (isInvertedValue) {
+        colorValue = "grey";
+        isInvertedValue = false;
+      }
+      else 
+        return "default";
+
+    }
     return `--a-${colorValue}${hueValue === "default" ? "" : `-${hueValue}`}${
-      isInverted ? "-invert" : ""
+      isInvertedValue ? "-invert" : ""
     }`;
   }, document.body);
 }

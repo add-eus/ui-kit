@@ -16,9 +16,9 @@ withDefaults(defineProps<ACardProps>(), {
 </script>
 
 <template>
-  <div class="ad-card">
+  <div class="a-card">
     <header
-      class="ad-card-head"
+      class="a-card-head"
       :class="[
         titleAlignement === 'center' && 'is-centered',
         titleAlignement === 'right' && 'is-end',
@@ -26,7 +26,7 @@ withDefaults(defineProps<ACardProps>(), {
     >
       <slot name="header"></slot>
     </header>
-    <div class="ad-card-body">
+    <div class="a-card-body">
       <div class="inner-content">
         <Suspense>
           <template #default>
@@ -39,7 +39,7 @@ withDefaults(defineProps<ACardProps>(), {
       </div>
     </div>
     <div
-      class="ad-card-foot"
+      class="a-card-foot"
       :class="[
         actionAlignement === 'center' && 'is-centered',
         actionAlignement === 'right' && 'is-end',
@@ -53,7 +53,7 @@ withDefaults(defineProps<ACardProps>(), {
 <style lang="scss" scoped>
 @import "../scss/color";
 
-.ad-card {
+.a-card {
   position: relative;
   background-color: $a-white;
   border-radius: 0.5rem;
@@ -64,7 +64,7 @@ withDefaults(defineProps<ACardProps>(), {
   overflow: visible;
   width: 100%;
 
-  .ad-card-body {
+  .a-card-body {
     margin: 0;
 
     &:not(:empty) {
@@ -72,7 +72,7 @@ withDefaults(defineProps<ACardProps>(), {
     }
   }
 
-  .ad-card-foot {
+  .a-card-foot {
     display: flex;
     margin: 0;
     gap: 1em;
