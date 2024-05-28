@@ -8,7 +8,7 @@ export interface AInputSizerEmits {
 export interface AInputSizerProps {
   raw?: boolean;
   modelValue?: any;
-  disabled?: boolean;
+  placeholder?: string;
 }
 
 const emits = defineEmits<AInputSizerEmits>();
@@ -46,10 +46,9 @@ defineExpose({
       ref="textarea"
       v-model="value"
       :class="classes"
-      :disabled="disabled"
       oninput="parentNode.dataset.value = value"
       rows="1"
-      placeholder="hi"
+      :placeholder="placeholder"
     ></textarea>
   </div>
 </template>
@@ -89,8 +88,6 @@ defineExpose({
     appearance: none;
     border: none;
     min-height: 80px;
-    /* max-height: 500px;
-    width: 85%; */
   }
 
   span {
