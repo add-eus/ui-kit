@@ -34,7 +34,7 @@ const boundingElement = useElementBounding(baseElement);
 
 const styleDropdown = computed(() => {
   return {
-    top: `${boundingElement.top.value + 35}px`,
+    top: `${boundingElement.bottom.value}px`,
     left: `${boundingElement.left.value}px`,
     width: `${boundingElement.width.value}px`,
   };
@@ -63,13 +63,15 @@ const closeDropdown = () => {
   display: inline-block;
 }
 
-.a-card.a-dropdown-content {
-  position: absolute;
-  max-height: none;
-  min-width: 120px;
+.a-card {
+  &.a-dropdown-content {
+    position: absolute;
+    max-height: none;
+    min-width: 120px;
 
-  > .a-card-body > .inner-content {
-    padding: 0;
+    > .a-card-body > .inner-content {
+      padding: 0;
+    }
   }
 }
 </style>
