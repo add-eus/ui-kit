@@ -35,7 +35,9 @@ const isOpen = computed(() => {
 
             <AButton v-for="item in filteredItems" :key="item.id" @click="emit('clickItem', item); searchTerm = ''">
                 <slot name="item" :item="item">
-                    {{ item.name }}
+                    <span class="ellipsis">
+                        {{ item.name }}
+                    </span>
                 </slot>
             </AButton>
             
