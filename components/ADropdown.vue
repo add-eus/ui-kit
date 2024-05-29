@@ -34,7 +34,7 @@ const boundingElement = useElementBounding(baseElement);
 
 const styleDropdown = computed(() => {
   return {
-    top: `${boundingElement.bottom.value}px`,
+    top: `${boundingElement.top.value + 35}px`,
     left: `${boundingElement.left.value}px`,
     width: `${boundingElement.width.value}px`,
   };
