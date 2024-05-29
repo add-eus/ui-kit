@@ -65,9 +65,8 @@ const closeDropdown = () => {
 
 .a-card {
   &.a-dropdown-content {
-    background: red;
-    position: absolute;
-    max-height: none;
+    position: absolute !important;
+    max-height: none !important;
     min-width: 120px;
 
     > .a-card-body > .inner-content {
