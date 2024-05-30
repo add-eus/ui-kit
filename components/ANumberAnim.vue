@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { defineProps, onMounted, watch, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
+import { useTransition, TransitionPresets } from "@vueuse/core";
 
 const props = defineProps({
   target: {
@@ -10,50 +11,33 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  duration: {
+    type: Number,
+    default: 1000,
+  },
 });
 
-const counterRef = ref(null);
+const duration = props.duration;
 
-const animateCounter = (start, end, duration) => {
-  const h3Element = counterRef.value;
-  if (!h3Element) return;
+const baseNumber = ref(0);
 
-  const totalSteps = 100;
-  const stepTime = duration / totalSteps;
-  const stepIncrement = (end - start) / totalSteps;
-  let current = start;
-  let currentStep = 0;
-
-  const timer = setInterval(() => {
-    current += stepIncrement;
-    currentStep += 1;
-    h3Element.textContent = `${Math.round(current)}`;
-    if (currentStep >= totalSteps) {
-      h3Element.textContent = `${end}`;
-      clearInterval(timer);
-    }
-  }, stepTime);
-};
-
-onMounted(() => {
-  animateCounter(0, props.target, 1000);
+const target = useTransition(baseNumber, {
+  duration,
+  transition: TransitionPresets.easeOutExpo,
 });
 
 watch(
   () => props.target,
-  (newValue, oldValue) => {
-    animateCounter(oldValue, newValue, 1000);
-  }
+  (newValue) => {
+    baseNumber.value = newValue;
+  },
+  { immediate: true }
 );
 </script>
 
 <template>
   <p>
-    <span ref="counterRef">0</span>
+    <span>{{ Math.floor(target) }}</span>
     <span>{{ percent ? "%" : "" }}</span>
   </p>
 </template>
-
-<style scoped lang="scss">
-/* Add any custom styles you need here */
-</style>

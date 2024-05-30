@@ -20,9 +20,9 @@ import "../../index.scss";
 </template>
 
 <docs lang="md">
-# ALoader
+# ANumberAnim
 
-This is a stat component incrementing to the target number.
+This is a number anim component incrementing to the target number.
 
 ## Props
 
