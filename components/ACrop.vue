@@ -4,7 +4,7 @@ import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import type { CropOptions } from "../stores/crop";
 
-interface VCropProps {
+export interface ACropProps {
     modelValue: Blob;
     aspectRatio?: number;
     minWidth?: number;
@@ -14,12 +14,12 @@ interface VCropProps {
     mimeType?: string;
     quality?: number;
 }
-interface VCropEmits {
+export interface ACropEmits {
     (event: "update:modelValue", value?: any): void;
 }
 
-const props = defineProps<VCropProps>();
-const emit = defineEmits<VCropEmits>();
+const props = defineProps<ACropProps>();
+const emit = defineEmits<ACropEmits>();
 
 const initialImageBlob = ref<null|Blob>(props.modelValue || null);
 
@@ -29,7 +29,7 @@ watch(() => props.modelValue, () => {
 });
 
 const initialImageBlobUrl = computed((oldValue) => {
-  if (oldValue)
+  if (typeof oldValue === "string")
     URL.revokeObjectURL(oldValue);
   if (initialImageBlob.value !== null)
     return URL.createObjectURL(initialImageBlob.value)

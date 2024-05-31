@@ -5,9 +5,9 @@ import ACropPrompt from "../components/Prompt/ACropPrompt.vue";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
 export interface CropOptions {
-    title: string;
-    confirm: string;
-    cancel: string;
+    title?: string;
+    confirm?: string;
+    cancel?: string;
     aspectRatio?: number;
     minWidth?: number;
     minHeight?: number;
