@@ -2,7 +2,6 @@
 import { ref, watch, computed } from "vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
-import type { CropOptions } from "../stores/crop";
 
 export interface ACropProps {
     modelValue: Blob;

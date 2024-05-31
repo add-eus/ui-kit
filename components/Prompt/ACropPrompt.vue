@@ -4,7 +4,7 @@ import AButton from "../AButton.vue";
 import ACrop from "../ACrop.vue";
 import { toValue } from "@vueuse/core";
 import { watch } from "vue";
-import type {ACropProps } from "../ACrop.vue"
+import { ACropProps } from "../ACrop.vue"
 
 export interface AConfirmPromptEmits {
   (e: "cancel"): void;
@@ -12,7 +12,7 @@ export interface AConfirmPromptEmits {
   (e: "update:modelValue", value?: any): void;
 }
 
-export interface AConfirmPromptProps extends ACropProps {
+export interface AConfirmPromptProps extends /* @vue-ignore */ ACropProps {
   title: string;
   modelValue: Blob | File;
   confirm: string;
