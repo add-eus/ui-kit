@@ -7,9 +7,9 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
-  percent: {
-    type: Boolean,
-    default: false,
+  suffix: {
+    type: String,
+    default: "",
   },
   duration: {
     type: Number,
@@ -38,6 +38,6 @@ watch(
 <template>
   <p>
     <span>{{ Math.floor(target) }}</span>
-    <span>{{ percent ? "%" : "" }}</span>
+    <span>{{ suffix }}</span>
   </p>
 </template>

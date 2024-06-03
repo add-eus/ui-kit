@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { defineProps, onMounted, watch, ref } from "vue";
+import { defineProps, PropType, computed } from "vue";
+import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
   target: {
@@ -7,14 +8,26 @@ const props = defineProps({
     default: 1,
   },
   colors: {
-    type: Array,
-    default: () => ["var(--a-orange)", "var(--a-gold)"],
+    type: Array as PropType<Colors[]>,
+    default: () => ["gold", "orange"],
   },
   size: {
     type: Number,
     default: 200,
   },
 });
+
+const colorA = useColor(
+  computed(() => {
+    return props.colors[1];
+  })
+);
+
+const colorB = useColor(
+  computed(() => {
+    return props.colors[0];
+  })
+);
 
 // Range from -120deg to 250deg * target (in degree) / 100 to get the percent
 const dotRotation = -120 + 250 * (props.target * 0.01);
@@ -35,8 +48,8 @@ const gradientId =
     <svg width="240" height="240" viewBox="0 0 240 240">
       <defs>
         <linearGradient :id="gradientId" gradientTransform="rotate(25)">
-          <stop offset="5%" :stop-color="colors[0]" />
-          <stop offset="95%" :stop-color="colors[1]" />
+          <stop offset="5%" :stop-color="colorA" />
+          <stop offset="95%" :stop-color="colorB" />
         </linearGradient>
       </defs>
       <circle

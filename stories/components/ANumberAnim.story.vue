@@ -13,8 +13,8 @@ import "../../index.scss";
       <ANumberAnim :target="74" />
     </Variant>
 
-    <Variant title="percent">
-      <ANumberAnim :target="112" percent />
+    <Variant title="suffix">
+      <ANumberAnim :target="112" suffix="%" />
     </Variant>
   </Story>
 </template>

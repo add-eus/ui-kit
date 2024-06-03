@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { defineProps, onMounted, watch, ref } from "vue";
+import { defineProps, PropType, computed } from "vue";
+import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
-  targets: {
-    type: Array,
-    default: () => [25],
+  target: {
+    type: Number,
+    default: 25,
   },
   color: {
-    type: String,
-    default: "var(--a-tertiary)",
+    type: String as PropType<Colors>,
+    default: "grey",
   },
   size: {
     type: Number,
@@ -19,6 +20,12 @@ const props = defineProps({
     default: 8,
   },
 });
+
+const color = useColor(
+  computed(() => {
+    return props.color;
+  })
+);
 
 const calculateOpacity = (targetValue: number) => {
   const maxOpacity = 1;
@@ -33,7 +40,7 @@ const calculateOpacity = (targetValue: number) => {
     class="a-progress-bar"
     :style="{ '--size': size + 'px', '--margin': margin + 'px' }"
   >
-    <div v-for="(target, index) in targets" :key="index" class="bar">
+    <div class="bar">
       <div
         class="progress"
         :style="{
@@ -50,7 +57,7 @@ const calculateOpacity = (targetValue: number) => {
 .a-progress-bar {
   display: flex;
   flex-direction: column;
-  gap: var(--margin);
+  margin: var(--margin) 0;
   width: 100%;
 
   .bar {
@@ -60,7 +67,7 @@ const calculateOpacity = (targetValue: number) => {
 
     .progress {
       height: var(--size);
-      border-radius: 6px;
+      border-radius: 5px;
       animation: barLoading 1s cubic-bezier(0.47, 1.64, 0.41, 0.8) forwards;
     }
 

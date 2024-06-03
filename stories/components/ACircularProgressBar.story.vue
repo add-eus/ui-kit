@@ -19,11 +19,11 @@ import "../../index.scss";
       <div class="container">
         <ACircularProgressBar
           :target="92"
-          :colors="['var(--a-secondary)', 'var(--a-success)']"
+          :colors="['secondary', 'success']"
           :size="250"
         />
         <div class="number">
-          <ANumberAnim :target="92" percent />
+          <ANumberAnim :target="92" suffix="%" />
         </div>
       </div>
     </Variant>
