@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ACircularProgressBar from "../../components/ACircularProgressBar.vue";
-import ANumberAnim from "../../components/ANumberAnim.vue";
+import ANumberAnimated from "../../components/ANumberAnimated.vue";
 
 import "../../index.scss";
 </script>
@@ -23,7 +23,7 @@ import "../../index.scss";
           :size="250"
         />
         <div class="number">
-          <ANumberAnim :target="92" suffix="%" />
+          <ANumberAnimated :target="92" suffix="%" />
         </div>
       </div>
     </Variant>
