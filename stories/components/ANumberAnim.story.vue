@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import ANumberAnim from "../../components/ANumberAnim.vue";
+import ANumberAnimated from "../../components/ANumberAnimated.vue";
 import "../../index.scss";
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ANumberAnim />
+      <ANumberAnimated />
     </Variant>
 
     <Variant title="target">
-      <ANumberAnim :target="74" />
+      <ANumberAnimated :target="74" />
     </Variant>
 
     <Variant title="suffix">
-      <ANumberAnim :target="112" suffix="%" />
+      <ANumberAnimated :target="112" suffix="%" />
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# ANumberAnim
+# ANumberAnimated
 
 This is a number anim component incrementing to the target number.
 
