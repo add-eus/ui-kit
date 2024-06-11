@@ -76,27 +76,27 @@ const deleteFile = (index?: number) => {
 };
 
 const addFiles = (files: FileUploadResponse[], index?: number) => {
-  if (props.multiple) {
+  const hasNewFiles = files.some(({ path }) => path !== undefined);
+  if (hasNewFiles && props.multiple) {
     if (filesModel.value === undefined) filesModel.value = [];
     if (filesModel.value.constructor !== Array)
       throw new Error("props multiple is true but filesModel is not an array");
+    const newFilePaths = files
+      .filter(({ path }) => path !== undefined)
+      .map((file) => file.path!);
     if (index !== undefined) {
       filesModel.value = [
         ...filesModel.value.slice(0, index),
-        ...files
-          .filter(({ path }) => path !== undefined)
-          .map((file) => file.path!),
+        ...newFilePaths,
         ...filesModel.value.slice(index + 1),
       ];
     } else {
       filesModel.value = [
         ...filesModel.value,
-        ...files
-          .filter(({ path }) => path !== undefined)
-          .map((file) => file.path!),
+        ...newFilePaths,
       ];
     }
-  } else {
+  } else if (hasNewFiles) {
     if (files.length !== 1)
       throw new Error("Multiple files uploaded but multiple is false");
     filesModel.value = files[0].path;
