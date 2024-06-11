@@ -1,13 +1,13 @@
 import { useComponent } from "@addeus/vue3-stores/stores/component";
-import { ref } from "vue";
-import AConfirmPrompt from "../components/Prompt/AConfirmPrompt.vue";
 import ACropPrompt from "../components/Prompt/ACropPrompt.vue";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
+
 
 export interface CropOptions {
     title?: string;
     confirm?: string;
     cancel?: string;
+    modelValue: Blob;
     aspectRatio?: number;
     minWidth?: number;
     minHeight?: number;
