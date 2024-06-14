@@ -172,6 +172,11 @@ defineExpose({
     width: 100%;
     border-radius: 8px;
     padding: 20px 40px 40px 40px;
+    max-height: 100vh;
+
+    > .a-card-body {
+      overflow: auto;
+    }
   }
 
   .a-modal-background {

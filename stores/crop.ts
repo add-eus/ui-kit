@@ -20,14 +20,17 @@ export interface CropOptions {
 export function useCrop() {
     const { initialize, destroy } = useComponent();
     const { translate } = useTranslate();
+    const tTitle = translate(".crop.title");
+    const tConfirm = translate(".crop.confirm");
+    const tCancel = translate(".crop.cancel");
 
     return async (blob: Blob | File, options?: CropOptions) : Promise<Blob> => {
         return new Promise((resolve, reject) => {
             let newBlob: Blob | undefined = blob;
             const node = initialize(ACropPrompt, {
-                title: translate(".crop.title"),
-                confirm: translate(".crop.confirm"),
-                cancel: translate(".crop.cancel"),
+                title: tTitle,
+                confirm: tConfirm,
+                cancel: tCancel,
                 ...options,
                 modelValue: blob,
                 "onUpdate:modelValue"(blobExport) {
