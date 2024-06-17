@@ -12,7 +12,7 @@ import "../../index.scss";
     <Variant title="grey">
       <AButton color="grey">AButton</AButton>
     </Variant>
-    <Variant title="primary ">
+    <Variant title="primary">
       <AButton color="tertiary">
         AButton
         <AIcon icon="arrow_forward" type="rounded" />

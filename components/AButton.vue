@@ -42,8 +42,10 @@ const color = useColor(mainColor);
 const colorInvert = useColor(mainColor, "default", true);
 
 const colorLight = useColor(mainColor, "light");
-const colorLighter = useColor(mainColor, "lighter");
 const colorLightInvert = useColor(mainColor, "light", true);
+
+const colorDark = useColor(mainColor, "dark");
+const colorDarkInvert = useColor(mainColor, "darker", true);
 
 const colorDarker = useColor(mainColor, "darker");
 const colorDarkerInvert = useColor(mainColor, "darker", true);
@@ -74,7 +76,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-  background-color: v-bind(colorLight);
+  background-color: v-bind(color);
   color: v-bind(colorInvert);
 
   .loader-icon {
@@ -87,8 +89,8 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   }
 
   &:hover {
-    background-color: v-bind(colorLighter);
-    color: v-bind(colorInvert);
+    background-color: v-bind(colorDark);
+    color: v-bind(colorDarkInvert);
 
     i {
       color: v-bind(color);
@@ -96,7 +98,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   }
 
   &:active {
-    background-color: v-bind(color);
+    background-color: v-bind(colorDarker);
     color: v-bind(colorDarkerInvert);
 
     i {
@@ -110,10 +112,10 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
 
     &:hover {
       background-color: v-bind(colorLight);
-      color: v-bind(colorInvert);
+      color: v-bind(colorLightInvert);
 
       i {
-        color: v-bind(colorInvert);
+        color: v-bind(colorLightInvert);
       }
     }
   }

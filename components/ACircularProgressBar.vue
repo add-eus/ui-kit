@@ -9,7 +9,7 @@ const props = defineProps({
   },
   colors: {
     type: Array as PropType<Colors[]>,
-    default: () => ["gold", "orange"],
+    default: () => ["gold"],
   },
   size: {
     type: Number,
@@ -48,7 +48,7 @@ const gradientId =
     <svg width="240" height="240" viewBox="0 0 240 240">
       <defs>
         <linearGradient :id="gradientId" gradientTransform="rotate(25)">
-          <stop offset="5%" :stop-color="colorA" />
+          <stop v-if="colorA" offset="5%" :stop-color="colorA" />
           <stop offset="95%" :stop-color="colorB" />
         </linearGradient>
       </defs>
@@ -81,7 +81,6 @@ const gradientId =
   position: relative;
   width: var(--size);
   height: var(--size);
-  overflow: hidden;
 
   svg {
     position: relative;
