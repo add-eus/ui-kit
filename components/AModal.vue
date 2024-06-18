@@ -194,8 +194,8 @@ defineExpose({
     margin: 0;
     padding: 0 10px;
     z-index: 300;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     position: fixed;
     /* transform: scale(1) translate(-50%, -50%) !important; */
     animation: goup 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
@@ -318,10 +318,11 @@ defineExpose({
   }
 
   //SIZING
+
   &.is-giant {
     .a-modal-content {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1390px;
 
       .modal-card {
         width: 100%;
