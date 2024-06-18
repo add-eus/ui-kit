@@ -41,10 +41,6 @@ const color = useColor(
 );
 
 const stepLength = props.step.length;
-
-function handleClick(index: number) {
-  console.log("Index clicked:", index);
-}
 </script>
 
 <template>
@@ -118,7 +114,7 @@ function handleClick(index: number) {
       width: 30px;
       height: 70px;
       position: relative;
-      margin-top: 4px;
+      margin-top: 7px;
 
       &.last {
         height: 20px;
