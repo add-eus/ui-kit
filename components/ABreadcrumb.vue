@@ -12,7 +12,7 @@ const props = defineProps({
     type: Array,
     default: () => [""],
   },
-  activeStep: {
+  modelValue: {
     type: Number,
     default: 2,
   },
@@ -22,16 +22,15 @@ const props = defineProps({
   },
 });
 
-const activeStep = useVModel(props, "activeStep", undefined, { passive: true });
-
 interface ABreadcrumbEmits {
-  (e: "click-step", index: number): void;
+  (e: "update:modelValue", index: number): void;
 }
 
 const emits = defineEmits<ABreadcrumbEmits>();
 
+const activeStep = useVModel(props, "modelValue", emits);
+
 const clickStep = (index) => {
-  emits("click-step", index);
   activeStep.value = index;
 };
 
