@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, PropType, computed, ref } from "vue";
+import { defineProps, PropType, computed, ref, watch } from "vue";
 import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
     default: () => [""],
   },
   activeStep: {
-    type: String,
+    type: Number,
     default: "2",
   },
   color: {
@@ -22,6 +22,13 @@ const props = defineProps({
 });
 
 const activeStep = ref(props.activeStep);
+
+watch(
+  () => props.activeStep,
+  (newStep) => {
+    activeStep.value = newStep;
+  }
+);
 
 interface ABreadcrumbEmits {
   (e: "click-step", index: number): void;
@@ -70,7 +77,6 @@ const stepLength = props.step.length;
 .a-breadcrumb {
   display: flex;
   flex-direction: column;
-  background: var(--a-grey-lightest);
 
   .breadcrumb-row {
     display: flex;

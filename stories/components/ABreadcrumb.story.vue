@@ -10,7 +10,7 @@ import { logEvent } from "histoire/client";
       <ABreadcrumb />
     </Variant>
 
-    <Variant title="blank">
+    <Variant title="step/point/color/active-step/@click-step">
       <ABreadcrumb
         :step="[
           'Social network',
