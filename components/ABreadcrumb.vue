@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { defineProps, PropType, computed, ref, watch } from "vue";
+import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
+import { useVModel } from "@vueuse/core";
 
 const props = defineProps({
   step: {
@@ -13,7 +14,7 @@ const props = defineProps({
   },
   activeStep: {
     type: Number,
-    default: "2",
+    default: 2,
   },
   color: {
     type: String as PropType<Colors>,
@@ -21,14 +22,7 @@ const props = defineProps({
   },
 });
 
-const activeStep = ref(props.activeStep);
-
-watch(
-  () => props.activeStep,
-  (newStep) => {
-    activeStep.value = newStep;
-  }
-);
+const activeStep = useVModel(props, "activeStep", undefined, { passive: true });
 
 interface ABreadcrumbEmits {
   (e: "click-step", index: number): void;
