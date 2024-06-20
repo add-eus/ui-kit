@@ -36,16 +36,15 @@ function isDateRange(value: any): boolean {
     return (
         typeof value === 'object' &&
         value !== null &&
-        value.start instanceof Date && 
-        value.end instanceof Date
+        !moment.isDate(value)
     );
 }
 
 function isMomentRange(value: any): boolean {
     return (
         typeof value === 'object' &&
-        moment.isMoment(value.start) &&
-        moment.isMoment(value.end)
+        value !== null &&
+        !moment.isMoment(value) 
     );
 }
 
@@ -54,8 +53,8 @@ function parseMoment(momentValue: moment.Moment | MomentRange | undefined | null
 
     if (isMomentRange(momentValue)) {
         return {
-            start: momentValue.start.toDate(),
-            end: momentValue.end.toDate(),
+            start: moment.isMoment(momentValue.start) ? momentValue.start.toDate() : momentValue.start,
+            end: moment.isMoment(momentValue.end) ? momentValue.end.toDate() : momentValue.end
         } as DateRange;
     }
     return momentValue.toDate();
@@ -89,15 +88,15 @@ syncRef(date, transformedDate, {
 <template>
     <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
         <template #default="{ togglePopover }">
-            <AInput :modelValue="date === null || date === undefined ? '-' : date.format(props.format)" :placeholder="displayed" @focus="togglePopover"/>
+            <AInput :modelValue="!moment.isMoment(date) ? '-' : date.format(props.format)" :placeholder="displayed" @focus="togglePopover"/>
         </template>
   </DatePicker>
   <DatePicker v-model.range="transformedDate" v-else>
         <template #default="{ togglePopover }">
             <div class="flex-row">
-                <AInput :modelValue="date === null || date === undefined || date.start === null || date.end === undefined ? '-' : date.start.format(props.format)" @focus="togglePopover"/>
+                <AInput :modelValue="date === null || date === undefined || typeof date !== 'object' || !moment.isMoment(date.start) ? '-' : date.start.format(props.format)" @focus="togglePopover"/>
                 -
-                <AInput :modelValue="date === null || date === undefined || date.end === null || date.end === undefined ? '-' : date.end.format(props.format)" @focus="togglePopover"/>
+                <AInput :modelValue="date === null || date === undefined || typeof date !== 'object' || !moment.isMoment(date.end) ? '-' : date.end.format(props.format)" @focus="togglePopover"/>
             </div>
         </template>
   </DatePicker>

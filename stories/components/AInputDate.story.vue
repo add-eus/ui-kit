@@ -13,6 +13,8 @@ const range = computed({
       return { start: start.value, end: end.value };
     },
     set(value) {
+        if (value === null)
+          return;
         start.value = value.start;
         end.value = value.end;
     }
