@@ -153,6 +153,7 @@ defineExpose({
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
   }
 
   .a-modal-close {
@@ -190,7 +191,6 @@ defineExpose({
   .a-modal-content {
     opacity: 1 !important;
     max-width: 540px;
-    animation: fadeInDown 0.5s;
     margin: 0;
     padding: 0 10px;
     z-index: 300;
@@ -198,10 +198,10 @@ defineExpose({
     left: 50vw;
     position: fixed;
     /* transform: scale(1) translate(-50%, -50%) !important; */
-    animation: goup 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: goUp 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
     transform-origin: left;
 
-    @keyframes goup {
+    @keyframes goUp {
       0% {
         transform: scale(1) translate(-50%, -40%);
       }
@@ -216,10 +216,10 @@ defineExpose({
       max-height: 95vh;
       overflow-y: auto;
 
-      animation: upscale 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      animation: upScale 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       transform-origin: center;
 
-      @keyframes upscale {
+      @keyframes upScale {
         0% {
           transform: scale(0.95);
         }
@@ -323,6 +323,10 @@ defineExpose({
     .a-modal-content {
       width: 100%;
       max-width: 1390px;
+
+      @media screen and (max-width: 1390px) {
+        max-width: 95vw;
+      }
 
       .modal-card {
         width: 100%;
