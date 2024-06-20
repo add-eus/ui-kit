@@ -2,19 +2,33 @@
 import { get } from "@vueuse/core";
 import AInputDate from "../../components/AInputDate.vue";
 import moment from "moment";
-import { ref, computed } from "vue";
+import { ref, computed, markRaw, watch } from "vue";
 import "../../index.scss";
 
 const start = ref(moment());
 const end = ref(moment().add(10, 'days'));
 
-const range = computed({
-    get: () => ({ start: start.value, end: end.value }),
-    set: (value) => {
-        start.value = value.start;
-        end.value = value.end;
-    }
-})
+// const range = computed({
+//     get() {
+//       console.log(start.value, end.value);
+//       return { start: start.value, end: end.value };
+//     },
+//     set(value) {
+//         start.value = value.start;
+//         end.value = value.end;
+//     }
+// }, {
+//   onTrack() {
+//     console.log('onTrack', arguments);
+//   },
+//   onTrigger() {
+//     console.log('onTrigger', arguments);
+//   }
+// });
+
+watch(start, (value) => {
+    console.log('watch', value);
+});
 </script>
 
 <template>
@@ -22,10 +36,10 @@ const range = computed({
     <Variant title="default">
         <AInputDate v-model="start" />
     </Variant>
-
+<!-- 
     <Variant title="default">
         <AInputDate v-model="range" />
-    </Variant>
+    </Variant> -->
     
   </Story>
 </template>

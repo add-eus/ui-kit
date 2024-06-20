@@ -3,85 +3,101 @@ import {  DatePicker } from 'v-calendar';
 import AInput from './AInput.vue';
 import moment from "moment";
 import 'v-calendar/style.css';
-import { ref, computed } from 'vue';
-import {  useVModel, syncRef, refDebounced } from '@vueuse/core';
+import { ref } from 'vue';
+import {  useVModel, syncRef } from '@vueuse/core';
 
-export interface AInputDateRangeMoment {
+export interface MomentRange {
     start: moment.Moment | null; 
     end: moment.Moment | null;
 }
 
-export interface AInputDateRange {
+export interface DateRange {
     start: Date | null;
     end: Date | null;
 }
 
 export interface AInputDateProps {
-    modelValue: moment.Moment | null | AInputDateRangeMoment;
+    modelValue?: moment.Moment | null | MomentRange;
+    format?: string;
 }
 
-const props = defineProps<AInputDateProps>();
+const props = withDefaults(defineProps<AInputDateProps>(), {
+    format: 'DD-MM-YYYY',
+    modelValue: moment()
+});
 
 const emits = defineEmits(['update:modelValue']);
 
 const date = useVModel(props, 'modelValue', emits);
 
-const transformedDate = ref<null | undefined | Date | AInputDateRange>(null);
+const transformedDate = ref<null | undefined | Date | DateRange>(null);
+
+function isDateRange(value: any): boolean {
+    return (
+        typeof value === 'object' &&
+        value !== null &&
+        value.start instanceof Date && 
+        value.end instanceof Date
+    );
+}
+
+function isMomentRange(value: any): boolean {
+    return (
+        typeof value === 'object' &&
+        moment.isMoment(value.start) &&
+        moment.isMoment(value.end)
+    );
+}
+
+function parseMoment(momentValue: moment.Moment | MomentRange | undefined | null) : Date | DateRange | null | undefined {
+    if (momentValue === undefined || momentValue === null) return momentValue;
+
+    if (isMomentRange(momentValue)) {
+        return {
+            start: momentValue.start.toDate(),
+            end: momentValue.end.toDate(),
+        } as DateRange;
+    }
+    return momentValue.toDate();
+}
+
+function formatMoment(dateValue: Date | DateRange | undefined | null) : moment.Moment | MomentRange | null | undefined {
+    if (dateValue === undefined || dateValue === null) return dateValue;
+    else if (isDateRange(dateValue)) {
+        const start = moment(dateValue.start);
+        const end = moment(dateValue.end);
+        return {start, end};
+    }
+
+    return moment(date.value);
+}
 
 syncRef(date, transformedDate, {
     immediate: true,
     transform: {
         ltr(left) {
-            if (left === undefined || left === null)
-                return left;
-            else if (left.start instanceof moment && left.end instanceof moment) {
-                // Vérifier si la transformation est nécessaire
-                const current = transformedDate.value;
-                if (current && current.start === left.start.toDate() && current.end === left.end.toDate()) {
-                    return current; // Retourner la valeur actuelle pour éviter la modification circulaire
-                }
-                return {
-                    start: left.start?.toDate(),
-                    end: left.end?.toDate(),
-                };
-            }
-            return left.toDate();
+            return parseMoment(left);
         },
-        rtl(right: Date | null | undefined | AInputDateRange) {
-            if (right === undefined || right === null)
-                return right;
-            else if (right.start || right.end) {
-                return {
-                    start: moment(right.start),
-                    end: moment(right.end),
-                };
-            }
-            return moment(right);
+        rtl(right: Date | null | undefined | DateRange) {
+            return formatMoment(right);
         }
     }
 });
 
-const displayed = computed(() => {
-    if (date.value === null || date.value === undefined)
-        return "no";
-    if (date.value.start instanceof moment && date.value.end instanceof moment)
-        return `${date.value.start.calendar()} - ${date.value.end.calendar()}`;
-    return date.value.calendar();
-});
 </script>
 
 <template>
-    <DatePicker v-model="transformedDate" v-if="transformedDate === null || transformedDate === undefined || !transformedDate.start">
+    <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
         <template #default="{ togglePopover }">
-            <AInput :modelValue="displayed" :placeholder="displayed" @focus="togglePopover"/>
+            <AInput :modelValue="date === null || date === undefined ? '-' : date.format(props.format)" :placeholder="displayed" @focus="togglePopover"/>
         </template>
   </DatePicker>
-  <DatePicker v-model.range="transformedDate" v-else-if="transformedDate.start">
+  <DatePicker v-model.range="transformedDate" v-else>
         <template #default="{ togglePopover }">
             <div class="flex-row">
-                <AInput :modelValue="displayed" @focus="togglePopover"/>
+                <AInput :modelValue="date === null || date === undefined || date.start === null || date.end === undefined ? '-' : date.start.format(props.format)" @focus="togglePopover"/>
                 -
-                <AInput :modelValue="displayed" @focus="togglePopover"/>
+                <AInput :modelValue="date === null || date === undefined || date.end === null || date.end === undefined ? '-' : date.end.format(props.format)" @focus="togglePopover"/>
             </div>
         </template>
   </DatePicker>
