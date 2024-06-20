@@ -8,26 +8,14 @@ import "../../index.scss";
 const start = ref(moment());
 const end = ref(moment().add(10, 'days'));
 
-// const range = computed({
-//     get() {
-//       console.log(start.value, end.value);
-//       return { start: start.value, end: end.value };
-//     },
-//     set(value) {
-//         start.value = value.start;
-//         end.value = value.end;
-//     }
-// }, {
-//   onTrack() {
-//     console.log('onTrack', arguments);
-//   },
-//   onTrigger() {
-//     console.log('onTrigger', arguments);
-//   }
-// });
-
-watch(start, (value) => {
-    console.log('watch', value);
+const range = computed({
+    get() {
+      return { start: start.value, end: end.value };
+    },
+    set(value) {
+        start.value = value.start;
+        end.value = value.end;
+    }
 });
 </script>
 
@@ -36,10 +24,10 @@ watch(start, (value) => {
     <Variant title="default">
         <AInputDate v-model="start" />
     </Variant>
-<!-- 
+
     <Variant title="default">
         <AInputDate v-model="range" />
-    </Variant> -->
+    </Variant>
     
   </Story>
 </template>
@@ -53,6 +41,6 @@ This is a icon component.
 
 The `AIcon` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `var(--a-primary)`.
-- `placeholder` (string, optional): Specifies the placeholder of the button. Possible values are any valid text like `Type your text here..`.
+- `modelValue` (moment): Specifies the model value of the button. Possible values are any valid moment object.
+- `format` (string, optional): Specifies the format of the date. Default is `DD-MM-YYYY`.
 </docs>
