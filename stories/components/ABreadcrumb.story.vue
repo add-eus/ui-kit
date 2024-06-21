@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ABreadcrumb from "../../components/ABreadcrumb.vue";
 import "../../index.scss";
-import { logEvent } from "histoire/client";
 </script>
 
 <template>
@@ -40,8 +39,4 @@ This is a breadcrumb component.
 - `color` (string, optional, default: primary): Specifies the color of the component.
 - `modelValue` (number, optional, default: 2): Specifies the default active index of the breadcrumb.
 - `v-model` (number, default: 2): Specifies the index of the active step of the breadcrumb.
-
-## Events
-
-- `click-step` (index: number): Emitted when a step item is clicked, providing the index of the clicked step.
 </docs>
