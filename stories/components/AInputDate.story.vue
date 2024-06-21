@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { get } from "@vueuse/core";
 import AInputDate from "../../components/AInputDate.vue";
 import moment from "moment";
-import { ref, computed, markRaw, watch } from "vue";
+import { ref, computed, markRaw } from "vue";
 import "../../index.scss";
 
-const start = ref(moment());
-const end = ref(moment().add(10, 'days'));
+const start = ref(markRaw(moment()));
+const end = ref(markRaw(moment().add(10, 'days')));
 
 const range = computed({
     get() {
@@ -35,14 +34,14 @@ const range = computed({
 </template>
 
 <docs lang="md">
-# AIcon
+# AInputDate
 
-This is a icon component.
+This is a input date component.
 
 ## Usage
 
 The `AIcon` component provides the following options:
 
-- `modelValue` (moment): Specifies the model value of the button. Possible values are any valid moment object.
+- `v-model` (moment | {start: moment; end: moment; }): Specifies the model value of the button. Possible values are any valid moment object.
 - `format` (string, optional): Specifies the format of the date. Default is `DD-MM-YYYY`.
 </docs>

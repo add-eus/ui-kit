@@ -1,34 +1,31 @@
 <script setup lang="ts">
 import {  DatePicker } from 'v-calendar';
 import AInput from './AInput.vue';
-import moment from "moment";
 import 'v-calendar/style.css';
-import { ref } from 'vue';
-import {  useVModel, syncRef } from '@vueuse/core';
+import { ref, markRaw, computed, watch, nextTick } from 'vue';
+import { syncRef, watchPausable } from '@vueuse/core';
+import moment from "moment";
 
 export interface MomentRange {
-    start: moment.Moment | null; 
-    end: moment.Moment | null;
+    start: moment.Moment | null | undefined; 
+    end: moment.Moment | null | undefined; 
 }
 
 export interface DateRange {
-    start: Date | null;
-    end: Date | null;
+    start: Date | null | undefined;
+    end: Date | null | undefined;
 }
 
 export interface AInputDateProps {
-    modelValue?: moment.Moment | null | MomentRange;
+    modelValue: moment.Moment | null | undefined | MomentRange;
     format?: string;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
-    format: 'DD-MM-YYYY',
-    modelValue: moment()
+    format: 'DD-MM-YYYY'
 });
 
-const emits = defineEmits(['update:modelValue']);
-
-const date = useVModel(props, 'modelValue', emits);
+const date = defineModel<moment.Moment | MomentRange | null | undefined>();
 
 const transformedDate = ref<null | undefined | Date | DateRange>(null);
 
@@ -63,16 +60,24 @@ function parseMoment(momentValue: moment.Moment | MomentRange | undefined | null
 function formatMoment(dateValue: Date | DateRange | undefined | null) : moment.Moment | MomentRange | null | undefined {
     if (dateValue === undefined || dateValue === null) return dateValue;
     else if (isDateRange(dateValue)) {
-        const start = moment(dateValue.start);
-        const end = moment(dateValue.end);
+        const start = markRaw(moment(dateValue.start));
+        const end = markRaw(moment(dateValue.end));
+        if (start.isSame(date.value.start) && end.isSame(date.value.end))
+            return date.value;
         return {start, end};
     }
 
-    return moment(date.value);
+    const m = moment(dateValue);
+
+    if (m.isSame(date.value))
+        return date.value;
+    
+    return markRaw(m);
 }
 
 syncRef(date, transformedDate, {
     immediate: true,
+    flush: 'sync',
     transform: {
         ltr(left) {
             return parseMoment(left);
@@ -83,21 +88,34 @@ syncRef(date, transformedDate, {
     }
 });
 
+const displayed = computed(() => {
+    if (isMomentRange(date.value)) {
+        return [
+            moment.isMoment(date.value.start) ? date.value.start.format(props.format) : '-', 
+            moment.isMoment(date.value.end) ? date.value.end.format(props.format) : '-'
+        ];
+    }
+    else if (moment.isMoment(date.value)) {
+        return date.value.format(props.format);
+    }
+    return '-';
+});
+
 </script>
 
 <template>
     <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
         <template #default="{ togglePopover }">
-            <AInput :modelValue="!moment.isMoment(date) ? '-' : date.format(props.format)" :placeholder="displayed" @focus="togglePopover"/>
+            <AInput :modelValue="displayed" @focus="togglePopover"/>
         </template>
-  </DatePicker>
-  <DatePicker v-model.range="transformedDate" v-else>
+    </DatePicker>
+    <DatePicker v-model.range="transformedDate" v-else>
         <template #default="{ togglePopover }">
             <div class="flex-row">
-                <AInput :modelValue="date === null || date === undefined || typeof date !== 'object' || !moment.isMoment(date.start) ? '-' : date.start.format(props.format)" @focus="togglePopover"/>
+                <AInput :modelValue="displayed[0]" @focus="togglePopover"/>
                 -
-                <AInput :modelValue="date === null || date === undefined || typeof date !== 'object' || !moment.isMoment(date.end) ? '-' : date.end.format(props.format)" @focus="togglePopover"/>
+                <AInput :modelValue="displayed[1]" @focus="togglePopover"/>
             </div>
         </template>
-  </DatePicker>
+    </DatePicker>
 </template>
