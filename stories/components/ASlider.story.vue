@@ -12,7 +12,7 @@ const sliderValuesB = ref<[number, number]>([20, 60]);
     <Variant title="default">
       <div class="slider-min-max-container">
         <h3>Min: {{ sliderValuesA[0] }} - Max: {{ sliderValuesA[1] }}</h3>
-        <ASlider class="slider-min-max" v-model:values="sliderValuesA" />
+        <ASlider class="slider-min-max" v-model="sliderValuesA" />
       </div>
     </Variant>
 
@@ -24,7 +24,7 @@ const sliderValuesB = ref<[number, number]>([20, 60]);
           :min="0"
           :max="250"
           :step="10"
-          v-model:values="sliderValuesB"
+          v-model="sliderValuesB"
           color="secondary"
         />
       </div>

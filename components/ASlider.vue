@@ -15,8 +15,8 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
-  values: {
-    type: Array as PropType<[number, number]>,
+  modelValue: {
+    type: Array as unknown as PropType<[number, number]>,
     default: () => [50, 80],
   },
   color: {
@@ -31,12 +31,12 @@ const color = useColor(
   })
 );
 
-const emit = defineEmits(["update:values"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const slider = ref<HTMLDivElement | null>(null);
 const inputMin = ref<HTMLInputElement | null>(null);
 const inputMax = ref<HTMLInputElement | null>(null);
-const sliderValues = ref<[number, number]>([...props.values]);
+const sliderValues = ref<[number, number]>([...props.modelValue]);
 
 const getPercent = (value: number, min: number, max: number) => {
   return ((value - min) / (max - min)) * 100;
@@ -57,7 +57,7 @@ const setCSSProps = (left: number, right: number) => {
 //UPDATED ON SLIDE
 watchEffect(() => {
   if (slider.value) {
-    emit("update:values", sliderValues.value);
+    emit("update:modelValue", sliderValues.value);
 
     const leftPercent = getPercent(sliderValues.value[0], props.min, props.max);
     const rightPercent =
