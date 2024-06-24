@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import {  DatePicker } from 'v-calendar';
-import AInput from './AInput.vue';
-import 'v-calendar/style.css';
-import { ref, markRaw, computed, watch, nextTick } from 'vue';
-import { syncRef, watchPausable } from '@vueuse/core';
+import { DatePicker } from "v-calendar";
+import AInput from "./AInput.vue";
+import "v-calendar/style.css";
+import { ref, markRaw, computed, watch, nextTick } from "vue";
+import { syncRef, watchPausable } from "@vueuse/core";
 import moment from "moment";
 
 export interface MomentRange {
-    start: moment.Moment | null | undefined; 
-    end: moment.Moment | null | undefined; 
+  start: moment.Moment | null | undefined;
+  end: moment.Moment | null | undefined;
 }
 
 export interface DateRange {
-    start: Date | null | undefined;
-    end: Date | null | undefined;
+  start: Date | null | undefined;
+  end: Date | null | undefined;
 }
 
 export interface AInputDateProps {
-    modelValue: moment.Moment | null | undefined | MomentRange;
-    format?: string;
+  modelValue: moment.Moment | null | undefined | MomentRange;
+  format?: string;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
-    format: 'DD-MM-YYYY'
+  format: "DD-MM-YYYY",
 });
 
 const date = defineModel<moment.Moment | MomentRange | null | undefined>();
@@ -30,92 +30,250 @@ const date = defineModel<moment.Moment | MomentRange | null | undefined>();
 const transformedDate = ref<null | undefined | Date | DateRange>(null);
 
 function isDateRange(value: any): boolean {
-    return (
-        typeof value === 'object' &&
-        value !== null &&
-        !moment.isDate(value)
-    );
+  return typeof value === "object" && value !== null && !moment.isDate(value);
 }
 
 function isMomentRange(value: any): boolean {
-    return (
-        typeof value === 'object' &&
-        value !== null &&
-        !moment.isMoment(value) 
-    );
+  return typeof value === "object" && value !== null && !moment.isMoment(value);
 }
 
-function parseMoment(momentValue: moment.Moment | MomentRange | undefined | null) : Date | DateRange | null | undefined {
-    if (momentValue === undefined || momentValue === null) return momentValue;
+function parseMoment(
+  momentValue: moment.Moment | MomentRange | undefined | null
+): Date | DateRange | null | undefined {
+  if (momentValue === undefined || momentValue === null) return momentValue;
 
-    if (isMomentRange(momentValue)) {
-        return {
-            start: moment.isMoment(momentValue.start) ? momentValue.start.toDate() : momentValue.start,
-            end: moment.isMoment(momentValue.end) ? momentValue.end.toDate() : momentValue.end
-        } as DateRange;
-    }
-    return momentValue.toDate();
+  if (isMomentRange(momentValue)) {
+    return {
+      start: moment.isMoment(momentValue.start)
+        ? momentValue.start.toDate()
+        : momentValue.start,
+      end: moment.isMoment(momentValue.end)
+        ? momentValue.end.toDate()
+        : momentValue.end,
+    } as DateRange;
+  }
+  return momentValue.toDate();
 }
 
-function formatMoment(dateValue: Date | DateRange | undefined | null) : moment.Moment | MomentRange | null | undefined {
-    if (dateValue === undefined || dateValue === null) return dateValue;
-    else if (isDateRange(dateValue)) {
-        const start = markRaw(moment(dateValue.start));
-        const end = markRaw(moment(dateValue.end));
-        if (start.isSame(date.value.start) && end.isSame(date.value.end))
-            return date.value;
-        return {start, end};
-    }
+function formatMoment(
+  dateValue: Date | DateRange | undefined | null
+): moment.Moment | MomentRange | null | undefined {
+  if (dateValue === undefined || dateValue === null) return dateValue;
+  else if (isDateRange(dateValue)) {
+    const start = markRaw(moment(dateValue.start));
+    const end = markRaw(moment(dateValue.end));
+    if (start.isSame(date.value.start) && end.isSame(date.value.end))
+      return date.value;
+    return { start, end };
+  }
 
-    const m = moment(dateValue);
+  const m = moment(dateValue);
 
-    if (m.isSame(date.value))
-        return date.value;
-    
-    return markRaw(m);
+  if (m.isSame(date.value)) return date.value;
+
+  return markRaw(m);
 }
 
 syncRef(date, transformedDate, {
-    immediate: true,
-    flush: 'sync',
-    transform: {
-        ltr(left) {
-            return parseMoment(left);
-        },
-        rtl(right: Date | null | undefined | DateRange) {
-            return formatMoment(right);
-        }
-    }
+  immediate: true,
+  flush: "sync",
+  transform: {
+    ltr(left) {
+      return parseMoment(left);
+    },
+    rtl(right: Date | null | undefined | DateRange) {
+      return formatMoment(right);
+    },
+  },
 });
 
 const displayed = computed(() => {
-    if (isMomentRange(date.value)) {
-        return [
-            moment.isMoment(date.value.start) ? date.value.start.format(props.format) : '-', 
-            moment.isMoment(date.value.end) ? date.value.end.format(props.format) : '-'
-        ];
-    }
-    else if (moment.isMoment(date.value)) {
-        return date.value.format(props.format);
-    }
-    return '-';
+  if (isMomentRange(date.value)) {
+    return [
+      moment.isMoment(date.value.start)
+        ? date.value.start.format(props.format)
+        : "-",
+      moment.isMoment(date.value.end)
+        ? date.value.end.format(props.format)
+        : "-",
+    ];
+  } else if (moment.isMoment(date.value)) {
+    return date.value.format(props.format);
+  }
+  return "-";
 });
-
 </script>
 
 <template>
+  <div class="input-date-container">
     <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
-        <template #default="{ togglePopover }">
-            <AInput :modelValue="displayed" @focus="togglePopover"/>
-        </template>
+      <template #default="{ togglePopover }">
+        <AInput :modelValue="displayed" @focus="togglePopover" />
+      </template>
     </DatePicker>
     <DatePicker v-model.range="transformedDate" v-else>
-        <template #default="{ togglePopover }">
-            <div class="flex-row">
-                <AInput :modelValue="displayed[0]" @focus="togglePopover"/>
-                -
-                <AInput :modelValue="displayed[1]" @focus="togglePopover"/>
-            </div>
-        </template>
+      <template #default="{ togglePopover }">
+        <div class="input-range-container">
+          <div class="input-range-content">
+            <label class="label">Début</label>
+            <AInput
+              :modelValue="displayed[0]"
+              @focus="togglePopover"
+              color="grey-light"
+              class="input-range begin"
+            />
+          </div>
+          <div class="input-range-content">
+            <label class="label">Fin</label>
+            <AInput
+              :modelValue="displayed[1]"
+              @focus="togglePopover"
+              color="grey-light"
+              class="input-range end"
+            />
+          </div>
+        </div>
+      </template>
     </DatePicker>
+  </div>
 </template>
+
+<style lang="scss">
+.input-date-container {
+  .input-range-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    .input-range-content {
+      position: relative;
+      width: 45%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: 0;
+        width: 0;
+        border-top: 6px solid var(--a-grey);
+        border-right: 3px solid transparent;
+        border-left: 3px solid transparent;
+      }
+
+      .input-range {
+        padding-top: 25px;
+        padding-bottom: 7px;
+        font-size: 10px;
+        width: 100%;
+        max-width: 225px;
+      }
+
+      .label {
+        position: absolute;
+        pointer-events: none;
+        top: 5px;
+        left: 15px;
+        font-size: 13px;
+        color: var(--a-grey);
+      }
+    }
+  }
+
+  .vc-popover-content-wrapper {
+    .vc-popover-content {
+      border: 1px solid var(--a-grey-light);
+
+      .vc-container {
+        .vc-pane-container {
+          .vc-pane-header-wrapper {
+            //HEADER ARROW
+            .vc-header {
+              width: 75%;
+              .vc-arrow {
+                background: transparent;
+                svg {
+                  height: 15px;
+                  width: 15px;
+                  stroke-width: 3px;
+                  color: var(--a-black);
+                }
+              }
+            }
+          }
+
+          //HEADER TITLE
+          .vc-pane-layout {
+            .vc-pane {
+              .vc-header {
+                width: 75%;
+                .vc-title-wrapper {
+                  .vc-title {
+                    background: transparent;
+                    font-weight: 700;
+                  }
+                }
+              }
+
+              //BODY
+              .vc-weeks {
+                //DAYS LETTERS
+                .vc-weekdays {
+                  .vc-weekday {
+                    color: var(--a-black);
+
+                    //DAYS LETTERS WEEK-END
+                    &.vc-weekday-7,
+                    &.vc-weekday-1 {
+                      color: var(--a-tertiary-lighter);
+                    }
+                  }
+                }
+
+                //DAYS NUMBERS
+                .vc-week {
+                  .vc-day {
+                    //DAYS NUMBERS WEEK-END
+                    &.weekday-7,
+                    &.weekday-1 {
+                      color: var(--a-tertiary-lighter);
+                    }
+
+                    //SELECTED DATE BACKGROUND
+                    .vc-highlights {
+                      .vc-day-layer {
+                        .vc-highlight {
+                          background-color: var(--a-tertiary) !important;
+                        }
+
+                        .vc-highlight-bg-outline {
+                          border: 2px solid transparent;
+                        }
+                      }
+                    }
+
+                    //SELECTED DATE NUMBER
+                    .vc-day-content {
+                      &.vc-focusable {
+                        box-shadow: none;
+                      }
+
+                      &.vc-highlight-content-light {
+                        color: var(--a-white);
+                      }
+
+                      &.vc-highlight-content-outline {
+                        color: var(--a-white);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
