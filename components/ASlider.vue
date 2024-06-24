@@ -15,13 +15,9 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
-  minValue: {
-    type: Number,
-    default: 50,
-  },
-  maxValue: {
-    type: Number,
-    default: 80,
+  values: {
+    type: Array as PropType<[number, number]>,
+    default: () => [50, 80],
   },
   color: {
     type: String as PropType<Colors>,
@@ -35,13 +31,12 @@ const color = useColor(
   })
 );
 
-const emit = defineEmits(["update:minValue", "update:maxValue"]);
+const emit = defineEmits(["update:values"]);
 
 const slider = ref<HTMLDivElement | null>(null);
 const inputMin = ref<HTMLInputElement | null>(null);
 const inputMax = ref<HTMLInputElement | null>(null);
-const sliderMinValue = ref(props.minValue);
-const sliderMaxValue = ref(props.maxValue);
+const sliderValues = ref<[number, number]>([...props.values]);
 
 const getPercent = (value: number, min: number, max: number) => {
   return ((value - min) / (max - min)) * 100;
@@ -49,7 +44,7 @@ const getPercent = (value: number, min: number, max: number) => {
 
 // DIFF BETWEEN MIN & MAX
 const sliderDifference = computed(() => {
-  return Math.abs(sliderMaxValue.value - sliderMinValue.value);
+  return Math.abs(sliderValues.value[1] - sliderValues.value[0]);
 });
 
 const setCSSProps = (left: number, right: number) => {
@@ -62,12 +57,11 @@ const setCSSProps = (left: number, right: number) => {
 //UPDATED ON SLIDE
 watchEffect(() => {
   if (slider.value) {
-    emit("update:minValue", sliderMinValue.value);
-    emit("update:maxValue", sliderMaxValue.value);
+    emit("update:values", sliderValues.value);
 
-    const leftPercent = getPercent(sliderMinValue.value, props.min, props.max);
+    const leftPercent = getPercent(sliderValues.value[0], props.min, props.max);
     const rightPercent =
-      100 - getPercent(sliderMaxValue.value, props.min, props.max);
+      100 - getPercent(sliderValues.value[1], props.min, props.max);
 
     setCSSProps(leftPercent, rightPercent);
   }
@@ -77,18 +71,18 @@ const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
 
   if (target.name === "min") {
-    if (parseFloat(target.value) > sliderMaxValue.value) {
-      target.value = sliderMaxValue.value.toString();
+    if (parseFloat(target.value) > sliderValues.value[1]) {
+      target.value = sliderValues.value[1].toString();
     } else {
-      sliderMinValue.value = parseFloat(target.value);
+      sliderValues.value[0] = parseFloat(target.value);
     }
   }
 
   if (target.name === "max") {
-    if (parseFloat(target.value) < sliderMinValue.value) {
-      target.value = sliderMinValue.value.toString();
+    if (parseFloat(target.value) < sliderValues.value[0]) {
+      target.value = sliderValues.value[0].toString();
     } else {
-      sliderMaxValue.value = parseFloat(target.value);
+      sliderValues.value[1] = parseFloat(target.value);
     }
   }
 };
@@ -110,7 +104,7 @@ const onInput = (event: Event) => {
       id="min"
       :min="props.min"
       :max="props.max"
-      :value="props.minValue"
+      :value="sliderValues[0]"
       :step="props.step"
       @input="onInput"
     />
@@ -121,7 +115,7 @@ const onInput = (event: Event) => {
       id="max"
       :min="props.min"
       :max="props.max"
-      :value="props.maxValue"
+      :value="sliderValues[1]"
       :step="props.step"
       @input="onInput"
     />

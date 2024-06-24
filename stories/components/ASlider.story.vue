@@ -1,38 +1,30 @@
 <script setup lang="ts">
-import AMinMaxSlider from "../../components/AMinMaxSlider.vue";
+import ASlider from "../../components/ASlider.vue";
 import "../../index.scss";
 import { ref } from "vue";
 
-const minValue = ref(65);
-const maxValue = ref(100);
-
-const minValueExemple = ref(20);
-const maxValueExemple = ref(60);
+const sliderValuesA = ref<[number, number]>([65, 100]);
+const sliderValuesB = ref<[number, number]>([20, 60]);
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 520 }">
     <Variant title="default">
       <div class="slider-min-max-container">
-        <h3>Min: {{ minValue }} - Max: {{ maxValue }}</h3>
-        <AMinMaxSlider
-          class="slider-min-max"
-          v-model:min-value="minValue"
-          v-model:max-value="maxValue"
-        />
+        <h3>Min: {{ sliderValuesA[0] }} - Max: {{ sliderValuesA[1] }}</h3>
+        <ASlider class="slider-min-max" v-model:values="sliderValuesA" />
       </div>
     </Variant>
 
     <Variant title="Exemple">
       <div class="slider-min-max-container">
-        <h3>Min: {{ minValueExemple }} - Max: {{ maxValueExemple }}</h3>
-        <AMinMaxSlider
+        <h3>Min: {{ sliderValuesB[0] }} - Max: {{ sliderValuesB[1] }}</h3>
+        <ASlider
           class="slider-min-max"
           :min="0"
           :max="250"
           :step="10"
-          v-model:min-value="minValueExemple"
-          v-model:max-value="maxValueExemple"
+          v-model:values="sliderValuesB"
           color="secondary"
         />
       </div>
