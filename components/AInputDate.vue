@@ -2,7 +2,9 @@
 import { DatePicker } from "v-calendar";
 import AInput from "./AInput.vue";
 import "v-calendar/style.css";
-import { ref, markRaw, computed, watch, nextTick } from "vue";
+import { ref, markRaw, computed, defineProps } from "vue";
+import { useColor } from "../stores/color";
+import type { Colors } from "../stores/color";
 import { syncRef, watchPausable } from "@vueuse/core";
 import moment from "moment";
 
@@ -19,11 +21,18 @@ export interface DateRange {
 export interface AInputDateProps {
   modelValue: moment.Moment | null | undefined | MomentRange;
   format?: string;
+  color?: Colors;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
   format: "DD-MM-YYYY",
+  color: "tertiary",
 });
+
+const mainColor = computed(() => props.color);
+const color = useColor(mainColor);
+const colorInvert = useColor(mainColor, "default", true);
+const colorLighter = useColor(mainColor, "lighter");
 
 const date = defineModel<moment.Moment | MomentRange | null | undefined>();
 
@@ -225,7 +234,7 @@ const displayed = computed(() => {
                     //DAYS LETTERS WEEK-END
                     &.vc-weekday-7,
                     &.vc-weekday-1 {
-                      color: var(--a-tertiary-lighter);
+                      color: v-bind(colorLighter);
                     }
                   }
                 }
@@ -236,14 +245,14 @@ const displayed = computed(() => {
                     //DAYS NUMBERS WEEK-END
                     &.weekday-7,
                     &.weekday-1 {
-                      color: var(--a-tertiary-lighter);
+                      color: v-bind(colorLighter);
                     }
 
                     //SELECTED DATE BACKGROUND
                     .vc-highlights {
                       .vc-day-layer {
                         .vc-highlight {
-                          background-color: var(--a-tertiary) !important;
+                          background-color: v-bind(color) !important;
                         }
 
                         .vc-highlight-bg-outline {
@@ -259,11 +268,11 @@ const displayed = computed(() => {
                       }
 
                       &.vc-highlight-content-light {
-                        color: var(--a-white);
+                        color: v-bind(colorInvert);
                       }
 
                       &.vc-highlight-content-outline {
-                        color: var(--a-white);
+                        color: v-bind(colorInvert);
                       }
                     }
                   }
