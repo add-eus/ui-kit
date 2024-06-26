@@ -52,4 +52,5 @@ The `AInputRadio` component accepts the following properties:
 - `name` (string, required): Name of the radio button group.
 - `value` (string, required): Value of the radio button.
 - `modelValue` (string, required): Current selected value.
+- `color` (string, optional): Specifies the color of the input.
 </docs>

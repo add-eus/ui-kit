@@ -5,31 +5,34 @@ import { ref, computed, markRaw } from "vue";
 import "../../index.scss";
 
 const start = ref(markRaw(moment()));
-const end = ref(markRaw(moment().add(10, 'days')));
+const end = ref(markRaw(moment().add(10, "days")));
 
 const range = computed({
-    get() {
-      return { start: start.value, end: end.value };
-    },
-    set(value) {
-        if (value === null)
-          return;
-        start.value = value.start;
-        end.value = value.end;
-    }
+  get() {
+    return { start: start.value, end: end.value };
+  },
+  set(value) {
+    if (value === null) return;
+    start.value = value.start;
+    end.value = value.end;
+  },
 });
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: '100%' }">
     <Variant title="default">
-        <AInputDate v-model="start" />
+      <AInputDate v-model="start" />
     </Variant>
 
-    <Variant title="default">
-        <AInputDate v-model="range" />
+    <Variant title="range format color border-color">
+      <AInputDate
+        v-model="range"
+        format="DD MMMM - YYYY"
+        color="primary"
+        border-color="secondary"
+      />
     </Variant>
-    
   </Story>
 </template>
 
@@ -40,8 +43,10 @@ This is a input date component.
 
 ## Usage
 
-The `AIcon` component provides the following options:
+The `AInputDate` component provides the following options:
 
 - `v-model` (moment | {start: moment; end: moment; }): Specifies the model value of the button. Possible values are any valid moment object.
 - `format` (string, optional): Specifies the format of the date. Default is `DD-MM-YYYY`.
+- `color` (string, optional): Specifies the color of the calendar date selection.
+- `border-color` (string, optional): Specifies the color of the border of the input.
 </docs>
