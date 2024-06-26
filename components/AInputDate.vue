@@ -22,11 +22,13 @@ export interface AInputDateProps {
   modelValue: moment.Moment | null | undefined | MomentRange;
   format?: string;
   color?: Colors;
+  borderColor?: string;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
   format: "DD-MM-YYYY",
   color: "tertiary",
+  borderColor: "grey-light",
 });
 
 const mainColor = computed(() => props.color);
@@ -117,7 +119,11 @@ const displayed = computed(() => {
   <div class="input-date-container">
     <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
       <template #default="{ togglePopover }">
-        <AInput :modelValue="displayed" @focus="togglePopover" />
+        <AInput
+          :modelValue="displayed"
+          @focus="togglePopover"
+          :color="borderColor"
+        />
       </template>
     </DatePicker>
     <DatePicker v-model.range="transformedDate" v-else>
@@ -128,7 +134,7 @@ const displayed = computed(() => {
             <AInput
               :modelValue="displayed[0]"
               @focus="togglePopover"
-              color="grey-light"
+              :color="borderColor"
               class="input-range begin"
             />
           </div>
@@ -137,7 +143,7 @@ const displayed = computed(() => {
             <AInput
               :modelValue="displayed[1]"
               @focus="togglePopover"
-              color="grey-light"
+              :color="borderColor"
               class="input-range end"
             />
           </div>
@@ -151,12 +157,12 @@ const displayed = computed(() => {
 .input-date-container {
   .input-range-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
 
     .input-range-content {
       position: relative;
-      width: 45%;
+      width: calc(50% - 15px);
 
       &::after {
         content: "";
@@ -175,7 +181,6 @@ const displayed = computed(() => {
         padding-bottom: 7px;
         font-size: 10px;
         width: 100%;
-        max-width: 225px;
       }
 
       .label {
