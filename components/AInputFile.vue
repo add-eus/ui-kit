@@ -27,6 +27,10 @@ const props = defineProps({
     type: Object as PropType<Array<string> | string | undefined>,
     default: undefined,
   },
+  accept: {
+    type: String,
+    default: "image/*",
+  },
 });
 const emits = defineEmits<AInputFileEmits>();
 
@@ -38,7 +42,7 @@ const openFileSelector = async (index?: number): Promise<void> => {
     const input = document.createElement("input");
     input.type = "file";
     input.multiple = props.multiple;
-    input.accept = "image/*";
+    input.accept = props.accept;
     input.onchange = (e) => {
       const files = (e.target as HTMLInputElement).files;
       if (files) {
