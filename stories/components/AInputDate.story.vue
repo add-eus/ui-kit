@@ -25,12 +25,14 @@ const range = computed({
       <AInputDate v-model="start" />
     </Variant>
 
-    <Variant title="range format color border-color">
+    <Variant title="range format color border-color label-a label-b">
       <AInputDate
         v-model="range"
         format="DD MMMM - YYYY"
         color="primary"
         border-color="secondary"
+        label-a="From"
+        label-b="To"
       />
     </Variant>
   </Story>
@@ -49,4 +51,6 @@ The `AInputDate` component provides the following options:
 - `format` (string, optional): Specifies the format of the date. Default is `DD-MM-YYYY`.
 - `color` (string, optional): Specifies the color of the calendar date selection.
 - `border-color` (string, optional): Specifies the color of the border of the input.
+- `label-a` (string, optional): Specifies the label of the first input.
+- `label-b` (string, optional): Specifies the label of the second input.
 </docs>
