@@ -70,7 +70,10 @@ onMounted(() => {
             />
           </slot>
         </div>
-        <div class="conversation-message">
+        <div
+          class="conversation-message"
+          :class="{ 'bot-typing': showTyping, 'bot-typed': !showTyping }"
+        >
           <div v-if="showTyping && sender === 'bot'">
             <ATyping />
           </div>
@@ -100,6 +103,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
 
     .conversation-row {
       border-radius: 8px;
@@ -133,6 +137,7 @@ onMounted(() => {
         width: fit-content;
         height: fit-content;
         border-radius: 20px;
+        max-width: 80%;
       }
 
       &.user-message {
@@ -153,6 +158,18 @@ onMounted(() => {
           padding: 5px 10px;
           background: var(--a-grey-lightest);
           border-bottom-left-radius: 0;
+          color: var(--a-grey-darker);
+          font-weight: 500;
+          overflow: hidden;
+        }
+
+        .bot-typing {
+          max-height: 30px;
+          transition: max-height 0.5s ease-in-out;
+        }
+        .bot-typed {
+          max-height: 2000px;
+          transition: max-height 0.5s ease-in-out;
         }
       }
 

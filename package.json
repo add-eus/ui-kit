@@ -22,6 +22,7 @@
   "dependencies": {
     "@addeus/vue3-stores": "github:add-eus/vue3-stores#master",
     "@popperjs/core": "^2.11.8",
+    "@vueform/multiselect": "^2.6.8",
     "@vueuse/core": "^10.9.0",
     "material-symbols": "^0.17.1",
     "notyf": "^3.10.0",
