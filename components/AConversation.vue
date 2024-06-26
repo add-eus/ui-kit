@@ -103,6 +103,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
 
     .conversation-row {
       border-radius: 8px;
