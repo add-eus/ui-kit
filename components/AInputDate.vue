@@ -23,12 +23,16 @@ export interface AInputDateProps {
   format?: string;
   color?: Colors;
   borderColor?: string;
+  labelA?: string;
+  labelB?: string;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
   format: "DD-MM-YYYY",
   color: "tertiary",
   borderColor: "grey-light",
+  labelA: "Begin",
+  labelB: "End",
 });
 
 const mainColor = computed(() => props.color);
@@ -130,7 +134,7 @@ const displayed = computed(() => {
       <template #default="{ togglePopover }">
         <div class="input-range-container">
           <div class="input-range-content">
-            <label class="label">Début</label>
+            <label class="label">{{ labelA }}</label>
             <AInput
               :modelValue="displayed[0]"
               @focus="togglePopover"
@@ -139,7 +143,7 @@ const displayed = computed(() => {
             />
           </div>
           <div class="input-range-content">
-            <label class="label">Fin</label>
+            <label class="label">{{ labelB }}</label>
             <AInput
               :modelValue="displayed[1]"
               @focus="togglePopover"
