@@ -22,6 +22,10 @@ const props = defineProps({
       ].includes(value);
     },
   },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
   loading: {
     type: Boolean,
     default: false,
@@ -53,9 +57,10 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   <button
     class="a-button"
     v-bind="$attrs"
+    :class="{'outlined': outlined}"
     :style="{
       width: full && '100%',
-      padding: paddingxl && '3px 20px',
+      padding: paddingxl && '3px 20px'
     }"
   >
     <slot v-if="!loading"></slot>
@@ -74,8 +79,36 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-  background-color: v-bind(colorLight);
-  color: v-bind(colorInvert);
+  
+  &:not(.outlined) {
+    background-color: v-bind(colorLight);
+    color: v-bind(colorInvert);
+
+    &:hover {
+      background-color: v-bind(colorLighter);
+      color: v-bind(colorInvert);
+
+      i {
+        color: v-bind(color);
+      }
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 1px solid v-bind(colorLight);
+    color: v-bind(colorLight);
+
+    &:hover {
+      border: 1px solid v-bind(colorLighter);
+      color: v-bind(colorLighter);
+      background-color: v-bind(colorInvert);
+
+      i {
+        color: v-bind(colorLighter);
+      }
+    }
+  }
 
   .loader-icon {
     position: absolute;
@@ -86,14 +119,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
     transition: color 0.15s ease-in-out;
   }
 
-  &:hover {
-    background-color: v-bind(colorLighter);
-    color: v-bind(colorInvert);
-
-    i {
-      color: v-bind(color);
-    }
-  }
+  
 
   &:active {
     background-color: v-bind(color);
