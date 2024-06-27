@@ -31,7 +31,9 @@ const emits = defineEmits<ABreadcrumbEmits>();
 const activeStep = useVModel(props, "modelValue", emits);
 
 const clickStep = (index) => {
-  activeStep.value = index;
+  if (activeStep.value > index) {
+    activeStep.value = index;
+  }
 };
 
 const color = useColor(
@@ -59,7 +61,7 @@ const stepLength = props.step.length;
         </div>
         <div class="breadcrumb-text">{{ step[index - 1] }}</div>
         <div v-if="index != stepLength" class="breadcrumb-point">
-          {{ point[index - 1] }}
+          {{ point[index - 1] }} {{ index }}
         </div>
       </div>
     </div>

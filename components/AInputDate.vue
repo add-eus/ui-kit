@@ -185,6 +185,7 @@ const displayed = computed(() => {
         padding-bottom: 7px;
         font-size: 10px;
         width: 100%;
+        cursor: pointer;
       }
 
       .label {

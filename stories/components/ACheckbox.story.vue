@@ -3,19 +3,21 @@ import ACheckbox from "../../components/ACheckbox.vue";
 import { ref } from "vue";
 import "../../index.scss";
 
-const value = ref(false);
+const valueA = ref(false);
+const valueB = ref(false);
+const valueC = ref(false);
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
-      <ACheckbox v-model="value"/>
-    </Variant>
-    <Variant title="violet">
-      <ACheckbox color="violet" v-model="value"/>
+      <ACheckbox v-model="valueA" />
     </Variant>
     <Variant title="primary">
-      <ACheckbox color="primary" v-model="value"/>
+      <ACheckbox color="primary" v-model="valueB" />
+    </Variant>
+    <Variant title="secondary">
+      <ACheckbox color="secondary" v-model="valueC" />
     </Variant>
   </Story>
 </template>
