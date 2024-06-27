@@ -61,7 +61,7 @@ const stepLength = props.step.length;
         </div>
         <div class="breadcrumb-text">{{ step[index - 1] }}</div>
         <div v-if="index != stepLength" class="breadcrumb-point">
-          {{ point[index - 1] }} {{ index }}
+          {{ point[index - 1] }}
         </div>
       </div>
     </div>
