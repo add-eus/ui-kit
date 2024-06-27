@@ -5,6 +5,10 @@ import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
+  modelValue: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+  },
   options: {
     type: Array as PropType<string[]>,
     default: () => ["Option 1", "Option 2", "Option 3"],
@@ -40,6 +44,7 @@ const color = useColor(
 const mainColor = computed(() => props.tagColor);
 const tagColor = useColor(mainColor);
 const tagColorInvert = useColor(mainColor, "default", true);
+const value = defineModel();
 </script>
 
 <template>
