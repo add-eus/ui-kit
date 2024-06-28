@@ -12,8 +12,8 @@ import "../../index.scss";
     <Variant title="grey">
       <AButton color="grey">AButton</AButton>
     </Variant>
-    <Variant title="primary ">
-      <AButton color="tertiary">
+    <Variant title="primary">
+      <AButton color="primary">
         AButton
         <AIcon icon="arrow_forward" type="rounded" />
       </AButton>
@@ -52,6 +52,12 @@ import "../../index.scss";
     </Variant>
     <Variant title="disabled">
       <AButton color="tertiary" disabled> AButton Disabled </AButton>
+    </Variant>
+    <Variant title="primary">
+      <AButton color="primary" outlined>
+        AButton
+        <AIcon icon="arrow_forward" type="rounded" />
+      </AButton>
     </Variant>
   </Story>
 </template>
