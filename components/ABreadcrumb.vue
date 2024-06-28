@@ -31,7 +31,9 @@ const emits = defineEmits<ABreadcrumbEmits>();
 const activeStep = useVModel(props, "modelValue", emits);
 
 const clickStep = (index) => {
-  activeStep.value = index;
+  if (activeStep.value > index) {
+    activeStep.value = index;
+  }
 };
 
 const color = useColor(
