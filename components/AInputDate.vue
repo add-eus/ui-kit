@@ -25,6 +25,8 @@ export interface AInputDateProps {
   borderColor?: string;
   labelA?: string;
   labelB?: string;
+  min?: moment.Moment;
+  max?: moment.Moment;
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
@@ -121,7 +123,12 @@ const displayed = computed(() => {
 
 <template>
   <div class="input-date-container">
-    <DatePicker v-model="transformedDate" v-if="!isDateRange(transformedDate)">
+    <DatePicker
+      v-model="transformedDate"
+      v-if="!isDateRange(transformedDate)"
+      :min-date="props.min?.toDate()"
+      :max-date="props.max?.toDate()"
+    >
       <template #default="{ togglePopover }">
         <AInput
           :modelValue="displayed"
@@ -130,7 +137,12 @@ const displayed = computed(() => {
         />
       </template>
     </DatePicker>
-    <DatePicker v-model.range="transformedDate" v-else>
+    <DatePicker
+      v-model.range="transformedDate"
+      v-else
+      :min-date="props.min?.toDate()"
+      :max-date="props.max?.toDate()"
+    >
       <template #default="{ togglePopover }">
         <div class="input-range-container">
           <div class="input-range-content">
