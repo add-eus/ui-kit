@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // import '../scss/_color.scss';
 
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+import { useColor } from "../stores/color";
 
 const props = defineProps({
   color: {
@@ -20,12 +21,16 @@ const props = defineProps({
     },
   },
 });
+
+const color = computed(() => props.color);
+
+const colorValue = useColor(color);
 </script>
 
 <template>
   <span
     :class="['a-icon', 'material-symbols-' + type]"
-    :style="{ color: color }"
+    :style="{ color: colorValue }"
     >{{ icon }}</span
   >
 </template>

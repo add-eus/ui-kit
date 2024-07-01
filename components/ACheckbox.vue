@@ -32,15 +32,12 @@ const checkboxValue = computed({
   },
 });
 
-const isChecked = computed(() => {
-  return props.value === props.valueChecked;
-});
-
 const color = useColor(
   computed(() => {
     return props.color;
   })
 );
+
 </script>
 
 <template>

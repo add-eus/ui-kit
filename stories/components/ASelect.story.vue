@@ -3,7 +3,11 @@ import { ref } from "vue";
 import ASelect from "../../components/ASelect.vue";
 
 const options = ["Option 1", "Option 2", "Option 3"];
-const value = ref([]);
+const value1 = ref([]);
+
+const value2 = ref([]);
+const value3 = ref(undefined);
+
 </script>
 
 <template>
@@ -11,7 +15,32 @@ const value = ref([]);
     <Variant title="default">
       <div class="story-select">
         <ASelect
-          v-model="value"
+          v-model="value1"
+          no-results="No results found"
+          no-options="The list is empty"
+          placeholder="Type your tag.."
+          :options="options"
+        ></ASelect>
+      </div>
+    </Variant>
+    <Variant title="default">
+      <div class="story-select">
+        <ASelect
+          v-model="value2"
+          mode="multiple"
+          no-results="No results found"
+          no-options="The list is empty"
+          placeholder="Type your tag.."
+          :options="options"
+        ></ASelect>
+      </div>
+    </Variant>
+    <Variant title="default">
+      <div class="story-select">
+        <ASelect
+          v-model="value3"
+          mode="single"
+          color="primary"
           no-results="No results found"
           no-options="The list is empty"
           placeholder="Type your tag.."
