@@ -133,6 +133,7 @@ const value = defineModel();
     margin: 0 10px;
     color: v-bind(colorValue);
     font-weight: 400;
+    width: 100%;
     cursor: pointer;
   }
 
