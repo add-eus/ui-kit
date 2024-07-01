@@ -26,6 +26,6 @@ This is a icon component.
 
 The `AIcon` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `var(--a-primary)`.
+- `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `primary`.
 - `placeholder` (string, optional): Specifies the placeholder of the button. Possible values are any valid text like `Type your text here..`.
 </docs>

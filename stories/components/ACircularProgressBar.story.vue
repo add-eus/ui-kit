@@ -6,7 +6,7 @@ import "../../index.scss";
 </script>
 
 <template>
-  <Story :layout="{ type: 'grid', width: 290 }">
+  <Story :layout="{ type: 'grid', width: 400 }">
     <Variant title="default">
       <ACircularProgressBar />
     </Variant>
@@ -54,6 +54,6 @@ This is a circular progress bar component incrementing to the target number.
 ## Props
 
 - `target` (number, optional, default: 1): Specifies the target number.
-- `colors` (array of string, optional, default: ["orange", "gold"]): Specifies the first color of the graph.
+- `colors` (array of string, optional, default: ["gold"]): Specifies the color of the graph. You can specifie two color to have a gradient like ['primary', 'secondary']
 - `size` (number, optional, default: 200): Specifies the height & width of the graph.
 </docs>

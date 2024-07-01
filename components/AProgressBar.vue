@@ -7,9 +7,9 @@ const props = defineProps({
     type: Number,
     default: 25,
   },
-  color: {
-    type: String as PropType<Colors>,
-    default: "grey",
+  colors: {
+    type: Array as PropType<Colors[]>,
+    default: () => ["grey"],
   },
   size: {
     type: Number,
@@ -21,15 +21,21 @@ const props = defineProps({
   },
 });
 
-const color = useColor(
+const colorA = useColor(
   computed(() => {
-    return props.color;
+    return props.colors[0];
+  })
+);
+
+const colorB = useColor(
+  computed(() => {
+    return props.colors[1];
   })
 );
 
 const calculateOpacity = (targetValue: number) => {
   const maxOpacity = 1;
-  const minOpacity = 0;
+  const minOpacity = 0.2;
   const opacityStep = (maxOpacity - minOpacity) / 100;
   return maxOpacity - opacityStep * (100 - targetValue);
 };
@@ -44,8 +50,10 @@ const calculateOpacity = (targetValue: number) => {
       <div
         class="progress"
         :style="{
-          '--width': target + '%',
-          background: color,
+          '--width': target * 0.93 + 7 + '%',
+          background: colorB
+            ? `linear-gradient(90deg, ${colorA}, ${colorB} 90%)`
+            : colorA,
           opacity: calculateOpacity(target),
         }"
       ></div>
