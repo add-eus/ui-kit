@@ -71,6 +71,7 @@ const value = defineModel();
     <Multiselect
       v-model="value"
       :mode="mode"
+      :addTagOn="['enter', 'tab', ',', 'space']"
       :close-on-select="false"
       :searchable="true"
       :create-option="createOption"

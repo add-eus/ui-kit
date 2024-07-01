@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import '../scss/_color.scss';
-
 import { defineProps, computed } from "vue";
 import { useColor } from "../stores/color";
 

@@ -1,6 +1,24 @@
+<script setup lang="ts">
+import { defineProps, PropType, computed } from "vue";
+import { Colors, useColor } from "../stores/color";
+
+const props = defineProps({
+  color: {
+    type: String as PropType<Colors>,
+    default: "white",
+  },
+});
+
+const color = useColor(
+  computed(() => {
+    return props.color;
+  })
+);
+</script>
+
 <template>
   <div class="loader-icon">
-    <div class="spinner"></div>
+    <div class="spinner" :style="{ borderTop: `4px solid ${color}` }"></div>
   </div>
 </template>
 
@@ -15,9 +33,9 @@
   overflow: hidden;
 
   > .spinner {
-    border: 4px solid var(--a-grey-lighter);
+    border: 4px solid rgba(255, 255, 255, 0.25);
     border-radius: 50%;
-    border-top: 4px solid var(--a-primary);
+    border-top: 4px solid var(--a-white);
     width: 22px;
     height: 22px;
     animation: spin 1s linear infinite;
