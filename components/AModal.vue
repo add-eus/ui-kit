@@ -86,60 +86,62 @@ defineExpose({
 
 <template>
   <Teleport to="body">
-    <div
-      :class="[open && 'is-active', `is-${size}`, `${classList}`]"
-      class="modal ad-modal"
-      v-if="open"
-    >
-      <button
-        class="ad-modal-background ad-modal-close"
-        tabindex="0"
-        @keydown.space.prevent="() => noclose === false && close()"
-        @click="() => noclose === false && close()"
-      ></button>
-      <div class="ad-modal-content">
-        <ACard
-          :title-alignement="titleAlignement"
-          :action-alignement="actionAlignement"
-        >
-          <template #header>
-            <h3>
-              <slot name="title"
-                ><Translate>{{ title }}</Translate></slot
+    <transition name="fade-fast">
+      <div
+        :class="[open && 'is-active', `is-${size}`, `${classList}`]"
+        class="modal a-modal"
+        v-if="open"
+      >
+        <button
+          class="a-modal-background a-modal-close"
+          tabindex="0"
+          @keydown.space.prevent="() => noclose === false && close()"
+          @click="() => noclose === false && close()"
+        ></button>
+        <div class="a-modal-content">
+          <ACard
+            :title-alignement="titleAlignement"
+            :action-alignement="actionAlignement"
+          >
+            <template #header>
+              <h3>
+                <slot name="title"
+                  ><Translate>{{ title }}</Translate></slot
+                >
+              </h3>
+              <AButton
+                class="a-modal-close"
+                icon="close"
+                circle
+                :disabled="noclose"
+                @keydown.space.prevent="close()"
+                @click="close()"
               >
-            </h3>
-            <AButton
-              class="ad-modal-close"
-              icon="close"
-              circle
-              :disabled="noclose"
-              @keydown.space.prevent="close()"
-              @click="close()"
-            >
-              <AIcon icon="close"></AIcon>
-            </AButton>
-          </template>
-          <template #content>
-            <slot
-              v-if="showConfirmation"
-              name="confirmation"
-              :cancel="cancelConfirmation"
-            ></slot>
-            <slot name="content"></slot>
-          </template>
-          <template #action>
-            <slot name="action" :close="() => close()"></slot>
-          </template>
-        </ACard>
+                <AIcon icon="close"></AIcon>
+              </AButton>
+            </template>
+            <template #content>
+              <slot
+                v-if="showConfirmation"
+                name="confirmation"
+                :cancel="cancelConfirmation"
+              ></slot>
+              <slot name="content"></slot>
+            </template>
+            <template #action>
+              <slot name="action" :close="() => close()"></slot>
+            </template>
+          </ACard>
+        </div>
       </div>
-    </div>
+    </transition>
   </Teleport>
 </template>
 
 <style lang="scss">
 @import "../scss/color";
 
-.ad-modal {
+.a-modal {
   transition: all 0.5s;
 
   &.is-active {
@@ -151,16 +153,17 @@ defineExpose({
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: hidden;
   }
 
-  .ad-modal-close {
+  .a-modal-close {
     position: absolute;
     cursor: pointer;
     top: 10px;
     right: 10px;
     background: transparent;
 
-    &.ad-modal-background {
+    &.a-modal-background {
       top: 0;
       right: 0;
     }
@@ -170,33 +173,63 @@ defineExpose({
     width: 100%;
     border-radius: 8px;
     padding: 20px 40px 40px 40px;
+    max-height: 100vh;
+
+    > .a-card-body {
+      overflow: auto;
+    }
   }
 
-  .ad-modal-background {
+  .a-modal-background {
     height: 100%;
     width: 100%;
-    background: $a-grey;
-    opacity: 0.5;
+    background: $a-black;
+    opacity: 0.45;
     border: none;
   }
 
-  .ad-modal-content {
-    transform: scale(1) translate(-50%, -50%) !important;
+  .a-modal-content {
     opacity: 1 !important;
     max-width: 540px;
-    animation: fadeInDown 0.5s;
     margin: 0;
     padding: 0 10px;
     z-index: 300;
-    top: 50%;
-    left: 50%;
-    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    position: fixed;
+    /* transform: scale(1) translate(-50%, -50%) !important; */
+    animation: goUp 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    transform-origin: left;
+
+    @keyframes goUp {
+      0% {
+        transform: scale(1) translate(-50%, -40%);
+      }
+      100% {
+        transform: scale(1) translate(-50%, -50%);
+      }
+    }
 
     .a-card {
       max-width: 100%;
       margin: 0 auto;
       max-height: 95vh;
       overflow-y: auto;
+
+      animation: upScale 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      transform-origin: center;
+
+      @keyframes upScale {
+        0% {
+          transform: scale(0.95);
+        }
+        50% {
+          transform: scale(0.95);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
 
       &.is-rounded {
         border-radius: 12px;
@@ -285,10 +318,15 @@ defineExpose({
   }
 
   //SIZING
+
   &.is-giant {
-    .ad-modal-content {
+    .a-modal-content {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1390px;
+
+      @media screen and (max-width: 1390px) {
+        max-width: 95vw;
+      }
 
       .modal-card {
         width: 100%;
@@ -297,7 +335,7 @@ defineExpose({
   }
 
   &.is-big {
-    .ad-modal-content {
+    .a-modal-content {
       width: 100%;
       max-width: 840px;
 
@@ -308,7 +346,7 @@ defineExpose({
   }
 
   &.is-large {
-    .ad-modal-content {
+    .a-modal-content {
       width: 100%;
       max-width: 720px;
 
@@ -319,7 +357,7 @@ defineExpose({
   }
 
   &.is-medium {
-    .ad-modal-content {
+    .a-modal-content {
       width: 100%;
       max-width: 640px;
 
@@ -330,7 +368,7 @@ defineExpose({
   }
 
   &.is-small {
-    .ad-modal-content {
+    .a-modal-content {
       width: 100%;
       max-width: 420px;
 
@@ -341,11 +379,11 @@ defineExpose({
   }
 
   &.is-dark {
-    .ad-modal-background {
+    .a-modal-background {
       background: rgb(101 101 104 / 80%) !important;
     }
 
-    .ad-modal-content {
+    .a-modal-content {
       .modal-card {
         .modal-card-head {
           background: var(--dark-sidebar-light-6) !important;
@@ -372,14 +410,14 @@ defineExpose({
 @media screen and (min-width: 769px) {
   .modal.modal-lg {
     .modal-card,
-    .ad-modal-content {
+    .a-modal-content {
       width: 800px !important;
     }
   }
 
   .modal.modal-sm {
     .modal-card,
-    .ad-modal-content {
+    .a-modal-content {
       width: 400px !important;
     }
   }

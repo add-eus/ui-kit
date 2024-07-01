@@ -10,10 +10,14 @@ export interface AInputSizerProps {
   raw?: boolean;
   modelValue?: any;
   placeholder?: string;
+  maxLength?: number;
 }
 
 const emits = defineEmits<AInputSizerEmits>();
-const props = withDefaults(defineProps<AInputSizerProps>(), { modelValue: "" });
+const props = withDefaults(defineProps<AInputSizerProps>(), {
+  modelValue: "",
+  maxLength: 9999,
+});
 
 const value = useVModel(props, "modelValue", emits);
 
@@ -40,6 +44,7 @@ defineExpose({
       :class="classes"
       rows="1"
       :placeholder="placeholder"
+      :maxlength="props.maxLength"
     ></textarea>
   </div>
 </template>
@@ -78,7 +83,7 @@ defineExpose({
     background: none;
     appearance: none;
     border: none;
-    min-height: 80px;
+    min-height: 50px;
   }
 
   span {

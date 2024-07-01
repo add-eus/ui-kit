@@ -4,22 +4,29 @@ import AButton from "../AButton.vue";
 import ACrop from "../ACrop.vue";
 import { toValue } from "@vueuse/core";
 import { watch } from "vue";
-import { ACropProps } from "../ACrop.vue"
 
-export interface AConfirmPromptEmits {
+export interface ACropPromptEmits {
   (e: "cancel"): void;
   (e: "confirm"): void;
   (e: "update:modelValue", value?: any): void;
 }
 
-export interface AConfirmPromptProps extends /* @vue-ignore */ ACropProps {
+export interface ACropPromptProps {
   title: string;
   modelValue: Blob | File;
   confirm: string;
   cancel: string;
+  modelValue: Blob;
+  aspectRatio?: number;
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
+  mimeType?: string;
+  quality?: number;
 }
 
-const props = defineProps<AConfirmPromptProps>();
+const props = defineProps<ACropPromptProps>();
 const model = defineModel();
 </script>
 
@@ -37,11 +44,12 @@ const model = defineModel();
               ></ACrop>
     </template>
     <template #action>
-      <AButton @click="$emit('confirm')" color="success">{{
-        toValue(confirm)
-      }}</AButton>
-      <AButton @click="$emit('cancel')" color="danger">{{
+      
+      <AButton @click="$emit('cancel')">{{
         toValue(cancel)
+      }}</AButton>
+      <AButton @click="$emit('confirm')" color="primary">{{
+        toValue(confirm)
       }}</AButton>
     </template>
   </AModal>

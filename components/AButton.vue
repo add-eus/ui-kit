@@ -22,6 +22,10 @@ const props = defineProps({
       ].includes(value);
     },
   },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
   loading: {
     type: Boolean,
     default: false,
@@ -55,6 +59,7 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   <button
     class="a-button"
     v-bind="$attrs"
+    :class="{ outlined: outlined }"
     :style="{
       width: full && '100%',
       padding: paddingxl && '3px 20px',
@@ -76,34 +81,57 @@ const colorDarkerInvert = useColor(mainColor, "darker", true);
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
-  background-color: v-bind(color);
-  color: v-bind(colorInvert);
+
+  &:not(.outlined) {
+    background-color: v-bind(color);
+    color: v-bind(colorInvert);
+
+    &:hover {
+      background-color: v-bind(colorDark);
+      color: v-bind(colorDarkInvert);
+
+      i {
+        color: v-bind(color);
+      }
+    }
+
+    &:active {
+      background-color: v-bind(colorDarker);
+      color: v-bind(colorDarkerInvert);
+
+      i {
+        color: v-bind(colorDarkerInvert);
+      }
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 1px solid v-bind(color);
+    color: v-bind(color);
+
+    &:hover {
+      border: 1px solid v-bind(colorDark);
+      color: v-bind(colorDark);
+      background-color: v-bind(colorDarkInvert);
+
+      i {
+        color: v-bind(colorDarkInvert);
+      }
+    }
+
+    &:active {
+      border: 1px solid v-bind(colorDarker);
+      color: v-bind(colorDarker);
+
+      i {
+        color: v-bind(colorDarkerInvert);
+      }
+    }
+  }
 
   .loader-icon {
     position: absolute;
-  }
-
-  i {
-    color: v-bind(colorInvert);
-    transition: color 0.15s ease-in-out;
-  }
-
-  &:hover {
-    background-color: v-bind(colorDark);
-    color: v-bind(colorDarkInvert);
-
-    i {
-      color: v-bind(color);
-    }
-  }
-
-  &:active {
-    background-color: v-bind(colorDarker);
-    color: v-bind(colorDarkerInvert);
-
-    i {
-      color: v-bind(colorDarkerInvert);
-    }
   }
 
   &:disabled {

@@ -45,7 +45,7 @@ const model = defineModel();
 <style scoped lang="scss">
 input {
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   border-style: solid;
   border-width: 1px;
   max-width: 100%;

@@ -13,6 +13,7 @@ export interface ACropProps {
     mimeType?: string;
     quality?: number;
 }
+
 export interface ACropEmits {
     (event: "update:modelValue", value?: any): void;
 }
