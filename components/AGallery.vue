@@ -113,13 +113,13 @@ defineExpose({
             v-if="medias.length >= 2"
             class="icon-carousel media-img"
             icon="filter_none"
-            color="var(--a-white)"
+            color="white"
           />
           <AIcon
             v-if="medias.length >= 2"
             class="icon-carousel media-video"
             icon="video_library"
-            color="var(--a-white)"
+            color="white"
           />
         </div>
         <!-- Placeholder -->
@@ -166,7 +166,7 @@ defineExpose({
       class="icon-back"
       @click="prevMedia"
     >
-      <AIcon icon="keyboard_arrow_left" color="var(--a-grey)" />
+      <AIcon icon="keyboard_arrow_left" color="grey" />
     </button>
     <!-- Icon Next -->
     <button
@@ -174,7 +174,7 @@ defineExpose({
       class="icon-next"
       @click="nextMedia"
     >
-      <AIcon icon="keyboard_arrow_right" color="var(--a-grey)" />
+      <AIcon icon="keyboard_arrow_right" color="grey" />
     </button>
     <slot
       name="actions"

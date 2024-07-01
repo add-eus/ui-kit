@@ -77,6 +77,7 @@ const onChange = (event: Event) => {
 
     &.hide-radio {
       border: 2px solid v-bind(color);
+      text-align:center;
 
       &.selected {
         background-color: v-bind(color);

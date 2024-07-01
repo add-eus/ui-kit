@@ -67,13 +67,13 @@ const inputFileRef = ref<any>(null);
         <template #actions="{ index, setActiveMedia }">
           <div class="icons-container-story">
             <AButton>
-              <AIcon icon="edit" color="var(--a-grey)" />
+              <AIcon icon="edit" color="grey" />
             </AButton>
             <AButton>
-              <AIcon icon="add_to_photos" color="var(--a-grey)" />
+              <AIcon icon="add_to_photos" color="grey" />
             </AButton>
             <AButton>
-              <AIcon icon="close" color="var(--a-danger)" />
+              <AIcon icon="close" color="danger" />
             </AButton>
           </div>
         </template>

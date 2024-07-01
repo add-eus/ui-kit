@@ -125,7 +125,7 @@ if (props.noRouter !== true) {
             @keydown.space.prevent="(e) => (e.target as HTMLAnchorElement).click()"
             @click="(e) => handleLinkClick(e, currentPage - 1)"
           >
-            <AIcon icon="arrow_back_ios_new" color="var(--a-blue)" />
+            <AIcon icon="arrow_back_ios_new" color="blue" />
           </RouterLink>
         </li>
       </div>
@@ -190,7 +190,7 @@ if (props.noRouter !== true) {
             @keydown.space.prevent="(e) => (e.target as HTMLAnchorElement).click()"
             @click="(e) => handleLinkClick(e, currentPage + 1)"
           >
-            <AIcon icon="arrow_forward_ios" color="var(--a-blue)" />
+            <AIcon icon="arrow_forward_ios" color="blue" />
           </RouterLink>
         </li>
       </div>

@@ -90,20 +90,26 @@ const value = defineModel();
         {{ option.label }}
         </slot>
       </template>
-      <template #singlelabel>
+      <template #singlelabel="{value}">
         <span class="label">
-          <slot name="label"></slot>
+          <slot name="label">
+            {{ value.label || "Select an option" }}
+          </slot>
         </span>
        
       </template>
-      <template #multiplelabel>
+      <template #multiplelabel="{values}">
         <span class="label">
-          <slot name="label"></slot>
+          <slot name="label">
+            {{ values.length }} selected
+          </slot>
         </span>
       </template>
       <template #placeholder>
         <span class="label">
-          <slot name="label"></slot>
+          <slot name="label">
+            {{ placeholder }}
+          </slot>
         </span>
       </template>
     </Multiselect>
