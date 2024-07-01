@@ -17,7 +17,7 @@ const props = defineProps({
   full: {
     type: Boolean,
     default: false,
-  },
+  }
 });
 
 const color = useColor(
@@ -70,6 +70,7 @@ span {
     transition: opacity 0.25s, outline 0.25s;
     outline: none;
     border: none;
+    width: 100%;
 
     &::placeholder {
       color: var(--a-grey-light);
