@@ -9,13 +9,13 @@ import "../../index.scss";
       <AIcon />
     </Variant>
     <Variant title="primary ">
-      <AIcon icon="arrow_forward" type="rounded" color="var(--a-primary)" />
+      <AIcon icon="arrow_forward" type="rounded" color="primary" />
     </Variant>
     <Variant title="danger">
-      <AIcon icon="close" type="sharp" color="var(--a-danger)" />
+      <AIcon icon="close" type="sharp" color="danger" />
     </Variant>
     <Variant title="success">
-      <AIcon icon="check" type="outlined" color="var(--a-success)" />
+      <AIcon icon="check" type="outlined" color="success" />
     </Variant>
   </Story>
 </template>

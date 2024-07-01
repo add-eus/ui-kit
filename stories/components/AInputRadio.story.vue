@@ -8,9 +8,39 @@ const selectedOption = ref("monday");
 <template>
   <Story :layout="{ type: 'grid', width: 300 }">
     <Variant title="default">
-      <AInputRadio> Default </AInputRadio>
+      <AInputRadio :hideRadio="true"> Default </AInputRadio>
     </Variant>
     <Variant title="Multi options">
+      <AInputRadio
+        name="days"
+        value="monday"
+        v-model:modelValue="selectedOption"
+        color="tertiary"
+        :hideRadio="true"
+      >
+        Monday
+      </AInputRadio>
+      <AInputRadio
+        name="days"
+        value="tuesday"
+        v-model:modelValue="selectedOption"
+        color="tertiary"
+        :hideRadio="true"
+      >
+        Tuesday
+      </AInputRadio>
+      <AInputRadio
+        name="days"
+        value="wednesday"
+        v-model:modelValue="selectedOption"
+        color="secondary"
+        :hideRadio="true"
+      >
+        Wednesday
+      </AInputRadio>
+      <p>Selected: {{ selectedOption }}</p>
+    </Variant>
+    <Variant title="Show Radio">
       <AInputRadio
         name="days"
         value="monday"
@@ -31,7 +61,7 @@ const selectedOption = ref("monday");
         name="days"
         value="wednesday"
         v-model:modelValue="selectedOption"
-        color="tertiary"
+        color="secondary"
       >
         Wednesday
       </AInputRadio>
