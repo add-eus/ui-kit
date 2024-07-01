@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, PropType, computed } from "vue";
+import { PropType, computed, ref } from "vue";
 import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
@@ -27,10 +27,16 @@ const color = useColor(
 );
 
 const model = defineModel();
+const inputRef = ref<HTMLInputElement | null>(null);
+const focus = () => {
+  inputRef.value?.focus();
+};
+defineExpose({ focus });
 </script>
 
 <template>
   <input
+    ref="inputRef"
     v-bind="$attrs"
     v-model="model"
     :style="{

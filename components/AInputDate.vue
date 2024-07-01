@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { DatePicker } from "v-calendar";
-import AInput from "./AInput.vue";
-import "v-calendar/style.css";
-import { ref, markRaw, computed, defineProps } from "vue";
-import { useColor } from "../stores/color";
-import type { Colors } from "../stores/color";
-import { syncRef, watchPausable } from "@vueuse/core";
+import { syncRef } from "@vueuse/core";
 import moment from "moment";
+import { DatePicker } from "v-calendar";
+import "v-calendar/style.css";
+import { computed, defineProps, markRaw, ref } from "vue";
+import type { Colors } from "../stores/color";
+import { useColor } from "../stores/color";
+import AInput from "./AInput.vue";
 
 export interface MomentRange {
   start: moment.Moment | null | undefined;
@@ -45,6 +45,7 @@ const colorLighter = useColor(mainColor, "lighter");
 const date = defineModel<moment.Moment | MomentRange | null | undefined>();
 
 const transformedDate = ref<null | undefined | Date | DateRange>(null);
+const inputRef = ref<InstanceType<typeof AInput> | null>(null);
 
 function isDateRange(value: any): boolean {
   return typeof value === "object" && value !== null && !moment.isDate(value);
@@ -119,6 +120,12 @@ const displayed = computed(() => {
   }
   return "-";
 });
+
+const open = () => {
+  inputRef.value?.focus();
+};
+
+defineExpose({ open });
 </script>
 
 <template>
@@ -131,6 +138,7 @@ const displayed = computed(() => {
     >
       <template #default="{ togglePopover }">
         <AInput
+          ref="inputRef"
           :modelValue="displayed"
           @focus="togglePopover"
           :color="borderColor"
@@ -148,6 +156,7 @@ const displayed = computed(() => {
           <div class="input-range-content">
             <label class="label">{{ labelA }}</label>
             <AInput
+              ref="inputRef"
               :modelValue="displayed[0]"
               @focus="togglePopover"
               :color="borderColor"
