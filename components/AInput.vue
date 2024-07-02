@@ -60,6 +60,7 @@ defineExpose({ focus });
   border-style: solid;
   border-width: 1px;
   display: flex;
+  background: var(--a-white);
 
   &:has(+ *) {
     padding-right: 0;
