@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType, ref, computed, watchEffect, defineProps } from "vue";
 import { Colors, useColor } from "../stores/color";
+import { watchArray } from "@vueuse/core";
 
 const props = defineProps({
   min: {
@@ -65,6 +66,10 @@ watchEffect(() => {
 
     setCSSProps(leftPercent, rightPercent);
   }
+});
+
+watchArray(() => props.modelValue, () => {
+    sliderValues.value = [...props.modelValue];
 });
 
 const onInput = (event: Event) => {
