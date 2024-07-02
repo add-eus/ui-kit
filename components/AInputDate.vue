@@ -202,8 +202,8 @@ defineExpose({ open });
       }
 
       .input-range {
-        padding-top: 25px;
-        padding-bottom: 7px;
+        padding-top: 11px;
+        padding-bottom: 3px;
         font-size: 10px;
         width: 100%;
         cursor: pointer;
@@ -213,7 +213,7 @@ defineExpose({ open });
         position: absolute;
         pointer-events: none;
         top: 5px;
-        left: 15px;
+        left: 18px;
         font-size: 13px;
         color: var(--a-grey);
       }
