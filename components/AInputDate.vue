@@ -7,6 +7,8 @@ import { computed, defineProps, markRaw, ref } from "vue";
 import type { Colors } from "../stores/color";
 import { useColor } from "../stores/color";
 import AInput from "./AInput.vue";
+import { DatePartsRules } from "v-calendar/dist/types/src/utils/date/helpers.js";
+import { DateRangeSource } from "v-calendar/dist/types/src/utils/date/range.js";
 
 export interface MomentRange {
   start: moment.Moment | null | undefined;
@@ -23,19 +25,21 @@ export interface AInputDateProps {
   format?: string;
   color?: Colors;
   borderColor?: string;
-  labelA?: string;
-  labelB?: string;
+  label?: string;
   min?: moment.Moment;
   max?: moment.Moment;
+  rules?: DatePartsRules;
+  disabledDates?:DateRangeSource[];
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
   format: "DD-MM-YYYY",
   color: "tertiary",
   borderColor: "grey-light",
-  labelA: "Begin",
-  labelB: "End",
+  label: "Date"
 });
+
+const emits = defineEmits(["drag", "update:modelValue"]);
 
 const mainColor = computed(() => props.color);
 const color = useColor(mainColor);
@@ -126,6 +130,7 @@ const open = () => {
 };
 
 defineExpose({ open });
+
 </script>
 
 <template>
@@ -135,7 +140,10 @@ defineExpose({ open });
       v-if="!isDateRange(transformedDate)"
       :min-date="props.min?.toDate()"
       :max-date="props.max?.toDate()"
+      :rules="rules"
+      :disabled-dates="disabledDates"
        :columns="2"
+       @drag="emits('drag', $event)"
     >
       <template #default="{ togglePopover }">
         <AInput
@@ -148,15 +156,18 @@ defineExpose({ open });
     </DatePicker>
     <DatePicker
       v-model.range="transformedDate"
+      :rules="rules"
       v-else
       :min-date="props.min?.toDate()"
       :max-date="props.max?.toDate()"
+      :disabled-dates="disabledDates"
        :columns="2"
+       @drag="emits('drag', $event)"
     >
       <template #default="{ togglePopover }">
         <div class="input-range-container">
           <div class="input-range-content">
-            <label class="label">{{ labelA }}</label>
+            <label class="label">{{ label }}</label>
             <AInput
               ref="inputRef"
               :modelValue="`${displayed[0]} - ${displayed[1]}`"

@@ -36,7 +36,7 @@ const activeStep = useVModel(props, "modelValue", emits);
 const lastEnableStep = computed(() => props.lastEnabledStep ?? activeStep.value);
 
 const clickStep = (index) => {
-  if (activeStep.value > index) {
+  if (lastEnableStep.value > index) {
     activeStep.value = index;
   }
 };
