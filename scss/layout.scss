@@ -13,16 +13,17 @@ $breakpoints: (
 );
 
 @mixin breakpoints($className) {
+    .#{$className} {
+        @content;
+    }
+
     @each $breakpointName, $breakpoint in $breakpoints {
+
         @media (min-width: $breakpoint) {
-            .#{$breakpointName}:#{$className} {
+            .#{$breakpointName}\:#{$className} {
                 @content;
             }
         }
-    }
-
-    .#{$className} {
-        @content;
     }
 }
 

@@ -35,49 +35,65 @@ defineExpose({ focus });
 </script>
 
 <template>
-  <input
-    ref="inputRef"
-    v-bind="$attrs"
-    v-model="model"
+  <div
+    class="a-input"
     :style="{
       borderColor: color,
       width: full && '100%',
       '--color': color,
     }"
-    :placeholder="placeholder"
-  />
+  >
+    <input
+      ref="inputRef"
+      v-bind="$attrs"
+      v-model="model"
+      :placeholder="placeholder"
+    />
+    <slot name="rightAction" class="right-action"></slot>
+  </div>
 </template>
 
 <style scoped lang="scss">
-input {
+.a-input {
   padding: 12px 16px;
   border-radius: 5px;
   border-style: solid;
   border-width: 1px;
-  max-width: 100%;
-  outline: 1px solid rgba(255, 255, 255, 0);
-  transition: opacity 0.25s, outline 0.25s;
+  display: flex;
 
-  &::placeholder {
-    color: var(--a-grey-light);
-    opacity: 1; /* Firefox */
+  &:has(+ *) {
+    padding-right: 0;
   }
 
-  &::-ms-input-placeholder {
-    /* Edge 12 -18 */
-    color: var(--a-grey-light);
-  }
-
-  &:focus {
-    outline: 1px solid rgba(255, 255, 255, 0.5);
-    outline-offset: -1px;
+  input {
+    border: none;
+    max-width: 100%;
+    transition: opacity 0.25s, outline 0.25s;
+    outline: none !important;
+    border: none;
+    width: 100%;
 
     &::placeholder {
-      opacity: 0.75;
+      color: var(--a-grey-light);
+      opacity: 1; /* Firefox */
     }
 
     &::-ms-input-placeholder {
-      opacity: 0.75;
+      /* Edge 12 -18 */
+      color: var(--a-grey-light);
+    }
+
+    &:focus {
+      outline: 1px solid rgba(255, 255, 255, 0.5);
+      outline-offset: -1px;
+
+      &::placeholder {
+        opacity: 0.75;
+      }
+
+      &::-ms-input-placeholder {
+        opacity: 0.75;
+      }
     }
   }
 }

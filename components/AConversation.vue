@@ -50,7 +50,6 @@ onMounted(() => {
   >
     <div class="conversation-body">
       <div
-        :key="index"
         class="conversation-row"
         :class="[
           sender === 'user'
@@ -78,7 +77,10 @@ onMounted(() => {
             <ATyping />
           </div>
           <span v-else>
-            {{ text }}
+            <slot name="content">
+              {{ text }}
+            </slot>
+            
           </span>
         </div>
         <div class="conversation-action">
