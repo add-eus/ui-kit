@@ -20,6 +20,10 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "primary",
   },
+  lastEnabledStep: {
+    type: Number,
+    default: undefined
+  }
 });
 
 interface ABreadcrumbEmits {
@@ -29,6 +33,7 @@ interface ABreadcrumbEmits {
 const emits = defineEmits<ABreadcrumbEmits>();
 
 const activeStep = useVModel(props, "modelValue", emits);
+const lastEnableStep = computed(() => props.lastEnabledStep ?? activeStep.value);
 
 const clickStep = (index) => {
   if (activeStep.value > index) {
@@ -52,7 +57,7 @@ const stepLength = props.step.length;
         class="breadcrumb-row"
         :class="{
           'active-step': index - 1 == activeStep,
-          'previous-step': index <= activeStep,
+          'previous-step': index <= lastEnableStep
         }"
       >
         <div class="breadcrumb-elements" :class="{ last: index == stepLength }">

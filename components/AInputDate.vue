@@ -135,6 +135,7 @@ defineExpose({ open });
       v-if="!isDateRange(transformedDate)"
       :min-date="props.min?.toDate()"
       :max-date="props.max?.toDate()"
+       :columns="2"
     >
       <template #default="{ togglePopover }">
         <AInput
@@ -150,6 +151,7 @@ defineExpose({ open });
       v-else
       :min-date="props.min?.toDate()"
       :max-date="props.max?.toDate()"
+       :columns="2"
     >
       <template #default="{ togglePopover }">
         <div class="input-range-container">
@@ -157,19 +159,10 @@ defineExpose({ open });
             <label class="label">{{ labelA }}</label>
             <AInput
               ref="inputRef"
-              :modelValue="displayed[0]"
+              :modelValue="`${displayed[0]} - ${displayed[1]}`"
               @focus="togglePopover"
               :color="borderColor"
               class="input-range begin"
-            />
-          </div>
-          <div class="input-range-content">
-            <label class="label">{{ labelB }}</label>
-            <AInput
-              :modelValue="displayed[1]"
-              @focus="togglePopover"
-              :color="borderColor"
-              class="input-range end"
             />
           </div>
         </div>
