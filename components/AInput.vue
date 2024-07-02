@@ -17,7 +17,7 @@ const props = defineProps({
   full: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 const color = useColor(
@@ -35,30 +35,31 @@ defineExpose({ focus });
 </script>
 
 <template>
-  <span class="input">
+  <div
+    class="a-input"
+    :style="{
+      borderColor: color,
+      width: full && '100%',
+      '--color': color,
+    }"
+  >
     <input
       ref="inputRef"
-    v-bind="$attrs"
+      v-bind="$attrs"
       v-model="model"
-      :style="{
-        borderColor: color,
-        width: full && '100%',
-        '--color': color,
-      }"
       :placeholder="placeholder"
     />
     <slot name="rightAction" class="right-action"></slot>
-  </span>
-
+  </div>
 </template>
 
 <style scoped lang="scss">
-span {
-  outline: 1px solid rgba(255, 255, 255, 0);
+.a-input {
   padding: 12px 16px;
   border-radius: 5px;
   border-style: solid;
   border-width: 1px;
+  display: flex;
 
   &:has(+ *) {
     padding-right: 0;
@@ -68,7 +69,7 @@ span {
     border: none;
     max-width: 100%;
     transition: opacity 0.25s, outline 0.25s;
-    outline: none;
+    outline: none !important;
     border: none;
     width: 100%;
 
@@ -95,7 +96,5 @@ span {
       }
     }
   }
-
-  
 }
 </style>
