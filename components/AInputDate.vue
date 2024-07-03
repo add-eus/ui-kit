@@ -145,7 +145,8 @@ defineExpose({ open });
       :max-date="props.max?.toDate()"
       :rules="rules"
       :disabled-dates="disabledDates"
-      :columns="2"
+      :rows="isMobile ? 2 : 1"
+      :columns="isMobile ? 1 : 2"
       @drag="emits('drag', $event)"
     >
       <template #default="{ togglePopover }">
