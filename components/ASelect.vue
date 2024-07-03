@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType } from "vue";
-import { useColor } from "../stores/color";
-import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
+import { PropType, computed, defineProps } from "vue";
+import "../scss/_color-declaration.scss";
+import type { Colors } from "../stores/color";
+import { useColor } from "../stores/color";
 import ACheckbox from "./ACheckbox.vue";
 import AInputRadio from "./AInputRadio.vue";
-import "../scss/_color-declaration.scss";
 
 const props = defineProps({
   modelValue: {
@@ -105,13 +105,14 @@ const value = defineModel();
           </slot>
         </span>
       </template>
-      <template #placeholder>
+      <!-- block input -->
+      <!-- <template #placeholder>
         <span class="label">
           <slot name="label">
             {{ placeholder }}
           </slot>
         </span>
-      </template>
+      </template> -->
     </Multiselect>
   </div>
 </template>
