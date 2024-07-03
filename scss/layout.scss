@@ -13,18 +13,21 @@ $breakpoints: (
 );
 
 @mixin breakpoints($className) {
-    .#{$className} {
-        @content;
-    }
-
     @each $breakpointName, $breakpoint in $breakpoints {
 
         @media (min-width: $breakpoint) {
-            .#{$breakpointName}\:#{$className} {
+            // @Todo fix deduplication name
+            .#{$breakpointName}\:#{$className}.#{$breakpointName}\:#{$className} {
                 @content;
             }
         }
     }
+
+    .#{$className} {
+        @content;
+    }
+
+    
 }
 
 //Using Case ==> md:flex
