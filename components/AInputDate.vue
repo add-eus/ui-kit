@@ -9,6 +9,10 @@ import { useColor } from "../stores/color";
 import AInput from "./AInput.vue";
 import { DatePartsRules } from "v-calendar/dist/types/src/utils/date/helpers.js";
 import { DateRangeSource } from "v-calendar/dist/types/src/utils/date/range.js";
+import { useBreakpoints } from "../stores/breakpoint";
+
+const breakpoints = useBreakpoints();
+const isMobile = breakpoints.smaller("md");
 
 export interface MomentRange {
   start: moment.Moment | null | undefined;
@@ -29,14 +33,14 @@ export interface AInputDateProps {
   min?: moment.Moment;
   max?: moment.Moment;
   rules?: DatePartsRules;
-  disabledDates?:DateRangeSource[];
+  disabledDates?: DateRangeSource[];
 }
 
 const props = withDefaults(defineProps<AInputDateProps>(), {
   format: "DD-MM-YYYY",
   color: "tertiary",
   borderColor: "grey-light",
-  label: "Date"
+  label: "Date",
 });
 
 const emits = defineEmits(["drag", "update:modelValue"]);
@@ -130,7 +134,6 @@ const open = () => {
 };
 
 defineExpose({ open });
-
 </script>
 
 <template>
@@ -142,8 +145,8 @@ defineExpose({ open });
       :max-date="props.max?.toDate()"
       :rules="rules"
       :disabled-dates="disabledDates"
-       :columns="2"
-       @drag="emits('drag', $event)"
+      :columns="2"
+      @drag="emits('drag', $event)"
     >
       <template #default="{ togglePopover }">
         <AInput
@@ -161,8 +164,9 @@ defineExpose({ open });
       :min-date="props.min?.toDate()"
       :max-date="props.max?.toDate()"
       :disabled-dates="disabledDates"
-       :columns="2"
-       @drag="emits('drag', $event)"
+      :rows="isMobile ? 2 : 1"
+      :columns="isMobile ? 1 : 2"
+      @drag="emits('drag', $event)"
     >
       <template #default="{ togglePopover }">
         <div class="input-range-container">
@@ -186,7 +190,7 @@ defineExpose({ open });
 .input-date-container {
   .input-range-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 20px;
 
     .input-range-content {
@@ -225,8 +229,19 @@ defineExpose({ open });
   }
 
   .vc-popover-content-wrapper {
+    &.is-interactive {
+      left: 50% !important;
+      transform: translate(-50%, 42px) !important;
+    }
+
     .vc-popover-content {
       border: 1px solid var(--a-grey-light);
+
+      .vc-popover-caret {
+        &.align-left {
+          left: calc(50% - 8px);
+        }
+      }
 
       .vc-container {
         .vc-pane-container {
