@@ -233,7 +233,7 @@ defineExpose({ open });
           .vc-pane-header-wrapper {
             //HEADER ARROW
             .vc-header {
-              width: 75%;
+              width: 100%;
               .vc-arrow {
                 background: transparent;
                 svg {
