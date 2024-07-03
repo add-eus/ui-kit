@@ -106,7 +106,7 @@ const value = defineModel();
         </span>
       </template>
       <template #placeholder>
-        <span class="label">
+        <span class="label multiselect-placeholder">
           <slot name="label">
             {{ placeholder }}
           </slot>
@@ -142,6 +142,7 @@ const value = defineModel();
     font-weight: 400;
     width: 100%;
     cursor: pointer;
+    pointer-events: none;
   }
 
   .is-selected {
