@@ -80,7 +80,6 @@ onMounted(() => {
             <slot name="content">
               {{ text }}
             </slot>
-            
           </span>
         </div>
         <div class="conversation-action">
@@ -152,6 +151,17 @@ onMounted(() => {
           background: var(--color);
           border-top-right-radius: 0;
           text-align: right;
+          max-height: 0px;
+          animation: messageAppear 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        @keyframes messageAppear {
+          0% {
+            max-height: 0px;
+          }
+          100% {
+            max-height: 1000px;
+          }
         }
       }
 
@@ -167,11 +177,11 @@ onMounted(() => {
 
         .bot-typing {
           max-height: 30px;
-          transition: max-height 0.5s ease-in-out;
+          transition: max-height 1s cubic-bezier(0.85, 0, 0.15, 1);
         }
         .bot-typed {
           max-height: 2000px;
-          transition: max-height 0.5s ease-in-out;
+          transition: max-height 1.5s cubic-bezier(0.85, 0, 0.15, 1);
         }
       }
 
