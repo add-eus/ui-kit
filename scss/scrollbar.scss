@@ -1,19 +1,28 @@
 * {
-  ::-webkit-scrollbar {
+  @-moz-document url-prefix() {
+    scrollbar-color: var(--a-grey-light) transparent;
+    scrollbar-width: thin;
+  }
+
+  &::-webkit-scrollbar {
     width: 6px !important;
     height: initial !important;
   }
 
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar:horizontal {
+    height: 6px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
     background: var(--a-grey-light);
     border-radius: 10px;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
+  &::-webkit-scrollbar-thumb:hover {
     background: var(--a-grey);
   }
 
-  ::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background: transparent;
   }
 }
