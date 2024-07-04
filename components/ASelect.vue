@@ -40,6 +40,10 @@ const props = defineProps({
     type: String as PropType<"tags" | "single" | "multiple" | undefined>,
     default: "tags",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   createOption: {
     type: Boolean,
     default: false,
@@ -81,6 +85,7 @@ const value = defineModel();
       :noResultsText="noResults"
       :placeholder="placeholder"
       :canClear="mode !== 'single'"
+      :disabled="disabled"
       class="multiselect"
     >
       <template #option="{option, search}">

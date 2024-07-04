@@ -161,22 +161,24 @@ const stepLength = props.step.length;
       cursor: pointer;
       position: absolute;
       top: 40px;
-      left: 45px;
+      left: 35px;
       font-size: 12px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 85%;
+      padding-left: 13px;
 
       &::after {
         content: "";
         height: 4px;
         width: 4px;
+        color: var(--a-grey-light);
         background: var(--a-grey-light);
         border-radius: 50%;
         position: absolute;
         top: 7px;
-        left: -8px;
+        left: 0;
         transition: background 0.25s ease-in-out;
       }
 
