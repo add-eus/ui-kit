@@ -118,10 +118,10 @@ const displayed = computed(() => {
     return [
       moment.isMoment(date.value.start)
         ? date.value.start.format(props.format)
-        : "-",
+        : "_",
       moment.isMoment(date.value.end)
         ? date.value.end.format(props.format)
-        : "-",
+        : "_",
     ];
   } else if (moment.isMoment(date.value)) {
     return date.value.format(props.format);
