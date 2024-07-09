@@ -67,8 +67,19 @@ const stepLength = props.step.length;
           <div class="breadcrumb-circle"></div>
         </div>
         <div class="breadcrumb-text">{{ step[index - 1] }}</div>
-        <div v-if="index != stepLength" class="breadcrumb-point">
-          {{ point[index - 1] }}
+        <div
+          v-if="index != stepLength"
+          :class="
+            Array.isArray(point[index - 1])
+              ? 'breadcrumb-point breadcrumb-point-' + subIndex
+              : 'breadcrumb-point'
+          "
+          v-for="(subPoint, subIndex) in Array.isArray(point[index - 1])
+            ? point[index - 1]
+            : [point[index - 1]]"
+          :key="subIndex"
+        >
+          {{ Array.isArray(point[index - 1]) ? subPoint : point[index - 1] }}
         </div>
       </div>
     </div>
@@ -186,6 +197,14 @@ const stepLength = props.step.length;
         &::after {
           display: none;
         }
+      }
+
+      &.breadcrumb-point-0 {
+        top: 32px;
+      }
+
+      &.breadcrumb-point-1 {
+        top: 52px;
       }
     }
   }

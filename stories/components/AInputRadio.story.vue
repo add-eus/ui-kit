@@ -83,4 +83,6 @@ The `AInputRadio` component accepts the following properties:
 - `value` (string, required): Value of the radio button.
 - `modelValue` (string, required): Current selected value.
 - `color` (string, optional): Specifies the color of the input.
+- `textColor` (string, optional): Specifies the color of the text.
+- `hideRadio` (boolean, optional): Hide the radio basis design.
 </docs>

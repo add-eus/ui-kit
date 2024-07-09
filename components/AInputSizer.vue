@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useFocus } from "@vueuse/core";
 import { useVModel } from "@vueuse/core";
+import type { Colors } from "../stores/color";
+import { useColor } from "../stores/color";
 import { computed, ref, watch } from "vue";
 
 export interface AInputSizerEmits {
@@ -11,13 +13,23 @@ export interface AInputSizerProps {
   modelValue?: any;
   placeholder?: string;
   maxLength?: number;
+  color?: Colors;
+  textColor?: Colors;
 }
 
 const emits = defineEmits<AInputSizerEmits>();
 const props = withDefaults(defineProps<AInputSizerProps>(), {
   modelValue: "",
   maxLength: 9999,
+  textColor: "grey-dark",
+  color: "grey-light",
 });
+
+const mainColor = computed(() => props.color);
+const color = useColor(mainColor);
+
+const textColor = computed(() => props.textColor);
+const colorText = useColor(textColor);
 
 const value = useVModel(props, "modelValue", emits);
 
@@ -55,8 +67,8 @@ defineExpose({
   vertical-align: top;
   align-items: center;
   position: relative;
-  border: 1px solid var(--a-grey-lighter);
-  border-radius: 4px;
+  border: 1px solid v-bind(color);
+  border-radius: 3px;
   padding: 0.25em 0.5em;
 
   &.a-input-sizer-stacked {
@@ -84,6 +96,7 @@ defineExpose({
     appearance: none;
     border: none;
     min-height: 50px;
+    color: v-bind(colorText);
   }
 
   span {

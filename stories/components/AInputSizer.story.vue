@@ -33,4 +33,6 @@ The `AInputSizer` component offers the following options:
 - `raw` (boolean, optional): Specifies if the component should be displayed without default styles. Possible values are `true` or `false`.
 - `modelValue` (any, optional): The value of the text field. It can be of any type, but usually it is a string.
 - `placeholder` (string, optional): The placeholder text to be displayed in the input field.
+- `color` (string, optional): Specifies the color of the input.
+- `textColor` (string, optional): Specifies the color of the text.
 </docs>
