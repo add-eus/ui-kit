@@ -19,7 +19,13 @@ import "../../index.scss";
           'Publications',
           'Posts',
         ]"
-        :point="['First', 'Second', 'Third', 'Fourth', 'First', 'Second']"
+        :point="[
+          'First',
+          ['Second 1', 'Second 2'],
+          'Third',
+          ['Fourth 1', 'Fourth 2'],
+          'Fifth',
+        ]"
         :modelValue="3"
         color="secondary"
       />

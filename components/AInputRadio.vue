@@ -20,6 +20,10 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "primary",
   },
+  textColor: {
+    type: String as PropType<Colors>,
+    default: "grey-darker",
+  },
   hideRadio: {
     type: Boolean,
     default: false,
@@ -29,9 +33,11 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const mainColor = computed(() => props.color);
+const textColor = computed(() => props.textColor);
 
 const color = useColor(mainColor);
 const colorInvert = useColor(mainColor, "default", true);
+const colorText = useColor(textColor);
 
 const onChange = (event: Event) => {
   emit("update:modelValue", (event.target as HTMLInputElement).value);
@@ -55,29 +61,28 @@ const onChange = (event: Event) => {
 
 <style lang="scss" scoped>
 .a-input-radio {
-  
   min-width: fit-content;
-
-
 
   input[type="radio"] {
     accent-color: v-bind(color);
     cursor: pointer;
+    margin-right: 5px;
   }
 
   label {
     display: flex;
     justify-content: center;
     padding: 4px 10px;
-    color: v-bind(color);
+    color: v-bind(colorText);
     border-radius: 5px;
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 
     &.hide-radio {
+      color: v-bind(color);
       border: 2px solid v-bind(color);
-      text-align:center;
+      text-align: center;
 
       &.selected {
         background-color: v-bind(color);
@@ -98,7 +103,6 @@ const onChange = (event: Event) => {
     &:not(:empty) {
       width: 115px;
     }
-    
   }
 }
 </style>

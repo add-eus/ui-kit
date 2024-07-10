@@ -56,7 +56,7 @@ defineExpose({ focus });
 <style scoped lang="scss">
 .a-input {
   padding: 12px 16px;
-  border-radius: 5px;
+  border-radius: 3px;
   border-style: solid;
   border-width: 1px;
   display: flex;
