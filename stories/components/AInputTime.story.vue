@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import moment from "moment";
 import { markRaw, ref } from "vue";
 import AInputTime from "../../components/AInputTime.vue";
-import "../../index.scss";
+import moment from "moment";
 
 const time = ref(markRaw(moment()));
 </script>
@@ -14,6 +13,8 @@ const time = ref(markRaw(moment()));
     </Variant>
   </Story>
 </template>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
 
 <docs lang="md">
 # AInputDate
