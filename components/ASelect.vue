@@ -48,6 +48,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  openDirection: {
+    type: String as PropType<"top" | "bottom" | undefined>,
+    default: undefined,
+  },
 });
 
 const color =   computed(() => {
@@ -86,6 +90,7 @@ const value = defineModel();
       :placeholder="placeholder"
       :canClear="mode !== 'single'"
       :disabled="disabled"
+      :open-direction="openDirection"
       class="multiselect"
     >
       <template #option="{option, search}">
