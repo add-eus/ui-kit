@@ -12,6 +12,7 @@ defineProps<AInputTimeProps>();
 
 const model = defineModel<Moment | undefined>({ default: undefined });
 
+let localHours: number | undefined = undefined, localMinutes: number | undefined = undefined;
 const hours = computed<number | undefined>({
   get() {
     if (moment.isMoment(model.value) && model.value.isValid())
@@ -20,10 +21,16 @@ const hours = computed<number | undefined>({
   },
   set(value) {
     const modelValue = model.value || moment();
-    if (value === undefined)
-      model.value = modelValue.clone().hours(0);
-    else
-      model.value = modelValue.clone().hours(value);
+    if (value === undefined || localMinutes === undefined) {
+      if (value === undefined)
+        localHours = undefined;
+      model.value = undefined;
+    }
+    else {
+      localHours = value;
+      model.value = modelValue.clone().hours(value).minutes(localMinutes);
+      
+    }
   }
 })
 
@@ -35,10 +42,15 @@ const minutes = computed<number | undefined>({
   },
   set(value) {
     const modelValue = model.value || moment();
-    if (value === undefined)
-      model.value = modelValue.clone().minutes(0);
-    else
-      model.value = modelValue.clone().minutes(value);
+    if (value === undefined || localHours === undefined) {
+      if (value === undefined)
+        localMinutes = undefined;
+      model.value = undefined;
+    }
+    else {
+      localMinutes = value;
+      model.value = modelValue.clone().minutes(value).hours(localHours);
+    }
   }
 });
 
