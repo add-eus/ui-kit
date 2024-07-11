@@ -21,8 +21,6 @@ const setRandomTime = () => {
   </Story>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
-
 <docs lang="md">
 # AInputDate
 

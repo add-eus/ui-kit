@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import moment, { type Moment } from "moment";
 import "v-calendar/style.css";
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 import ASelect from "./ASelect.vue";
 
 export interface AInputTimeProps {
@@ -12,35 +12,37 @@ defineProps<AInputTimeProps>();
 
 const model = defineModel<Moment | undefined>({ default: undefined });
 
-const hours = ref<number | undefined | null>(model.value?.hours());
-const minutes = ref<number | undefined | null>(model.value?.minutes());
+const hours = computed<number | undefined>({
+  get() {
+    if (moment.isMoment(model.value) && model.value.isValid())
+      return model.value.hours();
+    return undefined;
+  },
+  set(value) {
+    const modelValue = model.value || moment();
+    if (value === undefined)
+      model.value = modelValue.clone().hours(0);
+    else
+      model.value = modelValue.clone().hours(value);
+  }
+})
 
-watch([hours, minutes], ([hours, minutes]) => {
-  if (
-    hours !== undefined &&
-    hours !== null &&
-    minutes !== undefined &&
-    minutes !== null
-  ) {
-    model.value = moment().hours(hours).minutes(minutes);
-  } else {
-    model.value = undefined;
+const minutes = computed<number | undefined>({
+  get() {
+    if (moment.isMoment(model.value) && model.value.isValid())
+      return model.value.minutes();
+    return undefined;
+  },
+  set(value) {
+    const modelValue = model.value || moment();
+    if (value === undefined)
+      model.value = modelValue.clone().minutes(0);
+    else
+      model.value = modelValue.clone().minutes(value);
   }
 });
-watch(model, (value) => {
-  if (value !== undefined) {
-    hours.value = value.hours();
-    minutes.value = value.minutes();
-  } else if (
-    hours.value !== undefined &&
-    hours.value !== null &&
-    minutes.value !== undefined &&
-    minutes.value !== null
-  ) {
-    hours.value = undefined;
-    minutes.value = undefined;
-  }
-});
+
+
 
 const hoursOptions = Array.from({ length: 24 }, (_, i) => ({
   value: i,
@@ -55,8 +57,8 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
 
 <template>
   <div>
-    <ASelect mode="single" v-model="hours" :options="hoursOptions"> </ASelect>
-    <ASelect mode="single" v-model="minutes" :options="minutesOptions">
+    <ASelect mode="single" color="primary" v-model="hours" :options="hoursOptions"> </ASelect>
+    <ASelect mode="single" color="primary" v-model="minutes" :options="minutesOptions">
     </ASelect>
   </div>
 </template>
