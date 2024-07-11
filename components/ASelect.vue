@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType } from "vue";
+import { defineProps, computed, PropType, watch, ref } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
@@ -56,6 +56,10 @@ const props = defineProps({
     type: String as PropType<"top" | "bottom" | undefined>,
     default: undefined,
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = computed(() => {
@@ -83,16 +87,20 @@ const arrowColor = useColor(
     <Multiselect
       v-model="value"
       :mode="mode"
+      :required="required"
       :addTagOn="['enter', 'tab', ',', 'space']"
       :close-on-select="false"
       :searchable="true"
       :create-option="createOption"
       :options="options"
+      :clearOnSelect="mode !== 'single' && required"
+      :canDeselect="mode !== 'single' && required"
+      :clearOnBlur="mode !== 'single' && required"
       :hide-selected="false"
       :noOptionsText="noOptions"
       :noResultsText="noResults"
       :placeholder="placeholder"
-      :canClear="mode !== 'single'"
+      :canClear="mode !== 'single' && required"
       :disabled="disabled"
       :open-direction="openDirection"
       class="multiselect"
@@ -106,8 +114,7 @@ const arrowColor = useColor(
         <AInputRadio
           :name="option.value.toString()"
           :color="color"
-          :modelValue="value"
-          :value="option.value"
+          :modelValue="value === option.value"
           v-else-if="mode == 'single'"
         />
         <slot name="option" :option="option" :search="search">
