@@ -24,6 +24,8 @@ const hours = computed<number | undefined>({
     if (value === undefined || localMinutes === undefined) {
       if (value === undefined)
         localHours = undefined;
+      else
+        localHours = value;
       model.value = undefined;
     }
     else {
@@ -45,6 +47,8 @@ const minutes = computed<number | undefined>({
     if (value === undefined || localHours === undefined) {
       if (value === undefined)
         localMinutes = undefined;
+      else 
+        localMinutes = value;
       model.value = undefined;
     }
     else {
