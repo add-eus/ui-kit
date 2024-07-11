@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from "vue";
+import { defineProps, ref, watch, computed } from "vue";
 import { useTransition, TransitionPresets } from "@vueuse/core";
 
 const props = defineProps({
@@ -17,13 +17,12 @@ const props = defineProps({
   },
 });
 
-const duration = props.duration;
 
 const baseNumber = ref(0);
-
+const duration = computed(() => props.duration);
 const target = useTransition(baseNumber, {
   duration,
-  transition: TransitionPresets.easeOutExpo,
+  transition: TransitionPresets.easeOutSine,
 });
 
 watch(
