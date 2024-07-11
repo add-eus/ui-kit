@@ -36,6 +36,10 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "primary",
   },
+  arrowColor: {
+    type: String as PropType<Colors>,
+    default: "transparent",
+  },
   mode: {
     type: String as PropType<"tags" | "single" | "multiple" | undefined>,
     default: "tags",
@@ -54,24 +58,24 @@ const props = defineProps({
   },
 });
 
-const color =   computed(() => {
-    return props.color;
-  });
+const color = computed(() => {
+  return props.color;
+});
 
-const colorValue = useColor(
-  color
-);
+const colorValue = useColor(color);
 
-const colorValueInvert = useColor(
-  color,
-  "default",
-  true
-);
+const colorValueInvert = useColor(color, "default", true);
 
 const mainColor = computed(() => props.tagColor);
 const tagColor = useColor(mainColor);
 const tagColorInvert = useColor(mainColor, "default", true);
 const value = defineModel();
+
+const arrowColor = useColor(
+  computed(() => {
+    return props.arrowColor;
+  })
+);
 </script>
 
 <template>
@@ -93,26 +97,33 @@ const value = defineModel();
       :open-direction="openDirection"
       class="multiselect"
     >
-      <template #option="{option, search}">
-        <ACheckbox :color="color" :modelValue="value.indexOf(option.value) >= 0" v-if="mode == 'multiple'" />
-        <AInputRadio :name="option.value" :color="color" :modelValue="value" :value="option.value" v-else-if="mode == 'single'" />
+      <template #option="{ option, search }">
+        <ACheckbox
+          :color="color"
+          :modelValue="value.indexOf(option.value) >= 0"
+          v-if="mode == 'multiple'"
+        />
+        <AInputRadio
+          :name="option.value"
+          :color="color"
+          :modelValue="value"
+          :value="option.value"
+          v-else-if="mode == 'single'"
+        />
         <slot name="option" :option="option" :search="search">
-        {{ option.label }}
+          {{ option.label }}
         </slot>
       </template>
-      <template #singlelabel="{value}">
+      <template #singlelabel="{ value }">
         <span class="label">
           <slot name="label">
             {{ value.label || "Select an option" }}
           </slot>
         </span>
-       
       </template>
-      <template #multiplelabel="{values}">
+      <template #multiplelabel="{ values }">
         <span class="label">
-          <slot name="label">
-            {{ values.length }} selected
-          </slot>
+          <slot name="label"> {{ values.length }} selected </slot>
         </span>
       </template>
       <template #placeholder>
@@ -128,18 +139,20 @@ const value = defineModel();
 
 <style lang="scss">
 .a-select {
-    --ms-bg: transparent;
+  --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
   --ms-border-color: v-bind(colorValue); //Border color
+  --ms-border-width: 2px;
+  --ms-radius: 5px;
   --ms-tag-bg: v-bind(tagColor); //Tag color
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
-  --ms-caret-color: transparent; // Remove the arrow color
+  --ms-caret-color: v-bind(arrowColor); // Arrow color
   --ms-option-color-selected: #000;
   --ms-option-bg-selected: transparent;
   --ms-option-bg-pointed: transparent;
   --ms-option-color-pointed: #000;
   --ms-option-bg-selected-pointed: transparent;
-  --ms-option-color-selected-pointed: #000;;
+  --ms-option-color-selected-pointed: #000;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
 
   input[type="checkbox"] {
@@ -153,11 +166,15 @@ const value = defineModel();
     width: 100%;
     cursor: pointer;
     pointer-events: none;
+    white-space: nowrap;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .is-selected {
     &::after {
-        display: none;
+      display: none;
     }
   }
 }
