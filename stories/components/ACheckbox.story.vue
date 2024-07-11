@@ -6,6 +6,9 @@ import "../../index.scss";
 const valueA = ref(false);
 const valueB = ref(false);
 const valueC = ref(false);
+const valueD = ref(false);
+const valueE = ref(false);
+const valueF = ref(false);
 </script>
 
 <template>
@@ -14,10 +17,21 @@ const valueC = ref(false);
       <ACheckbox v-model="valueA" />
     </Variant>
     <Variant title="primary">
-      <ACheckbox color="primary" v-model="valueB" />
+      <ACheckbox color="primary" v-model="valueB">Option I</ACheckbox>
     </Variant>
     <Variant title="secondary">
-      <ACheckbox color="secondary" v-model="valueC" />
+      <ACheckbox color="secondary" v-model="valueC">Option II</ACheckbox>
+    </Variant>
+    <Variant title="secondary">
+      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueD">
+        Option III
+      </ACheckbox>
+      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueE">
+        Option IV
+      </ACheckbox>
+      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueF">
+        Option V
+      </ACheckbox>
     </Variant>
   </Story>
 </template>
@@ -34,4 +48,5 @@ The `ACheckbox` component provides the following options:
 - `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `primary`.
 - `valueChecked` (any, optional): Specifies the value when the checkbox is checked. Default is `true`.
 - `modelValue` (any): Binds the value of the checkbox to a variable.
+- `hideCheckbox` (boolean, optional): Hide the checkbox basis design.
 </docs>
