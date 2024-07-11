@@ -11,12 +11,6 @@ export interface AInputTimeProps {
 defineProps<AInputTimeProps>();
 
 const model = defineModel<Moment | undefined>({ default: undefined });
-const proxyModel = computed({
-  get: () => model.value,
-  set: (value: Moment | undefined) => {
-    model.value = value;
-  },
-});
 
 const hours = ref<number | undefined | null>(model.value?.hours());
 const minutes = ref<number | undefined | null>(model.value?.minutes());
@@ -28,12 +22,12 @@ watch([hours, minutes], ([hours, minutes]) => {
     minutes !== undefined &&
     minutes !== null
   ) {
-    proxyModel.value = moment().hours(hours).minutes(minutes);
+    model.value = moment().hours(hours).minutes(minutes);
   } else {
-    proxyModel.value = undefined;
+    model.value = undefined;
   }
 });
-watch(proxyModel, (value) => {
+watch(model, (value) => {
   if (value !== undefined) {
     hours.value = value.hours();
     minutes.value = value.minutes();
