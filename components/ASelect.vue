@@ -114,7 +114,8 @@ const arrowColor = useColor(
         <AInputRadio
           :name="option.value.toString()"
           :color="color"
-          :modelValue="value === option.value"
+          :modelValue="value"
+          :value="option.value"
           v-else-if="mode == 'single'"
         />
         <slot name="option" :option="option" :search="search">
