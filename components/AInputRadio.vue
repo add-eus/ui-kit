@@ -101,7 +101,8 @@ const onChange = (event: Event) => {
     width: 5px;
 
     &:not(:empty) {
-      width: 115px;
+      width: 90px;
+      height: 16px;
     }
   }
 }

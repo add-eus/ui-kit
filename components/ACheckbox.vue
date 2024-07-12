@@ -19,6 +19,10 @@ const props = defineProps({
   valueUnchecked: {
     default: false,
   },
+  hideCheckbox: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const modelValue = defineModel();
@@ -32,21 +36,67 @@ const checkboxValue = computed({
   },
 });
 
-const color = useColor(
-  computed(() => {
-    return props.color;
-  })
-);
+const mainColor = computed(() => props.color);
 
+const color = useColor(mainColor);
+const colorInvert = useColor(mainColor, "default", true);
 </script>
 
 <template>
-  <input type="checkbox" v-model="checkboxValue" />
+  <div class="a-input-checkbox">
+    <label
+      :class="{ 'hide-checkbox': props.hideCheckbox, selected: checkboxValue }"
+    >
+      <input type="checkbox" v-model="checkboxValue" />
+      <span class="label-text"><slot></slot></span>
+    </label>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-input {
-  accent-color: v-bind(color);
-  cursor: pointer;
+.a-input-checkbox {
+  min-width: fit-content;
+
+  input[type="checkbox"] {
+    accent-color: v-bind(color);
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  label {
+    display: flex;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    &.hide-checkbox {
+      color: v-bind(color);
+      border: 2px solid v-bind(color);
+      text-align: center;
+
+      &.selected {
+        background-color: v-bind(color);
+        color: v-bind(colorInvert);
+        border-color: v-bind(color);
+      }
+
+      input[type="checkbox"] {
+        display: none;
+      }
+    }
+  }
+
+  .label-text {
+    display: inline-block;
+    width: 5px;
+
+    &:not(:empty) {
+      width: 90px;
+      height: 16px;
+    }
+  }
 }
 </style>
