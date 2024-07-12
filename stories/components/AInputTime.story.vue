@@ -7,16 +7,29 @@ import moment from "moment";
 const time = ref<moment.Moment | undefined>(undefined);
 
 const setRandomTime = () => {
-  time.value = moment().hours(Math.floor(Math.random() * 24)).minutes(Math.floor(Math.random() * 60));
+  time.value = moment()
+    .hours(Math.floor(Math.random() * 24))
+    .minutes(Math.floor(Math.random() * 60));
 };
 </script>
 
 <template>
-  <Story :layout="{ type: 'grid', width: 400, outerHeight: 500 }">
+  <Story :layout="{ type: 'grid', width: 400 }">
     <Variant title="default">
       <AInputTime v-model="time" />
-      <div>{{ time?.hours().toString().padStart(2, "0") }}:{{ time?.minutes().toString().padStart(2, "0") }}</div>
+      <div>
+        {{ time?.hours().toString().padStart(2, "0") }}:{{
+          time?.minutes().toString().padStart(2, "0")
+        }}
+      </div>
       <AButton @click="setRandomTime">Random time</AButton>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </Variant>
   </Story>
 </template>
