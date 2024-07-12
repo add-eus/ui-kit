@@ -12,7 +12,8 @@ defineProps<AInputTimeProps>();
 
 const model = defineModel<Moment | undefined>({ default: undefined });
 
-let localHours: number | undefined = undefined, localMinutes: number | undefined = undefined;
+let localHours: number | undefined = model.value?.hours();
+let localMinutes: number | undefined = model.value?.minutes();
 const hours = computed<number | undefined>({
   get() {
     if (moment.isMoment(model.value) && model.value.isValid())
