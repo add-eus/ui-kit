@@ -60,6 +60,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  name: {
+    type: String as PropType<string | undefined>,
+    default: undefined,
+  },
+  closeOnSelect: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = computed(() => {
@@ -89,7 +97,7 @@ const arrowColor = useColor(
       :mode="mode"
       :required="required"
       :addTagOn="['enter', 'tab', ',', 'space']"
-      :close-on-select="false"
+      :close-on-select="closeOnSelect"
       :searchable="true"
       :create-option="createOption"
       :options="options"
@@ -112,7 +120,7 @@ const arrowColor = useColor(
           v-if="mode == 'multiple'"
         />
         <AInputRadio
-          :name="option.value.toString()"
+          :name="`${props.name}${option.value.toString()}`"
           :color="color"
           :modelValue="value"
           :value="option.value"

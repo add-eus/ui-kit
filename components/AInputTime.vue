@@ -23,23 +23,18 @@ const hours = computed<number | undefined>({
   set(value) {
     const modelValue = model.value || markRaw(moment());
     if (value === undefined || localMinutes === undefined) {
-      if (value === undefined)
-        localHours = undefined;
-      else
-        localHours = value;
+      if (value === undefined) localHours = undefined;
+      else localHours = value;
       model.value = undefined;
-    }
-    else {
+    } else {
       localHours = value;
       const cloned = modelValue.clone();
       cloned.minutes(localMinutes);
       cloned.hours(value);
       model.value = cloned;
-      
     }
-  }
-})
-
+  },
+});
 
 const minutes = computed<number | undefined>({
   get() {
@@ -48,24 +43,20 @@ const minutes = computed<number | undefined>({
     return localMinutes;
   },
   set(value) {
-    const modelValue = model.value ||  markRaw(moment());
+    const modelValue = model.value || markRaw(moment());
     if (value === undefined || localHours === undefined) {
-      if (value === undefined)
-        localMinutes = undefined;
-      else 
-        localMinutes = value;
+      if (value === undefined) localMinutes = undefined;
+      else localMinutes = value;
       model.value = undefined;
-    }
-    else {
+    } else {
       localMinutes = value;
       const cloned = modelValue.clone();
       cloned.hours(localHours);
       cloned.minutes(value);
       model.value = cloned;
     }
-  }
+  },
 });
-
 
 const hoursOptions = Array.from({ length: 24 }, (_, i) => ({
   value: i,
@@ -75,13 +66,28 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
   value: i,
   label: i.toString().padStart(2, "0"),
 }));
-
 </script>
 
 <template>
   <div>
-    <ASelect mode="single" color="primary" v-model="hours" :options="hoursOptions"> </ASelect>
-    <ASelect mode="single" color="primary" v-model="minutes" :options="minutesOptions">
+    <ASelect
+      mode="single"
+      color="primary"
+      v-model="hours"
+      :options="hoursOptions"
+      name="hours"
+      close-on-select
+
+    >
+    </ASelect>
+    <ASelect
+      mode="single"
+      color="primary"
+      v-model="minutes"
+      :options="minutesOptions"
+      name="minutes"
+      close-on-select
+    >
     </ASelect>
   </div>
 </template>
