@@ -22,8 +22,12 @@ const filteredItems = computed(() => {
     return props.items.filter(item => item.name.toLowerCase().includes(searchTerm.value.toLowerCase()));
 });
 
-const isOpen = computed(() => {
-    return searchTerm.value.length > 0;
+const isOpen = computed({
+    get() {
+        return searchTerm.value.length > 0;
+    },
+    set() {
+    }
 });
 </script>
 <template>

@@ -9,11 +9,11 @@ const props = defineProps({
     required: false,
   },
   value: {
-    type: String,
+    type: null as unknown as PropType<any>,
     required: false,
   },
   modelValue: {
-    type: String,
+    type: null as unknown as PropType<any>,
     required: false,
   },
   color: {

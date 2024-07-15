@@ -52,7 +52,7 @@ const value3 = ref(undefined);
   </Story>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
+
 <style lang="scss" scoped>
 .story-select {
   height: 200px;

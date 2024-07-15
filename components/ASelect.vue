@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType } from "vue";
+import { defineProps, computed, PropType, watch, ref } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
@@ -56,6 +56,18 @@ const props = defineProps({
     type: String as PropType<"top" | "bottom" | undefined>,
     default: undefined,
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  name: {
+    type: String as PropType<string | undefined>,
+    default: undefined,
+  },
+  closeOnSelect: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = computed(() => {
@@ -83,16 +95,20 @@ const arrowColor = useColor(
     <Multiselect
       v-model="value"
       :mode="mode"
+      :required="required"
       :addTagOn="['enter', 'tab', ',', 'space']"
-      :close-on-select="false"
+      :close-on-select="closeOnSelect"
       :searchable="true"
       :create-option="createOption"
       :options="options"
+      :clearOnSelect="mode !== 'single' && required"
+      :canDeselect="mode !== 'single' && required"
+      :clearOnBlur="mode !== 'single' && required"
       :hide-selected="false"
       :noOptionsText="noOptions"
       :noResultsText="noResults"
       :placeholder="placeholder"
-      :canClear="mode !== 'single'"
+      :canClear="mode !== 'single' && required"
       :disabled="disabled"
       :open-direction="openDirection"
       class="multiselect"
@@ -104,7 +120,7 @@ const arrowColor = useColor(
           v-if="mode == 'multiple'"
         />
         <AInputRadio
-          :name="option.value"
+          :name="`${props.name}${option.value.toString()}`"
           :color="color"
           :modelValue="value"
           :value="option.value"
@@ -137,6 +153,8 @@ const arrowColor = useColor(
   </div>
 </template>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
+
 <style lang="scss">
 .a-select {
   --ms-bg: transparent;
@@ -147,7 +165,7 @@ const arrowColor = useColor(
   --ms-tag-bg: v-bind(tagColor); //Tag color
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
   --ms-caret-color: v-bind(arrowColor); // Arrow color
-  --ms-option-color-selected: #000;
+  --ms-option-color-selected: v-bind(colorValue);
   --ms-option-bg-selected: transparent;
   --ms-option-bg-pointed: transparent;
   --ms-option-color-pointed: #000;
