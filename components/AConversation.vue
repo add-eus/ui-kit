@@ -146,7 +146,7 @@ onMounted(() => {
         justify-content: flex-end;
 
         .conversation-message {
-          padding: 5px 10px;
+          padding: 10px 15px;
           color: var(--a-white);
           background: var(--color);
           border-top-right-radius: 0;
@@ -167,7 +167,7 @@ onMounted(() => {
 
       &.bot-message {
         .conversation-message {
-          padding: 5px 10px;
+          padding: 10px 15px;
           background: var(--a-grey-lightest);
           border-bottom-left-radius: 0;
           color: var(--a-grey-darker);
