@@ -45,7 +45,11 @@ const colorInvert = useColor(mainColor, "default", true);
 <template>
   <div class="a-input-checkbox">
     <label
-      :class="{ 'hide-checkbox': props.hideCheckbox, selected: checkboxValue }"
+      :class="{
+        'hide-checkbox': props.hideCheckbox,
+        selected: checkboxValue,
+        'no-label': !$slots.default,
+      }"
     >
       <input type="checkbox" v-model="checkboxValue" />
       <span class="label-text"><slot></slot></span>
@@ -57,20 +61,28 @@ const colorInvert = useColor(mainColor, "default", true);
 .a-input-checkbox {
   min-width: fit-content;
 
-  input[type="checkbox"] {
-    accent-color: v-bind(color);
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
   label {
     display: flex;
     justify-content: center;
     padding: 4px 10px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
+
+    input[type="checkbox"] {
+      accent-color: v-bind(color);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    &.no-label {
+      padding: 4px;
+
+      input[type="checkbox"] {
+        margin-right: 0;
+      }
+    }
 
     &.hide-checkbox {
       color: v-bind(color);
@@ -91,11 +103,12 @@ const colorInvert = useColor(mainColor, "default", true);
 
   .label-text {
     display: inline-block;
-    width: 5px;
+    width: 0;
 
     &:not(:empty) {
-      width: 90px;
-      height: 16px;
+      min-width: 90px;
+      width: fit-content;
+      min-height: 16px;
     }
   }
 }

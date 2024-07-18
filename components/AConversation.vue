@@ -24,6 +24,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  duo: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = useColor(
@@ -71,7 +75,11 @@ onMounted(() => {
         </div>
         <div
           class="conversation-message"
-          :class="{ 'bot-typing': showTyping, 'bot-typed': !showTyping }"
+          :class="{
+            'bot-typing': showTyping,
+            'bot-typed': !showTyping,
+            duo: duo,
+          }"
         >
           <div v-if="showTyping && sender === 'bot'">
             <ATyping />
@@ -137,7 +145,6 @@ onMounted(() => {
       .conversation-message {
         width: fit-content;
         height: fit-content;
-        border-radius: 20px;
         max-width: 80%;
       }
 
@@ -149,10 +156,14 @@ onMounted(() => {
           padding: 10px 15px;
           color: var(--a-white);
           background: var(--color);
-          border-top-right-radius: 0;
+          border-radius: 20px 0 20px 20px;
           text-align: right;
           max-height: 0px;
           animation: messageAppear 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+
+          &.duo {
+            border-radius: 20px 20px 0 20px;
+          }
         }
 
         @keyframes messageAppear {
@@ -169,10 +180,14 @@ onMounted(() => {
         .conversation-message {
           padding: 10px 15px;
           background: var(--a-grey-lightest);
-          border-bottom-left-radius: 0;
+          border-radius: 0 20px 20px 20px;
           color: var(--a-grey-darker);
           font-weight: 500;
           overflow: hidden;
+
+          &.duo {
+            border-radius: 20px 20px 20px 0;
+          }
         }
 
         .bot-typing {
