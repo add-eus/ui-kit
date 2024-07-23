@@ -20,12 +20,7 @@ import "../../index.scss";
       </AInput>
     </Variant>
     <Variant title="phone">
-      <AInput
-        color="primary"
-        placeholder="Phone number.."
-        invalidMsg="Le numéro de téléphone n’est pas valide"
-        type="phone"
-      >
+      <AInput color="primary" placeholder="Phone number.." type="phone">
       </AInput>
     </Variant>
   </Story>
@@ -42,7 +37,6 @@ The `AIcon` component provides the following options:
 
 - `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `primary`.
 - `placeholder` (string, optional): Specifies the placeholder of the button. Possible values are any valid text like `Type your text here..`.
-- `invalidMsg` (string, optional): Specifies the invalid message of the input.
 - `modelValue` (any, optional): Specifies the model value of the input.
 - `full` (boolean, optional): Specifies the full width of the input.
 - `type` (string, optional): Specifies the type of the input. Possible custom values are `text` or `phone`.

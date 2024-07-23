@@ -20,10 +20,6 @@ const props = defineProps({
     type: String,
     default: "Type here..",
   },
-  invalidMsg: {
-    type: String,
-    default: "Invalid phone number",
-  },
   full: {
     type: Boolean,
     default: false,
@@ -52,8 +48,6 @@ const focus = () => {
 defineExpose({ focus });
 
 const telInputModel = ref(props.modelValue || "");
-const isValid = ref(true);
-const errorMessage = ref("");
 
 const emit = defineEmits<VTelInputEmits>();
 
@@ -62,16 +56,8 @@ function onInput(phone, phoneObject) {
     "+" + phoneObject.countryCallingCode + " ",
     ""
   );
-  emit("update:modelValue", phoneObject.formatted);
 
-  // VALIDATE MESSAGE
-  if (phoneObject.valid || phoneObject.formatted.length === 0) {
-    isValid.value = true;
-    errorMessage.value = "";
-  } else {
-    isValid.value = false;
-    errorMessage.value = props.invalidMsg;
-  }
+  emit("update:modelValue", phoneObject.formatted);
 }
 </script>
 
@@ -108,7 +94,6 @@ function onInput(phone, phoneObject) {
         }"
         @on-input="onInput"
       ></VueTelInput>
-      <div v-if="!isValid" class="error-message">{{ errorMessage }}</div>
     </template>
     <template v-else>
       <input
@@ -161,15 +146,6 @@ function onInput(phone, phoneObject) {
       border: 1px solid transparent;
       box-shadow: none;
       width: 100%;
-    }
-
-    .error-message {
-      position: absolute;
-      bottom: -18px;
-      left: 0;
-      font-size: 12px;
-      color: var(--a-danger);
-      white-space: nowrap;
     }
   }
 
