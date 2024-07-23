@@ -27,7 +27,8 @@
     "material-symbols": "^0.17.1",
     "notyf": "^3.10.0",
     "v-calendar": "^3.1.2",
-    "vue-advanced-cropper": "^2.8.8"
+    "vue-advanced-cropper": "^2.8.8",
+    "vue-tel-input": "^9.1.4"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.17.14",
