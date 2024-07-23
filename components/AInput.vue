@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { PropType, computed, ref } from "vue";
 import { Colors, useColor } from "../stores/color";
+import { VueTelInput } from "vue-tel-input";
+import "vue-tel-input/vue-tel-input.css";
+
+export interface VTelInputEmits {
+  (e: "update:modelValue", value: string | number): void;
+}
 
 const props = defineProps({
   color: {
@@ -14,9 +20,21 @@ const props = defineProps({
     type: String,
     default: "Type here..",
   },
+  invalidMsg: {
+    type: String,
+    default: "Invalid phone number",
+  },
   full: {
     type: Boolean,
     default: false,
+  },
+  type: {
+    type: String,
+    default: "text",
+  },
+  modelValue: {
+    type: Object as PropType<Array<string> | string | undefined>,
+    default: undefined,
   },
 });
 
@@ -32,26 +50,98 @@ const focus = () => {
   inputRef.value?.focus();
 };
 defineExpose({ focus });
+
+const telInputModel = ref(props.modelValue || "");
+const isValid = ref(true);
+const errorMessage = ref("");
+
+const emit = defineEmits<VTelInputEmits>();
+
+function onInput(phone, phoneObject) {
+  telInputModel.value = phoneObject.formatted.replace(
+    "+" + phoneObject.countryCallingCode + " ",
+    ""
+  );
+  emit("update:modelValue", phoneObject.formatted);
+
+  // VALIDATE MESSAGE
+  if (phoneObject.valid || phoneObject.formatted.length === 0) {
+    isValid.value = true;
+    errorMessage.value = "";
+  } else {
+    isValid.value = false;
+    errorMessage.value = props.invalidMsg;
+  }
+}
 </script>
 
 <template>
   <div
     class="a-input"
+    :class="type === 'phone' && 'a-input-phone'"
     :style="{
       borderColor: color,
       width: full && '100%',
       '--color': color,
     }"
   >
-    <input
-      ref="inputRef"
-      v-bind="$attrs"
-      v-model="model"
-      :placeholder="placeholder"
-    />
+    <template v-if="type === 'phone'">
+      <VueTelInput
+        v-model="telInputModel"
+        mode="international"
+        default-country="FR"
+        :enabled-country-code="true"
+        :preferred-countries="['FR']"
+        autocomplete="off"
+        :validCharactersOnly="true"
+        :autoFormat="true"
+        :dropdown-options="{
+          showDialCodeInList: true,
+          showDialCodeInSelection: true,
+          showFlags: true,
+        }"
+        :input-options="{
+          placeholder: placeholder,
+          required: true,
+          showDialCode: false,
+          type: 'tel',
+        }"
+        @on-input="onInput"
+      ></VueTelInput>
+      <div v-if="!isValid" class="error-message">{{ errorMessage }}</div>
+    </template>
+    <template v-else>
+      <input
+        ref="inputRef"
+        v-bind="$attrs"
+        v-model="model"
+        :placeholder="placeholder"
+        :type="type"
+      />
+    </template>
     <slot name="rightAction" class="right-action"></slot>
   </div>
 </template>
+
+<style lang="scss">
+.a-input {
+  &.a-input-phone {
+    .vue-tel-input {
+      .vti__dropdown {
+        position: initial !important;
+      }
+
+      .vti__input {
+        border: none;
+        padding-left: 0px !important;
+        outline: none;
+        box-shadow: none;
+        width: 100%;
+      }
+    }
+  }
+}
+</style>
 
 <style scoped lang="scss">
 .a-input {
@@ -61,6 +151,27 @@ defineExpose({ focus });
   border-width: 1px;
   display: flex;
   background: var(--a-white);
+  overflow: visible;
+
+  &.a-input-phone {
+    padding: 6.5px;
+    position: relative;
+
+    .vue-tel-input {
+      border: 1px solid transparent;
+      box-shadow: none;
+      width: 100%;
+    }
+
+    .error-message {
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+      font-size: 12px;
+      color: var(--a-danger);
+      white-space: nowrap;
+    }
+  }
 
   &:has(+ *) {
     padding-right: 0;
