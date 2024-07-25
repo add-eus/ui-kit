@@ -27,10 +27,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  checked: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const modelValue = defineModel();
@@ -59,7 +55,7 @@ const colorInvert = useColor(mainColor, "default", true);
         'no-label': !$slots.default,
       }"
     >
-      <input type="checkbox" v-model="checkboxValue" :checked="checked" />
+      <input type="checkbox" v-model="checkboxValue" />
       <span v-if="toggleSwitch" class="slider"></span>
       <span class="label-text"><slot></slot></span>
     </label>
