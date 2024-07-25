@@ -19,17 +19,19 @@ const valueF = ref(false);
     <Variant title="primary">
       <ACheckbox color="primary" v-model="valueB">Option I</ACheckbox>
     </Variant>
-    <Variant title="secondary">
-      <ACheckbox color="secondary" v-model="valueC">Option II</ACheckbox>
+    <Variant title="toggleSwitch">
+      <ACheckbox color="tertiary" toggleSwitch v-model="valueC"
+        >Option II</ACheckbox
+      >
     </Variant>
     <Variant title="secondary">
-      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueD">
+      <ACheckbox color="secondary" hideCheckbox v-model="valueD">
         Option III
       </ACheckbox>
-      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueE">
+      <ACheckbox color="secondary" hideCheckbox v-model="valueE">
         Option IV
       </ACheckbox>
-      <ACheckbox color="secondary" :hideCheckbox="true" v-model="valueF">
+      <ACheckbox color="secondary" hideCheckbox v-model="valueF">
         Option V
       </ACheckbox>
     </Variant>

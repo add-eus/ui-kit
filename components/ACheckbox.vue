@@ -23,6 +23,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  toggleSwitch: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const modelValue = defineModel();
@@ -43,7 +47,7 @@ const colorInvert = useColor(mainColor, "default", true);
 </script>
 
 <template>
-  <div class="a-input-checkbox">
+  <div :class="toggleSwitch ? 'a-input-toggle-switch' : 'a-input-checkbox'">
     <label
       :class="{
         'hide-checkbox': props.hideCheckbox,
@@ -52,6 +56,7 @@ const colorInvert = useColor(mainColor, "default", true);
       }"
     >
       <input type="checkbox" v-model="checkboxValue" />
+      <span v-if="toggleSwitch" class="slider"></span>
       <span class="label-text"><slot></slot></span>
     </label>
   </div>
@@ -109,6 +114,64 @@ const colorInvert = useColor(mainColor, "default", true);
       min-width: 90px;
       width: fit-content;
       min-height: 16px;
+    }
+  }
+}
+
+.a-input-toggle-switch {
+  display: flex;
+
+  label {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    cursor: pointer;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:checked + .slider {
+        background-color: v-bind(color);
+      }
+
+      &:focus + .slider {
+        box-shadow: 0 0 1px v-bind(color);
+      }
+
+      &:checked + .slider:before {
+        transform: translateX(20px);
+      }
+    }
+
+    .label-text {
+      margin-left: 40px;
+    }
+
+    .slider {
+      width: 40px;
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--a-grey-lighter);
+      transition: 0.25s;
+      border-radius: 20px;
+
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: 0.25s;
+        border-radius: 50%;
+      }
     }
   }
 }
