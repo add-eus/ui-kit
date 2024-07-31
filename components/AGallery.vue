@@ -356,7 +356,6 @@ defineExpose({
     /* right: calc((var(--border-space) / 2) + 10px); */
     right: 10px;
     z-index: 1;
-    transform: scaleX(-1);
     font-variation-settings: "FILL" 1;
   }
 
