@@ -15,8 +15,11 @@ const props = defineProps({
     type: Number,
     default: 1000,
   },
+  decimal: {
+    type: Boolean,
+    default: false,
+  },
 });
-
 
 const baseNumber = ref(0);
 const duration = computed(() => props.duration);
@@ -36,7 +39,8 @@ watch(
 
 <template>
   <p>
-    <span>{{ Math.floor(target) }}</span>
+    <span v-if="!decimal">{{ Math.floor(target) }}</span>
+    <span v-else>{{ Math.floor(target * 10) / 10 }}</span>
     <span>{{ suffix }}</span>
   </p>
 </template>

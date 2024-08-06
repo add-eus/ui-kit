@@ -19,6 +19,14 @@ const props = defineProps({
     type: Number,
     default: 8,
   },
+  border: {
+    type: Number,
+    default: 5,
+  },
+  opacity: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const colorA = useColor(
@@ -50,11 +58,12 @@ const calculateOpacity = (targetValue: number) => {
       <div
         class="progress"
         :style="{
+          '--border': border + 'px',
           '--width': target * 0.93 + 7 + '%',
           background: colorB
             ? `linear-gradient(90deg, ${colorA}, ${colorB} 90%)`
             : colorA,
-          opacity: calculateOpacity(target),
+          opacity: opacity ? calculateOpacity(target) : '1',
         }"
       ></div>
     </div>
@@ -75,7 +84,7 @@ const calculateOpacity = (targetValue: number) => {
 
     .progress {
       height: var(--size);
-      border-radius: 5px;
+      border-radius: var(--border);
       animation: barLoading 1s cubic-bezier(0.47, 1.64, 0.41, 0.8) forwards;
     }
 
