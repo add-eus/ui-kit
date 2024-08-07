@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<AInputSizerProps>(), {
 
 const mainColor = computed(() => props.color);
 const color = useColor(mainColor);
+const colorDark = useColor(mainColor, "dark");
 
 const textColor = computed(() => props.textColor);
 const colorText = useColor(textColor);
@@ -110,7 +111,7 @@ defineExpose({
   }
 
   &:focus-within {
-    outline: solid 1px var(--a-grey);
+    outline: solid 1px v-bind(colorDark);
 
     textarea:focus,
     input:focus {
