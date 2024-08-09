@@ -59,7 +59,7 @@ const background = useColor(
       class="star"
       :style="{
         maskImage:
-          mask !== 'assets/star.svg'
+          mask !== 'assets/star-mask.svg'
             ? 'url(' + mask + ')'
             : 'url(/ui-kit/components/' + mask + ')',
       }"
@@ -85,11 +85,13 @@ const background = useColor(
     background: var(--color);
     width: var(--progress);
   }
+
   .star {
     z-index: 0;
     background: var(--background);
     width: var(--size);
     mask-size: cover;
+    transform: scale(1.06); // REMOVE BORDER SPACING
   }
 }
 </style>
