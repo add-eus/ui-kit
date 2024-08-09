@@ -2,6 +2,8 @@
 import { computed, watch } from "vue";
 import type { RouteLocationOptions } from "vue-router";
 import { useRoute } from "vue-router";
+import type { Colors } from "../stores/color";
+import { useColor } from "../stores/color";
 import AIcon from "./AIcon.vue";
 
 export interface APaginationProps {
@@ -11,6 +13,7 @@ export interface APaginationProps {
   maxLinksDisplayed?: number;
   noRouter?: boolean;
   routerQueryKey?: string;
+  color?: Colors;
 }
 
 export interface APaginationEmits {
@@ -23,7 +26,11 @@ const props = withDefaults(defineProps<APaginationProps>(), {
   maxLinksDisplayed: 2,
   useRouter: true,
   routerQueryKey: "page",
+  color: "primary",
 });
+const mainColor = computed(() => props.color);
+const color = useColor(mainColor);
+const colorInvert = useColor(mainColor, "default", true);
 
 const route = useRoute();
 const lastPage = computed(
@@ -245,23 +252,32 @@ if (props.noRouter !== true) {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1em;
+      font-size: 11px;
       background: var(--a-white);
-      color: var(--a-black);
+      color: var(--a-grey-darker);
+      font-weight: 600;
       height: 100%;
       width: 100%;
       border-radius: 50%;
-      border: 1px solid var(--a-grey);
+      border: 1px solid var(--a-grey-lightest);
       transition: border 0.15s ease-in-out;
 
       &:hover {
-        border: 1px solid var(--a-grey-dark);
+        border: 1px solid var(--a-grey);
       }
 
       &.is-current {
-        background: var(--a-blue);
-        border: 1px solid var(--a-blue);
-        color: var(--a-white);
+        background: v-bind(color);
+        border: 1px solid v-bind(color);
+        color: v-bind(colorInvert);
+      }
+    }
+  }
+  .pagination-arrow {
+    a {
+      .a-icon {
+        font-size: 10px;
+        color: var(--a-black) !important;
       }
     }
   }

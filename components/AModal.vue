@@ -183,8 +183,8 @@ defineExpose({
   .a-modal-background {
     height: 100%;
     width: 100%;
-    background: $a-black;
-    opacity: 0.45;
+    background: $a-secondary-darker;
+    opacity: 0.4;
     border: none;
   }
 

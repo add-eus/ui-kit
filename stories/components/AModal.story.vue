@@ -31,7 +31,7 @@ const open = ref<string | false>(false);
         @close="open = false"
         size="small"
         title=".smallTitle"
-        actionAlignment="center"
+        action-alignement="center"
       >
         <template #content> Content test </template>
         <template #action>
@@ -48,7 +48,7 @@ const open = ref<string | false>(false);
         @close="open = false"
         size="medium"
         title=".mediumTitle"
-        actionAlignment="right"
+        action-alignement="right"
       >
         <template #content> Content test </template>
         <template #action>
@@ -81,7 +81,7 @@ const open = ref<string | false>(false);
         @close="open = false"
         size="big"
         title=".bigTitle"
-        actionAlignment="center"
+        action-alignement="center"
       >
         <template #content> Content test </template>
         <template #action>
@@ -98,7 +98,7 @@ const open = ref<string | false>(false);
         @close="open = false"
         size="giant"
         title=".giantTitle"
-        actionAlignment="right"
+        action-alignement="right"
       >
         <template #content> Content test </template>
         <template #action>
@@ -123,5 +123,5 @@ The `AModal` component provides the following options:
 - `size` (string, optional): Specifies the size of the modal. Possible values are `small`, `medium`, `large`, `big`, and `giant`.
 - `open` (boolean, required): Specifies whether the modal is open or not.
 - `close` (function, required): Specifies the function to close the modal.
-- `actionAlignment` (string, optional): Specifies the position of the actions. Possible values are `center` and `right`.
+- `action-alignement` (string, optional): Specifies the position of the actions. Possible values are `center` and `right`.
 </docs>
