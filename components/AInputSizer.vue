@@ -7,6 +7,7 @@ import { computed, ref, watch } from "vue";
 
 export interface AInputSizerEmits {
   (event: "update:modelValue", value?: any): void;
+  (event: "blur"): void;
 }
 export interface AInputSizerProps {
   raw?: boolean;
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<AInputSizerProps>(), {
 
 const mainColor = computed(() => props.color);
 const color = useColor(mainColor);
+const colorDark = useColor(mainColor, "dark");
 
 const textColor = computed(() => props.textColor);
 const colorText = useColor(textColor);
@@ -51,6 +53,7 @@ defineExpose({
 <template>
   <div class="a-input-sizer a-input-sizer-stacked" :data-value="value">
     <textarea
+      @blur="() => emits('blur')"
       ref="textarea"
       v-model="value"
       :class="classes"
@@ -110,7 +113,7 @@ defineExpose({
   }
 
   &:focus-within {
-    outline: solid 1px var(--a-grey);
+    outline: solid 1px v-bind(colorDark);
 
     textarea:focus,
     input:focus {

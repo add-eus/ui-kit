@@ -59,6 +59,21 @@ import "../../index.scss";
         <AIcon icon="arrow_forward" type="rounded" />
       </AButton>
     </Variant>
+    <Variant title="full">
+      <AButton
+        :style="{ marginTop: '70px' }"
+        color="primary"
+        full
+        congrat
+        :images="[
+          '/components/assets/star-mask.svg',
+          '/components/assets/sparkle.png',
+        ]"
+        :images-number="10"
+      >
+        AButton Congrat Click
+      </AButton>
+    </Variant>
   </Story>
 </template>
 
@@ -74,4 +89,9 @@ The `AButton` component provides the following options:
 - `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `tertiary`, `danger`, `warning`, `success` & `info`
 - `full` (boolean, optional): Specifies the size
 - `paddingxl` (boolean, optional): Specifies big padding
+- `loading` (boolean, optional): Specifies if the button is in loading state
+- `outlined` (boolean, optional): Specifies if the button is outlined
+- `disabled` (boolean, optional): Specifies if the button is disabled
+- `images` (array, optional): Specifies the images to be displayed in the animation
+- `imagesNumber` (number, optional): Specifies the number of images to be displayed
 </docs>

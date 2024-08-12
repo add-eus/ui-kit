@@ -25,18 +25,21 @@ import "../../index.scss";
         :colors="['primary-light', 'secondary']"
         :size="35"
         :margin="4"
+        :border="50"
       />
       <AProgressBar
         :target="0"
         :colors="['primary-light', 'secondary']"
         :size="35"
         :margin="4"
+        :border="50"
       />
       <AProgressBar
         :target="98"
         :colors="['primary-light', 'secondary']"
         :size="35"
         :margin="4"
+        :border="50"
       />
     </Variant>
   </Story>
@@ -53,4 +56,5 @@ This is a progress bar component incrementing to the target number.
 - `colors` (array of string, optional, default: ["gold"]): Specifies the color of the graph. You can specifie two color to have a gradient like ['primary', 'secondary']
 - `size` (number, optional, default: 25): Specifies the height of the bars.
 - `margin` (number, optional, default: 5): Specifies the margin between the bars.
+- `border` (number, optional, default: 5): Specifies the border of the bars.
 </docs>
