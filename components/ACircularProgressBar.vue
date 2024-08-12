@@ -84,10 +84,6 @@ const gradientId =
   width: var(--size);
   height: var(--size);
 
-  .svg-container {
-    transform: rotate(145deg);
-  }
-
   .svg-container,
   svg {
     position: relative;
