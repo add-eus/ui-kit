@@ -7,6 +7,7 @@ import { computed, ref, watch } from "vue";
 
 export interface AInputSizerEmits {
   (event: "update:modelValue", value?: any): void;
+  (event: "blur"): void;
 }
 export interface AInputSizerProps {
   raw?: boolean;
@@ -52,6 +53,7 @@ defineExpose({
 <template>
   <div class="a-input-sizer a-input-sizer-stacked" :data-value="value">
     <textarea
+      @blur="() => emits('blur')"
       ref="textarea"
       v-model="value"
       :class="classes"
