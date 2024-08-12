@@ -45,34 +45,36 @@ const gradientId =
     }"
   >
     <span class="dots"></span>
-    <svg width="240" height="240" viewBox="0 0 240 240">
-      <defs>
-        <linearGradient :id="gradientId" gradientTransform="rotate(25)">
-          <stop v-if="colorA" offset="5%" :stop-color="colorA" />
-          <stop offset="95%" :stop-color="colorB" />
-        </linearGradient>
-      </defs>
-      <circle
-        cx="120"
-        cy="120"
-        r="100"
-        class="back"
-        stroke-width="15"
-        stroke-dasharray="628"
-        stroke-dashoffset="188"
-      ></circle>
-      <circle
-        cx="120"
-        cy="120"
-        r="100"
-        fill="none"
-        :stroke="`url(#${gradientId})`"
-        stroke-width="20"
-        stroke-dasharray="628"
-        stroke-dashoffset="188"
-        :style="{ '--percent': target / 1.43 }"
-      ></circle>
-    </svg>
+    <div class="svg-container">
+      <svg width="240" height="240" viewBox="0 0 240 240">
+        <defs>
+          <linearGradient :id="gradientId" gradientTransform="rotate(25)">
+            <stop v-if="colorA" offset="5%" :stop-color="colorA" />
+            <stop offset="95%" :stop-color="colorB" />
+          </linearGradient>
+        </defs>
+        <circle
+          cx="120"
+          cy="120"
+          r="100"
+          class="back"
+          stroke-width="15"
+          stroke-dasharray="628"
+          stroke-dashoffset="188"
+        ></circle>
+        <circle
+          cx="120"
+          cy="120"
+          r="100"
+          fill="none"
+          :stroke="`url(#${gradientId})`"
+          stroke-width="20"
+          stroke-dasharray="628"
+          stroke-dashoffset="188"
+          :style="{ '--percent': target / 1.43 }"
+        ></circle>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -82,11 +84,15 @@ const gradientId =
   width: var(--size);
   height: var(--size);
 
+  .svg-container {
+    transform: rotate(145deg);
+  }
+
+  .svg-container,
   svg {
     position: relative;
     width: var(--size);
     height: var(--size);
-    transform: rotate(145deg);
 
     circle {
       width: 100%;
@@ -125,8 +131,8 @@ const gradientId =
     width: var(--size);
     height: var(--size);
     border-radius: 50%;
-    transform: rotate(0deg);
     transition: 2s transform;
+    transform: rotate(var(--rotate));
     animation: dotLoading 1s cubic-bezier(0.47, 1.64, 0.41, 0.8) forwards;
 
     &::after {
