@@ -77,6 +77,7 @@ const onChange = (event: Event) => {
     border-radius: 5px;
     font-size: 12px;
     cursor: pointer;
+    white-space: nowrap;
     transition: background-color 0.3s, border-color 0.3s;
 
     &.hide-radio {

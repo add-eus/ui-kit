@@ -189,6 +189,8 @@ defineExpose({ open });
 
 <style lang="scss">
 .input-date-container {
+  position: relative;
+
   .input-range-container {
     display: flex;
     justify-content: center;
@@ -230,6 +232,8 @@ defineExpose({ open });
   }
 
   .vc-popover-content-wrapper {
+    z-index: 100;
+
     &.is-interactive {
       left: 50% !important;
       transform: translate(-50%, 42px) !important;
