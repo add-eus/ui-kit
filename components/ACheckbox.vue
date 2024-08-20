@@ -10,6 +10,13 @@ const props = defineProps({
       return ["grey", "primary", "danger", "success"].includes(value);
     },
   },
+  type: {
+    type: String as PropType<"checkbox" | "switch" | "hidden">,
+    default: "checkbox",
+    validator: (value) => {
+      return ["checkbox", "switch", 'hidden'].includes(value);
+    },
+  },
   value: {
     default: false,
   },
@@ -44,19 +51,21 @@ const mainColor = computed(() => props.color);
 
 const color = useColor(mainColor);
 const colorInvert = useColor(mainColor, "default", true);
+console.log(props);
+
 </script>
 
 <template>
-  <div :class="toggleSwitch ? 'a-input-toggle-switch' : 'a-input-checkbox'">
+  <div :class="props.type === 'switch' ? 'a-input-toggle-switch' : 'a-input-checkbox'">
     <label
       :class="{
-        'hide-checkbox': props.hideCheckbox,
+        'hide-checkbox': props.type === 'hidden',
         selected: checkboxValue,
         'no-label': !$slots.default,
       }"
     >
       <input type="checkbox" v-model="checkboxValue" />
-      <span v-if="toggleSwitch" class="slider"></span>
+      <span v-if="type === 'switch'" class="slider"></span>
       <span class="label-text"><slot></slot></span>
     </label>
   </div>
