@@ -51,8 +51,6 @@ const mainColor = computed(() => props.color);
 
 const color = useColor(mainColor);
 const colorInvert = useColor(mainColor, "default", true);
-console.log(props);
-
 </script>
 
 <template>
