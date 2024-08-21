@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ATabs from "../../components/ATabs.vue";
+import AIcon from "../../components/AIcon.vue";
 import "../../index.scss";
 
 const tabs = [
@@ -22,7 +23,13 @@ const tabs = [
       <ATabs :tabs="tabs" color="primary" modelValue="settings" />
     </Variant>
     <Variant title="slow transition">
-      <ATabs :tabs="tabs" color="success" modelValue="home" slow />
+      <ATabs :tabs="tabs" color="success" modelValue="home" slow>
+        <template #tab> </template>
+        <template #tab-link-label="{ tab }">
+          <AIcon :icon="tab.icon" type="rounded" />
+          <Translate>{{ tab.label }}</Translate>
+        </template>
+      </ATabs>
     </Variant>
   </Story>
 </template>

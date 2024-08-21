@@ -76,13 +76,18 @@ const onChange = (event: Event) => {
     color: v-bind(colorText);
     border-radius: 5px;
     font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
     white-space: nowrap;
     transition: background-color 0.3s, border-color 0.3s;
 
+    @media screen and (max-width: 767px) {
+      border-radius: 3px;
+    }
+
     &.hide-radio {
       color: v-bind(color);
-      border: 2px solid v-bind(color);
+      border: 1px solid v-bind(color);
       text-align: center;
 
       &.selected {

@@ -98,6 +98,7 @@ function toggle(value: string) {
 <style scoped lang="scss">
 .a-tabs-container {
   display: flex;
+  flex-wrap: wrap;
 
   .a-tab {
     display: flex;
@@ -194,6 +195,25 @@ function toggle(value: string) {
         box-shadow: inset 0px 0px 0px 1px var(--a-info);
         border-radius: 5px;
         color: v-bind(color);
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .a-tab {
+      a {
+        padding: 2px 9px 2px 9px;
+        font-size: 10px;
+
+        span {
+          height: 14px;
+          gap: 5px;
+
+          :slotted(img),
+          :slotted(svg) {
+            width: 9px;
+          }
+        }
       }
     }
   }
