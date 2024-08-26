@@ -10,7 +10,7 @@ import "../../index.scss";
       <ALoader />
     </Variant>
     <Variant title="button">
-      <AButton color="tertiary" paddingxl>
+      <AButton color="tertiary" size="large">
         <ALoader />
       </AButton>
     </Variant>

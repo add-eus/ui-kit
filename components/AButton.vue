@@ -35,10 +35,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  paddingxl: {
-    type: Boolean,
-    default: false,
-  },
   images: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -46,6 +42,17 @@ const props = defineProps({
   imagesNumber: {
     type: Number,
     default: 10,
+  },
+  size: {
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
+    validator: (value) => {
+      return [
+        "small",
+        "medium",
+        "large",
+      ].includes(value);
+    },
   },
 });
 
@@ -91,10 +98,9 @@ function startAnimation() {
     class="a-button"
     v-bind="$attrs"
     @click="startAnimation"
-    :class="{ outlined: outlined }"
+    :class="[size, { outlined, loading }]"
     :style="{
       width: full && '100%',
-      padding: paddingxl && '3px 20px',
       '--rotate': randomRotation + 'deg',
       '--velocity': randdomVelocity + 'px',
       '--turbulence': randomTurbulence + 'px',
@@ -119,7 +125,7 @@ function startAnimation() {
   </button>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .a-button {
   z-index: 1;
   position: relative;
@@ -132,6 +138,34 @@ function startAnimation() {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &.large {
+    padding: 3px 20px;
+    height: 45px;
+
+    > .a-icon {
+      font-size: 40px;
+
+      > svg {
+        height: 40px;
+      }
+    }
+  }
+
+  &.small {
+    padding: 3px 5px;
+    height: 25px;
+
+    > .a-icon {
+      font-size: 20px;
+
+      > svg {
+        height: 20px;
+      }
+    }
+  }
+
+
 
   &:not(.outlined) {
     background-color: v-bind(color);
