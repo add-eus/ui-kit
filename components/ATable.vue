@@ -33,44 +33,44 @@ const diff = computed(() => {
 </script>
 
 <template>
-  <div class="a-spreadsheet" :style="{ '--lenght': titlesLength }">
-    <div class="spreadsheet-titles">
-      <div v-for="index in titlesLength" :key="index" class="spreadsheet-title">
+  <div class="a-table" :style="{ '--lenght': titlesLength }">
+    <div class="table-titles">
+      <div v-for="index in titlesLength" :key="index" class="table-title">
         {{ titles[index - 1] }}
       </div>
     </div>
-    <div class="spreadsheet-column" v-for="index in keysLength" :key="index">
-      <div class="spreadsheet-section">{{ keys[index - 1] }}</div>
-      <div class="spreadsheet-section">{{ actual[index - 1] }}</div>
+    <div class="table-column" v-for="index in keysLength" :key="index">
+      <div class="table-section">{{ keys[index - 1] }}</div>
+      <div class="table-section">{{ actual[index - 1] }}</div>
       <div
-        class="spreadsheet-section"
+        class="table-section"
         v-if="diff[index - 1] > 0"
         style="color: var(--a-success)"
       >
         <AIcon icon="arrow_upward" type="rounded" color="success" />
-        <div class="spreadsheet-number">+{{ diff[index - 1] }}</div>
+        <div class="table-number">+{{ diff[index - 1] }}</div>
       </div>
       <div
-        class="spreadsheet-section"
+        class="table-section"
         v-else="diff[index - 1] > 0"
         style="color: var(--a-danger)"
       >
         <AIcon icon="arrow_downward" type="rounded" color="danger" />
-        <div class="spreadsheet-number">{{ diff[index - 1] }}</div>
+        <div class="table-number">{{ diff[index - 1] }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.a-spreadsheet {
+.a-table {
   display: flex;
   flex-direction: column;
 
-  .spreadsheet-titles {
+  .table-titles {
     display: flex;
 
-    .spreadsheet-title {
+    .table-title {
       width: calc(100% / var(--lenght));
       text-align: center;
       font-size: 12px;
@@ -90,7 +90,7 @@ const diff = computed(() => {
     }
   }
 
-  .spreadsheet-column {
+  .table-column {
     text-transform: capitalize;
     display: flex;
     padding: 2px 1px;
@@ -100,7 +100,7 @@ const diff = computed(() => {
       border-bottom: 1px solid var(--a-grey-lighter);
     }
 
-    .spreadsheet-section {
+    .table-section {
       width: calc(100% / var(--lenght));
       text-align: center;
       font-size: 12px;
@@ -118,7 +118,7 @@ const diff = computed(() => {
         display: flex;
         justify-content: flex-end;
 
-        .spreadsheet-number {
+        .table-number {
           min-width: 34px;
           text-align: center;
         }
