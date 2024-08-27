@@ -30,8 +30,8 @@ import "../../index.scss";
         <AIcon icon="check" />
       </AButton>
     </Variant>
-    <Variant title="warning/paddingxl">
-      <AButton color="warning" paddingxl>
+    <Variant title="warning/large">
+      <AButton color="warning" size="large">
         AButton
         <AIcon icon="check" />
       </AButton>
@@ -88,7 +88,7 @@ The `AButton` component provides the following options:
 
 - `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `tertiary`, `danger`, `warning`, `success` & `info`
 - `full` (boolean, optional): Specifies the size
-- `paddingxl` (boolean, optional): Specifies big padding
+- `size="large"` (boolean, optional): Specifies big padding
 - `loading` (boolean, optional): Specifies if the button is in loading state
 - `outlined` (boolean, optional): Specifies if the button is outlined
 - `disabled` (boolean, optional): Specifies if the button is disabled
