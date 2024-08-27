@@ -57,7 +57,7 @@ withDefaults(defineProps<ACardProps>(), {
   position: relative;
   background-color: $a-white;
   border-radius: 0.5rem;
-  box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   max-height: 100%;
