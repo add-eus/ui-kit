@@ -186,7 +186,7 @@ function toggle(value: string) {
       }
     }
 
-    &:active {
+    &:focus {
       background: v-bind(colorLight);
 
       a {
