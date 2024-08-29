@@ -30,6 +30,12 @@ import "../../index.scss";
         <AIcon icon="check" />
       </AButton>
     </Variant>
+    <Variant title="warning/small">
+      <AButton color="warning" size="small">
+        AButton
+        <AIcon icon="check" />
+      </AButton>
+    </Variant>
     <Variant title="warning/large">
       <AButton color="warning" size="large">
         AButton
@@ -65,10 +71,7 @@ import "../../index.scss";
         color="primary"
         full
         congrat
-        :images="[
-          '/components/assets/star-mask.svg',
-          '/components/assets/sparkle.png',
-        ]"
+        :images="['/components/assets/sparkle.png']"
         :images-number="10"
       >
         AButton Congrat Click
@@ -88,7 +91,7 @@ The `AButton` component provides the following options:
 
 - `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `tertiary`, `danger`, `warning`, `success` & `info`
 - `full` (boolean, optional): Specifies the size
-- `size="large"` (boolean, optional): Specifies big padding
+- `size="large"` (boolean, optional): Specifies big padding. Possible values are `small`, `medium` & `large`
 - `loading` (boolean, optional): Specifies if the button is in loading state
 - `outlined` (boolean, optional): Specifies if the button is outlined
 - `disabled` (boolean, optional): Specifies if the button is disabled

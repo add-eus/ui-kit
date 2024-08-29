@@ -47,11 +47,7 @@ const props = defineProps({
     type: String as PropType<"small" | "medium" | "large">,
     default: "medium",
     validator: (value) => {
-      return [
-        "small",
-        "medium",
-        "large",
-      ].includes(value);
+      return ["small", "medium", "large"].includes(value);
     },
   },
 });
@@ -130,9 +126,10 @@ function startAnimation() {
   z-index: 1;
   position: relative;
   border: none;
-  border-radius: 6px;
-  padding: 3px 8px;
-  height: 35px;
+  border-radius: 5px;
+  padding: 10px 30px;
+  gap: 3px;
+  height: 37px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -140,32 +137,14 @@ function startAnimation() {
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 
   &.large {
-    padding: 3px 20px;
-    height: 45px;
-
-    > .a-icon {
-      font-size: 40px;
-
-      > svg {
-        height: 40px;
-      }
-    }
+    padding: 12px 16px;
+    height: 43px;
   }
 
   &.small {
-    padding: 3px 5px;
-    height: 25px;
-
-    > .a-icon {
-      font-size: 20px;
-
-      > svg {
-        height: 20px;
-      }
-    }
+    padding: 7px 8px;
+    height: 28px;
   }
-
-
 
   &:not(.outlined) {
     background-color: v-bind(color);
