@@ -35,10 +35,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  paddingxl: {
-    type: Boolean,
-    default: false,
-  },
   images: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -46,6 +42,13 @@ const props = defineProps({
   imagesNumber: {
     type: Number,
     default: 10,
+  },
+  size: {
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
+    validator: (value) => {
+      return ["small", "medium", "large"].includes(value);
+    },
   },
 });
 
@@ -91,10 +94,9 @@ function startAnimation() {
     class="a-button"
     v-bind="$attrs"
     @click="startAnimation"
-    :class="{ outlined: outlined }"
+    :class="[size, { outlined, loading }]"
     :style="{
       width: full && '100%',
-      padding: paddingxl && '3px 20px',
       '--rotate': randomRotation + 'deg',
       '--velocity': randdomVelocity + 'px',
       '--turbulence': randomTurbulence + 'px',
@@ -119,19 +121,30 @@ function startAnimation() {
   </button>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .a-button {
   z-index: 1;
   position: relative;
   border: none;
-  border-radius: 6px;
-  padding: 3px 8px;
-  height: 35px;
+  border-radius: 5px;
+  padding: 10px 30px;
+  gap: 3px;
+  height: 37px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &.large {
+    padding: 12px 16px;
+    height: 43px;
+  }
+
+  &.small {
+    padding: 7px 8px;
+    height: 28px;
+  }
 
   &:not(.outlined) {
     background-color: v-bind(color);

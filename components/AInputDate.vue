@@ -189,6 +189,8 @@ defineExpose({ open });
 
 <style lang="scss">
 .input-date-container {
+  position: relative;
+
   .input-range-container {
     display: flex;
     justify-content: center;
@@ -201,35 +203,41 @@ defineExpose({ open });
       &::after {
         content: "";
         position: absolute;
-        top: 20px;
+        top: 50%;
+        transform: translateY(-25%);
         right: 20px;
         height: 0;
         width: 0;
-        border-top: 6px solid var(--a-grey);
-        border-right: 3px solid transparent;
-        border-left: 3px solid transparent;
+        border-top: 7px solid var(--a-grey);
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
       }
 
       .input-range {
-        padding-top: 11px;
-        padding-bottom: 3px;
+        padding-top: 13px;
+        padding-bottom: 4px;
         font-size: 10px;
+        font-weight: 700;
         width: 100%;
         cursor: pointer;
+        border-radius: 5px;
       }
 
       .label {
         position: absolute;
         pointer-events: none;
-        top: 5px;
+        top: 6px;
         left: 18px;
         font-size: 13px;
+        font-weight: 500;
         color: var(--a-grey);
       }
     }
   }
 
   .vc-popover-content-wrapper {
+    z-index: 100;
+
     &.is-interactive {
       left: 50% !important;
       transform: translate(-50%, 42px) !important;
