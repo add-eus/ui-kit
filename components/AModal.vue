@@ -23,6 +23,8 @@ export interface AModalProps {
   cancelLabel?: string;
   classList?: string;
   confirmation?: boolean;
+  hasHeader?: boolean;
+  hasFooter?: boolean;
 }
 
 const emit = defineEmits<AModalEmits>();
@@ -32,6 +34,8 @@ const props = withDefaults(defineProps<AModalProps>(), {
   actions: undefined,
   cancelLabel: undefined,
   confirmation: false,
+  hasHeader: true,
+  hasFooter: true,
 });
 
 const wasOpen = ref(false);
@@ -100,6 +104,8 @@ defineExpose({
         ></button>
         <div class="a-modal-content">
           <ACard
+            :has-header="hasHeader"
+            :has-footer="hasFooter"
             :title-alignement="titleAlignement"
             :action-alignement="actionAlignement"
           >
@@ -109,18 +115,17 @@ defineExpose({
                   ><Translate>{{ title }}</Translate></slot
                 >
               </h3>
+            </template>
+            <template #content>
               <AButton
                 class="a-modal-close"
-                icon="close"
                 circle
                 :disabled="noclose"
                 @keydown.space.prevent="close()"
                 @click="close()"
               >
-                <AIcon icon="close"></AIcon>
+                <AIcon icon="close" color="black"></AIcon>
               </AButton>
-            </template>
-            <template #content>
               <slot
                 v-if="showConfirmation"
                 name="confirmation"
@@ -160,7 +165,7 @@ defineExpose({
     position: absolute;
     cursor: pointer;
     top: 10px;
-    right: 10px;
+    right: 0px;
     background: transparent;
 
     &.a-modal-background {
@@ -172,7 +177,7 @@ defineExpose({
   .a-card {
     width: 100%;
     border-radius: 8px;
-    padding: 20px 40px 40px 40px;
+    padding: 20px 30px 30px 30px;
     max-height: 100vh;
 
     > .a-card-body {
@@ -190,7 +195,7 @@ defineExpose({
 
   .a-modal-content {
     opacity: 1 !important;
-    max-width: 540px;
+    max-width: 620px;
     margin: 0;
     padding: 0 10px;
     z-index: 300;
@@ -290,10 +295,6 @@ defineExpose({
       .a-card-foot {
         border-top: 1px solid var(--fade-grey-dark-3);
 
-        &:empty {
-          display: none;
-        }
-
         &.no-border {
           border-top-color: transparent;
         }
@@ -348,7 +349,7 @@ defineExpose({
   &.is-large {
     .a-modal-content {
       width: 100%;
-      max-width: 720px;
+      max-width: 700px;
 
       .modal-card {
         width: 100%;
@@ -359,7 +360,7 @@ defineExpose({
   &.is-medium {
     .a-modal-content {
       width: 100%;
-      max-width: 640px;
+      max-width: 620px;
 
       .modal-card {
         width: 100%;
@@ -370,7 +371,7 @@ defineExpose({
   &.is-small {
     .a-modal-content {
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
 
       .modal-card {
         width: 100%;
