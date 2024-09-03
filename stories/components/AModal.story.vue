@@ -107,6 +107,38 @@ const open = ref<string | false>(false);
         </template>
       </AModal>
     </Variant>
+
+    <Variant title="no header">
+      <AButton @click="open = 'noHeader'">Open no header Modal</AButton>
+      <AModal
+        :open="open === 'noHeader'"
+        @close="open = false"
+        title=".noHeaderTitle"
+        :has-header="false"
+      >
+        <template #content> Content test </template>
+        <template #action>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
+        </template>
+      </AModal>
+    </Variant>
+
+    <Variant title="no footer">
+      <AButton @click="open = 'noFooter'">Open no footer Modal</AButton>
+      <AModal
+        :open="open === 'noFooter'"
+        @close="open = false"
+        title=".noFooterTitle"
+        :has-footer="false"
+      >
+        <template #content> Content test </template>
+        <template #action>
+          <AButton>Close</AButton>
+          <AButton color="success">Open</AButton>
+        </template>
+      </AModal>
+    </Variant>
   </Story>
 </template>
 

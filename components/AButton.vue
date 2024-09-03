@@ -214,6 +214,9 @@ function startAnimation() {
 
   //CONGRAT PART
   .congrat-container {
+    position: absolute;
+    width: 100%;
+
     .congrat-element {
       position: absolute;
       bottom: 5px;

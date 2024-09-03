@@ -13,6 +13,7 @@ export function usePrompt() {
         body?: string | Ref<string>;
         cancel?: string | Ref<string>;
         confirm?: string | Ref<string>;
+        colors?: string[];
       } = {}
     ): Promise<boolean> {
       if (options.title === undefined)

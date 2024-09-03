@@ -7,11 +7,15 @@ export type ACardAction = "center" | "right";
 export interface ACardProps {
   titleAlignement?: ACardTitle;
   actionAlignement?: ACardAction;
+  hasHeader?: boolean;
+  hasFooter?: boolean;
 }
 
 withDefaults(defineProps<ACardProps>(), {
   titleAlignement: undefined,
   actionAlignement: undefined,
+  hasHeader: true,
+  hasFooter: true,
 });
 </script>
 
@@ -19,6 +23,7 @@ withDefaults(defineProps<ACardProps>(), {
   <div class="a-card">
     <header
       class="a-card-head"
+      v-if="hasHeader"
       :class="[
         titleAlignement === 'center' && 'is-centered',
         titleAlignement === 'right' && 'is-end',
@@ -40,6 +45,7 @@ withDefaults(defineProps<ACardProps>(), {
     </div>
     <div
       class="a-card-foot"
+      v-if="hasFooter"
       :class="[
         actionAlignement === 'center' && 'is-centered',
         actionAlignement === 'right' && 'is-end',
