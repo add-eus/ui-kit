@@ -357,6 +357,7 @@ defineExpose({
     right: 10px;
     z-index: 1;
     font-variation-settings: "FILL" 1;
+    transform: scaleX(-1);
   }
 
   //ICON ARROW
