@@ -23,13 +23,11 @@ const updateDropdownPosition = () => {
   };
 };
 
-// Mettre à jour la position du dropdown quand on ouvre et quand on fait scroll
 onMounted(() => {
-  updateDropdownPosition(); // Initialement, quand le dropdown s'affiche
+  updateDropdownPosition();
   window.addEventListener("scroll", updateDropdownPosition);
 });
 
-// Nettoyage des écouteurs lors de la destruction du composant
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", updateDropdownPosition);
 });
@@ -40,12 +38,12 @@ onClickOutside(baseElement, () => {
 
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
-  if (isOpen.value) updateDropdownPosition(); // Mise à jour quand on ouvre
+  if (isOpen.value) updateDropdownPosition();
 };
 
 const openDropdown = () => {
   isOpen.value = true;
-  updateDropdownPosition(); // Mise à jour quand on ouvre
+  updateDropdownPosition();
 };
 
 const closeDropdown = () => {
