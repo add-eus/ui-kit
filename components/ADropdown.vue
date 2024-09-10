@@ -18,7 +18,7 @@ const boundingElement = useElementBounding(baseElement);
 const updateDropdownPosition = () => {
   dropdownStyles.value = {
     top: `${boundingElement.bottom.value + window.scrollY}px`,
-    left: `${boundingElement.left.value}px`,
+    left: `${boundingElement.left.value + window.scrollX}px`,
     width: `${boundingElement.width.value}px`,
   };
 };
