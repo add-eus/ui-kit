@@ -79,6 +79,7 @@ const closeDropdown = () => {
   position: relative;
   display: inline-block;
 }
+
 .a-dropdown-content {
   .a-button {
     display: flex;
@@ -97,6 +98,10 @@ const closeDropdown = () => {
 
     > .a-card-body > .inner-content {
       padding: 0;
+    }
+
+    .a-card-body {
+      margin: 0 5px !important;
     }
   }
 }
