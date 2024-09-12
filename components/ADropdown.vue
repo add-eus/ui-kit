@@ -7,7 +7,7 @@ import { useElementBounding, onClickOutside } from "@vueuse/core";
 const props = defineProps({
   position: {
     type: String,
-    default: "left",
+    default: "auto",
     validator: (value: string) => {
       return ["left", "right", "auto"].includes(value);
     },
@@ -131,6 +131,10 @@ const closeDropdown = () => {
 
     > .a-card-body > .inner-content {
       padding: 0;
+    }
+
+    .a-card-body {
+      margin: 0 5px !important;
     }
   }
 }
