@@ -118,6 +118,7 @@ const closeDropdown = () => {
     display: flex;
     justify-content: flex-start;
     padding: 7px 8px;
+    width: max-content;
   }
 }
 
@@ -134,7 +135,13 @@ const closeDropdown = () => {
     }
 
     .a-card-body {
-      margin: 0 5px !important;
+      margin: 15px !important;
+
+      .inner-content .flex-column {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
     }
   }
 }

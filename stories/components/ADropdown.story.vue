@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ADropdown from "../../components/ADropdown.vue";
+import ADropdownItem from "../../components/ADropdownItem.vue";
 import AButton from "../../components/AButton.vue";
 import AIcon from "../../components/AIcon.vue";
 import { ref } from "vue";
@@ -35,6 +36,29 @@ const open = ref(false);
           <AButton
             ><span class="ellipsis">Option 2 Option 2 Option 2</span></AButton
           >
+        </template>
+      </ADropdown>
+    </Variant>
+
+    <Variant title="ADropdownItem">
+      <ADropdown>
+        <template #action="{ toggle }">
+          <AButton @click="toggle()" color="tertiary">Click me</AButton>
+        </template>
+        <template #content>
+          <ADropdownItem>
+            <template #default>
+              <AIcon icon="add_box" />
+              Step action
+            </template>
+            <template #subtitle> Subtitle </template>
+          </ADropdownItem>
+          <ADropdownItem>
+            <template #default>
+              <AIcon icon="forms_add_on" />
+              Step Title
+            </template>
+          </ADropdownItem>
         </template>
       </ADropdown>
     </Variant>
