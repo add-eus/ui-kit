@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <AButton v-bind="$attrs" role="menuitem" class="a-dropdown-item">
+  <AButton v-bind="$attrs" role="menuitem" class="a-dropdown-item" full>
     <div class="dropdown-content">
       <div class="dropdown-main">
         <slot></slot>
@@ -60,15 +60,6 @@ const props = defineProps({
 
       &:empty {
         display: none;
-      }
-    }
-  }
-
-  &:hover {
-    background: var(--a-tertiary-lightest) !important;
-    .dropdown-content {
-      .dropdown-main {
-        color: var(--a-tertiary);
       }
     }
   }

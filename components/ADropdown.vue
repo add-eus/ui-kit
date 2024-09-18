@@ -2,6 +2,9 @@
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import AButton from "./AButton.vue";
 import ACard from "./ACard.vue";
+import { useColor } from "../stores/color";
+import { defineProps, computed, PropType } from "vue";
+import type { Colors } from "../stores/color";
 import { useElementBounding, onClickOutside } from "@vueuse/core";
 
 const props = defineProps({
@@ -11,6 +14,10 @@ const props = defineProps({
     validator: (value: string) => {
       return ["left", "right", "auto"].includes(value);
     },
+  },
+  color: {
+    type: String,
+    default: "primary",
   },
 });
 
@@ -80,6 +87,10 @@ const openDropdown = () => {
 const closeDropdown = () => {
   isOpen.value = false;
 };
+
+const mainColor = computed(() => props.color);
+const color = useColor(mainColor);
+const colorLightest = useColor(mainColor, "lightest");
 </script>
 
 <template>
@@ -118,7 +129,16 @@ const closeDropdown = () => {
     display: flex;
     justify-content: flex-start;
     padding: 7px 8px;
-    width: max-content;
+    min-width: max-content;
+
+    &:hover {
+      background: v-bind(colorLightest) !important;
+      .dropdown-content {
+        .dropdown-main {
+          color: v-bind(color);
+        }
+      }
+    }
   }
 }
 
