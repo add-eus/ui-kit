@@ -26,7 +26,7 @@ const props = defineProps({
   </AButton>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .a-dropdown-item {
   padding: 5px;
   height: inherit !important;
@@ -48,6 +48,10 @@ const props = defineProps({
       line-height: normal;
       height: 25px;
       color: var(--a-grey-dark);
+
+      :slotted(span) {
+        margin-right: 8px;
+      }
     }
 
     .dropdown-subtitle {
