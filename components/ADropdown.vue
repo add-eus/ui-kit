@@ -19,6 +19,10 @@ const props = defineProps({
     type: String,
     default: "primary",
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isOpen = defineModel("isOpen");
@@ -95,7 +99,7 @@ const colorLightest = useColor(mainColor, "lightest");
 
 <template>
   <div class="a-dropdown" ref="baseElement">
-    <div ref="buttonElement">
+    <div ref="buttonElement" :class="{ 'open-dropdown': isOpen && active }">
       <slot
         name="action"
         :toggle="toggleDropdown"
@@ -122,6 +126,13 @@ const colorLightest = useColor(mainColor, "lightest");
 .a-dropdown {
   position: relative;
   display: inline-block;
+
+  .open-dropdown {
+    .a-button {
+      background: v-bind(color);
+      color: var(--a-white);
+    }
+  }
 }
 
 .a-dropdown-content {
@@ -162,6 +173,10 @@ const colorLightest = useColor(mainColor, "lightest");
         flex-direction: column;
         gap: 5px;
       }
+    }
+
+    @media screen and (max-width: 767px) {
+      max-width: 80vw;
     }
   }
 }

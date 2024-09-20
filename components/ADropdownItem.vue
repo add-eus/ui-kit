@@ -67,5 +67,18 @@ const props = defineProps({
       }
     }
   }
+  @media screen and (max-width: 767px) {
+    .dropdown-content {
+      padding: 0;
+
+      .dropdown-main {
+        font-size: 11.2px;
+      }
+
+      .dropdown-subtitle {
+        font-size: 9.6px;
+      }
+    }
+  }
 }
 </style>
