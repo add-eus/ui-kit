@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ADropdown from "../../components/ADropdown.vue";
+import ADropdownItem from "../../components/ADropdownItem.vue";
 import AButton from "../../components/AButton.vue";
 import AIcon from "../../components/AIcon.vue";
 import { ref } from "vue";
@@ -16,25 +17,53 @@ const open = ref(false);
           <AButton @click="toggle()">Click me</AButton>
         </template>
         <template #content>
-          <AButton>Option 1</AButton>
+          <ADropdownItem>
+            <template #default> Step I </template>
+          </ADropdownItem>
         </template>
       </ADropdown>
     </Variant>
 
-    <Variant title="icon/ellipsis">
-      <ADropdown>
+    <Variant title="color">
+      <ADropdown color="primary">
         <template #action="{ toggle }">
           <AButton @click="toggle()" color="primary">
             <AIcon icon="more_horiz" type="rounded" />
           </AButton>
         </template>
         <template #content>
-          <AButton
-            ><span class="ellipsis">Option 1 Option 1 Option 1</span></AButton
-          >
-          <AButton
-            ><span class="ellipsis">Option 2 Option 2 Option 2</span></AButton
-          >
+          <ADropdownItem>
+            <template #default> Step I </template>
+          </ADropdownItem>
+          <ADropdownItem>
+            <template #default> Step II </template>
+          </ADropdownItem>
+          <ADropdownItem>
+            <template #default> Step III </template>
+          </ADropdownItem>
+        </template>
+      </ADropdown>
+    </Variant>
+
+    <Variant title="position/default/subtitle">
+      <ADropdown position="right" color="tertiary">
+        <template #action="{ toggle }">
+          <AButton @click="toggle()" color="tertiary">Click me</AButton>
+        </template>
+        <template #content>
+          <ADropdownItem>
+            <template #default>
+              <AIcon icon="add_box" />
+              Step action
+            </template>
+            <template #subtitle> Subtitle </template>
+          </ADropdownItem>
+          <ADropdownItem>
+            <template #default>
+              <AIcon icon="forms_add_on" />
+              Step Title
+            </template>
+          </ADropdownItem>
         </template>
       </ADropdown>
     </Variant>
@@ -51,4 +80,6 @@ This is a dropdown component.
 The `ADropdown` component provides the following options:
 
 - `isOpen` (boolean, optional): Specifies state open.
+- `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `tertiary`, `danger`, `warning`, `success` & `info`
+- `position` (string, optional): Specifies the position of the dropdown. Possible values are `left`, `right`, `auto`
 </docs>
