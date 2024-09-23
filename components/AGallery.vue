@@ -145,14 +145,34 @@ defineExpose({
       </div>
     </transition>
     <!-- Dot Container -->
-    <div class="dot-container">
+    <div
+      class="dot-container"
+      :style="{
+        width: `${medias.length * 12}px`,
+      }"
+    >
       <transition name="fade-slow">
-        <div v-if="medias.length >= 2" class="dot-content">
+        <div
+          v-if="medias.length >= 2"
+          class="dot-content"
+          :style="{
+            transform:
+              activeButtonIndex >= 2 &&
+              `translateX(-${(activeButtonIndex - 2) * 12}px)`,
+          }"
+        >
           <button
             v-for="(imageSrc, index) in medias"
             :key="index"
             class="dot"
-            :class="{ active: activeButtonIndex === index }"
+            :class="{
+              active: activeButtonIndex === index,
+              'scale-down':
+                activeButtonIndex >= index + 3 ||
+                (activeButtonIndex !== 0 &&
+                  activeButtonIndex !== 1 &&
+                  activeButtonIndex <= index - 2),
+            }"
             @click="dotButtonClick(index)"
           >
             <div></div>
@@ -183,6 +203,10 @@ defineExpose({
     ></slot>
   </div>
 </template>
+
+<!-- :style="{
+  transform: `translateX(-${visibleDotsStart * 12}px)`,
+}" -->
 
 <style lang="scss">
 //If v-image-firebase content video his next brother element media-img is display: none
@@ -264,12 +288,31 @@ defineExpose({
     height: 30px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    overflow: hidden;
+    /* padding: 0 4px; */
+    max-width: 48px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    justify-content: left;
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      box-shadow: inset 0px 0px 2px 2px var(--a-white);
+      pointer-events: none;
+    }
 
     .dot-content {
       display: flex;
       align-items: center;
+      transition: transform 0.5s ease-in-out;
 
       .dot {
         width: 12px;
@@ -293,6 +336,14 @@ defineExpose({
           div {
             width: 8px;
             height: 8px;
+          }
+        }
+
+        &.scale-down {
+          div {
+            width: 4px;
+            height: 4px;
+            transition: height 0.1s ease-in-out, width 0.1s ease-in-out;
           }
         }
       }
