@@ -43,6 +43,14 @@ const inputFileRef = ref<any>(null);
         :medias="[
           'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
           'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
         ]"
         :container-width="300"
         :container-height="430"
