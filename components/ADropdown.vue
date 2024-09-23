@@ -95,12 +95,13 @@ const colorLightest = useColor(mainColor, "lightest");
 
 <template>
   <div class="a-dropdown" ref="baseElement">
-    <div ref="buttonElement" :class="{ 'open-dropdown': isOpen }">
+    <div ref="buttonElement">
       <slot
         name="action"
         :toggle="toggleDropdown"
         :open="openDropdown"
         :close="closeDropdown"
+        :isOpen="isOpen"
       >
         <AButton @click="toggleDropdown()"></AButton>
       </slot>
@@ -122,13 +123,6 @@ const colorLightest = useColor(mainColor, "lightest");
 .a-dropdown {
   position: relative;
   display: inline-block;
-
-  .open-dropdown {
-    .a-button {
-      background: v-bind(color);
-      color: var(--a-white);
-    }
-  }
 }
 
 .a-dropdown-content {
