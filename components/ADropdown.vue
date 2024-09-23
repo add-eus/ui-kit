@@ -19,10 +19,6 @@ const props = defineProps({
     type: String,
     default: "primary",
   },
-  active: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const isOpen = defineModel("isOpen");
@@ -99,7 +95,7 @@ const colorLightest = useColor(mainColor, "lightest");
 
 <template>
   <div class="a-dropdown" ref="baseElement">
-    <div ref="buttonElement" :class="{ 'open-dropdown': isOpen && active }">
+    <div ref="buttonElement" :class="{ 'open-dropdown': isOpen }">
       <slot
         name="action"
         :toggle="toggleDropdown"
