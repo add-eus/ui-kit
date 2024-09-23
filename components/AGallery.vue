@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import AIcon from "./AIcon.vue";
 
 const props = defineProps({
@@ -87,7 +87,10 @@ defineExpose({
     }"
   >
     <!-- Media Container -->
-    <div class="media-container">
+    <div
+      class="media-container"
+      :class="medias.length === 0 && 'inspi-content'"
+    >
       <div
         class="media-content"
         :style="{
@@ -130,9 +133,14 @@ defineExpose({
             @click="clickEmpty"
           >
             <slot name="placeholder"> </slot>
-            <AIcon icon="upload" class="icon-upload" />
           </div>
         </transition>
+        <AIcon
+          icon="download"
+          class="icon-upload"
+          color="black"
+          v-if="medias.length === 0"
+        />
       </div>
     </div>
     <!-- Tootlip sentence -->
@@ -233,7 +241,11 @@ defineExpose({
     margin-left: calc(var(--border-space) / 2);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--a-grey-light);
+    background: var(--a-black);
+
+    &.inspi-content {
+      background: var(--a-white);
+    }
 
     .media-content {
       position: relative;
@@ -433,7 +445,7 @@ defineExpose({
   .inspiration-media {
     height: 100%;
     width: 100%;
-    opacity: 0.25;
+    opacity: 0.5;
     border-radius: 8px;
     overflow: hidden;
 
@@ -454,15 +466,14 @@ defineExpose({
         object-fit: cover;
       }
     }
-
-    .icon-upload {
-      color: var(--a-black);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      font-size: 35px;
-      transform: translate(-50%, -50%);
-    }
+  }
+  .icon-upload {
+    color: var(--a-black);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 30px;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
