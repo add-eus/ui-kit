@@ -67,5 +67,12 @@ const props = defineProps({
       }
     }
   }
+  @media screen and (max-width: 767px) {
+    .dropdown-content {
+      padding: 0;
+      max-width: 70vw;
+      text-align: left;
+    }
+  }
 }
 </style>

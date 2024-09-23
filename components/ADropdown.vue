@@ -101,6 +101,7 @@ const colorLightest = useColor(mainColor, "lightest");
         :toggle="toggleDropdown"
         :open="openDropdown"
         :close="closeDropdown"
+        :isOpen="isOpen"
       >
         <AButton @click="toggleDropdown()"></AButton>
       </slot>
@@ -162,6 +163,10 @@ const colorLightest = useColor(mainColor, "lightest");
         flex-direction: column;
         gap: 5px;
       }
+    }
+
+    @media screen and (max-width: 767px) {
+      max-width: 80vw;
     }
   }
 }
