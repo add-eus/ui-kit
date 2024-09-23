@@ -212,10 +212,6 @@ defineExpose({
   </div>
 </template>
 
-<!-- :style="{
-  transform: `translateX(-${visibleDotsStart * 12}px)`,
-}" -->
-
 <style lang="scss">
 //If v-image-firebase content video his next brother element media-img is display: none
 .container-gallery {
@@ -300,10 +296,8 @@ defineExpose({
     height: 30px;
     width: 100%;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     overflow: hidden;
-    /* padding: 0 4px; */
     max-width: 48px;
     margin-left: 50%;
     transform: translateX(-50%);
