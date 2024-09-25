@@ -260,8 +260,38 @@ defineExpose({
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top: 5px;
         position: relative;
+
+        //DEFAULT
+        :slotted(img) {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+
+        :slotted(video) {
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+
+        //FIRESTORE
+        :slotted(div) {
+          height: 100%;
+          width: 100%;
+
+          img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+
+          video {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+          }
+        }
       }
     }
 
@@ -443,6 +473,10 @@ defineExpose({
     border-radius: 8px;
     overflow: hidden;
 
+    :has(video) {
+      background: var(--a-black);
+    }
+
     //DEFAULT
     :slotted(img) {
       height: 100%;
@@ -450,14 +484,27 @@ defineExpose({
       object-fit: cover;
     }
 
+    :slotted(video) {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+
     //FIRESTORE
     :slotted(div) {
       height: 100%;
       width: 100%;
+
       img {
         height: 100%;
         width: 100%;
         object-fit: cover;
+      }
+
+      video {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
       }
     }
   }
