@@ -99,9 +99,7 @@ const inputFileRef = ref<any>(null);
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
         <template #placeholder>
-          <video
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-          ></video>
+          <video src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
         </template>
         <template #medias="{ imageSrc }">
           <!-- <ImageFirestore :path="imageSrc" alt="Post media" controls /> -->
