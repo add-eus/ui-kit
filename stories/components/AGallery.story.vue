@@ -10,7 +10,7 @@ const inputFileRef = ref<any>(null);
 
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
-    <Variant title="No media">
+    <Variant title="Image Inspiration">
       <AGallery
         class="gallery-container-story"
         :medias="[]"
@@ -37,7 +37,7 @@ const inputFileRef = ref<any>(null);
       </AGallery>
     </Variant>
 
-    <Variant title="Media & actions">
+    <Variant title="Medias & actions">
       <AGallery
         class="gallery-container-story"
         :medias="[
@@ -85,6 +85,44 @@ const inputFileRef = ref<any>(null);
             </AButton>
           </div>
         </template>
+      </AGallery>
+    </Variant>
+
+    <Variant title="Video Inspiration">
+      <AGallery
+        class="gallery-container-story"
+        :medias="[]"
+        :container-width="300"
+        :container-height="430"
+        tootlip="This is the tootlip sentence"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
+      >
+        <template #placeholder>
+          <video src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+        </template>
+        <template #medias="{ imageSrc }">
+          <!-- <ImageFirestore :path="imageSrc" alt="Post media" controls /> -->
+        </template>
+        <template #actions="{ index, setActiveMedia }"> </template>
+      </AGallery>
+    </Variant>
+
+    <Variant title="Video Media">
+      <AGallery
+        class="gallery-container-story"
+        :medias="['https://www.w3schools.com/html/mov_bbb.mp4']"
+        :container-width="300"
+        :container-height="430"
+        tootlip="This is the tootlip sentence"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
+      >
+        <template #placeholder> </template>
+        <template #medias="{ imageSrc }">
+          <video class="output" :src="imageSrc" controls></video>
+        </template>
+        <template #actions="{ index, setActiveMedia }"> </template>
       </AGallery>
     </Variant>
   </Story>
