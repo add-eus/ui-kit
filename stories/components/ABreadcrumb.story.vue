@@ -23,7 +23,7 @@ import "../../index.scss";
           'First',
           ['Second 1', 'Second 2'],
           'Third',
-          ['Fourth 1', 'Fourth 2'],
+          ['Fourth 1', 'Fourth 2', 'Fourth 3', 'Fourth 4'],
           'Fifth',
         ]"
         :modelValue="3"
