@@ -19,10 +19,9 @@ export interface CropOptions {
 
 export function useCrop() {
     const { initialize, destroy } = useComponent();
-    const { translate } = useTranslate();
-    const tTitle = translate(".crop.title");
-    const tConfirm = translate(".crop.confirm");
-    const tCancel = translate(".crop.cancel");
+    const tTitle = useTranslate(".crop.title");
+    const tConfirm = useTranslate(".crop.confirm");
+    const tCancel = useTranslate(".crop.cancel");
 
     return async (blob: Blob | File, options?: CropOptions) : Promise<Blob> => {
         return new Promise((resolve, reject) => {

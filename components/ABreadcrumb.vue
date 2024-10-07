@@ -62,24 +62,42 @@ const stepLength = props.step.length;
           'previous-step': index <= lastEnableStep,
         }"
       >
-        <div class="breadcrumb-elements" :class="{ last: index == stepLength }">
+        <div
+          class="breadcrumb-elements"
+          :class="{
+            last: index === stepLength,
+          }"
+          :style="{
+            height:
+              Array.isArray(point[index - 1]) && point[index - 1].length > 2
+                ? 70 + (point[index - 1].length - 2) * 25 + 'px'
+                : '70px',
+          }"
+        >
           <div v-if="index != stepLength" class="breadcrumb-line"></div>
           <div class="breadcrumb-circle"></div>
         </div>
-        <div class="breadcrumb-text">{{ step[index - 1] }}</div>
-        <div
-          v-if="index != stepLength"
-          :class="
-            Array.isArray(point[index - 1])
-              ? 'breadcrumb-point breadcrumb-point-' + subIndex
-              : 'breadcrumb-point'
-          "
-          v-for="(subPoint, subIndex) in Array.isArray(point[index - 1])
-            ? point[index - 1]
-            : [point[index - 1]]"
-          :key="subIndex"
-        >
-          {{ Array.isArray(point[index - 1]) ? subPoint : point[index - 1] }}
+        <div class="breadcrumb-text">
+          {{ step[index - 1] }}
+
+          <div class="point-container">
+            <div
+              v-if="index != stepLength"
+              :class="
+                Array.isArray(point[index - 1])
+                  ? 'breadcrumb-point breadcrumb-point-' + subIndex
+                  : 'breadcrumb-point'
+              "
+              v-for="(subPoint, subIndex) in Array.isArray(point[index - 1])
+                ? point[index - 1]
+                : [point[index - 1]]"
+              :key="subIndex"
+            >
+              {{
+                Array.isArray(point[index - 1]) ? subPoint : point[index - 1]
+              }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -199,12 +217,10 @@ const stepLength = props.step.length;
         }
       }
 
-      &.breadcrumb-point-0 {
-        top: 32px;
-      }
-
-      &.breadcrumb-point-1 {
-        top: 52px;
+      @for $i from 0 through 5 {
+        &.breadcrumb-point-#{$i} {
+          top: #{32px + ($i * 24px)};
+        }
       }
     }
   }
