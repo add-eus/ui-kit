@@ -4,7 +4,7 @@ import "../../index.scss";
 </script>
 
 <template>
-  <Story :layout="{ type: 'grid', width: 500 }">
+  <Story :layout="{ type: 'grid', width: 600 }">
     <Variant title="default">
       <div class="container-story-date-picker">
         <ADatePicker />

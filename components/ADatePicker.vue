@@ -1,49 +1,90 @@
 <script setup lang="ts">
-import { defineProps, PropType } from "vue";
+import { defineProps, PropType, watch } from "vue";
 import { ref } from "vue";
+import moment from "moment";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
-const date = ref();
-
+// Définition des props
 const props = defineProps({
   type: {
     type: String as PropType<"default" | "range">,
-    default: "default",
-    validator: (value) => {
-      return ["default", "range"].includes(value);
-    },
+    default: "range",
+    validator: (value) => ["default", "range"].includes(value),
   },
   hasValidation: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   hasTime: {
     type: Boolean,
     default: true,
   },
+  dateFormat: {
+    type: String,
+    default: "DD/MM/YYYY - HH:mm",
+  },
+  modelValue: {
+    type: [Array, String, Object] as PropType<
+      Array<string> | string | undefined
+    >,
+    default: undefined,
+  },
 });
+
+const emit = defineEmits(["update:modelValue"]);
+const date = ref(props.modelValue || null);
+
+const format = (dateValue: Date | [Date, Date] | null) => {
+  if (!dateValue) return "";
+
+  if (Array.isArray(dateValue)) {
+    const [startDate, endDate] = dateValue;
+    return `${moment(startDate).format(props.dateFormat)} - ${moment(
+      endDate
+    ).format(props.dateFormat)}`;
+  }
+
+  return moment(dateValue).format(props.dateFormat);
+};
+
+const setDate = (value: Date | [Date, Date] | null) => {
+  date.value = value;
+  emit("update:modelValue", value);
+};
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    date.value = newValue;
+  }
+);
 </script>
 
 <template>
   <div class="a-date-picker">
     <VueDatePicker
       v-model="date"
+      @update:model-value="setDate"
+      :auto-apply="!hasValidation"
+      :format="format"
       locale="fr"
+      placeholder="Select Date"
       cancelText="Annuler"
       selectText="Valider"
       :day-names="['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']"
       time-picker-inline
       :enable-time-picker="hasTime"
+      :range="type === 'range'"
+      :class="{ 'type-range': type === 'range', multi: type === 'range' }"
+      :multi-calendars="type === 'range'"
+      :action-row="{
+        showSelect: hasValidation,
+        showCancel: hasValidation,
+      }"
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.a-date-picker {
-  background-color: transparent;
-}
-</style>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -51,6 +92,22 @@ const props = defineProps({
 
 <style lang="scss">
 .a-date-picker {
+  .dp__main {
+    .dp__input_wrap {
+      .dp__input {
+        font-size: 12px;
+
+        &::placeholder {
+          color: var(--a-black);
+        }
+      }
+
+      .dp__input_icons {
+        color: var(--a-black);
+      }
+    }
+  }
+
   /* TOP ACTIONS */
   .dp__month_year_wrap {
     /* ARROW */
@@ -144,7 +201,7 @@ const props = defineProps({
             height: 6px;
             width: 2px;
             position: absolute;
-            transform: rotate(-40deg);
+            transform: rotate(-45deg);
             bottom: calc(32px - 6px);
             left: calc(50% - 52px + 1px);
             background: var(--a-black);
@@ -221,6 +278,7 @@ const props = defineProps({
     }
   }
 
+  /* ACTION BUTTONS */
   .dp__action_row {
     display: flex;
     justify-content: center;
@@ -240,7 +298,7 @@ const props = defineProps({
         display: flex;
         justify-content: center;
         text-align: center;
-        height: 40px;
+        height: 38px;
 
         &.dp__action_cancel {
           background: var(--a-transparent);
@@ -253,34 +311,118 @@ const props = defineProps({
     }
   }
 
+  /* TYPE RANGE */
+  .type-range {
+    /* CLOCK TYPE RANGE */
+    .dp--tp-wrap {
+      .dp__time_picker_inline_container {
+        .dp__flex {
+          &::before {
+            left: calc(50% - 92px - 10px);
+          }
+
+          .dp__time_input {
+            &::before {
+              left: calc(50% - 92px - 1px);
+            }
+
+            &::after {
+              left: calc(50% - 92px + 1px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* MULTI */
+  .multi {
+    /* CLOCK MULTI */
+    .dp--tp-wrap {
+      .dp__time_picker_inline_container {
+        justify-content: space-between;
+        .dp__flex {
+          width: 100%;
+
+          .dp__time_input {
+            padding: 0 10px;
+            &:nth-child(1) {
+              justify-content: flex-start;
+            }
+
+            &:nth-child(2) {
+              justify-content: flex-end;
+            }
+          }
+
+          &::before {
+            display: none;
+          }
+
+          .dp__time_input {
+            &::before {
+              display: none;
+            }
+
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    /* ACTION MULTI */
+    .dp__action_row {
+      .dp__action_buttons {
+        justify-content: flex-end;
+        gap: 5px;
+
+        .dp__action_button {
+          width: 23%;
+          text-align: center;
+          height: 38px;
+        }
+      }
+    }
+
+    /* SEPARATE MULTI */
+    .dp__instance_calendar {
+      &:nth-child(2) {
+        margin-left: 10px;
+        border-left: 1px solid var(--a-grey-lighter);
+      }
+    }
+  }
+
   .dp__theme_light {
     --dp-background-color: #fff;
     --dp-text-color: #212121;
     --dp-hover-color: #f3f3f3;
     --dp-hover-text-color: #212121;
     --dp-hover-icon-color: #959595;
-    --dp-primary-color: var(--a-tertiary); //
-    --dp-primary-disabled-color: var(--a-tertiary-light); //
+    --dp-primary-color: var(--a-tertiary);
+    --dp-primary-disabled-color: var(--a-tertiary-light);
     --dp-primary-text-color: #f8f5f5;
     --dp-secondary-color: #c0c4cc;
-    --dp-border-color: #ddd;
+    --dp-border-color: var(--a-black);
     --dp-menu-border-color: #ddd;
     --dp-border-color-hover: #aaaeb7;
     --dp-border-color-focus: #aaaeb7;
     --dp-disabled-color: #f6f6f6;
     --dp-scroll-bar-background: #f3f3f3;
     --dp-scroll-bar-color: #959595;
-    --dp-success-color: var(--a-success); //
+    --dp-success-color: var(--a-success);
     --dp-success-color-disabled: #a3d9b1;
     --dp-icon-color: #959595;
-    --dp-danger-color: var(--a-danger); //
-    --dp-marker-color: var(--a-danger); //
+    --dp-danger-color: var(--a-danger);
+    --dp-marker-color: var(--a-danger);
     --dp-tooltip-color: #fafafa;
     --dp-disabled-color-text: #8e8e8e;
     --dp-highlight-color: rgb(25 118 210 / 10%);
-    --dp-range-between-dates-background-color: var(--dp-hover-color, #f3f3f3);
-    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #212121);
-    --dp-range-between-border-color: var(--dp-hover-color, #f3f3f3);
+    --dp-range-between-dates-background-color: var(--a-tertiary-lightest);
+    --dp-range-between-dates-text-color: var(--a-tertiary);
+    --dp-range-between-border-color: var(--a-tertiary-lightest);
   }
 }
 
