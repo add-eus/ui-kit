@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { defineProps, PropType, watch } from "vue";
+import { defineProps, PropType, defineModel } from "vue";
 import { ref } from "vue";
 import moment from "moment";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
-// Définition des props
 const props = defineProps({
   type: {
     type: String as PropType<"default" | "range">,
@@ -24,16 +24,17 @@ const props = defineProps({
     type: String,
     default: "DD/MM/YYYY - HH:mm",
   },
-  modelValue: {
-    type: [Array, String, Object] as PropType<
-      Array<string> | string | undefined
-    >,
-    default: undefined,
-  },
 });
 
-const emit = defineEmits(["update:modelValue"]);
-const date = ref(props.modelValue || null);
+const modelValue = defineModel<Array<string> | string | undefined>(
+  "modelValue",
+  {
+    required: false,
+    default: undefined,
+  }
+);
+
+const date = ref(modelValue || null);
 
 const format = (dateValue: Date | [Date, Date] | null) => {
   if (!dateValue) return "";
@@ -50,15 +51,19 @@ const format = (dateValue: Date | [Date, Date] | null) => {
 
 const setDate = (value: Date | [Date, Date] | null) => {
   date.value = value;
-  emit("update:modelValue", value);
+  modelValue.value = value;
 };
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    date.value = newValue;
-  }
-);
+const dateTranslate = useTranslate("datepicker.date");
+const cancelTranslate = useTranslate("datepicker.cancel");
+const validateTranslate = useTranslate("datepicker.validate");
+const mondayTranslate = useTranslate("datepicker.days.monday");
+const tuesdayTranslate = useTranslate("datepicker.days.tuesday");
+const wednesdayTranslate = useTranslate("datepicker.days.wednesday");
+const thursdayTranslate = useTranslate("datepicker.days.thursday");
+const fridayTranslate = useTranslate("datepicker.days.friday");
+const saturdayTranslate = useTranslate("datepicker.days.saturday");
+const sundayTranslate = useTranslate("datepicker.days.sunday");
 </script>
 
 <template>
@@ -68,17 +73,17 @@ watch(
       @update:model-value="setDate"
       :auto-apply="!hasValidation"
       :format="format"
-      :placeholder="$t('date')"
-      :cancelText="$t('cancel')"
-      :selectText="$t('validate')"
+      :placeholder="dateTranslate"
+      :cancelText="cancelTranslate"
+      :selectText="validateTranslate"
       :day-names="[
-        $t('days.monday'),
-        $t('days.tuesday'),
-        $t('days.wednesday'),
-        $t('days.thursday'),
-        $t('days.friday'),
-        $t('days.saturday'),
-        $t('days.sunday'),
+        mondayTranslate,
+        tuesdayTranslate,
+        wednesdayTranslate,
+        thursdayTranslate,
+        fridayTranslate,
+        saturdayTranslate,
+        sundayTranslate,
       ]"
       time-picker-inline
       :enable-time-picker="hasTime"
@@ -320,6 +325,11 @@ watch(
 
   /* TYPE RANGE */
   .type-range {
+    /* DAYS TOP*/
+    .dp__calendar_header_item {
+      font-size: 12px;
+    }
+
     /* CLOCK TYPE RANGE */
     .dp--tp-wrap {
       .dp__time_picker_inline_container {
