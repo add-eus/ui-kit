@@ -9,7 +9,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 const props = defineProps({
   type: {
     type: String as PropType<"default" | "range">,
-    default: "range",
+    default: "default",
     validator: (value) => ["default", "range"].includes(value),
   },
   hasValidation: {
@@ -68,11 +68,18 @@ watch(
       @update:model-value="setDate"
       :auto-apply="!hasValidation"
       :format="format"
-      locale="fr"
-      placeholder="Select Date"
-      cancelText="Annuler"
-      selectText="Valider"
-      :day-names="['Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.', 'Dim.']"
+      :placeholder="$t('date')"
+      :cancelText="$t('cancel')"
+      :selectText="$t('validate')"
+      :day-names="[
+        $t('days.monday'),
+        $t('days.tuesday'),
+        $t('days.wednesday'),
+        $t('days.thursday'),
+        $t('days.friday'),
+        $t('days.saturday'),
+        $t('days.sunday'),
+      ]"
       time-picker-inline
       :enable-time-picker="hasTime"
       :range="type === 'range'"

@@ -10,6 +10,11 @@ import "../../index.scss";
         <ADatePicker />
       </div>
     </Variant>
+    <Variant title="default">
+      <div class="container-story-date-picker">
+        <ADatePicker type="range" :has-time="false" :has-validation="false" />
+      </div>
+    </Variant>
   </Story>
 </template>
 
@@ -22,7 +27,11 @@ This is a date picker component that can be used to select a date.
 
 The `ADatePicker` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are `default`,`grey`, `primary`, `secondary`, `tertiary`, `danger`, `warning`, `success` & `info`
+- `type` (string, optional, default: "default"): Specifies the type of the date picker. It can be either `default` or `range`.
+- `hasValidation` (boolean, optional): Specifies if the input should have validation.
+- `hasTime` (boolean, optional): Specifies if the input should have time.
+- `dateFormat` (string, optional): Specifies the format of the date. Default is `DD/MM/YYYY - HH:mm`.
+- `modelValue` (string, optional): Specifies the value of the input.
 </docs>
 
 <style lang="scss" scoped>
