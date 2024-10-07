@@ -10,24 +10,26 @@ const inputFileRef = ref<any>(null);
 
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
-    <Variant title="Image Inspiration">
+    <!-- Base Inspiration -->
+    <Variant title="Base Inspiration">
       <AGallery
         class="gallery-container-story"
         :medias="[]"
+        :inspirations="[]"
         :container-width="300"
         :container-height="430"
         tootlip="This is the tootlip sentence"
         @click-media="(index) => logEvent('Media at index', { index })"
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
-        <template #placeholder>
+        <template #placeholder="{ imageSrc }">
           <!-- <ImageFirestore
-                  v-if="inspiration !== undefined"
-                  :path="inspiration"
-                  alt="Inspiration image" /> -->
+                v-if="inspiration?.length !== 0"
+                :path="imageSrc"
+                alt="Inspiration image" />
+            <img v-else :src="postImage" alt="Inspiration image" /> -->
           <img
             src="https://thenational-the-national-prod.cdn.arcpublishing.com/resizer/v2/T5ZBPKDG7DCVPV2JI7HQU5UWAM.jpg?smart=true&auth=24ed8dc54447f1b8518c41077a2cfd708fe0c6609b3a2bc3651d44cf482474c3&width=800&height=1000"
-            alt="Inspiration image"
           />
         </template>
         <template #medias="{ imageSrc }">
@@ -37,7 +39,56 @@ const inputFileRef = ref<any>(null);
       </AGallery>
     </Variant>
 
-    <Variant title="Medias & actions">
+    <!-- Medias Inspiration Multiples -->
+    <Variant title="Medias Inspiration Multiples">
+      <AGallery
+        class="gallery-container-story"
+        :medias="[]"
+        :inspirations="[
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+          'https://fashionweekdaily.com/wp-content/uploads/2022/04/Copy-of-DX6A8927-scaled.jpg',
+          'https://indonesiaexpat.id/wp-content/uploads/2020/09/la-brisa.jpg',
+        ]"
+        :container-width="300"
+        :container-height="430"
+        tootlip="This is the tootlip sentence"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
+      >
+        <template #placeholder="{ imageSrc }"> </template>
+        <template #medias="{ imageSrc }"> </template>
+        <template #actions="{ index, setActiveMedia }"> </template>
+      </AGallery>
+    </Variant>
+
+    <!-- Video Inspiration Multiples -->
+    <Variant title="Video Inspiration Multiples">
+      <AGallery
+        class="gallery-container-story"
+        :medias="[]"
+        :inspirations="[
+          '/components/assets/portrait-video.mp4',
+          '/components/assets/paysage-video.mp4',
+        ]"
+        :container-width="300"
+        :container-height="430"
+        tootlip="This is the tootlip sentence"
+        @click-media="(index) => logEvent('Media at index', { index })"
+        @click-empty="logEvent('Placeholder clicked', $event)"
+      >
+        <template #placeholder="{ imageSrc }">
+          <video class="output" :src="imageSrc"></video>
+        </template>
+        <template #medias="{ imageSrc }"> </template>
+        <template #actions="{ index, setActiveMedia }"> </template>
+      </AGallery>
+    </Variant>
+
+    <!-- Medias Multiples & Actions -->
+    <Variant title="Medias Multiples & Actions">
       <AGallery
         class="gallery-container-story"
         :medias="[
@@ -58,20 +109,8 @@ const inputFileRef = ref<any>(null);
         @click-media="(index) => logEvent('Media at index', { index })"
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
-        <template #placeholder>
-          <!-- <ImageFirestore
-                  v-if="inspiration !== undefined"
-                  :path="inspiration"
-                  alt="Inspiration image" /> -->
-          <!-- <img
-            v-else
-            src="https://thenational-the-national-prod.cdn.arcpublishing.com/resizer/v2/T5ZBPKDG7DCVPV2JI7HQU5UWAM.jpg?smart=true&auth=24ed8dc54447f1b8518c41077a2cfd708fe0c6609b3a2bc3651d44cf482474c3&width=800&height=1000"
-            alt="Inspiration image"
-          /> -->
-        </template>
-        <template #medias="{ imageSrc }">
-          <!-- <ImageFirestore :path="imageSrc" alt="Post media" controls /> -->
-        </template>
+        <template #placeholder> </template>
+        <template #medias="{ imageSrc }"> </template>
         <template #actions="{ index, setActiveMedia }">
           <div class="icons-container-story">
             <AButton>
@@ -88,41 +127,37 @@ const inputFileRef = ref<any>(null);
       </AGallery>
     </Variant>
 
-    <Variant title="Video Inspiration">
+    <!-- Videos Multiples & Actions -->
+    <Variant title="Videos Multiples & Actions">
       <AGallery
         class="gallery-container-story"
-        :medias="[]"
+        :medias="[
+          '/components/assets/paysage-video.mp4',
+          '/components/assets/portrait-video.mp4',
+        ]"
         :container-width="300"
         :container-height="430"
         tootlip="This is the tootlip sentence"
         @click-media="(index) => logEvent('Media at index', { index })"
         @click-empty="logEvent('Placeholder clicked', $event)"
       >
-        <template #placeholder>
-          <video src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-        </template>
-        <template #medias="{ imageSrc }">
-          <!-- <ImageFirestore :path="imageSrc" alt="Post media" controls /> -->
-        </template>
-        <template #actions="{ index, setActiveMedia }"> </template>
-      </AGallery>
-    </Variant>
-
-    <Variant title="Video Media">
-      <AGallery
-        class="gallery-container-story"
-        :medias="['https://www.w3schools.com/html/mov_bbb.mp4']"
-        :container-width="300"
-        :container-height="430"
-        tootlip="This is the tootlip sentence"
-        @click-media="(index) => logEvent('Media at index', { index })"
-        @click-empty="logEvent('Placeholder clicked', $event)"
-      >
-        <template #placeholder> </template>
+        <template #placeholder="{ imageSrc }"> </template>
         <template #medias="{ imageSrc }">
           <video class="output" :src="imageSrc" controls></video>
         </template>
-        <template #actions="{ index, setActiveMedia }"> </template>
+        <template #actions="{ index, setActiveMedia }">
+          <div class="icons-container-story">
+            <AButton>
+              <AIcon icon="edit" color="grey" />
+            </AButton>
+            <AButton>
+              <AIcon icon="add_to_photos" color="grey" />
+            </AButton>
+            <AButton>
+              <AIcon icon="close" color="danger" />
+            </AButton>
+          </div>
+        </template>
       </AGallery>
     </Variant>
   </Story>
@@ -157,12 +192,14 @@ const inputFileRef = ref<any>(null);
 # AGallery
 
 This is a gallery component that displays a series of media items and allows navigation through them.
+Work with the ImageFirestore component to display images and videos.
 
 ## Props
 
 - `containerWidth` (number, optional, default: 300): Specifies the width of the input container.
 - `containerHeight` (number, optional, default: 300): Specifies the height of the input container.
 - `medias` (Array<string>, optional, default: []): An array of media URLs to be displayed in the gallery.
+- `inspirations` (Array<string>, optional, default: []): An array of media URLs to be displayed in the gallery.
 - `tootlip` (string, optional, default: ""): Tootlip text to be displayed when there are no media items.
 
 ## Events
