@@ -131,13 +131,13 @@ const mediasAndInspirations = computed((): string[] => {
           </slot>
           <!-- Switch between image and video icon -->
           <AIcon
-            v-if="medias.length >= 2"
+            v-if="medias.length >= 1"
             class="icon-carousel media-img"
             icon="filter_none"
             color="white"
           />
           <AIcon
-            v-if="medias.length >= 2"
+            v-if="medias.length >= 1"
             class="icon-carousel media-video"
             icon="video_library"
             color="white"
@@ -170,13 +170,13 @@ const mediasAndInspirations = computed((): string[] => {
           </slot>
           <!-- Switch between image and video icon -->
           <AIcon
-            v-if="inspirations.length >= 2"
+            v-if="inspirations.length >= 1"
             class="icon-carousel media-img"
             icon="filter_none"
             color="white"
           />
           <AIcon
-            v-if="inspirations.length >= 2"
+            v-if="inspirations.length >= 1"
             class="icon-carousel media-video"
             icon="video_library"
             color="white"
@@ -303,7 +303,7 @@ const mediasAndInspirations = computed((): string[] => {
     margin-left: calc(var(--border-space) / 2);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--a-white);
+    background: var(--a-black);
 
     &.inspi-content {
       .inspi-layer {
@@ -347,7 +347,7 @@ const mediasAndInspirations = computed((): string[] => {
         :slotted(video) {
           height: 100%;
           width: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
 
         //FIRESTORE
@@ -364,7 +364,7 @@ const mediasAndInspirations = computed((): string[] => {
           video {
             height: 100%;
             width: 100%;
-            object-fit: cover;
+            object-fit: contain;
           }
         }
       }
