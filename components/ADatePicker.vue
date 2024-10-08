@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import { defineProps, PropType, defineModel } from "vue";
-import { ref, markRaw, computed } from "vue";
-import { syncRef } from "@vueuse/core";
+import {
+  defineProps,
+  PropType,
+  defineEmits,
+  watch,
+  shallowRef,
+  computed,
+  markRaw,
+  toRaw,
+} from "vue";
 import moment from "moment";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
 export interface MomentRange {
-  start: moment.Moment | null | undefined;
-  end: moment.Moment | null | undefined;
+  start: moment.Moment | null;
+  end: moment.Moment | null;
 }
 
-const modelValue = defineModel<MomentRange | moment.Moment | undefined>(
-  "modelValue",
-  {
-    required: false,
-    default: undefined,
-  }
-);
-
 const props = defineProps({
+  modelValue: {
+    type: [Object, null] as PropType<moment.Moment | MomentRange | null>,
+    default: null,
+  },
   type: {
     type: String as PropType<"default" | "range">,
     default: "default",
@@ -41,50 +44,162 @@ const props = defineProps({
   },
 });
 
-const date = ref<Date | Date[] | null>(null);
-
-function isDateRange(value: unknown): value is Date[] {
-  return typeof value === "object" && value !== null && !moment.isDate(value);
-}
+const emits = defineEmits(["update:modelValue"]);
 
 function isMomentRange(value: unknown): value is MomentRange {
-  return typeof value === "object" && value !== null && !moment.isMoment(value);
+  const rawValue = value && typeof value === "object" ? toRaw(value) : null;
+
+  return (
+    rawValue !== null &&
+    "start" in rawValue &&
+    "end" in rawValue &&
+    (rawValue.start === null || moment.isMoment(toRaw(rawValue.start))) &&
+    (rawValue.end === null || moment.isMoment(toRaw(rawValue.end)))
+  );
 }
 
 function parseMoment(
-  momentValue: moment.Moment | MomentRange | undefined | null
-): Date | Date[] | null | undefined {
-  if (momentValue === undefined || momentValue === null) return momentValue;
+  momentValue: moment.Moment | MomentRange | null
+): Date | [Date, Date] | null {
+  if (momentValue === null) return null;
 
   if (isMomentRange(momentValue)) {
-    return [
-      moment.isMoment(momentValue.start)
-        ? momentValue.start.toDate()
-        : momentValue.start,
-      moment.isMoment(momentValue.end)
-        ? momentValue.end.toDate()
-        : momentValue.end,
-    ] as Date[];
+    if (
+      momentValue.start?.isValid() &&
+      momentValue.end?.isValid()
+    ) {
+      return [
+        momentValue.start.toDate(),
+        momentValue.end.toDate(),
+      ];
+    } else {
+      return null;
+    }
   }
-  return momentValue.toDate();
+
+  if (momentValue.isValid && momentValue.isValid()) {
+    return momentValue.toDate();
+  }
+
+  console.warn("parseMoment received invalid momentValue:", momentValue);
+  return null;
 }
 
 function formatMoment(
-  dateValue: Date | Date[] | undefined | null
-): moment.Moment | MomentRange | null | undefined {
-  if (dateValue === undefined || dateValue === null) return dateValue;
-  else if (isDateRange(dateValue) && isDateRange(date.value)) {
-    const start = markRaw(moment(dateValue[0]));
-    const end = markRaw(moment(dateValue[1]));
-    return { start, end };
+  dateValue: Date | [Date, Date] | null
+): moment.Moment | MomentRange | null {
+  if (dateValue === null) return null;
+
+  if (Array.isArray(dateValue)) {
+    const [startDate, endDate] = dateValue;
+    if (startDate && endDate) {
+      return {
+        start: moment(startDate),
+        end: moment(endDate),
+      };
+    } else {
+      return null;
+    }
   }
 
-  const m = moment(dateValue);
+  if (dateValue instanceof Date && !isNaN(dateValue.getTime())) {
+    return moment(dateValue);
+  }
 
-  if (m.isSame(date.value)) return date.value;
-
-  return markRaw(m);
+  console.warn("formatMoment received invalid dateValue:", dateValue);
+  return null;
 }
+
+
+function isEqualMoment(
+  a: moment.Moment | null,
+  b: moment.Moment | null
+): boolean {
+  a = a ? toRaw(a) : null;
+  b = b ? toRaw(b) : null;
+
+  if (a === null && b === null) return true;
+  if (a === null || b === null) return false;
+  if (!moment.isMoment(a) || !moment.isMoment(b)) {
+    console.warn("isEqualMoment received non-moment values:", a, b);
+    return false;
+  }
+  if (!a.isValid() && !b.isValid()) return true;
+  if (!a.isValid() || !b.isValid()) return false;
+  return a.isSame(b);
+}
+
+function isEqualModelValue(
+  a: moment.Moment | MomentRange | null,
+  b: moment.Moment | MomentRange | null
+): boolean {
+  a = a ? toRaw(a) : null;
+  b = b ? toRaw(b) : null;
+
+  if (a === null && b === null) return true;
+  if (a === null || b === null) return false;
+
+  if (moment.isMoment(a) && moment.isMoment(b)) {
+    return isEqualMoment(a, b);
+  }
+
+  if (isMomentRange(a) && isMomentRange(b)) {
+    return (
+      isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end)
+    );
+  }
+
+  console.warn("isEqualModelValue received mismatched types:", a, b);
+  return false;
+}
+
+
+function isEqualDate(
+  a: Date | [Date, Date] | null,
+  b: Date | [Date, Date] | null
+): boolean {
+  if (a === null && b === null) return true;
+  if (a === null || b === null) return false;
+
+  if (a instanceof Date && b instanceof Date) {
+    return a.getTime() === b.getTime();
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return (
+      a.length === b.length &&
+      a.every((dateA, index) => {
+        const dateB = b[index];
+        return dateA.getTime() === dateB.getTime();
+      })
+    );
+  }
+
+  return false;
+}
+
+
+const date = shallowRef<Date | [Date, Date] | null>(
+  parseMoment(props.modelValue)
+);
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    const newDateValue = parseMoment(newVal);
+    if (!isEqualDate(newDateValue, date.value)) {
+      date.value = newDateValue;
+    }
+  }
+);
+
+watch(date, (newVal) => {
+  const newModelValue = formatMoment(newVal);
+  if (!isEqualModelValue(newModelValue, props.modelValue)) {
+    emits("update:modelValue", newModelValue);
+  }
+});
+
 
 const format = (dateValue: Date | [Date, Date] | null) => {
   if (!dateValue) return "";
@@ -98,25 +213,6 @@ const format = (dateValue: Date | [Date, Date] | null) => {
 
   return moment(dateValue).format(props.dateFormat);
 };
-
-// const setDate = (value: Date | [Date, Date] | null) => {
-//   date.value = value;
-//   modelValue.value = value;
-// };
-
-syncRef(date, modelValue, {
-  immediate: true,
-  flush: "sync",
-  transform: {
-    ltr(left) {
-      return parseMoment(left);
-    },
-    rtl(right: Date | null | undefined | Date[]) {
-      return formatMoment(right);
-    },
-  },
-});
-console.log("ADatePicker", date, modelValue, props);
 
 const dateTranslate = useTranslate("datepicker.date");
 const cancelTranslate = useTranslate("datepicker.cancel");

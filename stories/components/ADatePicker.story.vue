@@ -2,14 +2,14 @@
 import ADatePicker from "../../components/ADatePicker.vue";
 import "../../index.scss";
 import moment from "moment";
-import { ref } from "vue";
+import { ref, markRaw } from "vue";
 
-const currentDate = ref(moment().subtract(3, "days"));
+const currentDate = ref(markRaw(moment().subtract(3, "days")));
 
-// const currentRange = ref({
-//   start: currentDate.value.clone().subtract(1, "days"),
-//   end: currentDate.value,
-// });
+const currentRange = ref({
+  start: markRaw(currentDate.value.clone().subtract(1, "days")),
+  end: markRaw(currentDate.value),
+});
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const currentDate = ref(moment().subtract(3, "days"));
         <ADatePicker v-model="currentDate" />
       </div>
     </Variant>
-    <!-- <Variant title="default">
+    <Variant title="default">
       <div class="container-story-date-picker">
         <ADatePicker
           type="range"
@@ -28,7 +28,7 @@ const currentDate = ref(moment().subtract(3, "days"));
           :has-validation="false"
         />
       </div>
-    </Variant> -->
+    </Variant>
   </Story>
 </template>
 
