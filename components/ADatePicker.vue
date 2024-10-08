@@ -1,16 +1,31 @@
 <script setup lang="ts">
 import { defineProps, PropType, defineModel } from "vue";
-import { ref } from "vue";
+import { ref, markRaw, computed } from "vue";
+import { syncRef } from "@vueuse/core";
 import moment from "moment";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
+export interface MomentRange {
+  start: moment.Moment | null | undefined;
+  end: moment.Moment | null | undefined;
+}
+
+const modelValue = defineModel<MomentRange | moment.Moment | undefined>(
+  "modelValue",
+  {
+    required: false,
+    default: undefined,
+  }
+);
+
 const props = defineProps({
   type: {
     type: String as PropType<"default" | "range">,
     default: "default",
-    validator: (value) => ["default", "range"].includes(value),
+    validator: (value) =>
+      typeof value === "string" && ["default", "range"].includes(value),
   },
   hasValidation: {
     type: Boolean,
@@ -26,15 +41,50 @@ const props = defineProps({
   },
 });
 
-const modelValue = defineModel<Array<string> | string | undefined>(
-  "modelValue",
-  {
-    required: false,
-    default: undefined,
-  }
-);
+const date = ref<Date | Date[] | null>(null);
 
-const date = ref(modelValue || null);
+function isDateRange(value: unknown): value is Date[] {
+  return typeof value === "object" && value !== null && !moment.isDate(value);
+}
+
+function isMomentRange(value: unknown): value is MomentRange {
+  return typeof value === "object" && value !== null && !moment.isMoment(value);
+}
+
+function parseMoment(
+  momentValue: moment.Moment | MomentRange | undefined | null
+): Date | Date[] | null | undefined {
+  if (momentValue === undefined || momentValue === null) return momentValue;
+
+  if (isMomentRange(momentValue)) {
+    return [
+      moment.isMoment(momentValue.start)
+        ? momentValue.start.toDate()
+        : momentValue.start,
+      moment.isMoment(momentValue.end)
+        ? momentValue.end.toDate()
+        : momentValue.end,
+    ] as Date[];
+  }
+  return momentValue.toDate();
+}
+
+function formatMoment(
+  dateValue: Date | Date[] | undefined | null
+): moment.Moment | MomentRange | null | undefined {
+  if (dateValue === undefined || dateValue === null) return dateValue;
+  else if (isDateRange(dateValue) && isDateRange(date.value)) {
+    const start = markRaw(moment(dateValue[0]));
+    const end = markRaw(moment(dateValue[1]));
+    return { start, end };
+  }
+
+  const m = moment(dateValue);
+
+  if (m.isSame(date.value)) return date.value;
+
+  return markRaw(m);
+}
 
 const format = (dateValue: Date | [Date, Date] | null) => {
   if (!dateValue) return "";
@@ -49,10 +99,24 @@ const format = (dateValue: Date | [Date, Date] | null) => {
   return moment(dateValue).format(props.dateFormat);
 };
 
-const setDate = (value: Date | [Date, Date] | null) => {
-  date.value = value;
-  modelValue.value = value;
-};
+// const setDate = (value: Date | [Date, Date] | null) => {
+//   date.value = value;
+//   modelValue.value = value;
+// };
+
+syncRef(date, modelValue, {
+  immediate: true,
+  flush: "sync",
+  transform: {
+    ltr(left) {
+      return parseMoment(left);
+    },
+    rtl(right: Date | null | undefined | Date[]) {
+      return formatMoment(right);
+    },
+  },
+});
+console.log("ADatePicker", date, modelValue, props);
 
 const dateTranslate = useTranslate("datepicker.date");
 const cancelTranslate = useTranslate("datepicker.cancel");
@@ -64,27 +128,30 @@ const thursdayTranslate = useTranslate("datepicker.days.thursday");
 const fridayTranslate = useTranslate("datepicker.days.friday");
 const saturdayTranslate = useTranslate("datepicker.days.saturday");
 const sundayTranslate = useTranslate("datepicker.days.sunday");
+
+const dayNames = computed(() => {
+  return [
+    mondayTranslate.value || "",
+    tuesdayTranslate.value || "",
+    wednesdayTranslate.value || "",
+    thursdayTranslate.value || "",
+    fridayTranslate.value || "",
+    saturdayTranslate.value || "",
+    sundayTranslate.value || "",
+  ];
+});
 </script>
 
 <template>
   <div class="a-date-picker">
     <VueDatePicker
       v-model="date"
-      @update:model-value="setDate"
       :auto-apply="!hasValidation"
       :format="format"
       :placeholder="dateTranslate"
       :cancelText="cancelTranslate"
       :selectText="validateTranslate"
-      :day-names="[
-        mondayTranslate,
-        tuesdayTranslate,
-        wednesdayTranslate,
-        thursdayTranslate,
-        fridayTranslate,
-        saturdayTranslate,
-        sundayTranslate,
-      ]"
+      :day-names="dayNames"
       time-picker-inline
       :enable-time-picker="hasTime"
       :range="type === 'range'"
