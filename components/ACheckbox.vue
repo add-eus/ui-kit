@@ -14,7 +14,7 @@ const props = defineProps({
     type: String as PropType<"checkbox" | "switch" | "hidden">,
     default: "checkbox",
     validator: (value) => {
-      return ["checkbox", "switch", 'hidden'].includes(value);
+      return ["checkbox", "switch", "hidden"].includes(value);
     },
   },
   value: {
@@ -26,11 +26,11 @@ const props = defineProps({
   valueUnchecked: {
     default: false,
   },
-  hideCheckbox: {
+  disabled: {
     type: Boolean,
     default: false,
   },
-  toggleSwitch: {
+  indeterminate: {
     type: Boolean,
     default: false,
   },
@@ -54,17 +54,30 @@ const colorInvert = useColor(mainColor, "default", true);
 </script>
 
 <template>
-  <div :class="props.type === 'switch' ? 'a-input-toggle-switch' : 'a-input-checkbox'">
+  <div
+    :class="
+      props.type === 'switch' ? 'a-input-toggle-switch' : 'a-input-checkbox'
+    "
+  >
     <label
       :class="{
+        'custom-checkbox': props.type === 'checkbox',
+        'custom-checkbox-indetermitate': props.indeterminate,
         'hide-checkbox': props.type === 'hidden',
+        'input-disabled': props.disabled,
         selected: checkboxValue,
         'no-label': !$slots.default,
       }"
     >
-      <input type="checkbox" v-model="checkboxValue" />
+      <input type="checkbox" v-model="checkboxValue" :disabled="disabled" />
       <span v-if="type === 'switch'" class="slider"></span>
       <span class="label-text"><slot></slot></span>
+      <template v-if="type === 'checkbox'">
+        <span class="checkmark-lab"></span>
+        <p class="caption-text">
+          <slot name="caption"></slot>
+        </p>
+      </template>
     </label>
   </div>
 </template>
@@ -78,16 +91,11 @@ const colorInvert = useColor(mainColor, "default", true);
     justify-content: center;
     padding: 4px 10px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 
-    input[type="checkbox"] {
-      accent-color: v-bind(color);
-      cursor: pointer;
-      margin-right: 5px;
-    }
-
+    //HIDDEN CHECKBOX
     &.no-label {
       padding: 4px;
 
@@ -123,8 +131,85 @@ const colorInvert = useColor(mainColor, "default", true);
       min-height: 16px;
     }
   }
+
+  //CUSTOM CHECKBOX
+  .custom-checkbox {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    justify-content: flex-start;
+    padding: 0 0 0 25px;
+
+    &:hover input ~ .checkmark-lab {
+      background-color: var(--a-grey-light);
+    }
+
+    //Hide native checkbox
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+
+      &:checked ~ .checkmark-lab {
+        background-color: v-bind(color);
+
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    //Custom check
+    .checkmark-lab {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      border-radius: 4px;
+      background-color: var(--a-grey-lighter);
+      transition: background-color 0.3s, border-color 0.3s;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 8px;
+        top: 4px;
+        width: 5px;
+        height: 9px;
+        border: solid var(--a-white);
+        border-width: 0 1px 1px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &-indetermitate {
+      .checkmark-lab {
+        &:after {
+          top: 10px;
+          left: 5px;
+          width: 10px;
+          border-width: 1px 0 0 0;
+          transform: rotate(0);
+        }
+      }
+    }
+
+    //Caption
+    .caption-text {
+      position: absolute;
+      top: 8px;
+      font-size: 8px;
+      color: var(--a-grey);
+    }
+  }
 }
 
+//SWITCH
 .a-input-toggle-switch {
   display: flex;
 
@@ -154,6 +239,7 @@ const colorInvert = useColor(mainColor, "default", true);
 
     .label-text {
       margin-left: 40px;
+      font-size: 12px;
     }
 
     .slider {
@@ -179,6 +265,22 @@ const colorInvert = useColor(mainColor, "default", true);
         transition: 0.25s;
         border-radius: 50%;
       }
+    }
+  }
+}
+
+//DISABLED
+.a-input-checkbox,
+.a-input-toggle-switch {
+  //ALL
+  .input-disabled {
+    color: var(--a-grey);
+    pointer-events: none;
+
+    //HIDDEN CHECKBOX
+    &.hide-checkbox {
+      color: var(--a-grey);
+      border-color: var(--a-grey-light);
     }
   }
 }
