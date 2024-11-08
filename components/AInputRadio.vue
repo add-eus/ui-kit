@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref, computed, watchEffect } from "vue";
+import { PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 import "../scss/_color-declaration.scss";
 
@@ -12,10 +12,6 @@ const props = defineProps({
     type: null as unknown as PropType<any>,
     required: false,
   },
-  modelValue: {
-    type: null as unknown as PropType<any>,
-    required: false,
-  },
   color: {
     type: String as PropType<Colors>,
     default: "primary",
@@ -24,13 +20,17 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "grey-darker",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
   hideRadio: {
     type: Boolean,
     default: false,
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const modelValue = defineModel();
 
 const mainColor = computed(() => props.color);
 const textColor = computed(() => props.textColor);
@@ -40,13 +40,20 @@ const colorInvert = useColor(mainColor, "default", true);
 const colorText = useColor(textColor);
 
 const onChange = (event: Event) => {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
+  modelValue.value = (event.target as HTMLInputElement).value;
 };
 </script>
 
 <template>
   <div class="a-input-radio">
-    <label :class="{ selected: modelValue === value, 'hide-radio': hideRadio }">
+    <label
+      :class="{
+        selected: modelValue === value,
+        'hide-radio': hideRadio,
+        'radio-content': !hideRadio,
+        'input-disabled': props.disabled,
+      }"
+    >
       <input
         type="radio"
         :name="name"
@@ -55,6 +62,12 @@ const onChange = (event: Event) => {
         @change="onChange"
       />
       <span class="label-text"><slot></slot></span>
+      <template v-if="!hideRadio">
+        <span class="checkmark-lab"></span>
+        <p class="caption-text">
+          <slot name="caption"></slot>
+        </p>
+      </template>
     </label>
   </div>
 </template>
@@ -62,12 +75,7 @@ const onChange = (event: Event) => {
 <style lang="scss" scoped>
 .a-input-radio {
   min-width: fit-content;
-
-  input[type="radio"] {
-    accent-color: v-bind(color);
-    cursor: pointer;
-    margin-right: 5px;
-  }
+  min-height: 20px;
 
   label {
     display: flex;
@@ -87,7 +95,7 @@ const onChange = (event: Event) => {
 
     &.hide-radio {
       color: v-bind(color);
-      border: 1px solid v-bind(color);
+      border: 2px solid v-bind(color);
       text-align: center;
 
       &.selected {
@@ -109,6 +117,125 @@ const onChange = (event: Event) => {
     &:not(:empty) {
       width: 90px;
       height: 16px;
+    }
+  }
+
+  //CUSTOM RADIO
+  .radio-content {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    justify-content: flex-start;
+    padding: 2px 0 0 25px;
+
+    &:hover input ~ .checkmark-lab {
+      background-color: var(--a-grey-light);
+    }
+
+    //Hide native radio
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+
+      &:checked ~ .checkmark-lab {
+        background-color: v-bind(color);
+
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    &.selected {
+      .checkmark-lab {
+        background-color: v-bind(color);
+
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    //Custom check
+    .checkmark-lab {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 21px;
+      width: 21px;
+      border-radius: 50%;
+      border: 1px solid var(--a-grey-light);
+      background-color: var(--a-white);
+      transition: background-color 0.3s, border-color 0.3s;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 5px;
+        top: 5px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: var(--a-white);
+      }
+    }
+
+    &-indetermitate {
+      .checkmark-lab {
+        &:after {
+          top: 10px;
+          left: 5px;
+          width: 10px;
+          border-width: 1px 0 0 0;
+          transform: rotate(0);
+        }
+      }
+    }
+
+    //Caption
+    .caption-text {
+      position: absolute;
+      top: 8px;
+      font-size: 8px;
+      color: var(--a-grey);
+    }
+  }
+}
+
+//DISABLED
+.a-input-radio {
+  //ALL
+  .input-disabled {
+    color: var(--a-grey);
+    pointer-events: none;
+
+    //CUSTOM RADIO
+    .checkmark-lab {
+      background-color: var(--a-grey-lighter);
+      border: 1px solid var(--a-grey-lighter);
+    }
+
+    &.selected {
+      .checkmark-lab {
+        background-color: var(--a-grey-lighter);
+      }
+    }
+
+    //HIDDEN RADIO
+    &.hide-radio {
+      color: var(--a-grey-lighter);
+      border: 2px solid var(--a-grey-lighter);
+
+      &.selected {
+        background-color: var(--a-grey-lighter);
+        color: v-bind(colorInvert);
+        border-color: var(--a-grey-lighter);
+      }
     }
   }
 }
