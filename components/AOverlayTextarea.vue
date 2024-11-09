@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ATextarea from "./ATextarea.vue";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 export interface AOverlayTextareaEmits {
   (event: "update:modelValue", value?: any): void;
@@ -13,11 +13,13 @@ const emits = defineEmits<AOverlayTextareaEmits>();
 const props = withDefaults(defineProps<AOverlayTextareaProps>(), {
   modelValue: "",
 });
-const value = ref(props.modelValue);
 const ATextareaRef = ref<InstanceType<typeof ATextarea> | null>(null);
 
-watch(value, (newValue) => {
-  emits("update:modelValue", newValue);
+const value = computed({
+  get: () => props.modelValue,
+  set: (value) => {
+    emits("update:modelValue", value);
+  },
 });
 
 const insertText = (text: string) => {
