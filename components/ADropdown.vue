@@ -19,6 +19,14 @@ const props = defineProps({
     type: String,
     default: "primary",
   },
+  above: {
+    type: Boolean,
+    default: false,
+  },
+  preventCloseOutside: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isOpen = defineModel("isOpen");
@@ -53,11 +61,15 @@ const updateDropdownPosition = async () => {
 
   // IF DROPDOWN IS NEXT TO THE SCREEN EDGE
   if (props.position === "auto" && dropdownLeft > windowWidth / 1.25) {
-    dropdownStyles.value.transform = `translate(calc(-100% + ${buttonWidth}px))`;
+    dropdownStyles.value.transform = props.above
+      ? `translate(calc(-100% + ${buttonWidth}px), calc(-100% - 50px))`
+      : `translate(calc(-100% + ${buttonWidth}px))`;
   }
 
   if (props.position === "right") {
-    dropdownStyles.value.transform = `translate(calc(-100% + ${buttonWidth}px))`;
+    dropdownStyles.value.transform = props.above
+      ? `translate(calc(-100% + ${buttonWidth}px), calc(-100% - 50px))`
+      : `translate(calc(-100% + ${buttonWidth}px))`;
   }
 };
 
@@ -71,7 +83,8 @@ onBeforeUnmount(() => {
 });
 
 onClickOutside(baseElement, () => {
-  isOpen.value = false;
+  if (isOpen.value === false) return;
+  if (!props.preventCloseOutside) isOpen.value = false;
 });
 
 const toggleDropdown = () => {
@@ -149,7 +162,7 @@ const colorLightest = useColor(mainColor, "lightest");
     max-height: none !important;
     min-width: 120px;
     width: fit-content !important;
-    z-index: 100;
+    z-index: 200;
 
     > .a-card-body > .inner-content {
       padding: 0;
