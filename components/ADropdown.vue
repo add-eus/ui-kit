@@ -84,7 +84,6 @@ onBeforeUnmount(() => {
 
 onClickOutside(baseElement, () => {
   if (isOpen.value === false) return;
-  console.log("click outside");
   if (!props.preventCloseOutside) isOpen.value = false;
 });
 

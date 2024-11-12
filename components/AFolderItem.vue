@@ -48,11 +48,9 @@ const emits = defineEmits(["update:modelValue", "folderSelected"]);
 const activeFolder = useVModel(props, "modelValue", emits, { passive: true });
 
 const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
-  console.log("Selecting folder:", folder);
   event?.stopPropagation();
   activeFolder.value = folder;
   emits("folderSelected", folder);
-  //   console.log("Selected folder:", activeFolder.value);
 };
 </script>
 
