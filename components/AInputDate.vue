@@ -217,7 +217,7 @@ defineExpose({ open });
         padding-top: 13px;
         padding-bottom: 4px;
         font-size: 10px;
-        font-weight: 700;
+        font-weight: 500;
         width: 100%;
         cursor: pointer;
         border-radius: 5px;
