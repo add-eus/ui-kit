@@ -60,6 +60,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  searchable: {
+    type: Boolean,
+    default: true,
+  },
   name: {
     type: String as PropType<string | undefined>,
     default: undefined,
@@ -98,7 +102,7 @@ const arrowColor = useColor(
       :required="required"
       :addTagOn="['enter', 'tab', ',', 'space']"
       :close-on-select="closeOnSelect"
-      :searchable="true"
+      :searchable="searchable"
       :create-option="createOption"
       :options="options"
       :clearOnSelect="mode !== 'single' && required"
