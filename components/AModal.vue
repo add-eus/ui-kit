@@ -117,21 +117,23 @@ defineExpose({
               </h3>
             </template>
             <template #content>
-              <AButton
-                class="a-modal-close"
-                circle
-                :disabled="noclose"
-                @keydown.space.prevent="close()"
-                @click="close()"
-              >
-                <AIcon icon="close" color="black"></AIcon>
-              </AButton>
-              <slot
-                v-if="showConfirmation"
-                name="confirmation"
-                :cancel="cancelConfirmation"
-              ></slot>
-              <slot name="content"></slot>
+              <span>
+                <AButton
+                  class="a-modal-close"
+                  circle
+                  :disabled="noclose"
+                  @keydown.space.prevent="close()"
+                  @click="close()"
+                >
+                  <AIcon icon="close" color="black"></AIcon>
+                </AButton>
+                <slot 
+                  v-if="showConfirmation"
+                  name="confirmation"
+                  :cancel="cancelConfirmation"
+                  ></slot>
+                <slot name="content"></slot>
+              </span>
             </template>
             <template #action>
               <slot name="action" :close="() => close()"></slot>

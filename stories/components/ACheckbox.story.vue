@@ -9,6 +9,8 @@ const valueC = ref(false);
 const valueD = ref(false);
 const valueE = ref(false);
 const valueF = ref(false);
+const valueG = ref(false);
+const valueH = ref(false);
 </script>
 
 <template>
@@ -16,24 +18,39 @@ const valueF = ref(false);
     <Variant title="default">
       <ACheckbox v-model="valueA" />
     </Variant>
-    <Variant title="primary">
-      <ACheckbox color="primary" v-model="valueB">Option I</ACheckbox>
-    </Variant>
-    <Variant title="toggleSwitch">
-      <ACheckbox color="tertiary" type="switch" v-model="valueC"
-        >Option II</ACheckbox
+    <Variant title="caption & disabled & color">
+      <ACheckbox color="primary" v-model="valueB"
+        >Option I
+        <template #caption> This is the caption </template>
+      </ACheckbox>
+      <br />
+      <ACheckbox color="primary" v-model="valueC" disabled
+        >Option I disabled</ACheckbox
       >
     </Variant>
-    <Variant title="secondary">
-      <ACheckbox color="secondary" type="hidden" v-model="valueD">
+    <Variant title="indeterminate & caption & color">
+      <ACheckbox color="tertiary" v-model="valueD" indeterminate
+        >Option II
+        <template #caption> This is the caption </template>
+      </ACheckbox>
+    </Variant>
+    <Variant title="type hidden">
+      <ACheckbox color="secondary" type="hidden" v-model="valueE">
         Option III
       </ACheckbox>
-      <ACheckbox color="secondary" type="hidden" v-model="valueE">
+      <br />
+      <ACheckbox color="secondary" type="hidden" v-model="valueF">
         Option IV
       </ACheckbox>
-      <ACheckbox color="secondary" type="hidden" v-model="valueF">
+      <br />
+      <ACheckbox color="secondary" type="hidden" v-model="valueG">
         Option V
       </ACheckbox>
+    </Variant>
+    <Variant title="type switch">
+      <ACheckbox color="tertiary" type="switch" v-model="valueH"
+        >Option VI</ACheckbox
+      >
     </Variant>
   </Story>
 </template>

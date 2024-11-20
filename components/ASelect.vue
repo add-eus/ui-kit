@@ -60,6 +60,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  searchable: {
+    type: Boolean,
+    default: true,
+  },
   name: {
     type: String as PropType<string | undefined>,
     default: undefined,
@@ -98,7 +102,7 @@ const arrowColor = useColor(
       :required="required"
       :addTagOn="['enter', 'tab', ',', 'space']"
       :close-on-select="closeOnSelect"
-      :searchable="true"
+      :searchable="searchable"
       :create-option="createOption"
       :options="options"
       :clearOnSelect="mode !== 'single' && required"
@@ -114,20 +118,26 @@ const arrowColor = useColor(
       class="multiselect"
     >
       <template #option="{ option, search }">
-        <ACheckbox
-          :color="color"
-          :modelValue="value.indexOf(option.value) >= 0"
-          v-if="mode == 'multiple'"
-        />
-        <AInputRadio
-          :name="`${props.name}${option.value.toString()}`"
-          :color="color"
-          :modelValue="value"
-          :value="option.value"
-          v-else-if="mode == 'single'"
-        />
+        <template v-if="mode == 'multiple'">
+          <ACheckbox
+            :color="color"
+            class="checkbox-select"
+            :modelValue="value.indexOf(option.value) >= 0"
+          />
+        </template>
+        <template v-else-if="mode == 'single'">
+          <AInputRadio
+            :name="`${props.name}${option.value.toString()}`"
+            :color="color"
+            class="radio-select"
+            :modelValue="value"
+            :value="option.value"
+          />
+        </template>
         <slot name="option" :option="option" :search="search">
-          {{ option.label }}
+          <p :class="mode == 'multiple' && 'checkbox-title'">
+            {{ option.label }}
+          </p>
         </slot>
       </template>
       <template #singlelabel="{ value }">
@@ -172,6 +182,26 @@ const arrowColor = useColor(
   --ms-option-bg-selected-pointed: transparent;
   --ms-option-color-selected-pointed: #000;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
+
+  .multiselect {
+    .checkbox-select {
+      padding-right: 20px;
+      pointer-events: none;
+    }
+  }
+
+  .radio-select {
+    padding-right: 10px;
+  }
+
+  p {
+    color: var(--a-black);
+    font-weight: 500;
+
+    &.checkbox-title {
+      margin-top: 10px;
+    }
+  }
 
   input[type="checkbox"] {
     margin: 0 20px;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
 
 const props = defineProps({
@@ -12,6 +12,10 @@ const props = defineProps({
     default: 300,
   },
   medias: {
+    type: Array<string>,
+    default: [],
+  },
+  inspirations: {
     type: Array<string>,
     default: [],
   },
@@ -39,7 +43,10 @@ const dotButtonClick = (index: number) => {
 };
 
 const nextMedia = () => {
-  if (activeButtonIndex.value < props.medias.length - 1) {
+  const totalItems =
+    props.medias.length > 0 ? props.medias.length : props.inspirations.length;
+
+  if (activeButtonIndex.value < totalItems - 1) {
     activeButtonIndex.value++;
     setActiveMedia(activeButtonIndex.value);
   }
@@ -53,8 +60,10 @@ const prevMedia = () => {
 };
 
 const setActiveMedia = (index: number) => {
-  if (index < 0 || index >= props.medias.length)
+  const items = props.medias.length > 0 ? props.medias : props.inspirations;
+  if (index < 0 || index >= items.length) {
     throw new Error("Index out of range");
+  }
   activeButtonIndex.value = index;
   mediaContainerTranslate.value =
     (-props.containerWidth + borderSpace.value) * index;
@@ -73,6 +82,10 @@ defineExpose({
   prevMedia,
   setActiveMedia,
 });
+
+const mediasAndInspirations = computed((): string[] => {
+  return [...props.inspirations, ...props.medias];
+});
 </script>
 
 <template>
@@ -83,7 +96,12 @@ defineExpose({
       '--height': containerHeight + 'px',
       '--media-container-translate': mediaContainerTranslate + 'px',
       '--border-space': borderSpace + 'px',
-      '--index': medias.length > 0 ? medias.length : 1,
+      '--index':
+        medias.length > 0
+          ? medias.length
+          : inspirations.length > 0
+          ? inspirations.length
+          : 1,
     }"
   >
     <!-- Media Container -->
@@ -113,35 +131,67 @@ defineExpose({
           </slot>
           <!-- Switch between image and video icon -->
           <AIcon
-            v-if="medias.length >= 2"
+            v-if="medias.length >= 1"
             class="icon-carousel media-img"
             icon="filter_none"
             color="white"
           />
           <AIcon
-            v-if="medias.length >= 2"
+            v-if="medias.length >= 1"
             class="icon-carousel media-video"
             icon="video_library"
             color="white"
           />
         </div>
         <!-- Placeholder -->
-        <transition name="fade-slow">
-          <div
-            v-if="medias.length === 0"
-            class="inspiration-media"
-            @click="clickEmpty"
-          >
-            <slot name="placeholder"> </slot>
-          </div>
-        </transition>
-        <AIcon
-          icon="download"
-          class="icon-upload"
-          color="black"
+        <!-- If no inspiration -->
+        <div
+          class="upload-container"
+          @click="clickMedia(index)"
+          v-if="medias.length === 0 && inspirations.length === 0"
+        >
+          <slot name="placeholder"> </slot>
+        </div>
+        <!-- If inspiration array -->
+        <div
           v-if="medias.length === 0"
-        />
+          v-for="(imageSrc, index) in inspirations"
+          :key="index"
+          class="upload-container"
+          @click="clickMedia(index)"
+        >
+          <slot name="placeholder" :imageSrc="imageSrc">
+            <img
+              v-if="imageSrc"
+              class="output"
+              :src="imageSrc"
+              alt="Post img"
+            />
+          </slot>
+          <!-- Switch between image and video icon -->
+          <AIcon
+            v-if="inspirations.length >= 1"
+            class="icon-carousel media-img"
+            icon="filter_none"
+            color="white"
+          />
+          <AIcon
+            v-if="inspirations.length >= 1"
+            class="icon-carousel media-video"
+            icon="video_library"
+            color="white"
+          />
+        </div>
+        <!-- Inspi layer -->
+        <div class="inspi-layer"></div>
       </div>
+      <!-- Upload icon -->
+      <AIcon
+        icon="download"
+        class="icon-upload"
+        color="black"
+        v-if="medias.length === 0"
+      />
     </div>
     <!-- Tootlip sentence -->
     <transition name="fade-slow">
@@ -156,12 +206,17 @@ defineExpose({
     <div
       class="dot-container"
       :style="{
-        width: `${medias.length * 12}px`,
+        width:
+          medias.length > 0
+            ? `${medias.length * 12}px`
+            : inspirations.length > 0
+            ? `${inspirations.length * 12}px`
+            : '0px',
       }"
     >
       <transition name="fade-slow">
         <div
-          v-if="medias.length >= 2"
+          v-if="medias.length >= 2 || inspirations.length >= 2"
           class="dot-content"
           :style="{
             transform:
@@ -169,8 +224,9 @@ defineExpose({
               `translateX(-${(activeButtonIndex - 2) * 12}px)`,
           }"
         >
+          <!-- Generate dot for medias & inspirations  -->
           <button
-            v-for="(imageSrc, index) in medias"
+            v-for="(imageSrc, index) in mediasAndInspirations"
             :key="index"
             class="dot"
             :class="{
@@ -190,7 +246,12 @@ defineExpose({
     </div>
     <!-- Icon Back -->
     <button
-      v-if="medias.length >= 2 && activeButtonIndex != 0"
+      v-if="
+        (medias.length >= 2 && activeButtonIndex != 0) ||
+        (medias.length == 0 &&
+          inspirations.length >= 2 &&
+          activeButtonIndex != 0)
+      "
       class="icon-back"
       @click="prevMedia"
     >
@@ -198,7 +259,12 @@ defineExpose({
     </button>
     <!-- Icon Next -->
     <button
-      v-if="medias.length >= 2 && activeButtonIndex != medias.length - 1"
+      v-if="
+        (medias.length >= 2 && activeButtonIndex != medias.length - 1) ||
+        (medias.length == 0 &&
+          inspirations.length >= 2 &&
+          activeButtonIndex != inspirations.length - 1)
+      "
       class="icon-next"
       @click="nextMedia"
     >
@@ -240,7 +306,16 @@ defineExpose({
     background: var(--a-black);
 
     &.inspi-content {
-      background: var(--a-white);
+      .inspi-layer {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: 1;
+        pointer-events: none;
+      }
     }
 
     .media-content {
@@ -466,7 +541,7 @@ defineExpose({
     }
   }
 
-  .inspiration-media {
+  /* .inspiration-media {
     height: 100%;
     width: 100%;
     opacity: 0.5;
@@ -509,7 +584,8 @@ defineExpose({
         background: var(--a-black);
       }
     }
-  }
+  } */
+
   .icon-upload {
     color: var(--a-black);
     position: absolute;
