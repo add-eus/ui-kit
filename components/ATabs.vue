@@ -6,6 +6,7 @@ import type { Colors } from "../stores/color";
 export interface ATabsItem {
   label: string;
   value: string;
+  notif?: string;
   icon?: string;
 }
 export interface ATabsProps {
@@ -81,6 +82,9 @@ function toggle(value: string) {
               >
                 {{ tab.label }}
               </slot>
+              <div class="tab-notif" v-if="tab.notif">
+                {{ tab.notif }}
+              </div>
             </span>
           </a>
         </slot>
@@ -104,12 +108,12 @@ function toggle(value: string) {
     display: flex;
     outline-offset: 10px;
     border-bottom: 2px solid var(--a-grey-light);
-    transition: background 0.25s ease-in-out;
+    /* transition: background 0.25s ease-in-out; */
 
     a {
       position: relative;
-      padding: 4px 20px 10px 20px;
-      color: var(--a-grey-light);
+      padding: 15px 20px 15px 0;
+      color: var(--a-grey);
       font-size: 16px;
       font-weight: 500;
       transition: color 0.25s ease-in-out;
@@ -118,14 +122,14 @@ function toggle(value: string) {
       span {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
 
         :slotted(img),
         :slotted(svg) {
           width: 15px;
 
           path {
-            fill: var(--a-grey-light);
+            fill: var(--a-grey);
             transition: fill 0.25s ease-in-out;
           }
         }
@@ -134,7 +138,7 @@ function toggle(value: string) {
 
     &.is-active {
       a {
-        color: v-bind(color);
+        color: var(--a-black);
 
         &:after {
           content: "";
@@ -152,7 +156,7 @@ function toggle(value: string) {
             width: 0%;
           }
           100% {
-            width: 100%;
+            width: calc(100% - 20px);
           }
         }
 
@@ -169,7 +173,7 @@ function toggle(value: string) {
     }
 
     &:hover {
-      background: v-bind(colorLight);
+      /* background: v-bind(colorLight); */
 
       a {
         color: v-bind(color);
@@ -187,7 +191,7 @@ function toggle(value: string) {
     }
 
     &:focus {
-      background: v-bind(colorLight);
+      /* background: v-bind(colorLight); */
 
       a {
         -webkit-box-shadow: inset 0px 0px 0px 1px var(--a-info);
@@ -216,6 +220,19 @@ function toggle(value: string) {
         }
       }
     }
+  }
+
+  .tab-notif {
+    margin-top: 3px;
+    height: 15px;
+    width: 22px;
+    background: var(--a-primary-lightest);
+    color: var(--a-primary);
+    font-size: 8px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

@@ -64,14 +64,8 @@ function parseMoment(
   if (momentValue === null) return null;
 
   if (isMomentRange(momentValue)) {
-    if (
-      momentValue.start?.isValid() &&
-      momentValue.end?.isValid()
-    ) {
-      return [
-        momentValue.start.toDate(),
-        momentValue.end.toDate(),
-      ];
+    if (momentValue.start?.isValid() && momentValue.end?.isValid()) {
+      return [momentValue.start.toDate(), momentValue.end.toDate()];
     } else {
       return null;
     }
@@ -110,7 +104,6 @@ function formatMoment(
   return null;
 }
 
-
 function isEqualMoment(
   a: moment.Moment | null,
   b: moment.Moment | null
@@ -144,15 +137,12 @@ function isEqualModelValue(
   }
 
   if (isMomentRange(a) && isMomentRange(b)) {
-    return (
-      isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end)
-    );
+    return isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end);
   }
 
   console.warn("isEqualModelValue received mismatched types:", a, b);
   return false;
 }
-
 
 function isEqualDate(
   a: Date | [Date, Date] | null,
@@ -178,7 +168,6 @@ function isEqualDate(
   return false;
 }
 
-
 const date = shallowRef<Date | [Date, Date] | null>(
   parseMoment(props.modelValue)
 );
@@ -199,7 +188,6 @@ watch(date, (newVal) => {
     emits("update:modelValue", newModelValue);
   }
 });
-
 
 const format = (dateValue: Date | [Date, Date] | null) => {
   if (!dateValue) return "";
