@@ -41,15 +41,9 @@ const modelValue = defineModel();
 const checkboxValue = computed({
   get() {
     const isChecked = modelValue.value === props.valueChecked;
-    console.log("checkboxValue computed:", {
-      modelValue: modelValue.value,
-      expected: props.valueChecked,
-      result: isChecked,
-    });
     return isChecked;
   },
   set(v) {
-    console.log("Setting checkboxValue:", v);
     modelValue.value = v ? props.valueChecked : props.valueUnchecked;
   },
 });
@@ -92,7 +86,6 @@ watch(
         :disabled="disabled"
         :checked="value"
       />
-      <!-- :class="{ 'input-checked': value }" -->
       <span v-if="type === 'switch'" class="slider"></span>
       <span class="label-text"><slot></slot></span>
       <template v-if="type === 'checkbox'">
@@ -171,7 +164,7 @@ watch(
       background-color: var(--a-grey-light);
     }
 
-    //Hide native checkbox
+    //HIDE NATIVE CHECKBOX
     input {
       position: absolute;
       opacity: 0;
