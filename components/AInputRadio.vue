@@ -76,6 +76,7 @@ const onChange = (event: Event) => {
 .a-input-radio {
   min-width: fit-content;
   min-height: 20px;
+  width: 25px;
 
   label {
     display: flex;
