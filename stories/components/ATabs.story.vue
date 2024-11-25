@@ -4,10 +4,10 @@ import AIcon from "../../components/AIcon.vue";
 import "../../index.scss";
 
 const tabs = [
-  { label: "Home", value: "home", icon: "home" },
-  { label: "Profile", value: "profile", icon: "account_circle" },
-  { label: "Settings", value: "settings", icon: "settings" },
-  { label: "About", value: "about", icon: "info" },
+  { label: "Home", value: "home", icon: "home", notif: "8" },
+  { label: "Profile", value: "profile", icon: "account_circle", notif: "27" },
+  { label: "Settings", value: "settings", icon: "settings", notif: "10" },
+  { label: "About", value: "about", icon: "info", notif: "2" },
 ];
 </script>
 
@@ -48,4 +48,5 @@ The `ATabs` component offers the following options:
 - `modelValue` (string or number, optional): The value of the selected tab, used for two-way binding.
 - `color` (string, optional): Specifies the color of the active tabs. Possible values: `primary`, `danger`, `success`, etc.
 - `slow` (boolean, optional): Applies a slower transition when changing tabs.
+- `notif` (string, optional): The number of notifications for each tab.
 </docs>
