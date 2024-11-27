@@ -40,7 +40,7 @@ const colorInvert = useColor(mainColor, "default", true);
 const colorText = useColor(textColor);
 
 const onChange = (event: Event) => {
-  modelValue.value = (event.target as HTMLInputElement).value;
+  modelValue.value = props.value;
 };
 </script>
 

@@ -15,9 +15,16 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
 export interface MomentRange {
-  start: moment.Moment | null;
-  end: moment.Moment | null;
+  start: moment.Moment | null | undefined;
+  end: moment.Moment | null | undefined;
 }
+
+export interface DateRange {
+  start: Date | null | undefined;
+  end: Date | null | undefined;
+}
+
+export type DateValue = Date | [Date, Date] | [null, Date] | [undefined, Date] | [Date, null] | [Date, undefined] | null| undefined;
 
 const props = defineProps({
   modelValue: {
@@ -51,21 +58,26 @@ function isMomentRange(value: unknown): value is MomentRange {
 
   return (
     rawValue !== null &&
+    rawValue !== undefined &&
     "start" in rawValue &&
     "end" in rawValue &&
-    (rawValue.start === null || moment.isMoment(toRaw(rawValue.start))) &&
-    (rawValue.end === null || moment.isMoment(toRaw(rawValue.end)))
+    (rawValue.start === null || rawValue.start === undefined || moment.isMoment(toRaw(rawValue.start))) &&
+    (rawValue.end === null || rawValue.end === undefined || moment.isMoment(toRaw(rawValue.end)))
   );
 }
 
 function parseMoment(
   momentValue: moment.Moment | MomentRange | null
-): Date | [Date, Date] | null {
+): DateValue {
   if (momentValue === null) return null;
 
   if (isMomentRange(momentValue)) {
     if (momentValue.start?.isValid() && momentValue.end?.isValid()) {
       return [momentValue.start.toDate(), momentValue.end.toDate()];
+    } else if (momentValue.start?.isValid() && (momentValue.end === null || momentValue.end === undefined)) {
+      return [momentValue.start.toDate(), momentValue.end];
+    } else if (momentValue.end?.isValid() && (momentValue.start === null || momentValue.start === undefined)) {
+      return [momentValue.start, momentValue.end.toDate()];
     } else {
       return null;
     }
@@ -80,7 +92,7 @@ function parseMoment(
 }
 
 function formatMoment(
-  dateValue: Date | [Date, Date] | null
+  dateValue: DateValue
 ): moment.Moment | MomentRange | null {
   if (dateValue === null) return null;
 
@@ -91,6 +103,17 @@ function formatMoment(
         start: moment(startDate),
         end: moment(endDate),
       };
+    } else if (startDate) {
+      return {
+        start: moment(startDate),
+        end: endDate,
+      };
+    } else if (endDate) {
+      return {
+        start: startDate,
+        end: moment(endDate),
+      };
+
     } else {
       return null;
     }
@@ -105,14 +128,14 @@ function formatMoment(
 }
 
 function isEqualMoment(
-  a: moment.Moment | null,
-  b: moment.Moment | null
+  a: moment.Moment | null | undefined,
+  b: moment.Moment | null | undefined
 ): boolean {
   a = a ? toRaw(a) : null;
   b = b ? toRaw(b) : null;
 
-  if (a === null && b === null) return true;
-  if (a === null || b === null) return false;
+  if ((a === null || a === undefined) && (b === null || b === undefined)) return true;
+  if (a === null || a === undefined || b === null || b === undefined) return false;
   if (!moment.isMoment(a) || !moment.isMoment(b)) {
     console.warn("isEqualMoment received non-moment values:", a, b);
     return false;
@@ -123,14 +146,14 @@ function isEqualMoment(
 }
 
 function isEqualModelValue(
-  a: moment.Moment | MomentRange | null,
-  b: moment.Moment | MomentRange | null
+  a: moment.Moment | MomentRange | null | undefined,
+  b: moment.Moment | MomentRange | null | undefined
 ): boolean {
   a = a ? toRaw(a) : null;
   b = b ? toRaw(b) : null;
 
-  if (a === null && b === null) return true;
-  if (a === null || b === null) return false;
+  if ((a === null || a === undefined) && (b === null || b === undefined)) return true;
+  if (a === null || a === undefined || b === null || b === undefined) return false;
 
   if (moment.isMoment(a) && moment.isMoment(b)) {
     return isEqualMoment(a, b);
@@ -145,11 +168,11 @@ function isEqualModelValue(
 }
 
 function isEqualDate(
-  a: Date | [Date, Date] | null,
-  b: Date | [Date, Date] | null
+  a: DateValue,
+  b: DateValue
 ): boolean {
-  if (a === null && b === null) return true;
-  if (a === null || b === null) return false;
+  if ((a === null || a === undefined) && (b === null || b === undefined)) return true;
+  if (a === null || a === undefined || b === null || b === undefined) return false;
 
   if (a instanceof Date && b instanceof Date) {
     return a.getTime() === b.getTime();
@@ -160,6 +183,10 @@ function isEqualDate(
       a.length === b.length &&
       a.every((dateA, index) => {
         const dateB = b[index];
+
+        if ((dateA === null || dateA === undefined) && (dateB === null || dateB === undefined)) return true;
+        if (dateA === null || dateA === undefined || dateB === null || dateB === undefined) return false;
+
         return dateA.getTime() === dateB.getTime();
       })
     );
@@ -168,7 +195,7 @@ function isEqualDate(
   return false;
 }
 
-const date = shallowRef<Date | [Date, Date] | null>(
+const date = shallowRef<DateValue>(
   parseMoment(props.modelValue)
 );
 
