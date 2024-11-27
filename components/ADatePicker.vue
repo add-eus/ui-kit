@@ -42,6 +42,18 @@ const props = defineProps({
     type: String,
     default: "DD/MM/YYYY - HH:mm",
   },
+  placeholder: {
+    type: String,
+    default: "Date",
+  },
+  minDate: {
+    type: String,
+    default: null,
+  },
+  maxDate: {
+    type: String,
+    default: null,
+  },
 });
 
 const emits = defineEmits(["update:modelValue"]);
@@ -64,14 +76,8 @@ function parseMoment(
   if (momentValue === null) return null;
 
   if (isMomentRange(momentValue)) {
-    if (
-      momentValue.start?.isValid() &&
-      momentValue.end?.isValid()
-    ) {
-      return [
-        momentValue.start.toDate(),
-        momentValue.end.toDate(),
-      ];
+    if (momentValue.start?.isValid() && momentValue.end?.isValid()) {
+      return [momentValue.start.toDate(), momentValue.end.toDate()];
     } else {
       return null;
     }
@@ -110,7 +116,6 @@ function formatMoment(
   return null;
 }
 
-
 function isEqualMoment(
   a: moment.Moment | null,
   b: moment.Moment | null
@@ -144,15 +149,12 @@ function isEqualModelValue(
   }
 
   if (isMomentRange(a) && isMomentRange(b)) {
-    return (
-      isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end)
-    );
+    return isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end);
   }
 
   console.warn("isEqualModelValue received mismatched types:", a, b);
   return false;
 }
-
 
 function isEqualDate(
   a: Date | [Date, Date] | null,
@@ -178,7 +180,6 @@ function isEqualDate(
   return false;
 }
 
-
 const date = shallowRef<Date | [Date, Date] | null>(
   parseMoment(props.modelValue)
 );
@@ -199,7 +200,6 @@ watch(date, (newVal) => {
     emits("update:modelValue", newModelValue);
   }
 });
-
 
 const format = (dateValue: Date | [Date, Date] | null) => {
   if (!dateValue) return "";
@@ -244,9 +244,10 @@ const dayNames = computed(() => {
       v-model="date"
       :auto-apply="!hasValidation"
       :format="format"
-      :placeholder="dateTranslate"
+      :placeholder="placeholder"
       :cancelText="cancelTranslate"
       :selectText="validateTranslate"
+      :min-date="minDate"
       :day-names="dayNames"
       time-picker-inline
       :enable-time-picker="hasTime"
