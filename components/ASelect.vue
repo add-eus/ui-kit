@@ -197,10 +197,6 @@ const arrowColor = useColor(
   p {
     color: var(--a-black);
     font-weight: 500;
-
-    &.checkbox-title {
-      margin-top: 10px;
-    }
   }
 
   input[type="checkbox"] {
@@ -208,14 +204,13 @@ const arrowColor = useColor(
   }
 
   .label {
-    margin: 0 10px;
     color: v-bind(colorValue);
     font-weight: 400;
     width: 100%;
     cursor: pointer;
     pointer-events: none;
     white-space: nowrap;
-    max-width: 80%;
+    max-width: 88%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
