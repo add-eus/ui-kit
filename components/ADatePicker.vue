@@ -248,6 +248,7 @@ const dayNames = computed(() => {
       :cancelText="cancelTranslate"
       :selectText="validateTranslate"
       :min-date="minDate"
+      :max-date="maxDate"
       :day-names="dayNames"
       time-picker-inline
       :enable-time-picker="hasTime"
