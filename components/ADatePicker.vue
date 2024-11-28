@@ -34,6 +34,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  teleport: {
+    type: Boolean,
+    default: false,
+  },
   hasTime: {
     type: Boolean,
     default: true,
@@ -235,6 +239,7 @@ const dayNames = computed(() => {
       :placeholder="dateTranslate"
       :cancelText="cancelTranslate"
       :selectText="validateTranslate"
+      :teleport="teleport"
       :day-names="dayNames"
       time-picker-inline
       :enable-time-picker="hasTime"
@@ -254,344 +259,342 @@ const dayNames = computed(() => {
 </style>
 
 <style lang="scss">
-.a-date-picker {
-  .dp__main {
-    .dp__input_wrap {
-      .dp__input {
-        font-size: 12px;
+.dp__main {
+  .dp__input_wrap {
+    .dp__input {
+      font-size: 12px;
 
-        &::placeholder {
-          color: var(--a-black);
-        }
-      }
-
-      .dp__input_icons {
+      &::placeholder {
         color: var(--a-black);
       }
     }
+
+    .dp__input_icons {
+      color: var(--a-black);
+    }
+  }
+}
+
+/* TOP ACTIONS */
+.dp__month_year_wrap {
+  /* ARROW */
+  .dp--arrow-btn-nav {
+    .dp__inner_nav {
+      border: 1px solid var(--a-grey-light);
+      border-radius: 4px;
+
+      svg {
+        stroke: transparent;
+        stroke-width: 1;
+        fill: black;
+        height: 16px;
+      }
+    }
   }
 
-  /* TOP ACTIONS */
+  /* MONTH | YEAR */
   .dp__month_year_wrap {
-    /* ARROW */
-    .dp--arrow-btn-nav {
-      .dp__inner_nav {
-        border: 1px solid var(--a-grey-light);
-        border-radius: 4px;
+    justify-content: center;
+    padding: 0 20px;
 
-        svg {
-          stroke: transparent;
-          stroke-width: 1;
-          fill: black;
-          height: 16px;
+    .dp__month_year_select {
+      border: 1px solid var(--a-grey-light);
+      font-size: 14px;
+      height: 33px;
+      margin: 10px 2px;
+      text-align: left;
+      width: 75px;
+    }
+  }
+}
+
+/* DAYS TOP*/
+.dp__calendar_header_item {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* SEPARATOR */
+.dp__calendar_header_separator {
+  display: none;
+}
+
+/* DAYS */
+.dp__calendar_item {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* DAYS OTHER MONTH */
+.dp__cell_offset {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--a-grey-light);
+}
+
+/* CLOCK */
+.dp--tp-wrap {
+  max-width: 100%;
+  padding: 5px 0 10px 0;
+
+  .dp__time_picker_inline_container {
+    .dp__flex {
+      /* CLOCK CIRCLE ICON */
+      &::before {
+        content: "";
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        border-radius: 20px;
+        bottom: calc(32px - 10px);
+        left: calc(50% - 52px - 10px);
+        border: 2px solid var(--a-black);
+      }
+
+      .dp__time_input {
+        /* CLOCK NEEDLE ICON */
+        &::before {
+          content: "";
+          height: 8px;
+          width: 2px;
+          position: absolute;
+          bottom: calc(32px - 1px);
+          left: calc(50% - 52px - 1px);
+          background: var(--a-black);
+        }
+
+        &::after {
+          content: "";
+          height: 6px;
+          width: 2px;
+          position: absolute;
+          transform: rotate(-45deg);
+          bottom: calc(32px - 6px);
+          left: calc(50% - 52px + 1px);
+          background: var(--a-black);
+        }
+
+        .dp__time_col {
+          height: 45px;
+          font-size: 14px;
+          padding: 0 2px;
+
+          /* ARROWS APPEAR */
+          &:nth-child(1),
+          &:nth-child(3) {
+            &:hover {
+              .dp__tp_inline_btn_top,
+              .dp__tp_inline_btn_bottom {
+                opacity: 1;
+              }
+            }
+          }
+
+          /* ARROWS */
+          .dp__tp_inline_btn_top,
+          .dp__tp_inline_btn_bottom {
+            display: flex;
+            justify-content: center;
+            height: 20px;
+            padding: 5px;
+            opacity: 0;
+
+            span {
+              height: 1px;
+              width: 8px;
+              background: var(--a-black);
+            }
+
+            &:hover {
+              span {
+                background: var(--a-tertiary);
+              }
+            }
+
+            /* ARROWS TOP */
+            &.dp__tp_inline_btn_top {
+              .dp__tp_btn_in_l {
+                transform: rotate(-25deg) translateX(1px);
+              }
+
+              .dp__tp_btn_in_r {
+                transform: rotate(25deg) translateX(-1px);
+              }
+            }
+
+            /* ARROWS BOTTOM */
+            &.dp__tp_inline_btn_bottom {
+              .dp__tp_btn_in_l {
+                transform: rotate(25deg) translateX(1px);
+              }
+
+              .dp__tp_btn_in_r {
+                transform: rotate(-25deg) translateX(-1px);
+              }
+            }
+          }
+
+          /* TIME NUMBERS */
+          .dp__time_display {
+            border: 1px solid var(--a-grey-light);
+            width: 30px;
+          }
         }
       }
     }
-
-    /* MONTH | YEAR */
-    .dp__month_year_wrap {
-      justify-content: center;
-      padding: 0 20px;
-
-      .dp__month_year_select {
-        border: 1px solid var(--a-grey-light);
-        font-size: 14px;
-        height: 33px;
-        margin: 10px 2px;
-        text-align: left;
-        width: 75px;
-      }
-    }
   }
+}
 
-  /* DAYS TOP*/
-  .dp__calendar_header_item {
-    font-size: 14px;
-    font-weight: 400;
-  }
+/* ACTION BUTTONS */
+.dp__action_row {
+  display: flex;
+  justify-content: center;
 
-  /* SEPARATOR */
-  .dp__calendar_header_separator {
+  .dp__selection_preview {
     display: none;
   }
 
-  /* DAYS */
-  .dp__calendar_item {
-    font-size: 16px;
-    font-weight: 400;
+  .dp__action_buttons {
+    width: 100%;
+    justify-content: space-between;
+    flex: inherit;
+    margin-inline-start: inherit;
+
+    .dp__action_button {
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      height: 38px;
+
+      &.dp__action_cancel {
+        background: var(--a-transparent);
+      }
+
+      &.dp__action_select {
+        background: var(--a-primary);
+      }
+    }
+  }
+}
+
+/* TYPE RANGE */
+.type-range {
+  /* DAYS TOP*/
+  .dp__calendar_header_item {
+    font-size: 12px;
   }
 
-  /* DAYS OTHER MONTH */
-  .dp__cell_offset {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--a-grey-light);
-  }
-
-  /* CLOCK */
+  /* CLOCK TYPE RANGE */
   .dp--tp-wrap {
-    max-width: 100%;
-    padding: 5px 0 10px 0;
-
     .dp__time_picker_inline_container {
       .dp__flex {
-        /* CLOCK CIRCLE ICON */
         &::before {
-          content: "";
-          height: 20px;
-          width: 20px;
-          position: absolute;
-          border-radius: 20px;
-          bottom: calc(32px - 10px);
-          left: calc(50% - 52px - 10px);
-          border: 2px solid var(--a-black);
+          left: calc(50% - 92px - 10px);
         }
 
         .dp__time_input {
-          /* CLOCK NEEDLE ICON */
           &::before {
-            content: "";
-            height: 8px;
-            width: 2px;
-            position: absolute;
-            bottom: calc(32px - 1px);
-            left: calc(50% - 52px - 1px);
-            background: var(--a-black);
+            left: calc(50% - 92px - 1px);
           }
 
           &::after {
-            content: "";
-            height: 6px;
-            width: 2px;
-            position: absolute;
-            transform: rotate(-45deg);
-            bottom: calc(32px - 6px);
-            left: calc(50% - 52px + 1px);
-            background: var(--a-black);
-          }
-
-          .dp__time_col {
-            height: 45px;
-            font-size: 14px;
-            padding: 0 2px;
-
-            /* ARROWS APPEAR */
-            &:nth-child(1),
-            &:nth-child(3) {
-              &:hover {
-                .dp__tp_inline_btn_top,
-                .dp__tp_inline_btn_bottom {
-                  opacity: 1;
-                }
-              }
-            }
-
-            /* ARROWS */
-            .dp__tp_inline_btn_top,
-            .dp__tp_inline_btn_bottom {
-              display: flex;
-              justify-content: center;
-              height: 20px;
-              padding: 5px;
-              opacity: 0;
-
-              span {
-                height: 1px;
-                width: 8px;
-                background: var(--a-black);
-              }
-
-              &:hover {
-                span {
-                  background: var(--a-tertiary);
-                }
-              }
-
-              /* ARROWS TOP */
-              &.dp__tp_inline_btn_top {
-                .dp__tp_btn_in_l {
-                  transform: rotate(-25deg) translateX(1px);
-                }
-
-                .dp__tp_btn_in_r {
-                  transform: rotate(25deg) translateX(-1px);
-                }
-              }
-
-              /* ARROWS BOTTOM */
-              &.dp__tp_inline_btn_bottom {
-                .dp__tp_btn_in_l {
-                  transform: rotate(25deg) translateX(1px);
-                }
-
-                .dp__tp_btn_in_r {
-                  transform: rotate(-25deg) translateX(-1px);
-                }
-              }
-            }
-
-            /* TIME NUMBERS */
-            .dp__time_display {
-              border: 1px solid var(--a-grey-light);
-              width: 30px;
-            }
+            left: calc(50% - 92px + 1px);
           }
         }
       }
     }
   }
+}
 
-  /* ACTION BUTTONS */
-  .dp__action_row {
-    display: flex;
-    justify-content: center;
-
-    .dp__selection_preview {
-      display: none;
-    }
-
-    .dp__action_buttons {
-      width: 100%;
+/* MULTI */
+.multi {
+  /* CLOCK MULTI */
+  .dp--tp-wrap {
+    .dp__time_picker_inline_container {
       justify-content: space-between;
-      flex: inherit;
-      margin-inline-start: inherit;
+      .dp__flex {
+        width: 100%;
 
-      .dp__action_button {
-        width: 48%;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        height: 38px;
-
-        &.dp__action_cancel {
-          background: var(--a-transparent);
-        }
-
-        &.dp__action_select {
-          background: var(--a-primary);
-        }
-      }
-    }
-  }
-
-  /* TYPE RANGE */
-  .type-range {
-    /* DAYS TOP*/
-    .dp__calendar_header_item {
-      font-size: 12px;
-    }
-
-    /* CLOCK TYPE RANGE */
-    .dp--tp-wrap {
-      .dp__time_picker_inline_container {
-        .dp__flex {
-          &::before {
-            left: calc(50% - 92px - 10px);
+        .dp__time_input {
+          padding: 0 10px;
+          &:nth-child(1) {
+            justify-content: flex-start;
           }
 
-          .dp__time_input {
-            &::before {
-              left: calc(50% - 92px - 1px);
-            }
-
-            &::after {
-              left: calc(50% - 92px + 1px);
-            }
+          &:nth-child(2) {
+            justify-content: flex-end;
           }
         }
-      }
-    }
-  }
 
-  /* MULTI */
-  .multi {
-    /* CLOCK MULTI */
-    .dp--tp-wrap {
-      .dp__time_picker_inline_container {
-        justify-content: space-between;
-        .dp__flex {
-          width: 100%;
+        &::before {
+          display: none;
+        }
 
-          .dp__time_input {
-            padding: 0 10px;
-            &:nth-child(1) {
-              justify-content: flex-start;
-            }
-
-            &:nth-child(2) {
-              justify-content: flex-end;
-            }
-          }
-
+        .dp__time_input {
           &::before {
             display: none;
           }
 
-          .dp__time_input {
-            &::before {
-              display: none;
-            }
-
-            &::after {
-              display: none;
-            }
+          &::after {
+            display: none;
           }
         }
       }
     }
+  }
 
-    /* ACTION MULTI */
-    .dp__action_row {
-      .dp__action_buttons {
-        justify-content: flex-end;
-        gap: 5px;
+  /* ACTION MULTI */
+  .dp__action_row {
+    .dp__action_buttons {
+      justify-content: flex-end;
+      gap: 5px;
 
-        .dp__action_button {
-          width: 23%;
-          text-align: center;
-          height: 38px;
-        }
-      }
-    }
-
-    /* SEPARATE MULTI */
-    .dp__instance_calendar {
-      &:nth-child(2) {
-        margin-left: 10px;
-        border-left: 1px solid var(--a-grey-lighter);
+      .dp__action_button {
+        width: 23%;
+        text-align: center;
+        height: 38px;
       }
     }
   }
 
-  .dp__theme_light {
-    --dp-background-color: #fff;
-    --dp-text-color: #212121;
-    --dp-hover-color: #f3f3f3;
-    --dp-hover-text-color: #212121;
-    --dp-hover-icon-color: #959595;
-    --dp-primary-color: var(--a-tertiary);
-    --dp-primary-disabled-color: var(--a-tertiary-light);
-    --dp-primary-text-color: #f8f5f5;
-    --dp-secondary-color: #c0c4cc;
-    --dp-border-color: var(--a-black);
-    --dp-menu-border-color: #ddd;
-    --dp-border-color-hover: #aaaeb7;
-    --dp-border-color-focus: #aaaeb7;
-    --dp-disabled-color: #f6f6f6;
-    --dp-scroll-bar-background: #f3f3f3;
-    --dp-scroll-bar-color: #959595;
-    --dp-success-color: var(--a-success);
-    --dp-success-color-disabled: #a3d9b1;
-    --dp-icon-color: #959595;
-    --dp-danger-color: var(--a-danger);
-    --dp-marker-color: var(--a-danger);
-    --dp-tooltip-color: #fafafa;
-    --dp-disabled-color-text: #8e8e8e;
-    --dp-highlight-color: rgb(25 118 210 / 10%);
-    --dp-range-between-dates-background-color: var(--a-tertiary-lightest);
-    --dp-range-between-dates-text-color: var(--a-tertiary);
-    --dp-range-between-border-color: var(--a-tertiary-lightest);
+  /* SEPARATE MULTI */
+  .dp__instance_calendar {
+    &:nth-child(2) {
+      margin-left: 10px;
+      border-left: 1px solid var(--a-grey-lighter);
+    }
   }
+}
+
+.dp__theme_light {
+  --dp-background-color: #fff;
+  --dp-text-color: #212121;
+  --dp-hover-color: #f3f3f3;
+  --dp-hover-text-color: #212121;
+  --dp-hover-icon-color: #959595;
+  --dp-primary-color: var(--a-tertiary);
+  --dp-primary-disabled-color: var(--a-tertiary-light);
+  --dp-primary-text-color: #f8f5f5;
+  --dp-secondary-color: #c0c4cc;
+  --dp-border-color: var(--a-black);
+  --dp-menu-border-color: #ddd;
+  --dp-border-color-hover: #aaaeb7;
+  --dp-border-color-focus: #aaaeb7;
+  --dp-disabled-color: #f6f6f6;
+  --dp-scroll-bar-background: #f3f3f3;
+  --dp-scroll-bar-color: #959595;
+  --dp-success-color: var(--a-success);
+  --dp-success-color-disabled: #a3d9b1;
+  --dp-icon-color: #959595;
+  --dp-danger-color: var(--a-danger);
+  --dp-marker-color: var(--a-danger);
+  --dp-tooltip-color: #fafafa;
+  --dp-disabled-color-text: #8e8e8e;
+  --dp-highlight-color: rgb(25 118 210 / 10%);
+  --dp-range-between-dates-background-color: var(--a-tertiary-lightest);
+  --dp-range-between-dates-text-color: var(--a-tertiary);
+  --dp-range-between-border-color: var(--a-tertiary-lightest);
 }
 
 :root {
