@@ -42,6 +42,18 @@ const props = defineProps({
     type: String,
     default: "DD/MM/YYYY - HH:mm",
   },
+  placeholder: {
+    type: String,
+    default: "Date",
+  },
+  minDate: {
+    type: String,
+    default: null,
+  },
+  maxDate: {
+    type: String,
+    default: null,
+  },
 });
 
 const emits = defineEmits(["update:modelValue"]);
@@ -232,9 +244,11 @@ const dayNames = computed(() => {
       v-model="date"
       :auto-apply="!hasValidation"
       :format="format"
-      :placeholder="dateTranslate"
+      :placeholder="placeholder"
       :cancelText="cancelTranslate"
       :selectText="validateTranslate"
+      :min-date="minDate"
+      :max-date="maxDate"
       :day-names="dayNames"
       time-picker-inline
       :enable-time-picker="hasTime"
