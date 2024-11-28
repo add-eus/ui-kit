@@ -210,7 +210,7 @@ const arrowColor = useColor(
     cursor: pointer;
     pointer-events: none;
     white-space: nowrap;
-    max-width: 8;
+    max-width: 88%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
