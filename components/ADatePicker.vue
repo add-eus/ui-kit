@@ -16,7 +16,6 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
 
 const { locale } = useI18n();
-const currentLocale = ref(locale.value);
 
 export interface MomentRange {
   start: moment.Moment | null | undefined;
@@ -315,7 +314,7 @@ const dayNames = computed(() => {
       :max-date="maxDate"
       :day-names="dayNames"
       time-picker-inline
-      :locale="currentLocale"
+      :locale="locale"
       :enable-time-picker="hasTime"
       :range="type === 'range'"
       :class="{ 'type-range': type === 'range', multi: type === 'range' }"
