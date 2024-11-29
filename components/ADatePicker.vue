@@ -562,7 +562,6 @@ const dayNames = computed(() => {
   /* CLOCK TYPE RANGE */
   .dp--tp-wrap {
     .dp__time_picker_inline_container {
-      background: red;
       .dp__flex {
         &::before {
           left: calc(50% - 92px - 10px);
