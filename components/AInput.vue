@@ -149,10 +149,6 @@ function onInput(phone, phoneObject) {
     }
   }
 
-  &:has(+ *) {
-    padding-right: 0;
-  }
-
   input {
     border: none;
     max-width: 100%;
@@ -160,6 +156,7 @@ function onInput(phone, phoneObject) {
     outline: none !important;
     border: none;
     width: 100%;
+    text-overflow: ellipsis;
 
     &::placeholder {
       color: var(--a-grey-light);
