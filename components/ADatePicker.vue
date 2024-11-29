@@ -6,13 +6,16 @@ import {
   watch,
   shallowRef,
   computed,
-  markRaw,
   toRaw,
+  ref,
 } from "vue";
 import moment from "moment";
+import { useI18n } from "vue-i18n";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useTranslate } from "@addeus/vue3-stores/stores/translate";
+
+const { locale } = useI18n();
 
 export interface MomentRange {
   start: moment.Moment | null | undefined;
@@ -47,11 +50,11 @@ const props = defineProps({
   },
   hasValidation: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   hasTime: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   teleport: {
     type: Boolean,
@@ -311,6 +314,7 @@ const dayNames = computed(() => {
       :max-date="maxDate"
       :day-names="dayNames"
       time-picker-inline
+      :locale="locale"
       :enable-time-picker="hasTime"
       :range="type === 'range'"
       :class="{ 'type-range': type === 'range', multi: type === 'range' }"
@@ -409,7 +413,7 @@ const dayNames = computed(() => {
   .dp__time_picker_inline_container {
     .dp__flex {
       /* CLOCK CIRCLE ICON */
-      &::before {
+      /* &::before {
         content: "";
         height: 20px;
         width: 20px;
@@ -418,11 +422,11 @@ const dayNames = computed(() => {
         bottom: calc(32px - 10px);
         left: calc(50% - 52px - 10px);
         border: 2px solid var(--a-black);
-      }
+      } */
 
       .dp__time_input {
         /* CLOCK NEEDLE ICON */
-        &::before {
+        /* &::before {
           content: "";
           height: 8px;
           width: 2px;
@@ -441,7 +445,7 @@ const dayNames = computed(() => {
           bottom: calc(32px - 6px);
           left: calc(50% - 52px + 1px);
           background: var(--a-black);
-        }
+        } */
 
         .dp__time_col {
           height: 45px;
