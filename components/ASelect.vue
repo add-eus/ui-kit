@@ -213,6 +213,8 @@ const arrowColor = useColor(
     max-width: 88%;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
+    padding-left: 14px;
   }
 
   .is-selected {
