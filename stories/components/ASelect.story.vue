@@ -28,6 +28,7 @@ const value3 = ref(undefined);
         <ASelect
           v-model="value2"
           mode="multiple"
+          color="tertiary"
           no-results="No results found"
           no-options="The list is empty"
           placeholder="Type your tag.."
@@ -40,8 +41,48 @@ const value3 = ref(undefined);
         <ASelect
           v-model="value3"
           mode="single"
+          color="tertiary"
+          no-results="No results found"
+          no-options="The list is empty"
+          placeholder="Type your tag.."
+          :options="options"
+        ></ASelect>
+      </div>
+    </Variant>
+    <Variant title="tag-color">
+      <div class="story-select">
+        <ASelect
+          v-model="value1"
+          label="Tags"
+          tag-color="primary"
+          no-results="No results found"
+          no-options="The list is empty"
+          placeholder="Type your tag.."
+          :options="options"
+        ></ASelect>
+      </div>
+    </Variant>
+    <Variant title="mode multiple">
+      <div class="story-select">
+        <ASelect
+          v-model="value2"
+          mode="multiple"
+          label="Multiple"
           color="primary"
-          arrow-color="primary"
+          no-results="No results found"
+          no-options="The list is empty"
+          placeholder="Type your tag.."
+          :options="options"
+        ></ASelect>
+      </div>
+    </Variant>
+    <Variant title="single/color">
+      <div class="story-select">
+        <ASelect
+          v-model="value3"
+          mode="single"
+          label="Single"
+          color="primary"
           no-results="No results found"
           no-options="The list is empty"
           placeholder="Type your tag.."
@@ -51,7 +92,6 @@ const value3 = ref(undefined);
     </Variant>
   </Story>
 </template>
-
 
 <style lang="scss" scoped>
 .story-select {
@@ -75,5 +115,4 @@ The `ASelect` component accepts the following properties:
 - `placeholder` (string, optional): Placeholder text for the input. Default is "Type your tag..".
 - `color` (string, optional): Specifies the color of the input.
 - `tag-color` (string, optional): Specifies the color of the tag.
-- `arrow-color` (string, optional): Specifies the color of the arrow Default is transparent.
 </docs>

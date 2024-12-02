@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed, ref } from "vue";
-import { Colors, useColor } from "../stores/color";
 import { VueTelInput } from "vue-tel-input";
+import AIcon from "./AIcon.vue";
 import "vue-tel-input/vue-tel-input.css";
 
 export interface VTelInputEmits {
@@ -9,16 +9,20 @@ export interface VTelInputEmits {
 }
 
 const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: "grey",
+  state: {
+    type: String,
+    default: "default",
     validator: (value) => {
-      return ["grey", "primary", "danger", "success"].includes(value);
+      return ["default", "error", "success", "disabled"].includes(value);
     },
   },
   placeholder: {
     type: String,
     default: "Type here..",
+  },
+  label: {
+    type: String,
+    default: null,
   },
   full: {
     type: Boolean,
@@ -27,18 +31,15 @@ const props = defineProps({
   type: {
     type: String,
     default: "text",
+    validator: (value) => {
+      return ["text", "phone", "password"].includes(value);
+    },
   },
   modelValue: {
     type: Object as PropType<Array<string> | string | undefined>,
     default: undefined,
   },
 });
-
-const color = useColor(
-  computed(() => {
-    return props.color;
-  })
-);
 
 const model = defineModel();
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -59,52 +60,102 @@ function onInput(phone, phoneObject) {
 
   emit("update:modelValue", phoneObject.formatted);
 }
+
+// TYPE PASSWORD
+const inputPasswordRef = ref<HTMLInputElement | null>(null);
+const showPassword = ref(false);
+
+const seePassword = () => {
+  if (inputPasswordRef.value) {
+    showPassword.value = !showPassword.value;
+    inputPasswordRef.value.type = showPassword.value ? "text" : "password";
+  }
+};
 </script>
 
 <template>
   <div
     class="a-input"
-    :class="type === 'phone' && 'a-input-phone'"
+    :class="[
+      type === 'phone' && 'a-input-phone',
+      state !== 'default' && `a-input-${state}`,
+    ]"
     :style="{
-      borderColor: color,
       width: full && '100%',
-      '--color': color,
     }"
   >
+    <div class="left-action-container">
+      <slot name="leftAction"></slot>
+    </div>
+    <!-- TYPE PHONE -->
     <template v-if="type === 'phone'">
-      <VueTelInput
-        v-model="telInputModel"
-        mode="international"
-        default-country="FR"
-        :enabled-country-code="true"
-        :preferred-countries="['FR']"
-        autocomplete="off"
-        :validCharactersOnly="true"
-        :autoFormat="true"
-        :dropdown-options="{
-          showDialCodeInList: true,
-          showDialCodeInSelection: true,
-          showFlags: true,
-        }"
-        :input-options="{
-          placeholder: placeholder,
-          required: true,
-          showDialCode: false,
-          type: 'tel',
-        }"
-        @on-input="onInput"
-      ></VueTelInput>
+      <div class="input-container">
+        <VueTelInput
+          v-model="telInputModel"
+          :class="{ labelised: label }"
+          mode="international"
+          default-country="FR"
+          :enabled-country-code="true"
+          :preferred-countries="['FR']"
+          autocomplete="off"
+          :validCharactersOnly="true"
+          :autoFormat="true"
+          :dropdown-options="{
+            showDialCodeInList: true,
+            showDialCodeInSelection: true,
+            showFlags: true,
+          }"
+          :input-options="{
+            placeholder: placeholder,
+            required: true,
+            showDialCode: false,
+            type: 'tel',
+          }"
+          @on-input="onInput"
+        ></VueTelInput>
+        <label v-if="label" class="phone-label">{{ label }}</label>
+      </div>
     </template>
-    <template v-else>
-      <input
-        ref="inputRef"
-        v-bind="$attrs"
-        v-model="model"
-        :placeholder="placeholder"
-        :type="type"
-      />
+    <!-- TYPE PASSWORD -->
+    <template v-if="type === 'password'">
+      <AIcon icon="lock" color="grey" class="lock-input" />
+      <div class="input-container">
+        <input
+          ref="inputPasswordRef"
+          v-bind="$attrs"
+          v-model="model"
+          :disabled="state === 'disabled'"
+          :placeholder="placeholder"
+          :type="type"
+          :class="{ labelised: label }"
+        />
+        <label v-if="label">{{ label }}</label>
+      </div>
+      <button class="input-password-button" @click="seePassword">
+        <AIcon
+          :icon="showPassword ? 'visibility_off' : 'visibility'"
+          color="grey"
+        />
+      </button>
     </template>
-    <slot name="rightAction" class="right-action"></slot>
+    <!-- TYPE TEXT -->
+    <template v-if="type === 'text'">
+      <div class="input-container">
+        <input
+          ref="inputRef"
+          v-bind="$attrs"
+          v-model="model"
+          :disabled="state === 'disabled'"
+          :placeholder="placeholder"
+          :type="type"
+          :class="{ labelised: label }"
+        />
+        <label v-if="label">{{ label }}</label>
+      </div>
+    </template>
+    <div class="right-action-container">
+      <slot name="rightAction"></slot>
+    </div>
   </div>
 </template>
 
@@ -123,6 +174,12 @@ function onInput(phone, phoneObject) {
         box-shadow: none;
         width: 100%;
       }
+
+      &.labelised {
+        .vti__input {
+          padding-top: 20px;
+        }
+      }
     }
   }
 }
@@ -130,14 +187,37 @@ function onInput(phone, phoneObject) {
 
 <style scoped lang="scss">
 .a-input {
-  padding: 12px 16px;
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 1px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  height: 58px;
   display: flex;
   background: var(--a-white);
   overflow: visible;
+  border: 1px solid var(--a-grey-light);
 
+  &:focus-within {
+    border-color: #0969da;
+  }
+
+  &.a-input-error {
+    border-color: var(--a-danger);
+  }
+
+  &.a-input-success {
+    border-color: var(--a-success);
+  }
+
+  &.a-input-disabled {
+    cursor: not-allowed;
+    background: var(--a-grey-lightest);
+
+    label,
+    input {
+      cursor: not-allowed;
+    }
+  }
+
+  // PHONE
   &.a-input-phone {
     padding: 6.5px;
     position: relative;
@@ -147,39 +227,102 @@ function onInput(phone, phoneObject) {
       box-shadow: none;
       width: 100%;
     }
+
+    .phone-label {
+      position: absolute;
+      left: 74px;
+    }
   }
 
-  input {
-    border: none;
-    max-width: 100%;
-    transition: opacity 0.25s, outline 0.25s;
-    outline: none !important;
-    border: none;
-    width: 100%;
-    text-overflow: ellipsis;
+  // LABEL
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+  }
 
-    &::placeholder {
-      color: var(--a-grey-light);
-      opacity: 1; /* Firefox */
-    }
+  // GENERAL
+  .input-container {
+    display: flex;
+    position: relative;
 
-    &::-ms-input-placeholder {
-      /* Edge 12 -18 */
-      color: var(--a-grey-light);
-    }
-
-    &:focus {
-      outline: 1px solid rgba(255, 255, 255, 0.5);
-      outline-offset: -1px;
+    input {
+      border: none;
+      max-width: 100%;
+      transition: opacity 0.25s, outline 0.25s;
+      outline: none !important;
+      border: none;
+      width: 100%;
+      text-overflow: ellipsis;
+      font-size: 14px;
 
       &::placeholder {
-        opacity: 0.75;
+        color: var(--a-grey-light);
+        opacity: 1; /* Firefox */
       }
 
       &::-ms-input-placeholder {
-        opacity: 0.75;
+        /* Edge 12 -18 */
+        color: var(--a-grey-light);
+      }
+
+      &:focus {
+        outline: 1px solid rgba(255, 255, 255, 0.5);
+        outline-offset: -1px;
+
+        &::placeholder {
+          opacity: 0.75;
+        }
+
+        &::-ms-input-placeholder {
+          opacity: 0.75;
+        }
+      }
+
+      // WITH LABEL
+      &.labelised {
+        padding: 20px 0 0 0;
       }
     }
+  }
+
+  :slotted(span) {
+    align-items: center;
+  }
+
+  // SLOT ACTIONS
+  .left-action-container {
+    display: flex;
+    align-items: center;
+
+    &:not(:empty) {
+      padding-right: 16px;
+    }
+  }
+
+  .right-action-container {
+    display: flex;
+    align-items: center;
+
+    &:not(:empty) {
+      padding-left: 16px;
+    }
+  }
+
+  // PASSWORD
+  .input-password-button {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    cursor: pointer;
+    padding: 0 0 0 16px;
+  }
+
+  .lock-input {
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 0;
   }
 }
 </style>

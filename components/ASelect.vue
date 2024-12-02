@@ -36,10 +36,6 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "primary",
   },
-  arrowColor: {
-    type: String as PropType<Colors>,
-    default: "transparent",
-  },
   mode: {
     type: String as PropType<"tags" | "single" | "multiple" | undefined>,
     default: "tags",
@@ -68,6 +64,10 @@ const props = defineProps({
     type: String as PropType<string | undefined>,
     default: undefined,
   },
+  label: {
+    type: String,
+    default: null,
+  },
   closeOnSelect: {
     type: Boolean,
     default: false,
@@ -86,16 +86,10 @@ const mainColor = computed(() => props.tagColor);
 const tagColor = useColor(mainColor);
 const tagColorInvert = useColor(mainColor, "default", true);
 const value = defineModel();
-
-const arrowColor = useColor(
-  computed(() => {
-    return props.arrowColor;
-  })
-);
 </script>
 
 <template>
-  <div class="a-select">
+  <div class="a-select" :class="{ labelised: label }">
     <Multiselect
       v-model="value"
       :mode="mode"
@@ -160,6 +154,7 @@ const arrowColor = useColor(
         </span>
       </template>
     </Multiselect>
+    <label v-if="label" class="select-label">{{ label }}</label>
   </div>
 </template>
 
@@ -167,14 +162,17 @@ const arrowColor = useColor(
 
 <style lang="scss">
 .a-select {
+  position: relative;
   --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
   --ms-border-color: v-bind(colorValue); //Border color
-  --ms-border-width: 2px;
+  --ms-border-width: 1px;
   --ms-radius: 5px;
+  --ms-tag-font-size: 10px;
+  --ms-tag-radius: 5px;
   --ms-tag-bg: v-bind(tagColor); //Tag color
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
-  --ms-caret-color: v-bind(arrowColor); // Arrow color
+  --ms-caret-color: v-bind(colorValue); // Arrow color
   --ms-option-color-selected: v-bind(colorValue);
   --ms-option-bg-selected: transparent;
   --ms-option-bg-pointed: transparent;
@@ -183,7 +181,48 @@ const arrowColor = useColor(
   --ms-option-color-selected-pointed: #000;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
 
+  &:focus-within {
+    --ms-border-color: #0969da;
+  }
+
+  // LABEL
+  &.labelised {
+    .multiselect-search,
+    .multiselect-tags {
+      padding-top: 20px;
+    }
+
+    .select-label {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      font-size: 12px;
+    }
+
+    .label {
+      padding-top: 20px;
+    }
+  }
+
   .multiselect {
+    min-height: 58px;
+    font-size: 14px;
+
+    .multiselect-search,
+    .multiselect-tags {
+      padding-left: 16px;
+
+      .multiselect-tag {
+        height: 20px;
+        padding: 1px 0 1px 5px;
+
+        .multiselect-tag-remove {
+          margin: 0;
+        }
+      }
+    }
+
+    // CHECKBOX
     .checkbox-select {
       padding-right: 20px;
       pointer-events: none;
@@ -204,7 +243,6 @@ const arrowColor = useColor(
   }
 
   .label {
-    color: v-bind(colorValue);
     font-weight: 400;
     width: 100%;
     cursor: pointer;
