@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AInputFile from "../../components/AInputFile.vue";
+import AButton from "../../components/AButton.vue";
 import { ref } from "vue";
 import "../../index.scss";
 
@@ -15,13 +16,9 @@ const inputFileRef = ref<any>(null);
         :container-height="300"
         multiple
         inspiration="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwSUsk_uu2KuNZRT5PintWjwyul4AujUgWNxZlExHB5Q&s"
+        v-slot="{openFileSelector}"
       >
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          @change="inputFileRef.handleImageChange($event)"
-        />
+        <AButton @click="openFileSelector()">Open File Selector</AButton>
       </AInputFile>
     </Variant>
   </Story>
