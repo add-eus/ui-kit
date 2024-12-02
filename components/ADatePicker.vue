@@ -7,7 +7,6 @@ import {
   shallowRef,
   computed,
   toRaw,
-  ref,
 } from "vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
@@ -276,7 +275,6 @@ const format = (dateValue: Date | [Date, Date] | null) => {
   return moment(dateValue).format(props.dateFormat);
 };
 
-const dateTranslate = useTranslate("datepicker.date");
 const cancelTranslate = useTranslate("datepicker.cancel");
 const validateTranslate = useTranslate("datepicker.validate");
 const mondayTranslate = useTranslate("datepicker.days.monday");
@@ -298,6 +296,16 @@ const dayNames = computed(() => {
     sundayTranslate.value || "",
   ];
 });
+
+const onOpen = () => {
+  //MODIFY CLOCK POSITION ON TYPE RANGE
+  setTimeout(() => {
+    if (props.type === "range") {
+      const element = document.querySelector(".dp__instance_calendar");
+      element?.classList.add("type-range");
+    }
+  }, 100);
+};
 </script>
 
 <template>
@@ -314,6 +322,7 @@ const dayNames = computed(() => {
       :max-date="maxDate"
       :day-names="dayNames"
       time-picker-inline
+      @open="onOpen"
       :locale="locale"
       :enable-time-picker="hasTime"
       :range="type === 'range'"
@@ -413,7 +422,7 @@ const dayNames = computed(() => {
   .dp__time_picker_inline_container {
     .dp__flex {
       /* CLOCK CIRCLE ICON */
-      /* &::before {
+      &::before {
         content: "";
         height: 20px;
         width: 20px;
@@ -422,11 +431,11 @@ const dayNames = computed(() => {
         bottom: calc(32px - 10px);
         left: calc(50% - 52px - 10px);
         border: 2px solid var(--a-black);
-      } */
+      }
 
       .dp__time_input {
         /* CLOCK NEEDLE ICON */
-        /* &::before {
+        &::before {
           content: "";
           height: 8px;
           width: 2px;
@@ -445,7 +454,7 @@ const dayNames = computed(() => {
           bottom: calc(32px - 6px);
           left: calc(50% - 52px + 1px);
           background: var(--a-black);
-        } */
+        }
 
         .dp__time_col {
           height: 45px;
