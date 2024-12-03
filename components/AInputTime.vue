@@ -126,6 +126,7 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
   .a-select {
     width: 30px;
     height: 21px;
+    --ms-caret-color: transparent; // Arrow color
 
     .multiselect {
       border: 1px solid transparent;
@@ -152,6 +153,7 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
           left: 5px;
           font-weight: 500;
           font-size: 14px;
+          padding: 0;
         }
 
         .multiselect-placeholder {

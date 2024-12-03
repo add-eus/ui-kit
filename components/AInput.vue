@@ -246,6 +246,7 @@ const seePassword = () => {
   .input-container {
     display: flex;
     position: relative;
+    width: 100%;
 
     input {
       border: none;
