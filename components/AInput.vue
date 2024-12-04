@@ -32,7 +32,7 @@ const props = defineProps({
     type: String,
     default: "text",
     validator: (value) => {
-      return ["text", "phone", "password"].includes(value);
+      return ["text", "phone", "password", "time", "search", "number", "email", "color"].includes(value);
     },
   },
   modelValue: {
