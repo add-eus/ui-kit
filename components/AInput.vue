@@ -117,7 +117,7 @@ const seePassword = () => {
       </div>
     </template>
     <!-- TYPE PASSWORD -->
-    <template v-if="type === 'password'">
+    <template v-else-if="type === 'password'">
       <AIcon icon="lock" color="grey" class="lock-input" />
       <div class="input-container">
         <input
