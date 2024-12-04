@@ -139,7 +139,7 @@ const seePassword = () => {
       </button>
     </template>
     <!-- TYPE TEXT -->
-    <template v-if="type === 'text'">
+    <template v-else>
       <div class="input-container">
         <input
           ref="inputRef"
