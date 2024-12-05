@@ -9,18 +9,41 @@ import "../../index.scss";
     <Variant title="default">
       <AInput />
     </Variant>
-    <Variant title="violet">
-      <AInput color="violet" placeholder="Violet type.." />
+    <Variant title="label">
+      <AInput placeholder="Your placeholder.." label="Label"> </AInput>
     </Variant>
-    <Variant title="primary">
-      <AInput color="primary" placeholder="Primary type..">
+    <Variant title="error/rightAction">
+      <AInput state="error" placeholder="Error type..">
         <template #rightAction>
-          <AIcon icon="arrow_forward" color="primary" />
+          <AIcon icon="close" color="danger" />
+        </template>
+      </AInput>
+    </Variant>
+    <Variant title="success/rightAction">
+      <AInput state="success" placeholder="Success type..">
+        <template #rightAction>
+          <AIcon icon="check" color="success" />
+        </template>
+      </AInput>
+    </Variant>
+    <Variant title="disabled/lefttAction">
+      <AInput state="disabled" placeholder="Disabled type.." label="Locked">
+        <template #leftAction>
+          <AIcon icon="lock" color="grey" />
         </template>
       </AInput>
     </Variant>
     <Variant title="phone">
-      <AInput color="primary" placeholder="Phone number.." type="phone">
+      <AInput placeholder="Phone number.." type="phone"> </AInput>
+    </Variant>
+    <Variant title="phone/label">
+      <AInput placeholder="Phone number.." type="phone" label="Phone"> </AInput>
+    </Variant>
+    <Variant title="password">
+      <AInput placeholder="Password.." type="password"> </AInput>
+    </Variant>
+    <Variant title="password/label">
+      <AInput placeholder="Password.." type="password" label="Password">
       </AInput>
     </Variant>
   </Story>
@@ -35,14 +58,16 @@ This is a icon component.
 
 The `AIcon` component provides the following options:
 
-- `color` (string, optional): Specifies the color of the button. Possible values are any valid color or variable like `primary`.
-- `placeholder` (string, optional): Specifies the placeholder of the button. Possible values are any valid text like `Type your text here..`.
+- `state` (string, optional): Specifies the state of the input. Possible values are `default`, `error`, `success` or `disabled`.
+- `placeholder` (string, optional): Specifies the placeholder of the input. Possible values are any valid text like `Type your text here..`.
+- `label` (string, optional): Specifies the placeholder of the input. Possible values are any valid text like `Password`.
 - `modelValue` (any, optional): Specifies the model value of the input.
 - `full` (boolean, optional): Specifies the full width of the input.
-- `type` (string, optional): Specifies the type of the input. Possible custom values are `text` or `phone`.
+- `type` (string, optional): Specifies the type of the input. Possible custom values are `text`, `phone` or `password`.
 - `modelValue` (any, optional): Specifies the model value of the input.
 
 ## Slots
 
 - `rightAction` (optional): Specifies the right action slot like an icon.
+- `leftAction` (optional): Specifies the left action slot like an icon.
 </docs>
