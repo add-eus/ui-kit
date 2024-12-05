@@ -36,6 +36,10 @@ const props = defineProps({
     type: String as PropType<Colors>,
     default: "primary",
   },
+  arrowColor: {
+    type: String as PropType<Colors>,
+    default: "grey",
+  },
   mode: {
     type: String as PropType<"tags" | "single" | "multiple" | undefined>,
     default: "tags",
@@ -86,6 +90,12 @@ const mainColor = computed(() => props.tagColor);
 const tagColor = useColor(mainColor);
 const tagColorInvert = useColor(mainColor, "default", true);
 const value = defineModel();
+
+const arrowColor = useColor(
+  computed(() => {
+    return props.arrowColor;
+  })
+);
 </script>
 
 <template>
@@ -172,7 +182,7 @@ const value = defineModel();
   --ms-tag-radius: 5px;
   --ms-tag-bg: v-bind(tagColor); //Tag color
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
-  --ms-caret-color: v-bind(colorValue); // Arrow color
+  --ms-caret-color: v-bind(arrowColor); // Arrow color
   --ms-option-color-selected: v-bind(colorValue);
   --ms-option-bg-selected: transparent;
   --ms-option-bg-pointed: transparent;
@@ -211,6 +221,10 @@ const value = defineModel();
     .multiselect-search,
     .multiselect-tags {
       padding-left: 16px;
+
+      .multiselect-tags-search-wrapper {
+        margin: 0;
+      }
 
       .multiselect-tag {
         height: 20px;
@@ -252,7 +266,11 @@ const value = defineModel();
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
-    padding-left: 14px;
+    padding-left: 9px !important;
+
+    &.multiselect-placeholder {
+      padding-left: 16px !important;
+    }
   }
 
   .is-selected {
