@@ -41,6 +41,7 @@ const colorValue = useColor(color);
 .a-icon {
   display: inline-flex;
   font-size: 20px;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 
   &.filled-icon {
     font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
