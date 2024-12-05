@@ -32,7 +32,7 @@ const props = defineProps({
     type: String,
     default: "text",
     validator: (value) => {
-      return ["text", "phone", "password"].includes(value);
+      return ["text", "phone", "password", "time", "search", "number", "email", "color"].includes(value);
     },
   },
   modelValue: {
@@ -117,7 +117,7 @@ const seePassword = () => {
       </div>
     </template>
     <!-- TYPE PASSWORD -->
-    <template v-if="type === 'password'">
+    <template v-else-if="type === 'password'">
       <AIcon icon="lock" color="grey" class="lock-input" />
       <div class="input-container">
         <input
@@ -139,7 +139,7 @@ const seePassword = () => {
       </button>
     </template>
     <!-- TYPE TEXT -->
-    <template v-if="type === 'text'">
+    <template v-else>
       <div class="input-container">
         <input
           ref="inputRef"
