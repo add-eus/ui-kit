@@ -15,44 +15,6 @@ const value3 = ref(undefined);
       <div class="story-select">
         <ASelect
           v-model="value1"
-          tag-color="tertiary"
-          no-results="No results found"
-          no-options="The list is empty"
-          placeholder="Type your tag.."
-          :options="options"
-        ></ASelect>
-      </div>
-    </Variant>
-    <Variant title="mode multiple">
-      <div class="story-select">
-        <ASelect
-          v-model="value2"
-          mode="multiple"
-          color="tertiary"
-          no-results="No results found"
-          no-options="The list is empty"
-          placeholder="Type your tag.."
-          :options="options"
-        ></ASelect>
-      </div>
-    </Variant>
-    <Variant title="single/color">
-      <div class="story-select">
-        <ASelect
-          v-model="value3"
-          mode="single"
-          color="tertiary"
-          no-results="No results found"
-          no-options="The list is empty"
-          placeholder="Type your tag.."
-          :options="options"
-        ></ASelect>
-      </div>
-    </Variant>
-    <Variant title="tag-color">
-      <div class="story-select">
-        <ASelect
-          v-model="value1"
           label="Tags"
           tag-color="primary"
           no-results="No results found"

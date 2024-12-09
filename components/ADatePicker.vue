@@ -345,7 +345,7 @@ const onOpen = () => {
   .dp__input_wrap {
     .dp__input {
       height: 58px;
-      font-size: 12px;
+      font-size: 14px;
 
       &::placeholder {
         color: var(--a-black);

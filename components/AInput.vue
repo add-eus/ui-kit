@@ -28,11 +28,24 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
   type: {
     type: String,
     default: "text",
     validator: (value) => {
-      return ["text", "phone", "password", "time", "search", "number", "email", "color"].includes(value);
+      return [
+        "text",
+        "phone",
+        "password",
+        "time",
+        "search",
+        "number",
+        "email",
+        "color",
+      ].includes(value);
     },
   },
   modelValue: {
@@ -71,6 +84,28 @@ const seePassword = () => {
     inputPasswordRef.value.type = showPassword.value ? "text" : "password";
   }
 };
+
+//CHECK IF INPUT IS FILLED
+const inputValue = ref(props.modelValue);
+const isInputFilled = computed(() => inputValue?.value?.length > 0);
+
+const onInputChange = (newValue: string[]) => {
+  inputValue.value = newValue;
+};
+
+//LISTEN KEYDOWN
+const handleKeydown = (event: KeyboardEvent) => {
+  if (props.type === "time") {
+    preventClear(event);
+  }
+};
+
+//REMOVE BACKSPACE AND DELETE ON  TYPE TIME
+const preventClear = (event: KeyboardEvent) => {
+  if (event.key === "Backspace" || event.key === "Delete") {
+    event.preventDefault();
+  }
+};
 </script>
 
 <template>
@@ -89,7 +124,7 @@ const seePassword = () => {
     </div>
     <!-- TYPE PHONE -->
     <template v-if="type === 'phone'">
-      <div class="input-container">
+      <div class="input-container" :class="{ 'is-not-empty': isInputFilled }">
         <VueTelInput
           v-model="telInputModel"
           :class="{ labelised: label }"
@@ -111,9 +146,11 @@ const seePassword = () => {
             showDialCode: false,
             type: 'tel',
           }"
-          @on-input="onInput"
+          @on-input="onInput, onInputChange($event)"
         ></VueTelInput>
-        <label v-if="label" class="phone-label">{{ label }}</label>
+        <label v-if="label" class="phone-label"
+          >{{ label }}<span v-if="required">*</span></label
+        >
       </div>
     </template>
     <!-- TYPE PASSWORD -->
@@ -129,7 +166,7 @@ const seePassword = () => {
           :type="type"
           :class="{ labelised: label }"
         />
-        <label v-if="label">{{ label }}</label>
+        <label v-if="label">{{ label }}<span v-if="required">*</span></label>
       </div>
       <button class="input-password-button" @click="seePassword">
         <AIcon
@@ -149,8 +186,9 @@ const seePassword = () => {
           :placeholder="placeholder"
           :type="type"
           :class="{ labelised: label }"
+          @keydown="handleKeydown"
         />
-        <label v-if="label">{{ label }}</label>
+        <label v-if="label">{{ label }}<span v-if="required">*</span></label>
       </div>
     </template>
     <div class="right-action-container">
@@ -163,6 +201,17 @@ const seePassword = () => {
 .a-input {
   &.a-input-phone {
     .vue-tel-input {
+      .vti__selection {
+        font-size: 14px;
+        width: 70px;
+
+        .vti__flag,
+        .vti__country-code {
+          margin-left: 0;
+          margin-right: 5px;
+        }
+      }
+
       .vti__dropdown {
         position: initial !important;
       }
@@ -173,12 +222,47 @@ const seePassword = () => {
         outline: none;
         box-shadow: none;
         width: 100%;
+
+        &::placeholder {
+          color: var(--a-grey-light);
+          opacity: 0; /* Firefox */
+          transition: opacity 0.25s;
+        }
+
+        &::-ms-input-placeholder {
+          /* Edge 12 -18 */
+          color: var(--a-grey-light);
+          opacity: 0; /* Firefox */
+          transition: opacity 0.25s;
+        }
       }
 
       &.labelised {
         .vti__input {
           padding-top: 20px;
+          padding-bottom: 0;
         }
+      }
+
+      &:focus-within {
+        .vti__input {
+          &::placeholder {
+            opacity: 1;
+          }
+
+          &::-ms-input-placeholder {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    //PHONE LABEL NOT EMPTY
+    .is-not-empty {
+      .phone-label {
+        top: 0 !important;
+        font-size: 12px !important;
+        transition: top 0.25s, font-size 0.25s;
       }
     }
   }
@@ -197,6 +281,17 @@ const seePassword = () => {
 
   &:focus-within {
     border-color: #0969da;
+
+    // PHONE
+    &.a-input-phone {
+      .phone-label {
+        position: absolute;
+        left: 84px;
+        top: 0;
+        font-size: 12px;
+        transition: top 0.25s, font-size 0.25s;
+      }
+    }
   }
 
   &.a-input-error {
@@ -230,16 +325,26 @@ const seePassword = () => {
 
     .phone-label {
       position: absolute;
-      left: 74px;
+      left: 84px;
+      top: 10px;
+      font-size: 14px;
+      transition: top 0.25s, font-size 0.25s;
+      pointer-events: none;
     }
   }
 
   // LABEL
   label {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 0;
-    font-size: 12px;
+    font-size: 14px;
+    transition: top 0.25s, font-size 0.25s;
+    pointer-events: none;
+
+    span {
+      color: var(--a-danger);
+    }
   }
 
   // GENERAL
@@ -260,12 +365,15 @@ const seePassword = () => {
 
       &::placeholder {
         color: var(--a-grey-light);
-        opacity: 1; /* Firefox */
+        opacity: 0; /* Firefox */
+        transition: opacity 0.25s;
       }
 
       &::-ms-input-placeholder {
         /* Edge 12 -18 */
         color: var(--a-grey-light);
+        opacity: 0; /* Firefox */
+        transition: opacity 0.25s;
       }
 
       &:focus {
@@ -273,11 +381,24 @@ const seePassword = () => {
         outline-offset: -1px;
 
         &::placeholder {
-          opacity: 0.75;
+          opacity: 1;
         }
 
         &::-ms-input-placeholder {
-          opacity: 0.75;
+          opacity: 1;
+        }
+
+        + label {
+          top: 0;
+          font-size: 12px;
+        }
+      }
+
+      // WITH VALUE
+      &:not(:placeholder-shown) {
+        + label {
+          top: 0;
+          font-size: 12px;
         }
       }
 

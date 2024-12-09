@@ -76,6 +76,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  appendToBody: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = computed(() => {
@@ -96,10 +100,21 @@ const arrowColor = useColor(
     return props.arrowColor;
   })
 );
+
+//CHECK IF INPUT IS FILLED
+const inputValue = ref(props.modelValue);
+const isInputFilled = computed(() => inputValue?.value?.length > 0);
+
+const onInputChange = (newValue: string[]) => {
+  inputValue.value = newValue;
+};
 </script>
 
 <template>
-  <div class="a-select" :class="{ labelised: label }">
+  <div
+    class="a-select"
+    :class="{ labelised: label, 'is-not-empty': isInputFilled }"
+  >
     <Multiselect
       v-model="value"
       :mode="mode"
@@ -109,9 +124,10 @@ const arrowColor = useColor(
       :searchable="searchable"
       :create-option="createOption"
       :options="options"
+      :append-to-body="appendToBody"
       :clearOnSelect="mode !== 'single' && required"
       :canDeselect="mode !== 'single' && required"
-      :clearOnBlur="mode !== 'single' && required"
+      :clearOnBlur="true"
       :hide-selected="false"
       :noOptionsText="noOptions"
       :noResultsText="noResults"
@@ -120,6 +136,7 @@ const arrowColor = useColor(
       :disabled="disabled"
       :open-direction="openDirection"
       class="multiselect"
+      @change="onInputChange($event)"
     >
       <template #option="{ option, search }">
         <template v-if="mode == 'multiple'">
@@ -164,7 +181,12 @@ const arrowColor = useColor(
         </span>
       </template>
     </Multiselect>
-    <label v-if="label" class="select-label">{{ label }}</label>
+    <label
+      v-if="label"
+      class="select-label"
+      :class="{ 'is-not-empty': isInputFilled }"
+      >{{ label }}<span v-if="required">*</span></label
+    >
   </div>
 </template>
 
@@ -193,6 +215,15 @@ const arrowColor = useColor(
 
   &:focus-within {
     --ms-border-color: #0969da;
+
+    .select-label {
+      top: 8px !important;
+      font-size: 12px !important;
+    }
+
+    .multiselect-placeholder {
+      opacity: 1 !important;
+    }
   }
 
   // LABEL
@@ -204,9 +235,32 @@ const arrowColor = useColor(
 
     .select-label {
       position: absolute;
-      top: 8px;
+      top: 20px;
       left: 16px;
-      font-size: 12px;
+      font-size: 14px;
+      transition: top 0.25s, font-size 0.25s;
+      pointer-events: none;
+
+      //IS NOT EMPTY
+      &.is-not-empty {
+        top: 8px;
+        font-size: 12px;
+      }
+
+      span {
+        color: var(--a-danger);
+      }
+    }
+
+    //PLACEHOLDER
+    .multiselect-placeholder {
+      width: 88%;
+      padding-top: 20px;
+      opacity: 0;
+      transition: opacity 0.25s;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .label {
@@ -262,11 +316,11 @@ const arrowColor = useColor(
     cursor: pointer;
     pointer-events: none;
     white-space: nowrap;
-    max-width: 88%;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
-    padding-left: 9px !important;
+    margin-right: 10px;
+    padding-left: 16px;
 
     &.multiselect-placeholder {
       padding-left: 16px !important;

@@ -126,7 +126,6 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
   .a-select {
     width: 30px;
     height: 21px;
-    --ms-caret-color: transparent; // Arrow color
 
     .multiselect {
       border: 1px solid transparent;
@@ -140,6 +139,7 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
         .multiselect-search {
           margin: 0;
           padding: 0;
+          padding-left: 5px;
         }
 
         .label {
@@ -158,12 +158,16 @@ const minutesOptions = Array.from({ length: 60 }, (_, i) => ({
 
         .multiselect-placeholder {
           margin: 0;
-          padding: 0;
+          padding: 0 !important;
           position: absolute;
-          top: 0px;
-          left: 10px;
+          top: 3px;
+          left: 5px;
           font-weight: 500;
           font-size: 14px;
+        }
+
+        .multiselect-caret {
+          opacity: 0;
         }
       }
       .multiselect-dropdown {

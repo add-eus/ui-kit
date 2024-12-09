@@ -6,45 +6,50 @@ import "../../index.scss";
 
 <template>
   <Story :layout="{ type: 'grid', width: 200 }">
-    <Variant title="default">
-      <AInput />
-    </Variant>
     <Variant title="label">
       <AInput placeholder="Your placeholder.." label="Label"> </AInput>
     </Variant>
     <Variant title="error/rightAction">
-      <AInput state="error" placeholder="Error type..">
+      <AInput state="error" placeholder="Error type.." label="Error">
         <template #rightAction>
           <AIcon icon="close" color="danger" />
         </template>
       </AInput>
     </Variant>
     <Variant title="success/rightAction">
-      <AInput state="success" placeholder="Success type..">
+      <AInput state="success" placeholder="Success type.." label="Success">
         <template #rightAction>
           <AIcon icon="check" color="success" />
         </template>
       </AInput>
     </Variant>
     <Variant title="disabled/lefttAction">
-      <AInput state="disabled" placeholder="Disabled type.." label="Locked">
+      <AInput
+        state="disabled"
+        placeholder="Disabled type.."
+        label="Locked"
+        value="My value"
+      >
         <template #leftAction>
           <AIcon icon="lock" color="grey" />
         </template>
       </AInput>
     </Variant>
-    <Variant title="phone">
-      <AInput placeholder="Phone number.." type="phone"> </AInput>
-    </Variant>
-    <Variant title="phone/label">
-      <AInput placeholder="Phone number.." type="phone" label="Phone"> </AInput>
-    </Variant>
-    <Variant title="password">
-      <AInput placeholder="Password.." type="password"> </AInput>
-    </Variant>
-    <Variant title="password/label">
-      <AInput placeholder="Password.." type="password" label="Password">
+    <Variant title="phone/label/required">
+      <AInput placeholder="Phone number.." type="phone" label="Phone" required>
       </AInput>
+    </Variant>
+    <Variant title="password/label/required">
+      <AInput
+        placeholder="Password.."
+        type="password"
+        label="Password"
+        required
+      >
+      </AInput>
+    </Variant>
+    <Variant title="time/label/required">
+      <AInput placeholder="Time.." type="time" label="Time" required> </AInput>
     </Variant>
   </Story>
 </template>
@@ -65,6 +70,7 @@ The `AIcon` component provides the following options:
 - `full` (boolean, optional): Specifies the full width of the input.
 - `type` (string, optional): Specifies the type of the input. Possible custom values are `text`, `phone` or `password`.
 - `modelValue` (any, optional): Specifies the model value of the input.
+- `required` (boolean, optional): Specifies if the input is required.
 
 ## Slots
 
