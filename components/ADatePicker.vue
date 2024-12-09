@@ -344,7 +344,8 @@ const onOpen = () => {
 .dp__main {
   .dp__input_wrap {
     .dp__input {
-      font-size: 12px;
+      height: 58px;
+      font-size: 14px;
 
       &::placeholder {
         color: var(--a-black);
@@ -659,10 +660,10 @@ const onOpen = () => {
   --dp-primary-disabled-color: var(--a-tertiary-light);
   --dp-primary-text-color: #f8f5f5;
   --dp-secondary-color: #c0c4cc;
-  --dp-border-color: var(--a-black);
+  --dp-border-color: var(--a-grey-light);
   --dp-menu-border-color: #ddd;
   --dp-border-color-hover: #aaaeb7;
-  --dp-border-color-focus: #aaaeb7;
+  --dp-border-color-focus: #0969da;
   --dp-disabled-color: #f6f6f6;
   --dp-scroll-bar-background: #f3f3f3;
   --dp-scroll-bar-color: #959595;

@@ -18,6 +18,10 @@ const props = defineProps({
       return ["rounded", "sharp", "outlined"].includes(value);
     },
   },
+  fill: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const color = computed(() => props.color);
@@ -27,7 +31,7 @@ const colorValue = useColor(color);
 
 <template>
   <span
-    :class="['a-icon', 'material-symbols-' + type]"
+    :class="['a-icon', 'material-symbols-' + type, { 'filled-icon': fill }]"
     :style="{ color: colorValue }"
     >{{ icon }}</span
   >
@@ -37,6 +41,10 @@ const colorValue = useColor(color);
 .a-icon {
   display: inline-flex;
   font-size: 20px;
-  /* font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48; */
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+
+  &.filled-icon {
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+  }
 }
 </style>
