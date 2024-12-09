@@ -128,6 +128,8 @@ function startAnimation() {
   border: none;
   border-radius: 5px;
   padding: 10px 30px;
+  font-size: 14px;
+  font-weight: 500;
   gap: 3px;
   height: 37px;
   display: inline-flex;
