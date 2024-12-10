@@ -180,6 +180,13 @@ const arrowColor = useColor(
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
 }
 
+:global(.multiselect-option) {
+  --ms-option-bg-selected: transparent;
+  --ms-option-bg-pointed: transparent;
+  --ms-option-color-pointed: #000;
+  --ms-option-bg-selected-pointed: transparent;
+  --ms-option-color-selected-pointed: #000;
+}
 .a-select {
   --ms-tag-bg: v-bind(tagColor); //Tag color
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
