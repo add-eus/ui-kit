@@ -212,6 +212,9 @@ const onInputChange = (newValue: string[]) => {
   --ms-option-bg-selected-pointed: transparent;
   --ms-option-color-selected-pointed: #000;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
+  --ms-border-color-active: #0969da; //Active border color
+  --ms-ring-color: transparent; //Green box shadow
+  --ms-option-bg-selected: transparent; //Selected option background color
 
   &:focus-within {
     --ms-border-color: #0969da;
