@@ -38,7 +38,7 @@ const props = defineProps({
   },
   arrowColor: {
     type: String as PropType<Colors>,
-    default: "grey",
+    default: "transparent",
   },
   mode: {
     type: String as PropType<"tags" | "single" | "multiple" | undefined>,
@@ -68,15 +68,7 @@ const props = defineProps({
     type: String as PropType<string | undefined>,
     default: undefined,
   },
-  label: {
-    type: String,
-    default: null,
-  },
   closeOnSelect: {
-    type: Boolean,
-    default: false,
-  },
-  appendToBody: {
     type: Boolean,
     default: false,
   },
@@ -100,21 +92,10 @@ const arrowColor = useColor(
     return props.arrowColor;
   })
 );
-
-//CHECK IF INPUT IS FILLED
-const inputValue = ref(props.modelValue);
-const isInputFilled = computed(() => inputValue?.value?.length > 0);
-
-const onInputChange = (newValue: string[]) => {
-  inputValue.value = newValue;
-};
 </script>
 
 <template>
-  <div
-    class="a-select"
-    :class="{ labelised: label, 'is-not-empty': isInputFilled }"
-  >
+  <div class="a-select">
     <Multiselect
       v-model="value"
       :mode="mode"
@@ -124,10 +105,9 @@ const onInputChange = (newValue: string[]) => {
       :searchable="searchable"
       :create-option="createOption"
       :options="options"
-      :append-to-body="appendToBody"
       :clearOnSelect="mode !== 'single' && required"
       :canDeselect="mode !== 'single' && required"
-      :clearOnBlur="true"
+      :clearOnBlur="mode !== 'single' && required"
       :hide-selected="false"
       :noOptionsText="noOptions"
       :noResultsText="noResults"
@@ -136,7 +116,6 @@ const onInputChange = (newValue: string[]) => {
       :disabled="disabled"
       :open-direction="openDirection"
       class="multiselect"
-      @change="onInputChange($event)"
     >
       <template #option="{ option, search }">
         <template v-if="mode == 'multiple'">
@@ -181,31 +160,17 @@ const onInputChange = (newValue: string[]) => {
         </span>
       </template>
     </Multiselect>
-    <label
-      v-if="label"
-      class="select-label"
-      :class="{ 'is-not-empty': isInputFilled }"
-      >{{ label }}<span v-if="required">*</span></label
-    >
   </div>
 </template>
 
 
 
 <style lang="scss" scoped>
-.a-select {
-  position: relative;
+:global(.multiselect) {
   --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
-  --ms-border-color: v-bind(colorValue); //Border color
-  --ms-border-width: 1px;
+  --ms-border-width: 2px;
   --ms-radius: 5px;
-  --ms-tag-font-size: 10px;
-  --ms-tag-radius: 5px;
-  --ms-tag-bg: v-bind(tagColor); //Tag color
-  --ms-tag-color: v-bind(tagColorInvert); //Tag background
-  --ms-caret-color: v-bind(arrowColor); // Arrow color
-  --ms-option-color-selected: v-bind(colorValue);
   --ms-option-bg-selected: transparent;
   --ms-option-bg-pointed: transparent;
   --ms-option-color-pointed: #000;
@@ -213,90 +178,15 @@ const onInputChange = (newValue: string[]) => {
   --ms-option-color-selected-pointed: #000;
   --ms-ring-color: transparent;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
-  --ms-border-color-active: #0969da; //Active border color
-  --ms-ring-color: transparent; //Green box shadow
-  --ms-spinner-color: transparent; //Spinner color
-  --ms-option-bg-selected: transparent; //Selected option background color
-  --ms-tag-bg: transparent; //Tag background color
+}
 
-  &:focus-within {
-    --ms-border-color: #0969da;
-
-    .select-label {
-      top: 8px !important;
-      font-size: 12px !important;
-    }
-
-    .multiselect-placeholder {
-      opacity: 1 !important;
-    }
-  }
-
-  // LABEL
-  &.labelised {
-    .multiselect-search,
-    .multiselect-tags {
-      padding-top: 20px;
-    }
-
-    .select-label {
-      position: absolute;
-      top: 20px;
-      left: 16px;
-      font-size: 14px;
-      transition: top 0.25s, font-size 0.25s;
-      pointer-events: none;
-
-      //IS NOT EMPTY
-      &.is-not-empty {
-        top: 8px;
-        font-size: 12px;
-      }
-
-      span {
-        color: var(--a-danger);
-      }
-    }
-
-    //PLACEHOLDER
-    .multiselect-placeholder {
-      width: 88%;
-      padding-top: 20px;
-      opacity: 0;
-      transition: opacity 0.25s;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .label {
-      padding-top: 20px;
-    }
-  }
+.a-select {
+  --ms-tag-bg: v-bind(tagColor); //Tag color
+  --ms-tag-color: v-bind(tagColorInvert); //Tag background
+  --ms-caret-color: v-bind(arrowColor); // Arrow color
+  --ms-option-color-selected: v-bind(colorValue);
 
   .multiselect {
-    min-height: 58px;
-    font-size: 14px;
-
-    .multiselect-search,
-    .multiselect-tags {
-      padding-left: 16px;
-
-      .multiselect-tags-search-wrapper {
-        margin: 0;
-      }
-
-      .multiselect-tag {
-        height: 20px;
-        padding: 1px 0 1px 5px;
-
-        .multiselect-tag-remove {
-          margin: 0;
-        }
-      }
-    }
-
-    // CHECKBOX
     .checkbox-select {
       padding-right: 20px;
       pointer-events: none;
@@ -317,20 +207,17 @@ const onInputChange = (newValue: string[]) => {
   }
 
   .label {
+    color: v-bind(colorValue);
     font-weight: 400;
     width: 100%;
     cursor: pointer;
     pointer-events: none;
     white-space: nowrap;
+    max-width: 88%;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
-    margin-right: 10px;
-    padding-left: 16px;
-
-    &.multiselect-placeholder {
-      padding-left: 16px !important;
-    }
+    padding-left: 14px;
   }
 
   .is-selected {
