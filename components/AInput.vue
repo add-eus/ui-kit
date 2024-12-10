@@ -146,7 +146,12 @@ const preventClear = (event: KeyboardEvent) => {
             showDialCode: false,
             type: 'tel',
           }"
-          @on-input="onInput, onInputChange($event)"
+          @on-input="
+            (phone, phoneObject) => {
+              onInput(phone, phoneObject);
+              onInputChange(phone);
+            }
+          "
         ></VueTelInput>
         <label v-if="label" class="phone-label"
           >{{ label }}<span v-if="required">*</span></label
