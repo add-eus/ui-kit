@@ -9,10 +9,16 @@ export interface ATextareaProps {
   raw?: boolean;
   modelValue?: any;
   disabled?: boolean;
+  label?: string;
+  required?: boolean;
 }
 
 const emits = defineEmits<ATextareaEmits>();
-const props = withDefaults(defineProps<ATextareaProps>(), { modelValue: "" });
+const props = withDefaults(defineProps<ATextareaProps>(), {
+  modelValue: "",
+  label: "",
+  required: false,
+});
 const value = ref(props.modelValue);
 
 const textarea = ref<HTMLTextAreaElement | null>(null);
@@ -41,12 +47,14 @@ defineExpose({
 </script>
 
 <template>
+  <p v-if="label">{{ label }} <span v-if="required">*</span></p>
   <textarea
     ref="textarea"
     v-model="value"
     :class="classes"
     :disabled="disabled"
-  ></textarea>
+  >
+  </textarea>
 </template>
 
 <style lang="scss" scoped>
@@ -55,5 +63,16 @@ defineExpose({
   /* outline-offset: none;
   outline-width: none;
   outline-color: none; */
+}
+
+p {
+  font-size: 12px;
+  color: var(--a-black);
+  margin: 0 0 5px 0;
+  font-weight: 400;
+
+  span {
+    color: var(--a-danger);
+  }
 }
 </style>
