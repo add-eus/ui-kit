@@ -163,9 +163,9 @@ const arrowColor = useColor(
   </div>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
 
-<style lang="scss">
+
+<style lang="scss" scoped>
 .a-select {
   --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
@@ -181,6 +181,7 @@ const arrowColor = useColor(
   --ms-option-color-pointed: #000;
   --ms-option-bg-selected-pointed: transparent;
   --ms-option-color-selected-pointed: #000;
+  --ms-ring-color: transparent;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
 
   .multiselect {
@@ -224,3 +225,5 @@ const arrowColor = useColor(
   }
 }
 </style>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
