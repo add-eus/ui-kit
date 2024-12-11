@@ -216,6 +216,8 @@ const onInputChange = (newValue: string[]) => {
   --ms-border-color-active: #0969da; //Active border color
   --ms-ring-color: transparent; //Green box shadow
   --ms-spinner-color: transparent; //Spinner color
+  --ms-option-py: 14px;
+  --ms-option-px: 12px;
 
   &:focus-within {
     --ms-border-color: #0969da;
@@ -346,20 +348,24 @@ const onInputChange = (newValue: string[]) => {
   --dark-text: var(--a-grey-darkest); //Text color
   --ms-border-width: 2px;
   --ms-radius: 5px;
-  --ms-option-bg-selected: transparent;
+  --ms-option-bg-selected: transparent !important;
   --ms-option-bg-pointed: transparent;
   --ms-option-color-pointed: #000;
   --ms-option-bg-selected-pointed: transparent;
   --ms-option-color-selected-pointed: #000;
   --ms-ring-color: transparent;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
+  --ms-option-py: 14px;
+  --ms-option-px: 12px;
 }
 :global(.multiselect-option) {
-  --ms-option-bg-selected: transparent;
+  --ms-option-bg-selected: transparent !important;
   --ms-option-bg-pointed: transparent;
   --ms-option-color-pointed: #000;
   --ms-option-bg-selected-pointed: transparent;
   --ms-option-color-selected-pointed: #000;
+  --ms-option-py: 14px;
+  --ms-option-px: 12px;
 }
 </style>
 
