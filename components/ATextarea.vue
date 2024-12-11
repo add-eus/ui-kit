@@ -14,6 +14,7 @@ export interface ATextareaProps {
   label?: string;
   required?: boolean;
   color?: Colors;
+  placeholder?: string;
 }
 
 const emits = defineEmits<ATextareaEmits>();
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<ATextareaProps>(), {
   label: "",
   required: false,
   color: "grey-light",
+  placeholder: "",
 });
 const value = ref(props.modelValue);
 
@@ -61,6 +63,7 @@ const color = useColor(mainColor);
       v-model="value"
       :class="classes"
       :disabled="disabled"
+      :placeholder="placeholder"
     >
     </textarea>
   </div>
