@@ -339,3 +339,26 @@ const onInputChange = (newValue: string[]) => {
   }
 }
 </style>
+
+<style lang="scss" scoped>
+:global(.multiselect) {
+  --ms-bg: transparent;
+  --dark-text: var(--a-grey-darkest); //Text color
+  --ms-border-width: 2px;
+  --ms-radius: 5px;
+  --ms-option-bg-selected: transparent;
+  --ms-option-bg-pointed: transparent;
+  --ms-option-color-pointed: #000;
+  --ms-option-bg-selected-pointed: transparent;
+  --ms-option-color-selected-pointed: #000;
+  --ms-ring-color: transparent;
+  --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
+}
+:global(.multiselect-option) {
+  --ms-option-bg-selected: transparent;
+  --ms-option-bg-pointed: transparent;
+  --ms-option-color-pointed: #000;
+  --ms-option-bg-selected-pointed: transparent;
+  --ms-option-color-selected-pointed: #000;
+}
+</style>
