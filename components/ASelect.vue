@@ -193,6 +193,9 @@ const onInputChange = (newValue: string[]) => {
 <style lang="scss">
 .a-select {
   position: relative;
+  --ms-font-size: 14px;
+  --ms-tag-font-size: 14px;
+  --ms-option-font-size: 14px;
   --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
   --ms-border-color: v-bind(colorValue); //Border color
@@ -204,17 +207,15 @@ const onInputChange = (newValue: string[]) => {
   --ms-tag-color: v-bind(tagColorInvert); //Tag background
   --ms-caret-color: v-bind(arrowColor); // Arrow color
   --ms-option-color-selected: v-bind(colorValue);
-  --ms-option-bg-selected: transparent;
-  --ms-option-bg-pointed: transparent;
+  --ms-option-bg-selected: transparent !important; //Selected option background color
+  --ms-option-bg-pointed: transparent !important;
   --ms-option-color-pointed: #000;
-  --ms-option-bg-selected-pointed: transparent;
+  --ms-option-bg-selected-pointed: transparent !important;
   --ms-option-color-selected-pointed: #000;
   --accessibility-focus-outline-color: transparent; // Remove the dash outline on focus
   --ms-border-color-active: #0969da; //Active border color
   --ms-ring-color: transparent; //Green box shadow
   --ms-spinner-color: transparent; //Spinner color
-  --ms-option-bg-selected: transparent; //Selected option background color
-  --ms-tag-bg: transparent; //Tag background color
 
   &:focus-within {
     --ms-border-color: #0969da;
@@ -314,6 +315,7 @@ const onInputChange = (newValue: string[]) => {
   }
 
   .label {
+    font-size: 14px;
     font-weight: 400;
     width: 100%;
     cursor: pointer;
