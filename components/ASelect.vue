@@ -190,8 +190,6 @@ const onInputChange = (newValue: string[]) => {
   </div>
 </template>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
-
 <style lang="scss">
 .a-select {
   position: relative;
@@ -362,3 +360,5 @@ const onInputChange = (newValue: string[]) => {
   --ms-option-color-selected-pointed: #000;
 }
 </style>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
