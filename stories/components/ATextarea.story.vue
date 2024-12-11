@@ -6,10 +6,21 @@ import "../../index.scss";
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
     <Variant title="default">
-      <ATextarea modelValue="Default text..." />
+      <ATextarea />
     </Variant>
-    <Variant title="label/required">
-      <ATextarea modelValue="Default text..." label="Label" required />
+    <Variant title="placeholder">
+      <ATextarea placeholder="Type your text" />
+    </Variant>
+    <Variant title="placeholder/label">
+      <ATextarea placeholder="Type your text" label="Label" />
+    </Variant>
+    <Variant title="placeholder/label/modelValue/required">
+      <ATextarea
+        modelValue="Default text..."
+        placeholder="Type your text"
+        label="Label"
+        required
+      />
     </Variant>
   </Story>
 </template>
