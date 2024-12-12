@@ -96,7 +96,7 @@ const onChange = (event: Event) => {
 
     &.hide-radio {
       color: v-bind(color);
-      border: 2px solid v-bind(color);
+      border: 1px solid v-bind(color);
       text-align: center;
 
       &.selected {
@@ -230,7 +230,7 @@ const onChange = (event: Event) => {
     //HIDDEN RADIO
     &.hide-radio {
       color: var(--a-grey-lighter);
-      border: 2px solid var(--a-grey-lighter);
+      border: 1px solid var(--a-grey-lighter);
 
       &.selected {
         background-color: var(--a-grey-lighter);

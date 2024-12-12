@@ -346,7 +346,7 @@ const onInputChange = (newValue: string[]) => {
 :global(.multiselect) {
   --ms-bg: transparent;
   --dark-text: var(--a-grey-darkest); //Text color
-  --ms-border-width: 2px;
+  --ms-border-width: 1px;
   --ms-radius: 5px;
   --ms-option-bg-selected: transparent !important;
   --ms-option-bg-pointed: transparent;

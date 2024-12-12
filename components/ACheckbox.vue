@@ -124,7 +124,7 @@ watch(
 
     &.hide-checkbox {
       color: v-bind(color);
-      border: 2px solid v-bind(color);
+      border: 1px solid v-bind(color);
       text-align: center;
 
       &.selected {
