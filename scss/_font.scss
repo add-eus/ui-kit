@@ -1,7 +1,9 @@
+$basePath: "/@ui-kit";
+
 // Local Fonts
 @font-face {
   font-family: "Poppins";
-  src: url("../assets/fonts/Poppins-Regular.ttf") format("truetype");
+  src: url($basePath + "/assets/fonts/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -9,7 +11,7 @@
 
 @font-face {
   font-family: "Poppins";
-  src: url("../assets/fonts/Poppins-Bold.ttf") format("truetype");
+  src: url($basePath + "/assets/fonts/Poppins-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -17,7 +19,7 @@
 
 @font-face {
   font-family: "Poppins";
-  src: url("../assets/fonts/Poppins-Light.ttf") format("truetype");
+  src: url($basePath + "/assets/fonts/Poppins-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -42,3 +44,6 @@
 .jacquarda-poppins-b {
   @include font-variant(var(--font-poppins), bold, normal);
 }
+
+$material-symbols-font-path: $basePath + '/node_modules/material-symbols/';
+@import 'material-symbols';
