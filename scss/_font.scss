@@ -45,5 +45,5 @@ $basePath: "/@ui-kit";
   @include font-variant(var(--font-poppins), bold, normal);
 }
 
-$material-symbols-font-path: $basePath + '/node_modules/material-symbols/';
+$material-symbols-font-path: $basePath + '/assets/fonts/';
 @import 'material-symbols';
