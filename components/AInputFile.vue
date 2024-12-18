@@ -18,19 +18,16 @@ export interface FileUploadResponse {
   errors?: string[];
 }
 
-const props = defineProps({
-  multiple: {
-    type: Boolean,
-    default: false,
-  },
-  modelValue: {
-    type: Object as PropType<Array<string> | string | undefined>,
-    default: undefined,
-  },
-  accept: {
-    type: String,
-    default: "image/*",
-  },
+interface AInputFileProps {
+  multiple: boolean;
+  modelValue: Array<string> | string | undefined;
+  accept: string;
+}
+
+const props = withDefaults(defineProps<AInputFileProps>(), {
+  multiple: false,
+  modelValue: undefined,
+  accept: "image/*",
 });
 const emits = defineEmits<AInputFileEmits>();
 

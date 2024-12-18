@@ -2,27 +2,20 @@
 import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
 
-const props = defineProps({
-  containerWidth: {
-    type: Number,
-    default: 300,
-  },
-  containerHeight: {
-    type: Number,
-    default: 300,
-  },
-  medias: {
-    type: Array<string>,
-    default: [],
-  },
-  inspirations: {
-    type: Array<string>,
-    default: [],
-  },
-  tootlip: {
-    type: String,
-    default: "",
-  },
+interface AGalleryProps {
+  containerWidth: number;
+  containerHeight: number;
+  medias: string[];
+  inspirations: string[];
+  tootlip: string;
+}
+
+const props = withDefaults(defineProps<AGalleryProps>(), {
+  containerWidth: 300,
+  containerHeight: 300,
+  medias: [],
+  inspirations: [],
+  tootlip: "",
 });
 
 interface AGalleryEmits {
