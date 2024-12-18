@@ -57,7 +57,7 @@ const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
 <template>
   <div class="a-folder-item">
     <!-- PARENT FOLDER -->
-    <div class="folder-header" @click="toggleFolder(folder.name)">
+    <div class="folder-header">
       <span
         v-if="folder.childs && folder.childs.length > 0"
         class="toggle-icon"
@@ -65,20 +65,18 @@ const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
         <AIcon
           :icon="isOpen ? 'keyboard_arrow_down' : 'keyboard_arrow_right'"
           color="grey-light"
+          @click="toggleFolder(folder.name)"
         />
       </span>
       <div v-else class="spacing"></div>
       <span class="folder-icon"
         ><AIcon icon="folder" color="grey-light"
       /></span>
-      <span class="folder-name">{{ folder.name }}</span>
+      <span class="folder-name" @click="selectFolder(folder, $event)">{{
+        folder.name
+      }}</span>
       <div class="line"></div>
-      <AButton
-        v-if="caret"
-        size="small"
-        class="select-btn"
-        @click="selectFolder(folder, $event)"
-      >
+      <AButton v-if="caret" size="small" class="select-btn">
         <AIcon icon="keyboard_arrow_right" color="grey-light" />
       </AButton>
     </div>
@@ -89,7 +87,7 @@ const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
       class="child-folders"
     >
       <div v-for="(child, index) in folder.childs" :key="child.name + index">
-        <div class="folder-header" @click="toggleChildFolder(child.name)">
+        <div class="folder-header">
           <span
             v-if="child.childs && child.childs.length > 0"
             class="toggle-icon"
@@ -101,20 +99,18 @@ const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
                   : 'keyboard_arrow_right'
               "
               color="grey-light"
+              @click="toggleChildFolder(child.name)"
             />
           </span>
           <div v-else class="spacing"></div>
           <span class="folder-icon"
             ><AIcon icon="folder" color="grey-light"
           /></span>
-          <span class="folder-name">{{ child.name }}</span>
+          <span class="folder-name" @click="selectFolder(child, $event)">{{
+            child.name
+          }}</span>
           <div class="line"></div>
-          <AButton
-            v-if="caret"
-            size="small"
-            class="select-btn"
-            @click="selectFolder(child, $event)"
-          >
+          <AButton v-if="caret" size="small" class="select-btn">
             <AIcon icon="keyboard_arrow_right" color="grey-light" />
           </AButton>
         </div>
@@ -155,6 +151,7 @@ const selectFolder = (folder: { name: string; childs: [] }, event: Event) => {
     .folder-name {
       font-weight: normal;
       color: var(--a-black);
+      width: 100%;
     }
 
     .line {

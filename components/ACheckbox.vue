@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, computed } from "vue";
+import { PropType, computed, watch } from "vue";
 import { Colors, useColor } from "../stores/color";
 
 const props = defineProps({
@@ -40,7 +40,8 @@ const modelValue = defineModel();
 
 const checkboxValue = computed({
   get() {
-    return modelValue.value === props.valueChecked;
+    const isChecked = modelValue.value === props.valueChecked;
+    return isChecked;
   },
   set(v) {
     modelValue.value = v ? props.valueChecked : props.valueUnchecked;
@@ -51,6 +52,16 @@ const mainColor = computed(() => props.color);
 
 const color = useColor(mainColor);
 const colorInvert = useColor(mainColor, "default", true);
+
+watch(
+  () => props.value,
+  (newValue) => {
+    if (props.value === true) {
+      modelValue.value = newValue ? props.valueChecked : props.valueUnchecked;
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -69,7 +80,12 @@ const colorInvert = useColor(mainColor, "default", true);
         'no-label': !$slots.default,
       }"
     >
-      <input type="checkbox" v-model="checkboxValue" :disabled="disabled" />
+      <input
+        type="checkbox"
+        v-model="checkboxValue"
+        :disabled="disabled"
+        :checked="value"
+      />
       <span v-if="type === 'switch'" class="slider"></span>
       <span class="label-text"><slot></slot></span>
       <template v-if="type === 'checkbox'">
@@ -84,6 +100,8 @@ const colorInvert = useColor(mainColor, "default", true);
 
 <style lang="scss" scoped>
 .a-input-checkbox {
+  width: 20px;
+  min-height: 20px;
   min-width: fit-content;
 
   label {
@@ -106,7 +124,7 @@ const colorInvert = useColor(mainColor, "default", true);
 
     &.hide-checkbox {
       color: v-bind(color);
-      border: 2px solid v-bind(color);
+      border: 1px solid v-bind(color);
       text-align: center;
 
       &.selected {
@@ -124,6 +142,7 @@ const colorInvert = useColor(mainColor, "default", true);
   .label-text {
     display: inline-block;
     width: 0;
+    white-space: nowrap;
 
     &:not(:empty) {
       min-width: 90px;
@@ -145,7 +164,7 @@ const colorInvert = useColor(mainColor, "default", true);
       background-color: var(--a-grey-light);
     }
 
-    //Hide native checkbox
+    //HIDE NATIVE CHECKBOX
     input {
       position: absolute;
       opacity: 0;
@@ -153,6 +172,7 @@ const colorInvert = useColor(mainColor, "default", true);
       height: 0;
       width: 0;
 
+      &.input-checked ~ .checkmark-lab,
       &:checked ~ .checkmark-lab {
         background-color: v-bind(color);
 
