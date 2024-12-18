@@ -40,7 +40,7 @@ const colorInvert = useColor(mainColor, "default", true);
 const colorText = useColor(textColor);
 
 const onChange = (event: Event) => {
-  modelValue.value = (event.target as HTMLInputElement).value;
+  modelValue.value = props.value;
 };
 </script>
 
@@ -76,6 +76,7 @@ const onChange = (event: Event) => {
 .a-input-radio {
   min-width: fit-content;
   min-height: 20px;
+  width: 25px;
 
   label {
     display: flex;
@@ -95,7 +96,7 @@ const onChange = (event: Event) => {
 
     &.hide-radio {
       color: v-bind(color);
-      border: 2px solid v-bind(color);
+      border: 1px solid v-bind(color);
       text-align: center;
 
       &.selected {
@@ -229,7 +230,7 @@ const onChange = (event: Event) => {
     //HIDDEN RADIO
     &.hide-radio {
       color: var(--a-grey-lighter);
-      border: 2px solid var(--a-grey-lighter);
+      border: 1px solid var(--a-grey-lighter);
 
       &.selected {
         background-color: var(--a-grey-lighter);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, PropType } from "vue";
+import { ref, defineProps, PropType, onMounted } from "vue";
 import FolderItem from "./AFolderItem.vue";
 
 interface Folder {
@@ -17,6 +17,11 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  firstOpen: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
 
 const emits = defineEmits(["folderSelected"]);
@@ -30,6 +35,13 @@ const toggleFolder = (folderName: string) => {
 const isOpen = (folderName: string) => {
   return openFolders.value[folderName] || false;
 };
+
+// OPEN FIRST FOLDER
+onMounted(() => {
+  if (props.folders && props.folders.length > 0 && props.firstOpen) {
+    openFolders.value[props.folders[0].name] = true;
+  }
+});
 </script>
 
 <template>

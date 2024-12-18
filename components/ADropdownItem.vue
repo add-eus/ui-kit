@@ -44,10 +44,10 @@ const props = defineProps({
       align-items: center;
       font-size: 14px;
       font-style: normal;
-      font-weight: 700;
+      font-weight: 400;
       line-height: normal;
       height: 25px;
-      color: var(--a-grey-dark);
+      color: var(--a-grey-darker);
 
       :slotted(span) {
         margin-right: 8px;

@@ -36,14 +36,14 @@ const emits = defineEmits<AInputFileEmits>();
 
 const filesModel = useVModel(props, "modelValue", emits);
 const lastUploadErrors = ref<string[][]>([]);
-
+const input = ref<HTMLInputElement>();
 const openFileSelector = async (index?: number): Promise<void> => {
   const inputPromise = new Promise<FileList>((resolve, reject) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.multiple = props.multiple;
-    input.accept = props.accept;
-    input.onchange = (e) => {
+    if (input.value === undefined)
+      return;
+    input.value.multiple = props.multiple;
+    input.value.accept = props.accept;
+    input.value.onchange = (e) => {
       const files = (e.target as HTMLInputElement).files;
       if (files) {
         resolve(files);
@@ -51,7 +51,7 @@ const openFileSelector = async (index?: number): Promise<void> => {
         reject("No files selected");
       }
     };
-    input.click();
+    input.value.click();
   });
   const fileList = await inputPromise;
   const processFilePromise = new Promise<FileUploadResponse[]>((resolve) => {
@@ -112,10 +112,12 @@ const addFiles = (files: FileUploadResponse[], index?: number) => {
 </script>
 
 <template>
+  <input type="file" style="display: none;" ref="input"/>
   <slot
     :openFileSelector="openFileSelector"
     :deleteFile="deleteFile"
     :errors="lastUploadErrors"
+    :input="input"
   >
   </slot>
 </template>
