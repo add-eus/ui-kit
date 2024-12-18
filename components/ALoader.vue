@@ -2,11 +2,12 @@
 import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: "white",
-  },
+interface ALoaderProps {
+  color: Colors;
+}
+
+const props = withDefaults(defineProps<ALoaderProps>(), {
+  color: "white",
 });
 
 const color = useColor(

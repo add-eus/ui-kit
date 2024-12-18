@@ -7,21 +7,15 @@ interface Folder {
   childs: Folder[];
 }
 
-const props = defineProps({
-  folders: {
-    type: Array as PropType<Folder[]>,
-    required: true,
-  },
-  caret: {
-    type: Boolean,
-    default: false,
-    required: false,
-  },
-  firstOpen: {
-    type: Boolean,
-    default: false,
-    required: false,
-  },
+interface ATreeViewProps {
+  folders: Folder[];
+  caret?: boolean;
+  firstOpen?: boolean;
+}
+
+const props = withDefaults(defineProps<ATreeViewProps>(), {
+  caret: false,
+  firstOpen: false,
 });
 
 const emits = defineEmits(["folderSelected"]);

@@ -3,31 +3,20 @@ import { PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 import "../scss/_color-declaration.scss";
 
-const props = defineProps({
-  name: {
-    type: String,
-    required: false,
-  },
-  value: {
-    type: null as unknown as PropType<any>,
-    required: false,
-  },
-  color: {
-    type: String as PropType<Colors>,
-    default: "primary",
-  },
-  textColor: {
-    type: String as PropType<Colors>,
-    default: "grey-darker",
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  hideRadio: {
-    type: Boolean,
-    default: false,
-  },
+interface ComponentProps {
+  name?: string;
+  value?: any;
+  color?: Colors;
+  textColor?: Colors;
+  disabled?: boolean;
+  hideRadio?: boolean;
+}
+
+const props = withDefaults(defineProps<ComponentProps>(), {
+  color: "primary",
+  textColor: "grey-darker",
+  disabled: false,
+  hideRadio: false,
 });
 
 const modelValue = defineModel();
