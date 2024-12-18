@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import { PropType, computed } from "vue";
+import { computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-    color: {
-    type: String as PropType<Colors>,
-    default: 'danger',
-    validator: (value) => {
-      return ['warning', 'danger', 'success'].includes(value);
-    },
-  }
+interface AMessageProps {
+  color: Colors;
+}
+
+const props = withDefaults(defineProps<AMessageProps>(), {
+  color: "danger",
 });
 
 const color = useColor(computed(() => props.color));
-
-
 </script>
 
 <template>

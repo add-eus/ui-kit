@@ -2,14 +2,12 @@
 import { ref } from "vue";
 import AButton from "./AButton.vue";
 
-const props = defineProps({
-  position: {
-    type: String,
-    default: "auto",
-    validator: (value: string) => {
-      return ["left", "right", "auto"].includes(value);
-    },
-  },
+interface DropdownItemProps {
+  position: string;
+}
+
+const props = withDefaults(defineProps<DropdownItemProps>(), {
+  position: "auto",
 });
 </script>
 

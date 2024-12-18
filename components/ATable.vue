@@ -2,23 +2,18 @@
 import { defineProps, computed } from "vue";
 import AIcon from "./AIcon.vue";
 
-const props = defineProps({
-  titles: {
-    type: Array,
-    default: () => ["Mots clés", "Apparitions", "Evolution"],
-  },
-  keys: {
-    type: Array,
-    default: () => ["1992", "1993", "1994", "1995"],
-  },
-  actual: {
-    type: Array,
-    default: () => ["52", "148", "78", "263", "32"],
-  },
-  before: {
-    type: Array,
-    default: () => ["92", "48", "718", "63", "82"],
-  },
+interface ATableProps {
+  titles?: string[];
+  keys?: string[];
+  actual?: string[];
+  before?: string[];
+}
+
+const props = withDefaults(defineProps<ATableProps>(), {
+  titles: ["Mots clés", "Apparitions", "Evolution"],
+  keys: ["1992", "1993", "1994", "1995"],
+  actual: ["52", "148", "78", "263", "32"],
+  before: ["92", "48", "718", "63", "82"],
 });
 
 const keysLength = props.keys.length;

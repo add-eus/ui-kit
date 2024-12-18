@@ -1,29 +1,22 @@
 <script setup lang="ts">
-import { PropType, ref, computed, watchEffect, defineProps } from "vue";
+import { PropType, ref, computed, watchEffect, defineProps, withDefaults } from "vue";
 import { Colors, useColor } from "../stores/color";
 import { watchArray } from "@vueuse/core";
 
-const props = defineProps({
-  min: {
-    type: Number,
-    default: 0,
-  },
-  max: {
-    type: Number,
-    default: 100,
-  },
-  step: {
-    type: Number,
-    default: 1,
-  },
-  modelValue: {
-    type: Array as unknown as PropType<[number, number]>,
-    default: () => [50, 80],
-  },
-  color: {
-    type: String as PropType<Colors>,
-    default: "primary",
-  },
+interface ASliderProps {
+  min: number;
+  max: number;
+  step: number;
+  modelValue: [number, number];
+  color: Colors;
+}
+
+const props = withDefaults(defineProps<ASliderProps>(), {
+  min: 0,
+  max: 100,
+  step: 1,
+  modelValue: () => [50, 80],
+  color: "primary",
 });
 
 const color = useColor(
