@@ -444,6 +444,7 @@ const preventClear = (event: KeyboardEvent) => {
     background: transparent;
     cursor: pointer;
     padding: 0 0 0 16px;
+    border: none;
   }
 
   .lock-input {
