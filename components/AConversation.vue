@@ -28,6 +28,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  delay: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const color = useColor(
@@ -36,17 +40,26 @@ const color = useColor(
   })
 );
 
+const isVisible = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true;
+  }, props.delay);
+});
+
 const showTyping = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
     showTyping.value = false;
-  }, 1500);
+  }, 1500 + props.delay);
 });
 </script>
 
 <template>
   <div
+    v-if="isVisible"
     class="a-conversation-bot"
     :style="{
       '--color': color,
@@ -146,6 +159,7 @@ onMounted(() => {
         width: fit-content;
         height: fit-content;
         max-width: 80%;
+        font-size: 12px;
       }
 
       &.user-message {
@@ -159,6 +173,7 @@ onMounted(() => {
           border-radius: 20px 0 20px 20px;
           text-align: right;
           max-height: 0px;
+          overflow: hidden;
           animation: messageAppear 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards;
 
           &.duo {
@@ -168,9 +183,11 @@ onMounted(() => {
 
         @keyframes messageAppear {
           0% {
+            color: var(--a-transparent);
             max-height: 0px;
           }
           100% {
+            color: var(--a-white);
             max-height: 1000px;
           }
         }
