@@ -43,6 +43,10 @@ const props = defineProps({
     type: Number,
     default: 10,
   },
+  tooltip: {
+    type: String,
+    default: undefined,
+  },
   size: {
     type: String as PropType<"small" | "medium" | "large">,
     default: "medium",
@@ -117,6 +121,11 @@ function startAnimation() {
       >
         <img :src="selectedImage" alt="Congrat icon" />
       </div>
+    </div>
+    <div class="a-button-tooltip" v-if="tooltip !== undefined">
+      <p>
+        {{ tooltip }}
+      </p>
     </div>
   </button>
 </template>
@@ -264,6 +273,40 @@ function startAnimation() {
           opacity: 0;
         }
       }
+    }
+  }
+
+  //TOOLTIP
+  .a-button-tooltip {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 5px);
+    transform: translateY(-50%);
+    background: var(--a-black);
+    border-radius: 5px;
+    padding: 10px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    max-width: 290px;
+    opacity: 0;
+    transition: 0.25s opacity;
+    pointer-events: none;
+
+    p {
+      white-space: nowrap;
+      color: var(--a-white);
+      max-width: 290px;
+      line-height: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &:hover {
+    .a-button-tooltip {
+      opacity: 1;
     }
   }
 }
