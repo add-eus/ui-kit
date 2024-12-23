@@ -47,6 +47,10 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  tooltipPosition: {
+    type: String as PropType<"top" | "bottom" | "left" | "right">,
+    default: "right",
+  },
   size: {
     type: String as PropType<"small" | "medium" | "large">,
     default: "medium",
@@ -122,7 +126,11 @@ function startAnimation() {
         <img :src="selectedImage" alt="Congrat icon" />
       </div>
     </div>
-    <div class="a-button-tooltip" v-if="tooltip !== undefined">
+    <div
+      class="a-button-tooltip"
+      v-if="tooltip !== undefined"
+      :class="'tootltip-' + tooltipPosition"
+    >
       <p>
         {{ tooltip }}
       </p>
@@ -301,6 +309,24 @@ function startAnimation() {
       line-height: normal;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    &.tootltip-top {
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+    }
+
+    &.tootltip-bottom {
+      top: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    &.tootltip-left {
+      top: 50%;
+      left: -5px;
+      transform: translateX(-100%) translateY(-50%);
     }
   }
 

@@ -75,6 +75,39 @@ import "../../index.scss";
         <AIcon icon="download" type="rounded" />
       </AButton>
     </Variant>
+    <Variant title="tooltip bottom">
+      <AButton
+        color="info"
+        tooltip="Télécharger"
+        full
+        tooltip-position="bottom"
+        :style="{ marginTop: '20px' }"
+      >
+        <AIcon icon="download" type="rounded" />
+      </AButton>
+    </Variant>
+    <Variant title="tooltip top">
+      <AButton
+        color="info"
+        tooltip="Télécharger"
+        full
+        tooltip-position="top"
+        :style="{ marginTop: '70px' }"
+      >
+        <AIcon icon="download" type="rounded" />
+      </AButton>
+    </Variant>
+    <Variant title="tooltip left">
+      <AButton
+        color="info"
+        tooltip="Télécharger"
+        tooltip-position="left"
+        size="small"
+        :style="{ marginTop: '20px', marginLeft: '150px' }"
+      >
+        <AIcon icon="download" type="rounded" />
+      </AButton>
+    </Variant>
     <Variant title="congrat">
       <AButton
         :style="{ marginTop: '70px' }"
