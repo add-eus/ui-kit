@@ -5,7 +5,7 @@ import "../../index.scss";
 </script>
 
 <template>
-  <Story :layout="{ type: 'grid', width: 200 }">
+  <Story :layout="{ type: 'grid', width: 250 }">
     <Variant title="default">
       <AButton>AButton</AButton>
     </Variant>
@@ -59,13 +59,23 @@ import "../../index.scss";
     <Variant title="disabled">
       <AButton color="tertiary" disabled> AButton Disabled </AButton>
     </Variant>
-    <Variant title="primary">
+    <Variant title="outlined">
       <AButton color="primary" outlined>
         AButton
         <AIcon icon="arrow_forward" type="rounded" />
       </AButton>
     </Variant>
-    <Variant title="full">
+    <Variant title="tooltip">
+      <AButton
+        color="info"
+        tooltip="Télécharger"
+        size="small"
+        :style="{ marginTop: '20px' }"
+      >
+        <AIcon icon="download" type="rounded" />
+      </AButton>
+    </Variant>
+    <Variant title="congrat">
       <AButton
         :style="{ marginTop: '70px' }"
         color="primary"
@@ -97,4 +107,5 @@ The `AButton` component provides the following options:
 - `disabled` (boolean, optional): Specifies if the button is disabled
 - `images` (array, optional): Specifies the images to be displayed in the animation
 - `imagesNumber` (number, optional): Specifies the number of images to be displayed
+- `tooltip` (string, optional): Specifies the tooltip text
 </docs>
