@@ -323,6 +323,25 @@ const open = ref<string | false>(false);
         </template>
       </AModal>
     </Variant>
+
+    <Variant title="noclose">
+      <AButton @click="open = 'noclose'" color="primary-light"
+        >Open no close Modal</AButton
+      >
+      <AModal
+        :open="open === 'noclose'"
+        @close="open = false"
+        title=".nocloseTitle"
+        subTitle=".nocloseSubTitle"
+        :noclose="true"
+      >
+        <template #header> Content header </template>
+        <template #content> Content test </template>
+        <template #action>
+          <AButton @click="open = false" color="success">Validate</AButton>
+        </template>
+      </AModal>
+    </Variant>
   </Story>
 </template>
 
@@ -338,14 +357,30 @@ The `AModal` component provides the following options:
 - `title` (string, optional): Specifies the title of modal.
 - `subTitle` (string, optional): Specifies the subtitle of the modal.
 - `size` (string, optional): Specifies the size of the modal. Possible values are `small`, `medium`, `large`, `big`, and `giant`.
-- `open` (boolean, required): Specifies whether the modal is open or not.
-- `close` (function, required): Specifies the function to close the modal.
-- `action-alignement` (string, optional): Specifies the position of the actions. Possible values are `center` and `right`.
 - `position` (string, optional): Specifies the position of the modal. Possible values are `top`, `right`, `bottom`, and `left`.
+- `icon` (string, optional): Specifies the icon of the modal.
+- `title-alignement` (string, optional): Specifies the position of the title. Possible values are `center` and `right`.
+- `action-alignement` (string, optional): Specifies the position of the actions. Possible values are `center` and `right`.
+- `open` (boolean, required): Specifies whether the modal is open or not.
+- `rounded` (boolean, optional): Specifies if the modal is rounded.
+- `noscroll` (boolean, optional): Specifies if the modal has a scroll.
+- `noclose` (boolean, optional): Specifies if the modal has a close button.
+- `cancel-label` (string, optional): Specifies the label of the cancel button.
+- `class-list` (string, optional): Specifies the class list of the modal.
+- `confirmation` (boolean, optional): Specifies if the modal is a confirmation modal.
 - `has-header` (boolean, optional): Specifies if the modal has a header.
 - `has-footer` (boolean, optional): Specifies if the modal has a footer.
-- `icon` (string, optional): Specifies the icon of the modal.
 - `right-content` (slot, optional): Specifies the right content of the modal.
 - `hasBodyPadding` (boolean, optional): Specifies if the modal has body padding.
-- `classList` (string, optional): Specifies the class list of the modal.
+
+## Slots
+
+- `header` (optional): Specifies the header slot.
+- `right-content` (optional): Specifies the right content slot.
+- `content` (optional): Specifies the content slot.
+- `action` (optional): Specifies the action slot.
+
+## Events
+
+- `close` (function, required): Specifies the function to close the modal.
 </docs>
