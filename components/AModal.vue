@@ -52,6 +52,7 @@ const props = withDefaults(defineProps<AModalProps>(), {
   hasHeader: true,
   hasFooter: true,
   hasBodyPadding: true,
+  actionAlignement: "right",
 });
 
 const wasOpen = ref(false);
@@ -339,6 +340,7 @@ defineExpose({
       .a-card-body {
         margin: 0;
         padding: 16px 20px;
+        max-height: 600px;
 
         .modal-form {
           padding: 10px 0 20px;
