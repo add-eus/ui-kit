@@ -77,9 +77,10 @@ const color = useColor(mainColor);
   overflow: hidden;
 
   &.hasLabel {
+    padding-top: 30px;
+
     .textarea {
       font-family: inherit;
-      padding-top: 30px;
     }
 
     &::after {
@@ -90,6 +91,7 @@ const color = useColor(mainColor);
       width: 100%;
       height: 30px;
       background: var(--a-white);
+      pointer-events: none;
     }
   }
 
@@ -99,6 +101,7 @@ const color = useColor(mainColor);
     border: none;
     padding: 10px;
     width: 100%;
+    max-width: 100%;
 
     &:focus-visible {
       outline-style: none;
