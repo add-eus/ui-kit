@@ -27,6 +27,19 @@ import "../../index.scss";
         </div>
       </div>
     </Variant>
+
+    <Variant title="target/colors/size">
+      <div class="container">
+        <ACircularProgressBar
+          :target="87"
+          :colors="['danger-light', 'warning-light', 'success-light']"
+          :size="250"
+        />
+        <div class="number">
+          <ANumberAnimated :target="87" suffix="%" />
+        </div>
+      </div>
+    </Variant>
   </Story>
 </template>
 
