@@ -110,6 +110,12 @@ function toggle(value: string) {
     border-bottom: 2px solid var(--a-grey-light);
     /* transition: background 0.25s ease-in-out; */
 
+    &:nth-last-child(1) {
+      a {
+        padding-right: 0;
+      }
+    }
+
     a {
       position: relative;
       padding: 15px 20px 15px 0;
@@ -137,6 +143,16 @@ function toggle(value: string) {
     }
 
     &.is-active {
+      &:nth-last-child(1) {
+        a {
+          padding-right: 0;
+
+          &:after {
+            animation: appearLast 0.25s ease-in-out forwards;
+          }
+        }
+      }
+
       a {
         color: var(--a-black);
 
@@ -157,6 +173,15 @@ function toggle(value: string) {
           }
           100% {
             width: calc(100% - 20px);
+          }
+        }
+
+        @keyframes appearLast {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: calc(100%);
           }
         }
 
