@@ -92,6 +92,7 @@ const color = useColor(mainColor);
       height: 30px;
       background: var(--a-white);
       pointer-events: none;
+      border-radius: 10px;
     }
   }
 
