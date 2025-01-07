@@ -432,6 +432,7 @@ defineExpose({
 
         .a-card-body {
           height: 100%;
+          max-height: 100%;
         }
       }
     }
@@ -527,6 +528,7 @@ defineExpose({
 
         .a-card-body {
           height: 100%;
+          max-height: 100%;
         }
       }
     }
@@ -547,6 +549,7 @@ defineExpose({
 
         .a-card-body {
           height: 100%;
+          max-height: 100%;
         }
       }
     }
@@ -566,6 +569,7 @@ defineExpose({
 
         .a-card-body {
           height: 100%;
+          max-height: 100%;
         }
       }
     }
@@ -586,6 +590,7 @@ defineExpose({
 
         .a-card-body {
           height: 100%;
+          max-height: 100%;
         }
       }
     }
