@@ -32,10 +32,6 @@ const props = defineProps({
     type: String,
     default: "image/*",
   },
-  length: {
-    type: Number,
-    default: 0,
-  },
 });
 const emits = defineEmits<AInputFileEmits>();
 
@@ -61,8 +57,6 @@ const openFileSelector = async (index?: number): Promise<void> => {
   });
 
   const fileList = await inputPromise;
-
-  console.log(fileList.length);
 
   // UPDATE SELECTED FILES COUNT
   selectedFilesCount.value = fileList.length;
