@@ -16,7 +16,7 @@ const inputFileRef = ref<any>(null);
         :container-height="300"
         multiple
         inspiration="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwSUsk_uu2KuNZRT5PintWjwyul4AujUgWNxZlExHB5Q&s"
-        v-slot="{openFileSelector}"
+        v-slot="{ openFileSelector }"
       >
         <AButton @click="openFileSelector()">Open File Selector</AButton>
       </AInputFile>
@@ -38,6 +38,7 @@ This is an input file component.
 ## Events
 
 - `handleImageChange(event: Event)`: Emitted when the user uploads an image. Need to be used with the input file ref `const inputFileRef = ref<any>(null);`.
+- `selectedFilesCount(count: number)`: Emitted when the user selects files. Can be used like `@update:selectedFilesCount="updateSelectedFilesCount"`.
 
 ## Slots
 
