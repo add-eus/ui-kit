@@ -12,7 +12,7 @@ const open = ref<string | false>(false);
   <Story :layout="{ type: 'grid', width: 200 }">
     <Variant title="default">
       <AButton @click="open = 'default'" color="grey"
-        >Open default Modal</AButton
+        >Open default New Modal</AButton
       >
       <AModal
         :open="open === 'default'"
