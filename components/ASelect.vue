@@ -358,6 +358,7 @@ const onInputChange = (newValue: string[]) => {
   --ms-option-py: 14px;
   --ms-option-px: 12px;
 }
+
 :global(.multiselect-option) {
   --ms-option-bg-selected: transparent !important;
   --ms-option-bg-pointed: transparent;
@@ -366,6 +367,11 @@ const onInputChange = (newValue: string[]) => {
   --ms-option-color-selected-pointed: #000;
   --ms-option-py: 14px;
   --ms-option-px: 12px;
+  padding: 7px 7px !important;
+}
+
+:global(.multiselect-options) {
+  margin: 1em !important;
 }
 </style>
 
