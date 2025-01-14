@@ -21,7 +21,7 @@ defineProps({
 
 <style lang="scss" scoped>
 .a-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   padding: 0 7px;
   height: 20px;
