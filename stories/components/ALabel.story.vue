@@ -72,5 +72,6 @@ This is a label component.
 
 The `ALabel` component provides the following options:
 
-- `color` (string, optional): Specifies the color of message (danger, warning, success, default to error).
+- `variant` (string, optional): Specifies the variant of the label. Possible values are `default`, `grey`, `accent`, `success`, `attention`, `danger`, `done`, `other`.
+- `outline` (boolean, optional): Specifies if the label should have an outline.
 </docs>
