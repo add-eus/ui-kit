@@ -9,49 +9,56 @@ import "../../index.scss";
       <ALabel>Default</ALabel>
     </Variant>
     <Variant title="default/outline">
-      <ALabel :outline="false">Default</ALabel>
+      <ALabel outline>Default</ALabel>
+    </Variant>
+    <!-- GREY -->
+    <Variant title="grey">
+      <ALabel variant="grey">Grey</ALabel>
+    </Variant>
+    <Variant title="grey/outline">
+      <ALabel variant="grey" outline>Grey</ALabel>
     </Variant>
     <!-- ACCENT -->
     <Variant title="accent">
       <ALabel variant="accent">Accent</ALabel>
     </Variant>
-    <Variant title="accent/no outline">
-      <ALabel variant="accent" :outline="false">Accent</ALabel>
+    <Variant title="accent/outline">
+      <ALabel variant="accent" outline>Accent</ALabel>
     </Variant>
     <!-- SUCCESS -->
     <Variant title="success">
       <ALabel variant="success">Success</ALabel>
     </Variant>
-    <Variant title="success/no outline">
-      <ALabel variant="success" :outline="false">Success</ALabel>
+    <Variant title="success/outline">
+      <ALabel variant="success" outline>Success</ALabel>
     </Variant>
     <!-- ATTENTION -->
     <Variant title="attention">
       <ALabel variant="attention">Attention</ALabel>
     </Variant>
-    <Variant title="attention/no outline">
-      <ALabel variant="attention" :outline="false">Attention</ALabel>
+    <Variant title="attention/outline">
+      <ALabel variant="attention" outline>Attention</ALabel>
     </Variant>
     <!-- DANGER -->
     <Variant title="danger">
       <ALabel variant="danger">Danger</ALabel>
     </Variant>
-    <Variant title="danger/no outline">
-      <ALabel variant="danger" :outline="false">Danger</ALabel>
+    <Variant title="danger/outline">
+      <ALabel variant="danger" outline>Danger</ALabel>
     </Variant>
     <!-- DONE -->
     <Variant title="done">
       <ALabel variant="done">Done</ALabel>
     </Variant>
-    <Variant title="done/no outline">
-      <ALabel variant="done" :outline="false">Done</ALabel>
+    <Variant title="done/outline">
+      <ALabel variant="done" outline>Done</ALabel>
     </Variant>
     <!-- OTHER -->
     <Variant title="other">
       <ALabel variant="other">Other</ALabel>
     </Variant>
-    <Variant title="other/no outline">
-      <ALabel variant="other" :outline="false">Other</ALabel>
+    <Variant title="other/outline">
+      <ALabel variant="other" outline>Other</ALabel>
     </Variant>
   </Story>
 </template>
