@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import ATooltip from "../../components/ATooltip.vue"; // Chemin vers le composant Tooltip
+import ATooltip from "../../components/ATooltip.vue";
+import AButton from "../../components/AButton.vue";
 import "../../index.scss";
 import { ref } from "vue";
 
@@ -13,11 +14,10 @@ const buttonLeftRef = ref<HTMLElement | null>(null);
 
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
-    <!-- Tooltip pour chaque position -->
     <Variant title="Tooltip Top">
       <div class="container">
         <ATooltip content="Ceci est un tooltip" position="top">
-          <button>Tooltip Top</button>
+          <AButton size="small" color="primary">Tooltip Top</AButton>
         </ATooltip>
       </div>
     </Variant>
@@ -25,7 +25,7 @@ const buttonLeftRef = ref<HTMLElement | null>(null);
     <Variant title="Tooltip Right">
       <div class="container">
         <ATooltip content="Ceci est un tooltip" position="right">
-          <button>Tooltip Right</button>
+          <AButton size="small" color="primary">Tooltip Right</AButton>
         </ATooltip>
       </div>
     </Variant>
@@ -33,7 +33,7 @@ const buttonLeftRef = ref<HTMLElement | null>(null);
     <Variant title="Tooltip Bottom">
       <div class="container">
         <ATooltip content="Ceci est un tooltip" position="bottom">
-          <button>Tooltip Bottom</button>
+          <AButton size="small" color="primary">Tooltip Bottom</AButton>
         </ATooltip>
       </div>
     </Variant>
@@ -41,7 +41,7 @@ const buttonLeftRef = ref<HTMLElement | null>(null);
     <Variant title="Tooltip Left">
       <div class="container">
         <ATooltip content="Ceci est un tooltip" position="left">
-          <button>Tooltip Left</button>
+          <AButton size="small" color="primary">Tooltip Left</AButton>
         </ATooltip>
       </div>
     </Variant>
