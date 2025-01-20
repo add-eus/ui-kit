@@ -73,10 +73,10 @@ watch(
 .tooltip {
   position: absolute;
   z-index: 1000;
-  background-color: #333;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
+  background-color: var(--a-black);
+  color: var(--a-white);
+  padding: 10px;
+  border-radius: 5px;
   font-size: 14px;
   pointer-events: none;
   white-space: nowrap;
