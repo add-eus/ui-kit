@@ -16,57 +16,33 @@ const buttonLeftRef = ref<HTMLElement | null>(null);
     <!-- Tooltip pour chaque position -->
     <Variant title="Tooltip Top">
       <div class="container">
-        <div ref="buttonTopRef" class="content">
+        <ATooltip content="Ceci est un tooltip" position="top">
           <button>Tooltip Top</button>
-          <ATooltip
-            v-if="buttonTopRef"
-            :target="buttonTopRef"
-            :content="tooltipContent"
-            position="top"
-          />
-        </div>
+        </ATooltip>
       </div>
     </Variant>
 
     <Variant title="Tooltip Right">
       <div class="container">
-        <div ref="buttonRightRef" class="content">
+        <ATooltip content="Ceci est un tooltip" position="right">
           <button>Tooltip Right</button>
-          <ATooltip
-            v-if="buttonRightRef"
-            :target="buttonRightRef"
-            :content="tooltipContent"
-            position="right"
-          />
-        </div>
+        </ATooltip>
       </div>
     </Variant>
 
     <Variant title="Tooltip Bottom">
       <div class="container">
-        <div ref="buttonBottomRef" class="content">
+        <ATooltip content="Ceci est un tooltip" position="bottom">
           <button>Tooltip Bottom</button>
-          <ATooltip
-            v-if="buttonBottomRef"
-            :target="buttonBottomRef"
-            :content="tooltipContent"
-            position="bottom"
-          />
-        </div>
+        </ATooltip>
       </div>
     </Variant>
 
     <Variant title="Tooltip Left">
       <div class="container">
-        <div ref="buttonLeftRef" class="content">
+        <ATooltip content="Ceci est un tooltip" position="left">
           <button>Tooltip Left</button>
-          <ATooltip
-            v-if="buttonLeftRef"
-            :target="buttonLeftRef"
-            :content="tooltipContent"
-            position="left"
-          />
-        </div>
+        </ATooltip>
       </div>
     </Variant>
   </Story>
