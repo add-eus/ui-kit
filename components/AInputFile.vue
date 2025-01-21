@@ -16,6 +16,9 @@ interface AInputFileEmits {
 export interface FileUploadResponse {
   path?: string;
   errors?: string[];
+  name?: string,
+  mimeType? : string,
+  size?: number,
 }
 
 const props = defineProps({
