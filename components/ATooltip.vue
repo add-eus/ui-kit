@@ -35,6 +35,7 @@ const tooltipVisible = ref(false);
 <style scoped lang="scss">
 .a-tooltip-container {
   position: relative;
+  width: fit-content;
 
   .tooltip {
     position: absolute;
