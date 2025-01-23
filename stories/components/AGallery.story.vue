@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AGallery from "../../components/AGallery.vue";
+import AButton from "../../components/AButton.vue";
 import AIcon from "../../components/AIcon.vue";
 import { ref } from "vue";
 import { logEvent } from "histoire/client";
@@ -113,13 +114,13 @@ const inputFileRef = ref<any>(null);
         <template #medias="{ imageSrc }"> </template>
         <template #actions="{ index, setActiveMedia }">
           <div class="icons-container-story">
-            <AButton>
+            <AButton size="small">
               <AIcon icon="edit" color="grey" />
             </AButton>
-            <AButton>
+            <AButton size="small">
               <AIcon icon="add_to_photos" color="grey" />
             </AButton>
-            <AButton>
+            <AButton size="small">
               <AIcon icon="close" color="danger" />
             </AButton>
           </div>
