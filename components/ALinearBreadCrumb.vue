@@ -2,32 +2,36 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  pathSegments: {
-    type: Array as () => string[],
+  path: {
+    type: String,
     required: true,
   },
   root: {
     type: String,
     default: "Home",
   },
-  path: {
+  splitChar: {
     type: String,
-    required: true,
+    default: "/",
   },
   separator: {
     type: String,
-    default: ">",
+    default: "/",
   },
 });
 
 const emit = defineEmits(["updatePath"]);
 
+const pathSegments = computed(() =>
+  props.path.split(props.splitChar).filter(Boolean)
+);
+
 const goToFolderLevel = (level: number) => {
-  const newPath = props.pathSegments.slice(0, level + 1).join("/");
-  emit("updatePath", level);
+  const newPath = pathSegments.value.slice(0, level + 1).join(props.splitChar);
+  emit("updatePath", newPath);
 };
 
-const isBreadcrumbEmpty = computed(() => props.pathSegments?.length === 0);
+const isBreadcrumbEmpty = computed(() => pathSegments.value.length === 0);
 </script>
 
 <template>

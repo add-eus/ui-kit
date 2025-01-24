@@ -1,24 +1,31 @@
 <script setup lang="ts">
 import ALinearBreadCrumb from "../../components/ALinearBreadCrumb.vue";
 import "../../index.scss";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const path = ref("Step I/Step II/Step III");
-const pathSegments = computed(() => path.value.split("/").filter(Boolean));
+const path2 = ref("Step I-Step II-Step III-Step IV");
 
-// Méthode appelée lors de la mise à jour du chemin
 const updatePath = (newPath: string) => {
   path.value = newPath;
+};
+
+const updatePath2 = (newPath: string) => {
+  path2.value = newPath;
 };
 </script>
 
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
     <Variant title="default">
+      <ALinearBreadCrumb :path="path" @updatePath="updatePath" />
+    </Variant>
+    <Variant title="splitChar/separator">
       <ALinearBreadCrumb
-        :pathSegments="pathSegments"
-        :path="path"
-        @update:path="updatePath"
+        :path="path2"
+        splitChar="-"
+        separator="*"
+        @updatePath="updatePath2"
       />
     </Variant>
   </Story>
