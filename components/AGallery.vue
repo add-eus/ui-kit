@@ -293,7 +293,6 @@ const mediasAndInspirations = computed((): string[] => {
 <style scoped lang="scss">
 //MEDIA CONTAINER
 .container-gallery {
-  overflow: hidden;
   width: var(--width);
   position: relative;
   background: transparent;

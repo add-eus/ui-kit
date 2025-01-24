@@ -116,7 +116,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 0 10px;
   width: 100%;
 
@@ -124,8 +124,8 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
 
     .conversation-row {
       border-radius: 8px;

@@ -17,6 +17,9 @@ interface AInputFileEmits {
 export interface FileUploadResponse {
   path?: string;
   errors?: string[];
+  name?: string,
+  mimeType? : string,
+  size?: number,
 }
 
 const props = defineProps({
@@ -42,7 +45,9 @@ const selectedFilesCount = ref(0);
 
 const openFileSelector = async (index?: number): Promise<void> => {
   const inputPromise = new Promise<FileList>((resolve, reject) => {
-    if (!input.value) return;
+    if (!input.value)
+      return;
+    input.value.value = '';
     input.value.multiple = props.multiple;
     input.value.accept = props.accept;
     input.value.onchange = (e) => {

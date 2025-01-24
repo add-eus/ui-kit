@@ -119,7 +119,7 @@ defineExpose({
         v-if="open"
       >
         <button
-          class="a-modal-background a-modal-close"
+          class="a-modal-background"
           tabindex="0"
           @keydown.space.prevent="() => noclose === false && close()"
           @click="() => noclose === false && close()"
@@ -170,7 +170,18 @@ defineExpose({
               </div>
             </template>
             <template #content>
-              <div>
+              <div class="body-container">
+                <AButton
+                  v-if="!hasHeader"
+                  class="a-modal-close"
+                  size="small"
+                  circle
+                  :disabled="noclose"
+                  @keydown.space.prevent="close()"
+                  @click="close()"
+                >
+                  <AIcon icon="close" color="black"></AIcon>
+                </AButton>
                 <slot
                   v-if="showConfirmation"
                   name="confirmation"
@@ -341,6 +352,22 @@ defineExpose({
         margin: 0;
         padding: 16px 20px;
         max-height: 600px;
+        position: relative;
+
+        .body-container {
+          .a-modal-close {
+            position: absolute;
+            cursor: pointer;
+            top: 18px;
+            right: 12px;
+            background: transparent;
+
+            &.a-modal-background {
+              top: 0;
+              right: 0;
+            }
+          }
+        }
 
         .modal-form {
           padding: 10px 0 20px;
