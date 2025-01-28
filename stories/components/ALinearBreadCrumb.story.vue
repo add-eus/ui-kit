@@ -32,13 +32,17 @@ const updatePath2 = (newPath: string) => {
 </template>
 
 <docs lang="md">
-# ATabs
+# ALinearBreadCrumb
 
-The `ATabs` component allows you to create a set of tabs with customizable styling.
+The `ALinearBreadCrumb` component is a simple breadcrumb component that allows users to navigate through a hierarchy of tabs.
 
 ## Usage
 
-The `ATabs` component offers the following options:
+The `ALinearBreadCrumb` component offers the following options:
 
 - `tabs` (array, required): A list of objects representing the tabs. Each object should have a `label` (string) and a `value` (string). The `icon` (string) option is optional.
+- `path` (string, required): The value of the currently selected tab.
+- `updatePath` (function, required): A function that updates the value of the currently selected tab.
+- `splitChar` (string, optional, default: "/"): The character used to split the path into segments.
+- `separator` (string, optional, default: "/"): The character used visualy to separate the segments in the breadcrumb.
 </docs>
