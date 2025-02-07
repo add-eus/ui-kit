@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
 import type { PropType } from "vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 interface AInputFileEmits {
   (e: "delete", index: number): boolean;
   (e: "update:modelValue", files: Array<string> | string | undefined): boolean;
+  (e: "update:selectedFilesCount", count: number): void;
   (
     e: "process-files",
     files: FileList,
@@ -16,6 +17,9 @@ interface AInputFileEmits {
 export interface FileUploadResponse {
   path?: string;
   errors?: string[];
+  name?: string,
+  mimeType? : string,
+  size?: number,
 }
 
 interface AInputFileProps {
@@ -34,10 +38,13 @@ const emits = defineEmits<AInputFileEmits>();
 const filesModel = useVModel(props, "modelValue", emits);
 const lastUploadErrors = ref<string[][]>([]);
 const input = ref<HTMLInputElement>();
+const selectedFilesCount = ref(0);
+
 const openFileSelector = async (index?: number): Promise<void> => {
   const inputPromise = new Promise<FileList>((resolve, reject) => {
-    if (input.value === undefined)
+    if (!input.value)
       return;
+    input.value.value = '';
     input.value.multiple = props.multiple;
     input.value.accept = props.accept;
     input.value.onchange = (e) => {
@@ -50,14 +57,32 @@ const openFileSelector = async (index?: number): Promise<void> => {
     };
     input.value.click();
   });
+
   const fileList = await inputPromise;
+
+  // UPDATE SELECTED FILES COUNT
+  selectedFilesCount.value = fileList.length;
+
+  updateLoadingFiles(fileList, index);
+
+  // Traiter les fichiers sélectionnés
   const processFilePromise = new Promise<FileUploadResponse[]>((resolve) => {
     emits("process-files", fileList, (response) => {
       resolve(response);
     });
   });
+
   const files = await processFilePromise;
+
   addFiles(files, index);
+
+  selectedFilesCount.value = 0;
+};
+
+//EMIT UPDATE SELECTED FILES COUNT AND RESET VALUE
+const updateLoadingFiles = (fileList: FileList, index?: number) => {
+  emits("update:selectedFilesCount", fileList.length);
+  selectedFilesCount.value = 0;
 };
 
 const deleteFile = (index?: number) => {
@@ -92,10 +117,7 @@ const addFiles = (files: FileUploadResponse[], index?: number) => {
         ...filesModel.value.slice(index + 1),
       ];
     } else {
-      filesModel.value = [
-        ...filesModel.value,
-        ...newFilePaths,
-      ];
+      filesModel.value = [...filesModel.value, ...newFilePaths];
     }
   } else if (hasNewFiles) {
     if (files.length !== 1)
@@ -109,12 +131,11 @@ const addFiles = (files: FileUploadResponse[], index?: number) => {
 </script>
 
 <template>
-  <input type="file" style="display: none;" ref="input"/>
+  <input type="file" style="display: none" ref="input" />
   <slot
     :openFileSelector="openFileSelector"
     :deleteFile="deleteFile"
     :errors="lastUploadErrors"
     :input="input"
-  >
-  </slot>
+  ></slot>
 </template>

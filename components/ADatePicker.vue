@@ -312,15 +312,9 @@ const onOpen = () => {
       :action-row="{
         showSelect: hasValidation,
         showCancel: hasValidation,
-      }"
-    />
+      }" />
   </div>
 </template>
-
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap");
-</style>
-
 <style lang="scss">
 .dp__main {
   .dp__input_wrap {

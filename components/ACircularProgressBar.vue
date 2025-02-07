@@ -14,15 +14,21 @@ const props = withDefaults(defineProps<ACircularProgressBarProps>(), {
   size: 200,
 });
 
-const colorA = useColor(
+const color = useColor(
+  computed(() => {
+    return props.colors[0];
+  })
+);
+
+const secondColor = useColor(
   computed(() => {
     return props.colors[1];
   })
 );
 
-const colorB = useColor(
+const thirdColor = useColor(
   computed(() => {
-    return props.colors[0];
+    return props.colors[2];
   })
 );
 
@@ -46,8 +52,13 @@ const gradientId =
       <svg width="240" height="240" viewBox="0 0 240 240">
         <defs>
           <linearGradient :id="gradientId" gradientTransform="rotate(25)">
-            <stop v-if="colorA" offset="5%" :stop-color="colorA" />
-            <stop offset="95%" :stop-color="colorB" />
+            <stop v-if="thirdColor" offset="0%" :stop-color="thirdColor" />
+            <stop
+              v-if="secondColor"
+              :offset="thirdColor ? '60%' : '0%'"
+              :stop-color="secondColor"
+            />
+            <stop offset="95%" :stop-color="color" />
           </linearGradient>
         </defs>
         <circle

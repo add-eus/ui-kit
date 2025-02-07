@@ -5,7 +5,15 @@ import ACard from "./ACard.vue";
 import AButton from "./AButton.vue";
 import AIcon from "./AIcon.vue";
 
-export type AModalSize = "small" | "medium" | "large" | "big" | "giant";
+export type AModalSize =
+  | "small"
+  | "medium"
+  | "large"
+  | "big"
+  | "giant"
+  | "full";
+
+export type AModalPosition = "center" | "top" | "right" | "bottom" | "left";
 
 export interface AModalEmits {
   (e: "close"): void;
@@ -13,7 +21,10 @@ export interface AModalEmits {
 
 export interface AModalProps {
   title?: string;
+  subTitle?: string;
   size?: AModalSize;
+  position?: AModalPosition;
+  icon?: string;
   titleAlignement?: ACardTitle;
   actionAlignement?: ACardAction;
   open?: boolean;
@@ -25,17 +36,23 @@ export interface AModalProps {
   confirmation?: boolean;
   hasHeader?: boolean;
   hasFooter?: boolean;
+  hasBodyPadding?: boolean;
 }
 
 const emit = defineEmits<AModalEmits>();
 const props = withDefaults(defineProps<AModalProps>(), {
   title: ".title",
+  subTitle: undefined,
   size: "medium",
+  position: "center",
+  icon: undefined,
   actions: undefined,
   cancelLabel: undefined,
   confirmation: false,
   hasHeader: true,
   hasFooter: true,
+  hasBodyPadding: true,
+  actionAlignement: "right",
 });
 
 const wasOpen = ref(false);
@@ -92,17 +109,28 @@ defineExpose({
   <Teleport to="body">
     <transition name="fade-fast">
       <div
-        :class="[open && 'is-active', `is-${size}`, `${classList}`]"
+        :class="[
+          open && 'is-active',
+          `is-${size}`,
+          `is-${position}`,
+          `${classList}`,
+        ]"
         class="modal a-modal"
         v-if="open"
       >
         <button
-          class="a-modal-background a-modal-close"
+          class="a-modal-background"
           tabindex="0"
           @keydown.space.prevent="() => noclose === false && close()"
           @click="() => noclose === false && close()"
         ></button>
-        <div class="a-modal-content">
+        <div
+          class="a-modal-content"
+          :class="{
+            'without-subtitle': subTitle === undefined,
+            'no-padding': !hasBodyPadding,
+          }"
+        >
           <ACard
             :has-header="hasHeader"
             :has-footer="hasFooter"
@@ -110,16 +138,28 @@ defineExpose({
             :action-alignement="actionAlignement"
           >
             <template #header>
-              <h3>
-                <slot name="title"
-                  ><Translate>{{ title }}</Translate></slot
-                >
-              </h3>
-            </template>
-            <template #content>
-              <span>
+              <div class="header-content">
+                <slot name="icon">
+                  <AIcon v-if="icon" :icon="icon" color="black"></AIcon>
+                </slot>
+                <div class="header-text">
+                  <h3>
+                    <slot name="title">
+                      <Translate>{{ title }}</Translate>
+                    </slot>
+                  </h3>
+                  <p>
+                    <slot name="sub-title"
+                      ><Translate>{{ subTitle }}</Translate></slot
+                    >
+                  </p>
+                </div>
+                <div class="right-content">
+                  <slot name="right-content"></slot>
+                </div>
                 <AButton
                   class="a-modal-close"
+                  size="small"
                   circle
                   :disabled="noclose"
                   @keydown.space.prevent="close()"
@@ -127,13 +167,28 @@ defineExpose({
                 >
                   <AIcon icon="close" color="black"></AIcon>
                 </AButton>
-                <slot 
+              </div>
+            </template>
+            <template #content>
+              <div class="body-container">
+                <AButton
+                  v-if="!hasHeader"
+                  class="a-modal-close"
+                  size="small"
+                  circle
+                  :disabled="noclose"
+                  @keydown.space.prevent="close()"
+                  @click="close()"
+                >
+                  <AIcon icon="close" color="black"></AIcon>
+                </AButton>
+                <slot
                   v-if="showConfirmation"
                   name="confirmation"
                   :cancel="cancelConfirmation"
-                  ></slot>
+                ></slot>
                 <slot name="content"></slot>
-              </span>
+              </div>
             </template>
             <template #action>
               <slot name="action" :close="() => close()"></slot>
@@ -163,23 +218,9 @@ defineExpose({
     overflow: hidden;
   }
 
-  .a-modal-close {
-    position: absolute;
-    cursor: pointer;
-    top: 10px;
-    right: 0px;
-    background: transparent;
-
-    &.a-modal-background {
-      top: 0;
-      right: 0;
-    }
-  }
-
   .a-card {
     width: 100%;
-    border-radius: 8px;
-    padding: 20px 30px 30px 30px;
+    border-radius: 5px;
     max-height: 100vh;
 
     > .a-card-body {
@@ -199,12 +240,10 @@ defineExpose({
     opacity: 1 !important;
     max-width: 620px;
     margin: 0;
-    padding: 0 10px;
     z-index: 300;
     top: 50vh;
     left: 50vw;
     position: fixed;
-    /* transform: scale(1) translate(-50%, -50%) !important; */
     animation: goUp 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
     transform-origin: left;
 
@@ -242,15 +281,57 @@ defineExpose({
         border-radius: 12px;
       }
 
+      // HEADER
       .a-card-head {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 20px;
+        padding: 16px;
+        border-bottom: 1px solid var(--a-grey-light);
+        min-height: 87px;
 
-        h3 {
-          font-weight: bold;
-          color: var(--a-grey-darker);
+        .header-content {
+          display: flex;
+          gap: 5px;
+          margin: 6px 0;
+
+          .header-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            h3 {
+              font-size: 14px;
+              font-weight: 600;
+              color: var(--a-black);
+              margin: 0;
+            }
+
+            p {
+              font-size: 12px;
+              font-weight: 400;
+              color: var(--a-grey);
+              margin: 0;
+            }
+          }
+
+          .right-content {
+            position: absolute;
+            cursor: pointer;
+            top: 18px;
+            right: 45px;
+          }
+
+          .a-modal-close {
+            position: absolute;
+            cursor: pointer;
+            top: 18px;
+            right: 12px;
+            background: transparent;
+
+            &.a-modal-background {
+              top: 0;
+              right: 0;
+            }
+          }
         }
 
         &.is-start {
@@ -266,7 +347,28 @@ defineExpose({
         }
       }
 
+      // BODY
       .a-card-body {
+        margin: 0;
+        padding: 16px 20px;
+        max-height: 600px;
+        position: relative;
+
+        .body-container {
+          .a-modal-close {
+            position: absolute;
+            cursor: pointer;
+            top: 18px;
+            right: 12px;
+            background: transparent;
+
+            &.a-modal-background {
+              top: 0;
+              right: 0;
+            }
+          }
+        }
+
         .modal-form {
           padding: 10px 0 20px;
         }
@@ -294,8 +396,13 @@ defineExpose({
         }
       }
 
+      // FOOTER
       .a-card-foot {
-        border-top: 1px solid var(--fade-grey-dark-3);
+        margin: 0;
+        padding: 16px;
+        border-top: 1px solid var(--a-grey-light);
+        min-height: 75px;
+        max-height: 75px;
 
         &.no-border {
           border-top-color: transparent;
@@ -318,9 +425,45 @@ defineExpose({
         }
       }
     }
+
+    // WITHOUT SUBTITLE
+    &.without-subtitle {
+      .a-card {
+        .a-card-head {
+          min-height: 60px;
+        }
+      }
+    }
+
+    // NO PADDING
+    &.no-padding {
+      .a-card {
+        .a-card-body {
+          padding: 0;
+        }
+      }
+    }
   }
 
-  //SIZING
+  // SIZING
+  &.is-full {
+    .a-modal-content {
+      width: 100%;
+      height: 100vh;
+      max-width: 100%;
+
+      .a-card {
+        max-height: 100vh;
+        width: 100%;
+        height: 100%;
+
+        .a-card-body {
+          height: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
 
   &.is-giant {
     .a-modal-content {
@@ -328,11 +471,7 @@ defineExpose({
       max-width: 1390px;
 
       @media screen and (max-width: 1390px) {
-        max-width: 95vw;
-      }
-
-      .modal-card {
-        width: 100%;
+        max-width: 100vw;
       }
     }
   }
@@ -340,10 +479,10 @@ defineExpose({
   &.is-big {
     .a-modal-content {
       width: 100%;
-      max-width: 840px;
+      max-width: 960px;
 
-      .modal-card {
-        width: 100%;
+      @media screen and (max-width: 960px) {
+        max-width: 100vw;
       }
     }
   }
@@ -351,10 +490,10 @@ defineExpose({
   &.is-large {
     .a-modal-content {
       width: 100%;
-      max-width: 700px;
+      max-width: 640px;
 
-      .modal-card {
-        width: 100%;
+      @media screen and (max-width: 640px) {
+        max-width: 100vw;
       }
     }
   }
@@ -362,10 +501,10 @@ defineExpose({
   &.is-medium {
     .a-modal-content {
       width: 100%;
-      max-width: 620px;
+      max-width: 480px;
 
-      .modal-card {
-        width: 100%;
+      @media screen and (max-width: 480px) {
+        max-width: 100vw;
       }
     }
   }
@@ -373,10 +512,10 @@ defineExpose({
   &.is-small {
     .a-modal-content {
       width: 100%;
-      max-width: 400px;
+      max-width: 320px;
 
-      .modal-card {
-        width: 100%;
+      @media screen and (max-width: 320px) {
+        max-width: 100vw;
       }
     }
   }
@@ -387,23 +526,98 @@ defineExpose({
     }
 
     .a-modal-content {
-      .modal-card {
-        .modal-card-head {
-          background: var(--dark-sidebar-light-6) !important;
-          border-color: var(--dark-sidebar-light-12);
+      .a-card {
+        background: var(--a-grey-darker);
+      }
+    }
+  }
 
-          h3 {
-            color: var(--dark-dark-text);
-          }
+  //POSITION
+  &.is-center {
+    .a-modal-content {
+      /* top: 50%;
+      left: 50%;
+      transform: scale(1) translate(-50%, -50%) !important; */
+    }
+  }
+
+  &.is-top {
+    .a-modal-content {
+      max-width: 100%;
+      top: 0;
+      left: 50%;
+      transform: scale(1) translate(-50%, 0) !important;
+
+      .a-card {
+        max-height: 100vh;
+        width: 100%;
+        height: 100%;
+
+        .a-card-body {
+          height: 100%;
+          max-height: 100%;
         }
+      }
+    }
+  }
 
-        .modal-card-body {
-          background: var(--dark-sidebar-light-6) !important;
+  &.is-right {
+    .a-modal-content {
+      height: 100vh;
+      max-width: 320px;
+      top: 50%;
+      left: 100%;
+      transform: scale(1) translate(-100%, -50%) !important;
+
+      .a-card {
+        max-height: 100vh;
+        width: 100%;
+        height: 100%;
+
+        .a-card-body {
+          height: 100%;
+          max-height: 100%;
         }
+      }
+    }
+  }
 
-        .modal-card-foot {
-          background: var(--dark-sidebar-light-6) !important;
-          border-color: var(--dark-sidebar-light-12);
+  &.is-bottom {
+    .a-modal-content {
+      max-width: 100%;
+      top: 100%;
+      left: 50%;
+      transform: scale(1) translate(-50%, -100%) !important;
+
+      .a-card {
+        max-height: 100vh;
+        width: 100%;
+        height: 100%;
+
+        .a-card-body {
+          height: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+
+  &.is-left {
+    .a-modal-content {
+      height: 100vh;
+      max-width: 320px;
+      top: 50%;
+      left: 0;
+      transform: scale(1) translate(0, -50%) !important;
+
+      .a-card {
+        max-height: 100vh;
+        width: 100%;
+        height: 100%;
+
+        .a-card-body {
+          height: 100%;
+          max-height: 100%;
         }
       }
     }
@@ -412,14 +626,12 @@ defineExpose({
 
 @media screen and (min-width: 769px) {
   .modal.modal-lg {
-    .modal-card,
     .a-modal-content {
       width: 800px !important;
     }
   }
 
   .modal.modal-sm {
-    .modal-card,
     .a-modal-content {
       width: 400px !important;
     }

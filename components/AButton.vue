@@ -5,24 +5,59 @@ import type { Colors } from "../stores/color";
 import ALoader from "./ALoader.vue";
 import { ref } from "vue";
 
-interface AButtonProps {
-  color?: Colors;
-  outlined?: boolean;
-  loading?: boolean;
-  full?: boolean;
-  images?: string[];
-  imagesNumber?: number;
-  size?: "small" | "medium" | "large";
-}
-
-const props = withDefaults(defineProps<AButtonProps>(), {
-  color: undefined,
-  outlined: false,
-  loading: false,
-  full: false,
-  images: () => [],
-  imagesNumber: 10,
-  size: "medium",
+const props = defineProps({
+  color: {
+    type: String as PropType<Colors>,
+    default: undefined,
+    validator: (value) => {
+      return [
+        "default",
+        "grey",
+        "primary",
+        "secondary",
+        "tertiary",
+        "danger",
+        "warning",
+        "success",
+        "info",
+      ].includes(value);
+    },
+  },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  full: {
+    type: Boolean,
+    default: false,
+  },
+  images: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+  },
+  imagesNumber: {
+    type: Number,
+    default: 10,
+  },
+  tooltip: {
+    type: String,
+    default: undefined,
+  },
+  tooltipPosition: {
+    type: String as PropType<"top" | "bottom" | "left" | "right">,
+    default: "right",
+  },
+  size: {
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
+    validator: (value) => {
+      return ["small", "medium", "large"].includes(value);
+    },
+  },
 });
 
 const mainColor = computed(() => props.color);
@@ -90,6 +125,15 @@ function startAnimation() {
       >
         <img :src="selectedImage" alt="Congrat icon" />
       </div>
+    </div>
+    <div
+      class="a-button-tooltip"
+      v-if="tooltip !== undefined"
+      :class="'tootltip-' + tooltipPosition"
+    >
+      <p>
+        {{ tooltip }}
+      </p>
     </div>
   </button>
 </template>
@@ -237,6 +281,58 @@ function startAnimation() {
           opacity: 0;
         }
       }
+    }
+  }
+
+  //TOOLTIP
+  .a-button-tooltip {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 5px);
+    transform: translateY(-50%);
+    background: var(--a-black);
+    border-radius: 5px;
+    padding: 10px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    max-width: 290px;
+    opacity: 0;
+    transition: 0.25s opacity;
+    pointer-events: none;
+
+    p {
+      white-space: nowrap;
+      color: var(--a-white);
+      max-width: 290px;
+      line-height: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &.tootltip-top {
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+    }
+
+    &.tootltip-bottom {
+      top: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    &.tootltip-left {
+      top: 50%;
+      left: -5px;
+      transform: translateX(-100%) translateY(-50%);
+    }
+  }
+
+  &:hover {
+    .a-button-tooltip {
+      opacity: 1;
     }
   }
 }

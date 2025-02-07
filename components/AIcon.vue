@@ -23,7 +23,7 @@ const colorValue = useColor(color);
 
 <template>
   <span
-    :class="['a-icon', 'material-symbols-' + type, { 'filled-icon': fill }]"
+    :class="['a-icon', 'material-symbols-' + type, { 'filled-icon': fill }, 'notranslate']"
     :style="{ color: colorValue }"
     >{{ icon }}</span
   >

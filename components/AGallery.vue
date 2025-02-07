@@ -123,7 +123,7 @@ const mediasAndInspirations = computed((): string[] => {
             />
           </slot>
           <!-- Switch between image and video icon -->
-          <AIcon
+          <!-- <AIcon
             v-if="medias.length >= 1"
             class="icon-carousel media-img"
             icon="filter_none"
@@ -134,7 +134,7 @@ const mediasAndInspirations = computed((): string[] => {
             class="icon-carousel media-video"
             icon="video_library"
             color="white"
-          />
+          /> -->
         </div>
         <!-- Placeholder -->
         <!-- If no inspiration -->
@@ -286,7 +286,6 @@ const mediasAndInspirations = computed((): string[] => {
 <style scoped lang="scss">
 //MEDIA CONTAINER
 .container-gallery {
-  overflow: hidden;
   width: var(--width);
   position: relative;
   background: transparent;

@@ -4,20 +4,34 @@ import { defineProps, computed, ref, onMounted } from "vue";
 import { Colors, useColor } from "../stores/color";
 import ATyping from "./ATyping.vue";
 
-interface AConversationProps {
-  color: Colors;
-  sender: "bot" | "user";
-  text: string;
-  avatar: boolean;
-  duo: boolean;
-}
-
-const props = withDefaults(defineProps<AConversationProps>(), {
-  color: "primary",
-  sender: "bot",
-  text: "Bonjour comment allez vous ? ",
-  avatar: false,
-  duo: false,
+const props = defineProps({
+  color: {
+    type: String as PropType<Colors>,
+    default: "primary",
+  },
+  sender: {
+    type: String,
+    default: "bot",
+    validator: (value) => {
+      return ["bot", "user"].includes(value);
+    },
+  },
+  text: {
+    type: String,
+    default: "Bonjour comment allez vous ? ",
+  },
+  avatar: {
+    type: Boolean,
+    default: false,
+  },
+  duo: {
+    type: Boolean,
+    default: false,
+  },
+  delay: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const color = useColor(
@@ -26,17 +40,26 @@ const color = useColor(
   })
 );
 
+const isVisible = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true;
+  }, props.delay);
+});
+
 const showTyping = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
     showTyping.value = false;
-  }, 1500);
+  }, 1500 + props.delay);
 });
 </script>
 
 <template>
   <div
+    v-if="isVisible"
     class="a-conversation-bot"
     :style="{
       '--color': color,
@@ -93,7 +116,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 0 10px;
   width: 100%;
 
@@ -101,8 +124,8 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
 
     .conversation-row {
       border-radius: 8px;
@@ -136,6 +159,7 @@ onMounted(() => {
         width: fit-content;
         height: fit-content;
         max-width: 80%;
+        font-size: 12px;
       }
 
       &.user-message {
@@ -149,6 +173,7 @@ onMounted(() => {
           border-radius: 20px 0 20px 20px;
           text-align: right;
           max-height: 0px;
+          overflow: hidden;
           animation: messageAppear 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards;
 
           &.duo {
@@ -158,9 +183,11 @@ onMounted(() => {
 
         @keyframes messageAppear {
           0% {
+            color: var(--a-transparent);
             max-height: 0px;
           }
           100% {
+            color: var(--a-white);
             max-height: 1000px;
           }
         }
