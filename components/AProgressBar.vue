@@ -2,31 +2,22 @@
 import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  target: {
-    type: Number,
-    default: 25,
-  },
-  colors: {
-    type: Array as PropType<Colors[]>,
-    default: () => ["grey"],
-  },
-  size: {
-    type: Number,
-    default: 25,
-  },
-  margin: {
-    type: Number,
-    default: 8,
-  },
-  border: {
-    type: Number,
-    default: 5,
-  },
-  opacity: {
-    type: Boolean,
-    default: true,
-  },
+interface ComponentProps {
+  target: number;
+  colors: Colors[];
+  size: number;
+  margin: number;
+  border: number;
+  opacity: boolean;
+}
+
+const props = withDefaults(defineProps<ComponentProps>(), {
+  target: 25,
+  colors: () => ["grey"],
+  size: 25,
+  margin: 8,
+  border: 5,
+  opacity: true,
 });
 
 const colorA = useColor(

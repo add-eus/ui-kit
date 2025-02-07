@@ -1,13 +1,13 @@
 <script setup lang="ts">
-defineProps({
-  variant: {
-    type: String,
-    default: "default",
-  },
-  outline: {
-    type: Boolean,
-    default: false,
-  },
+
+interface ALabelProps {
+  variant?: string;
+  outline?: boolean;
+}
+
+const props = withDefaults(defineProps<ALabelProps>(), {
+  variant: "default",
+  outline: false,
 });
 </script>
 

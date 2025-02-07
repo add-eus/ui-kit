@@ -8,50 +8,24 @@ export interface VTelInputEmits {
   (e: "update:modelValue", value: string | number): void;
 }
 
-const props = defineProps({
-  state: {
-    type: String,
-    default: "default",
-    validator: (value) => {
-      return ["default", "error", "success", "disabled"].includes(value);
-    },
-  },
-  placeholder: {
-    type: String,
-    default: "Type here..",
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  full: {
-    type: Boolean,
-    default: false,
-  },
-  required: {
-    type: Boolean,
-    default: false,
-  },
-  type: {
-    type: String,
-    default: "text",
-    validator: (value) => {
-      return [
-        "text",
-        "phone",
-        "password",
-        "time",
-        "search",
-        "number",
-        "email",
-        "color",
-      ].includes(value);
-    },
-  },
-  modelValue: {
-    type: Object as PropType<Array<string> | string | undefined>,
-    default: undefined,
-  },
+export interface AInputProps {
+  state?: "default" | "error" | "success" | "disabled";
+  placeholder?: string;
+  label?: string | null;
+  full?: boolean;
+  required?: boolean;
+  type?: "text" | "phone" | "password" | "time" | "search" | "number" | "email" | "color";
+  modelValue?: Array<string> | string;
+}
+
+const props = withDefaults(defineProps<AInputProps>(), {
+  state: "default",
+  placeholder: "Type here..",
+  label: null,
+  full: false,
+  required: false,
+  type: "text",
+  modelValue: undefined,
 });
 
 const model = defineModel();

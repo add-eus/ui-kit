@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {
-  defineProps,
-  PropType,
   defineEmits,
   watch,
   shallowRef,
@@ -36,45 +34,28 @@ export type DateValue =
   | null
   | undefined;
 
-const props = defineProps({
-  modelValue: {
-    type: [Object, null] as PropType<moment.Moment | MomentRange | null>,
-    default: null,
-  },
-  type: {
-    type: String as PropType<"default" | "range">,
-    default: "default",
-    validator: (value) =>
-      typeof value === "string" && ["default", "range"].includes(value),
-  },
-  hasValidation: {
-    type: Boolean,
-    default: false,
-  },
-  hasTime: {
-    type: Boolean,
-    default: false,
-  },
-  teleport: {
-    type: Boolean,
-    default: true,
-  },
-  dateFormat: {
-    type: String,
-    default: "DD/MM/YYYY - HH:mm",
-  },
-  placeholder: {
-    type: String,
-    default: "Date",
-  },
-  minDate: {
-    type: String,
-    default: null,
-  },
-  maxDate: {
-    type: String,
-    default: null,
-  },
+export interface ADatePickerProps {
+  modelValue: moment.Moment | MomentRange | null;
+  type: "default" | "range";
+  hasValidation: boolean;
+  hasTime: boolean;
+  teleport: boolean;
+  dateFormat: string;
+  placeholder: string;
+  minDate: string | null;
+  maxDate: string | null;
+}
+
+const props = withDefaults(defineProps<ADatePickerProps>(), {
+  modelValue: null,
+  type: "default",
+  hasValidation: false,
+  hasTime: false,
+  teleport: true,
+  dateFormat: "DD/MM/YYYY - HH:mm",
+  placeholder: "Date",
+  minDate: null,
+  maxDate: null,
 });
 
 const emits = defineEmits(["update:modelValue"]);
@@ -199,7 +180,7 @@ function isEqualModelValue(
   }
 
   if (isMomentRange(a) && isMomentRange(b)) {
-    return isEqualMoment(a.start, b.start) && isEqualMoment(a.end, b.end);
+    return isEqualMoment(a.start, a.start) && isEqualMoment(a.end, b.end);
   }
 
   console.warn("isEqualModelValue received mismatched types:", a, b);

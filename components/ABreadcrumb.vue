@@ -3,27 +3,20 @@ import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 import { useVModel } from "@vueuse/core";
 
-const props = defineProps({
-  step: {
-    type: Array,
-    default: () => ["1992", "1993", "1994", "1995"],
-  },
-  point: {
-    type: Array,
-    default: () => [""],
-  },
-  modelValue: {
-    type: Number,
-    default: 2,
-  },
-  color: {
-    type: String as PropType<Colors>,
-    default: "primary",
-  },
-  lastEnabledStep: {
-    type: Number,
-    default: undefined,
-  },
+interface ABreadcrumbProps {
+  step: string[];
+  point: string[];
+  modelValue: number;
+  color: Colors;
+  lastEnabledStep?: number;
+}
+
+const props = withDefaults(defineProps<ABreadcrumbProps>(), {
+  step: ["1992", "1993", "1994", "1995"],
+  point: [""],
+  modelValue: 2,
+  color: "primary",
+  lastEnabledStep: undefined,
 });
 
 interface ABreadcrumbEmits {

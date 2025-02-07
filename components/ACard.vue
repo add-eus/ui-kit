@@ -11,7 +11,7 @@ export interface ACardProps {
   hasFooter?: boolean;
 }
 
-withDefaults(defineProps<ACardProps>(), {
+const props = withDefaults(defineProps<ACardProps>(), {
   titleAlignement: undefined,
   actionAlignement: undefined,
   hasHeader: true,
@@ -23,10 +23,10 @@ withDefaults(defineProps<ACardProps>(), {
   <div class="a-card">
     <header
       class="a-card-head"
-      v-if="hasHeader"
+      v-if="props.hasHeader"
       :class="[
-        titleAlignement === 'center' && 'is-centered',
-        titleAlignement === 'right' && 'is-end',
+        props.titleAlignement === 'center' && 'is-centered',
+        props.titleAlignement === 'right' && 'is-end',
       ]"
     >
       <slot name="header"></slot>
@@ -45,10 +45,10 @@ withDefaults(defineProps<ACardProps>(), {
     </div>
     <div
       class="a-card-foot"
-      v-if="hasFooter"
+      v-if="props.hasFooter"
       :class="[
-        actionAlignement === 'center' && 'is-centered',
-        actionAlignement === 'right' && 'is-end',
+        props.actionAlignement === 'center' && 'is-centered',
+        props.actionAlignement === 'right' && 'is-end',
       ]"
     >
       <slot name="action"></slot>

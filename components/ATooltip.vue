@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const props = defineProps({
-  content: {
-    type: String,
-    required: true,
-  },
-  position: {
-    type: String as () => "top" | "right" | "bottom" | "left",
-    default: "top",
-  },
+interface ATooltipProps {
+  content: string;
+  position?: "top" | "right" | "bottom" | "left";
+}
+
+const props = withDefaults(defineProps<ATooltipProps>(), {
+  position: "top",
 });
 
 const tooltipVisible = ref(false);

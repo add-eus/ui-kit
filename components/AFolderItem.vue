@@ -10,27 +10,17 @@ interface Folder {
   childs: Folder[];
 }
 
-const props = defineProps({
-  folder: {
-    type: Object as PropType<Folder>,
-    required: true,
-  },
-  modelValue: {
-    type: String,
-    default: "",
-  },
-  isOpen: {
-    type: Boolean,
-    required: true,
-  },
-  toggleFolder: {
-    type: Function as PropType<(folderName: string) => void>,
-    required: true,
-  },
-  caret: {
-    type: Boolean,
-    required: false,
-  },
+interface AFolderItemProps {
+  folder: Folder;
+  modelValue: string;
+  isOpen: boolean;
+  toggleFolder: (folderName: string) => void;
+  caret?: boolean;
+}
+
+const props = withDefaults(defineProps<AFolderItemProps>(), {
+  modelValue: "",
+  caret: false,
 });
 
 const openChildFolders = ref<Record<string, boolean>>({});

@@ -2,11 +2,12 @@
 import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: "black",
-  },
+interface ATypingProps {
+  color: Colors;
+}
+
+const props = withDefaults(defineProps<ATypingProps>(), {
+  color: "black",
 });
 
 const color = useColor(
