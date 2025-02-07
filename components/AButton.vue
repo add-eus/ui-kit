@@ -1,63 +1,30 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType } from "vue";
+import { defineProps, computed, PropType, withDefaults } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
 import ALoader from "./ALoader.vue";
 import { ref } from "vue";
 
-const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: undefined,
-    validator: (value) => {
-      return [
-        "default",
-        "grey",
-        "primary",
-        "secondary",
-        "tertiary",
-        "danger",
-        "warning",
-        "success",
-        "info",
-      ].includes(value);
-    },
-  },
-  outlined: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  full: {
-    type: Boolean,
-    default: false,
-  },
-  images: {
-    type: Array as PropType<string[]>,
-    default: () => [],
-  },
-  imagesNumber: {
-    type: Number,
-    default: 10,
-  },
-  tooltip: {
-    type: String,
-    default: undefined,
-  },
-  tooltipPosition: {
-    type: String as PropType<"top" | "bottom" | "left" | "right">,
-    default: "right",
-  },
-  size: {
-    type: String as PropType<"small" | "medium" | "large">,
-    default: "medium",
-    validator: (value) => {
-      return ["small", "medium", "large"].includes(value);
-    },
-  },
+interface AButtonProps {
+  color?: Colors;
+  outlined?: boolean;
+  loading?: boolean;
+  full?: boolean;
+  images?: string[];
+  imagesNumber?: number;
+  tooltip?: string;
+  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  size?: "small" | "medium" | "large";
+}
+
+const props = withDefaults(defineProps<AButtonProps>(), {
+  outlined: false,
+  loading: false,
+  full: false,
+  images: () => [],
+  imagesNumber: 10,
+  tooltipPosition: "right",
+  size: "medium",
 });
 
 const mainColor = computed(() => props.color);
