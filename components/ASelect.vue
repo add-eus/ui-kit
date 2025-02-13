@@ -30,7 +30,7 @@ const props = defineProps({
   },
   color: {
     type: String as PropType<Colors>,
-    default: "grey-light",
+    default: "grey-dark",
   },
   tagColor: {
     type: String as PropType<Colors>,

@@ -4,18 +4,19 @@ import "notyf/notyf.min.css";
 import { Notyf } from "notyf";
 import { useColor } from "./color";
 
-const getNotyf = () : Notyf => {
-  if((window as any).notyf === undefined) {
+const getNotyf = (): Notyf => {
+  if ((window as any).notyf === undefined) {
     (window as any).notyf = new Notyf({
       duration: 5000,
+      dismissible: true,
       position: {
         x: "right",
         y: "top",
-      }
+      },
     });
   }
   return (window as any).notyf;
-}
+};
 
 class Notification {
   private options: Partial<INotyfNotificationOptions>;
@@ -37,52 +38,39 @@ class Notification {
 }
 
 export const useNotification = createGlobalState(() => {
-  const colorInfo = useColor("info");
-  const colorSuccess = useColor("success");
-  const colorError = useColor("danger");
+  const colors = {
+    default: useColor("grey-lightest"),
+    warning: useColor("warning-lightest"),
+    success: useColor("success-lightest"),
+    info: useColor("info-lightest"),
+    error: useColor("danger-lightest"),
+  };
+
+  const createNotification = (
+    type: keyof typeof colors,
+    payload: MaybeRef<string | Partial<INotyfNotificationOptions>>
+  ) => {
+    let payloadValue = toValue(payload);
+
+    if (typeof payloadValue === "string") {
+      payloadValue = { message: payloadValue };
+    }
+
+    // payloadValue.type = type;
+    payloadValue.className = `notyf__toast--${type}`;
+    payloadValue.background = colors[type].value;
+
+    const notification = new Notification(payloadValue);
+    notification.show();
+    return notification;
+  };
+
   return {
     dismissAll: () => getNotyf().dismissAll(),
-    success(payload: MaybeRef<string | Partial<INotyfNotificationOptions>>) {
-      let payloadValue = toValue(payload);
-
-      if (typeof payloadValue === "string") 
-        payloadValue = {
-          message: payloadValue
-        };
-      
-      payloadValue.type = "success";
-      payloadValue.background = colorSuccess.value;
-      const notification = new Notification(payloadValue)
-      notification.show();
-      return notification;
-    },
-    error: (payload: MaybeRef<string | Partial<INotyfNotificationOptions>>) => {
-      let payloadValue = toValue(payload);
-
-      if (typeof payloadValue === "string") 
-        payloadValue = {
-          message: payloadValue
-        };
-      
-      payloadValue.type = "error";
-      payloadValue.background = colorError.value;
-      const notification = new Notification(payloadValue)
-      notification.show();
-      return notification;
-    },
-    info: (payload: MaybeRef<string | Partial<INotyfNotificationOptions>>) => {
-      let payloadValue = toValue(payload);
-
-      if (typeof payloadValue === "string") 
-        payloadValue = {
-          message: payloadValue
-        };
-      
-      payloadValue.type = "info";
-      payloadValue.background = colorInfo.value;
-      const notification = new Notification(payloadValue)
-      notification.show();
-      return notification;
-    }
+    default: (payload) => createNotification("default", payload),
+    warning: (payload) => createNotification("warning", payload),
+    success: (payload) => createNotification("success", payload),
+    info: (payload) => createNotification("info", payload),
+    error: (payload) => createNotification("error", payload),
   };
 });
