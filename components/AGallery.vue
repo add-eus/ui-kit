@@ -204,11 +204,11 @@ const mediasAndInspirations = computed((): string[] => {
         <p>
           {{ title ? title : "Add your photos or videos here" }}
         </p>
-        <p>
+        <!-- <p>
           {{ subTitle ? subTitle : "OR" }}
-        </p>
+        </p> -->
       </div>
-      <AButton
+      <!-- <AButton
         v-if="medias.length === 0"
         color="secondary"
         @click="clickInsert"
@@ -218,7 +218,7 @@ const mediasAndInspirations = computed((): string[] => {
         <Translate>
           {{ action ? action : "Insert from media library" }}
         </Translate>
-      </AButton>
+      </AButton> -->
     </div>
     <!-- Tootlip sentence -->
     <transition name="fade-slow">
@@ -614,7 +614,8 @@ const mediasAndInspirations = computed((): string[] => {
 
   .details-container {
     position: absolute;
-    top: calc(50% - 45px);
+    /* top: calc(50% - 45px); */
+    top: 50%;
     left: 50%;
     font-size: 30px;
     transform: translate(-50%, -50%);
