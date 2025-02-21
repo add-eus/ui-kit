@@ -28,6 +28,7 @@ import "../../index.scss";
         ]"
         :modelValue="3"
         color="secondary"
+        :disabledSteps="[0, 1]"
       />
     </Variant>
   </Story>
@@ -43,6 +44,7 @@ This is a breadcrumb component.
 - `step` ( string, optional, default: ["1992", "1993", "1994"]) Specifies the step of the breadcrumb.
 - `point` ( string, optional, default: [""]) Specifies the bullet point of the breadcrumb.
 - `color` (string, optional, default: primary): Specifies the color of the component.
+- `disabledSteps` (Array[number], optional, default: []): Specifies the indices of the breadcrumb steps that should be disabled, preventing user interaction.
 - `modelValue` (number, optional, default: 2): Specifies the default active index of the breadcrumb.
 - `v-model` (number, default: 2): Specifies the index of the active step of the breadcrumb.
 </docs>

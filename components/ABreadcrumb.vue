@@ -9,6 +9,7 @@ interface ABreadcrumbProps {
   modelValue: number;
   color: Colors;
   lastEnabledStep?: number;
+  disabledSteps?: string[];
 }
 
 const props = withDefaults(defineProps<ABreadcrumbProps>(), {
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<ABreadcrumbProps>(), {
   modelValue: 2,
   color: "primary",
   lastEnabledStep: undefined,
+  disabledSteps: [],
 });
 
 interface ABreadcrumbEmits {
@@ -31,7 +33,7 @@ const lastEnableStep = computed(
 );
 
 const clickStep = (index) => {
-  if (lastEnableStep.value > index) {
+  if (!props.disabledSteps.includes(index) && lastEnableStep.value >= index) {
     activeStep.value = index;
   }
 };
@@ -53,6 +55,7 @@ const stepLength = props.step.length;
         :class="{
           'active-step': index - 1 == activeStep,
           'previous-step': index <= lastEnableStep,
+          'disabled-step': props.disabledSteps.includes(index - 1),
         }"
       >
         <div
@@ -136,6 +139,24 @@ const stepLength = props.step.length;
       .breadcrumb-point {
         &::after {
           background: var(--color);
+        }
+      }
+    }
+
+    &.disabled-step {
+      pointer-events: none;
+      opacity: 0.5;
+
+      .breadcrumb-elements {
+        .breadcrumb-circle,
+        .breadcrumb-line {
+          background: var(--a-grey-light);
+        }
+      }
+
+      .breadcrumb-point {
+        &::after {
+          background: var(--a-grey-light);
         }
       }
     }

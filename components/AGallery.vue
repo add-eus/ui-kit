@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
+import AButton from "./AButton.vue";
 
 interface AGalleryProps {
   containerWidth: number;
@@ -8,6 +9,9 @@ interface AGalleryProps {
   medias: string[];
   inspirations: string[];
   tootlip: string;
+  title: string;
+  subTitle: string;
+  action: string;
 }
 
 const props = withDefaults(defineProps<AGalleryProps>(), {
@@ -16,11 +20,14 @@ const props = withDefaults(defineProps<AGalleryProps>(), {
   medias: [],
   inspirations: [],
   tootlip: "",
+  title: undefined,
+  subTitle: undefined,
+  action: undefined,
 });
 
 interface AGalleryEmits {
   (e: "click-media", index: number): void;
-  (e: "click-empty"): void;
+  (e: "click-insert"): void;
 }
 
 const emits = defineEmits<AGalleryEmits>();
@@ -66,8 +73,8 @@ const clickMedia = () => {
   emits("click-media", activeButtonIndex.value);
 };
 
-const clickEmpty = () => {
-  emits("click-empty");
+const clickInsert = () => {
+  emits("click-insert");
 };
 
 defineExpose({
@@ -178,13 +185,27 @@ const mediasAndInspirations = computed((): string[] => {
         <!-- Inspi layer -->
         <div class="inspi-layer"></div>
       </div>
-      <!-- Upload icon -->
-      <AIcon
-        icon="download"
-        class="icon-upload"
-        color="black"
+      <div v-if="medias.length === 0" class="details-container">
+        <!-- Upload icon -->
+        <AIcon icon="download" class="icon-upload" color="black" />
+        <p>
+          {{ title ? title : "Add your photos or videos here" }}
+        </p>
+        <p>
+          {{ subTitle ? subTitle : "OR" }}
+        </p>
+      </div>
+      <AButton
         v-if="medias.length === 0"
-      />
+        color="secondary"
+        @click="clickInsert"
+        class="insert-btn"
+      >
+        <AIcon icon="Landscape" color="white" />
+        <Translate>
+          {{ action ? action : "Insert from media library" }}
+        </Translate>
+      </AButton>
     </div>
     <!-- Tootlip sentence -->
     <transition name="fade-slow">
@@ -578,12 +599,42 @@ const mediasAndInspirations = computed((): string[] => {
     }
   } */
 
-  .icon-upload {
-    color: var(--a-black);
+  .details-container {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 45px);
     left: 50%;
     font-size: 30px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 90px;
+    pointer-events: none;
+
+    p {
+      margin: 0;
+      color: var(--a-black);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .icon-upload {
+      color: var(--a-black);
+      font-size: 30px;
+    }
+  }
+
+  .insert-btn {
+    position: absolute;
+    top: calc(50% + 25px);
+    left: 50%;
+    padding: 10px;
+    width: 260px;
+    max-width: 100%;
     transform: translate(-50%, -50%);
   }
 }
