@@ -2,23 +2,18 @@
 import { defineProps, ref, watch, computed } from "vue";
 import { useTransition, TransitionPresets } from "@vueuse/core";
 
-const props = defineProps({
-  target: {
-    type: Number,
-    default: 1,
-  },
-  suffix: {
-    type: String,
-    default: "",
-  },
-  duration: {
-    type: Number,
-    default: 1000,
-  },
-  decimal: {
-    type: Boolean,
-    default: false,
-  },
+interface ANumberAnimatedProps {
+  target: number;
+  suffix: string;
+  duration: number;
+  decimal: boolean;
+}
+
+const props = withDefaults(defineProps<ANumberAnimatedProps>(), {
+  target: 1,
+  suffix: "",
+  duration: 1000,
+  decimal: false,
 });
 
 const baseNumber = ref(0);

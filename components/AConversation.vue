@@ -4,34 +4,23 @@ import { defineProps, computed, ref, onMounted } from "vue";
 import { Colors, useColor } from "../stores/color";
 import ATyping from "./ATyping.vue";
 
-const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: "primary",
-  },
-  sender: {
-    type: String,
-    default: "bot",
-    validator: (value) => {
-      return ["bot", "user"].includes(value);
-    },
-  },
-  text: {
-    type: String,
-    default: "Bonjour comment allez vous ? ",
-  },
-  avatar: {
-    type: Boolean,
-    default: false,
-  },
-  duo: {
-    type: Boolean,
-    default: false,
-  },
-  delay: {
-    type: Number,
-    default: 0,
-  },
+
+interface AConversationProps {
+  color?: Colors;
+  sender?: "bot" | "user";
+  text?: string;
+  avatar?: boolean;
+  duo?: boolean;
+  delay?: number;
+}
+
+const props = withDefaults(defineProps<AConversationProps>(), {
+  color: "primary",
+  sender: "bot",
+  text: "Bonjour comment allez vous ? ",
+  avatar: false,
+  duo: false,
+  delay: 0,
 });
 
 const color = useColor(

@@ -3,7 +3,7 @@ import { syncRef } from "@vueuse/core";
 import moment from "moment";
 import { DatePicker } from "v-calendar";
 import "v-calendar/style.css";
-import { computed, defineProps, markRaw, ref } from "vue";
+import { computed, markRaw, ref } from "vue";
 import type { Colors } from "../stores/color";
 import { useColor } from "../stores/color";
 import AInput from "./AInput.vue";

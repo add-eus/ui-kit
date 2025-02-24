@@ -3,39 +3,26 @@ import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
 import AButton from "./AButton.vue";
 
-const props = defineProps({
-  containerWidth: {
-    type: Number,
-    default: 300,
-  },
-  containerHeight: {
-    type: Number,
-    default: 300,
-  },
-  medias: {
-    type: Array<string>,
-    default: [],
-  },
-  inspirations: {
-    type: Array<string>,
-    default: [],
-  },
-  tootlip: {
-    type: String,
-    default: "",
-  },
-  title: {
-    type: String,
-    default: undefined,
-  },
-  subTitle: {
-    type: String,
-    default: undefined,
-  },
-  action: {
-    type: String,
-    default: undefined,
-  },
+interface AGalleryProps {
+  containerWidth: number;
+  containerHeight: number;
+  medias: string[];
+  inspirations: string[];
+  tootlip: string;
+  title: string;
+  subTitle: string;
+  action: string;
+}
+
+const props = withDefaults(defineProps<AGalleryProps>(), {
+  containerWidth: 300,
+  containerHeight: 300,
+  medias: [],
+  inspirations: [],
+  tootlip: "",
+  title: undefined,
+  subTitle: undefined,
+  action: undefined,
 });
 
 interface AGalleryEmits {

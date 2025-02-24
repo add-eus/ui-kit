@@ -2,19 +2,16 @@
 import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  target: {
-    type: Number,
-    default: 1,
-  },
-  colors: {
-    type: Array as PropType<Colors[]>,
-    default: () => ["gold"],
-  },
-  size: {
-    type: Number,
-    default: 200,
-  },
+interface ACircularProgressBarProps {
+  target: number;
+  colors: Colors[];
+  size: number;
+}
+
+const props = withDefaults(defineProps<ACircularProgressBarProps>(), {
+  target: 1,
+  colors: () => ["gold"],
+  size: 200,
 });
 
 const color = useColor(

@@ -2,26 +2,18 @@
 import { defineProps, computed } from "vue";
 import { useColor } from "../stores/color";
 
-const props = defineProps({
-  color: {
-    type: String,
-    default: undefined,
-  },
-  icon: {
-    type: String,
-    default: "circle",
-  },
-  type: {
-    type: String,
-    default: "rounded",
-    validator: (value) => {
-      return ["rounded", "sharp", "outlined"].includes(value);
-    },
-  },
-  fill: {
-    type: Boolean,
-    default: false,
-  },
+interface AIconProps {
+  color?: string;
+  icon: string;
+  type: "rounded" | "sharp" | "outlined";
+  fill: boolean;
+}
+
+const props = withDefaults(defineProps<AIconProps>(), {
+  color: undefined,
+  icon: "circle",
+  type: "rounded",
+  fill: false,
 });
 
 const color = computed(() => props.color);
