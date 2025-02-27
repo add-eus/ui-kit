@@ -4,10 +4,12 @@ import { ref } from "vue";
 interface ATooltipProps {
   content: string;
   position?: "top" | "right" | "bottom" | "left";
+  color?: "default" | "danger";
 }
 
 const props = withDefaults(defineProps<ATooltipProps>(), {
   position: "top",
+  color: "default",
 });
 
 const tooltipVisible = ref(false);
@@ -23,7 +25,7 @@ const tooltipVisible = ref(false);
       <slot></slot>
     </div>
     <transition name="fade-fast">
-      <div v-if="tooltipVisible" class="tooltip" :class="position">
+      <div v-if="tooltipVisible" class="tooltip" :class="position, color">
         {{ content }}
       </div>
     </transition>
@@ -44,7 +46,6 @@ const tooltipVisible = ref(false);
     border-radius: 5px;
     font-size: 14px;
     pointer-events: none;
-    white-space: nowrap;
 
     &.top {
       bottom: calc(100% + 5px);
@@ -70,5 +71,11 @@ const tooltipVisible = ref(false);
       transform: translateY(-50%);
     }
   }
+  .danger {
+      border: 0.5px solid var(--Colors-danger-500-Active, #EF2E55);
+      background: var(--Colors-danger-50-Lightest, #FDE7EC);
+      color: var(--Colors-danger-500-Active, #EF2E55);
+    }
 }
+
 </style>
