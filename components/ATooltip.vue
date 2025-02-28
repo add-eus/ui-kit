@@ -72,9 +72,9 @@ const tooltipVisible = ref(false);
     }
   }
   .danger {
-      border: 0.5px solid var(--Colors-danger-500-Active, #EF2E55);
-      background: var(--Colors-danger-50-Lightest, #FDE7EC);
-      color: var(--Colors-danger-500-Active, #EF2E55);
+      border: 0.5px solid var(--a-danger);
+      background: var(--a-danger-lightest);
+      color: var(--a-danger);
     }
 }
 
