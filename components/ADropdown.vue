@@ -3,30 +3,21 @@ import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import AButton from "./AButton.vue";
 import ACard from "./ACard.vue";
 import { useColor } from "../stores/color";
-import { defineProps, computed, PropType } from "vue";
-import type { Colors } from "../stores/color";
+import { defineProps, computed, withDefaults } from "vue";
 import { useElementBounding, onClickOutside } from "@vueuse/core";
 
-const props = defineProps({
-  position: {
-    type: String,
-    default: "auto",
-    validator: (value: string) => {
-      return ["left", "right", "auto"].includes(value);
-    },
-  },
-  color: {
-    type: String,
-    default: "primary",
-  },
-  above: {
-    type: Boolean,
-    default: false,
-  },
-  preventCloseOutside: {
-    type: Boolean,
-    default: false,
-  },
+interface DropdownProps {
+  position: string;
+  color: string;
+  above: boolean;
+  preventCloseOutside: boolean;
+}
+
+const props = withDefaults(defineProps<DropdownProps>(), {
+  position: "auto",
+  color: "primary",
+  above: false,
+  preventCloseOutside: false,
 });
 
 const isOpen = defineModel("isOpen");
