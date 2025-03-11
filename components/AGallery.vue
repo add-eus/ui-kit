@@ -37,8 +37,7 @@ const activeButtonIndex = ref(0);
 const borderSpace = ref(40);
 
 const dotButtonClick = (index: number) => {
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = -props.containerWidth * index;
   activeButtonIndex.value = index;
 };
 
@@ -65,8 +64,7 @@ const setActiveMedia = (index: number) => {
     throw new Error("Index out of range");
   }
   activeButtonIndex.value = index;
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = -props.containerWidth * index;
 };
 
 const clickMedia = () => {
@@ -269,7 +267,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-back"
       @click="prevMedia"
     >
-      <AIcon icon="keyboard_arrow_left" color="grey" />
+      <AIcon icon="keyboard_arrow_left" color="black" />
     </button>
     <!-- Icon Next -->
     <button
@@ -282,7 +280,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-next"
       @click="nextMedia"
     >
-      <AIcon icon="keyboard_arrow_right" color="grey" />
+      <AIcon icon="keyboard_arrow_right" color="black" />
     </button>
     <slot
       name="actions"
@@ -312,11 +310,10 @@ const mediasAndInspirations = computed((): string[] => {
   background: transparent;
 
   .media-container {
-    width: calc(var(--width) - var(--border-space));
-    margin-left: calc(var(--border-space) / 2);
-    border-radius: 8px;
+    width: var(--width);
+    /* border-radius: 8px; */
     overflow: hidden;
-    background: var(--a-black);
+    background: var(--a-white);
 
     &.inspi-content {
       .inspi-layer {
@@ -336,12 +333,12 @@ const mediasAndInspirations = computed((): string[] => {
       display: flex;
       overflow: hidden;
       height: calc(var(--height) - var(--border-space));
-      width: calc((var(--width) * var(--index)) - var(--border-space));
+      width: calc((var(--width) * var(--index)));
       transition: transform 0.5s ease-in-out;
 
       .upload-container {
         height: calc(var(--height) - var(--border-space));
-        width: calc(var(--width) - var(--border-space));
+        width: var(--width);
         object-fit: contain;
         max-width: inherit;
         overflow: hidden;
@@ -429,7 +426,7 @@ const mediasAndInspirations = computed((): string[] => {
       position: absolute;
       left: 0;
       z-index: 1;
-      box-shadow: inset 0px 0px 2px 2px var(--a-white);
+      box-shadow: inset 0px 0px 2px 2px var(--a-transparent);
       pointer-events: none;
     }
 
@@ -458,15 +455,14 @@ const mediasAndInspirations = computed((): string[] => {
 
         &.active {
           div {
-            width: 8px;
-            height: 8px;
+            background: var(--a-info);
           }
         }
 
         &.scale-down {
           div {
-            width: 4px;
-            height: 4px;
+            /* width: 4px;
+            height: 4px; */
             transition: height 0.1s ease-in-out, width 0.1s ease-in-out;
           }
         }
@@ -517,13 +513,6 @@ const mediasAndInspirations = computed((): string[] => {
     }
   }
 
-  //ICON
-  .icon-next,
-  .icon-back {
-    background: transparent;
-    border: none;
-  }
-
   //ICON CAROUSEL
   .icon-carousel {
     position: absolute;
@@ -540,17 +529,23 @@ const mediasAndInspirations = computed((): string[] => {
   .icon-back {
     position: absolute;
     top: calc((var(--height) * 0.5) - var(--border-space));
-    height: 30px;
-    width: 20px;
     padding: 0;
     cursor: pointer;
+    background: var(--a-white);
+    border-radius: 50px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.icon-next {
-      right: 0;
+      right: 15px;
     }
 
     &.icon-back {
-      left: 0;
+      left: 15px;
     }
   }
 
