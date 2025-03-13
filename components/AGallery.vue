@@ -323,7 +323,6 @@ const mediasAndInspirations = computed((): string[] => {
 
   .media-container {
     width: var(--width);
-    /* border-radius: 8px; */
     overflow: hidden;
     background: var(--a-white);
 
@@ -446,7 +445,7 @@ const mediasAndInspirations = computed((): string[] => {
       position: absolute;
       left: 0;
       z-index: 1;
-      box-shadow: inset 0px 0px 2px 2px var(--a-transparent);
+      box-shadow: inset 0px 0px 2px 2px var(--a-white);
       pointer-events: none;
     }
 
@@ -481,8 +480,6 @@ const mediasAndInspirations = computed((): string[] => {
 
         &.scale-down {
           div {
-            /* width: 4px;
-            height: 4px; */
             transition: height 0.1s ease-in-out, width 0.1s ease-in-out;
           }
         }
