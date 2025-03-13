@@ -2,6 +2,13 @@
 import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
 import AButton from "./AButton.vue";
+import { useWindowSize } from "@vueuse/core";
+import { useBreakpoints } from "../stores/breakpoint";
+
+const breakpoints = useBreakpoints();
+const isMobile = breakpoints.smaller("md");
+
+const { width } = useWindowSize();
 
 interface AGalleryProps {
   containerWidth: number;
@@ -37,7 +44,9 @@ const activeButtonIndex = ref(0);
 const borderSpace = ref(40);
 
 const dotButtonClick = (index: number) => {
-  mediaContainerTranslate.value = -props.containerWidth * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
   activeButtonIndex.value = index;
 };
 
@@ -64,7 +73,9 @@ const setActiveMedia = (index: number) => {
     throw new Error("Index out of range");
   }
   activeButtonIndex.value = index;
-  mediaContainerTranslate.value = -props.containerWidth * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
 };
 
 const clickMedia = () => {
@@ -308,12 +319,17 @@ const mediasAndInspirations = computed((): string[] => {
   width: var(--width);
   position: relative;
   background: transparent;
+  max-width: 100%;
 
   .media-container {
     width: var(--width);
     /* border-radius: 8px; */
     overflow: hidden;
     background: var(--a-white);
+
+    @media screen and (max-width: 767px) {
+      max-width: 100%;
+    }
 
     &.inspi-content {
       .inspi-layer {
@@ -335,6 +351,10 @@ const mediasAndInspirations = computed((): string[] => {
       height: calc(var(--height) - var(--border-space));
       width: calc((var(--width) * var(--index)));
       transition: transform 0.5s ease-in-out;
+
+      @media screen and (max-width: 767px) {
+        width: calc((100% * var(--index)));
+      }
 
       .upload-container {
         height: calc(var(--height) - var(--border-space));
