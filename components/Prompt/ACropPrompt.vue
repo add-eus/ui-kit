@@ -4,6 +4,8 @@ import AButton from "../AButton.vue";
 import ACrop from "../ACrop.vue";
 import { toValue } from "@vueuse/core";
 import { watch } from "vue";
+import AInputRadio from "../AInputRadio.vue";
+import { ref } from "vue";
 
 export interface ACropPromptEmits {
   (e: "cancel"): void;
@@ -26,6 +28,7 @@ export interface ACropPromptProps {
   quality?: number;
 }
 
+const selectedOption = ref<string | undefined>("1:1");
 const props = defineProps<ACropPromptProps>();
 const model = defineModel();
 </script>
@@ -33,8 +36,21 @@ const model = defineModel();
 <template>
   <AModal :open="true" @close="$emit('cancel')" :title="toValue(title)">
     <template #content>
+      <div class="container-ratio">
+        <label>Ratio:</label>
+        <AInputRadio
+          v-model="selectedOption"
+          name="aspectRatio"
+          value="4:5">4:5</AInputRadio>
+        <AInputRadio
+          v-model="selectedOption"
+          name="aspectRatio"
+          value="1:1"
+          label="1:1"
+        >1:1</AInputRadio>
+      </div>
         <ACrop v-model="model" 
-              :aspectRatio="aspectRatio" 
+              :aspectRatio="selectedOption === '4:5' ? 4/5 : 1" 
               :maxHeight="maxHeight" 
               :maxWidth="maxWidth" 
               :mimeType="mimeType"
@@ -43,7 +59,7 @@ const model = defineModel();
               :quality="quality"
               ></ACrop>
     </template>
-    <template #action>
+    <template #action> 
       
       <AButton @click="$emit('cancel')">{{
         toValue(cancel)
@@ -54,3 +70,19 @@ const model = defineModel();
     </template>
   </AModal>
 </template>
+<style>
+.container-ratio {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 10px;
+
+  .a-input-radio{
+    width: 50px;
+    min-width: inherit;
+  }
+  label {
+      padding: 0;
+    }
+}
+
+</style>

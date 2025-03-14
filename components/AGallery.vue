@@ -316,7 +316,7 @@ const mediasAndInspirations = computed((): string[] => {
     margin-left: calc(var(--border-space) / 2);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--a-black);
+    background: var(--a-white);
 
     &.inspi-content {
       .inspi-layer {
@@ -371,7 +371,7 @@ const mediasAndInspirations = computed((): string[] => {
           img {
             height: 100%;
             width: 100%;
-            object-fit: cover;
+            object-fit: contain;
           }
 
           video {
