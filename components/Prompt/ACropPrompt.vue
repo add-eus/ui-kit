@@ -3,7 +3,6 @@ import AModal from "../AModal.vue";
 import AButton from "../AButton.vue";
 import ACrop from "../ACrop.vue";
 import { toValue } from "@vueuse/core";
-import { watch } from "vue";
 import AInputRadio from "../AInputRadio.vue";
 import { ref } from "vue";
 
@@ -18,7 +17,6 @@ export interface ACropPromptProps {
   modelValue: Blob | File;
   confirm: string;
   cancel: string;
-  modelValue: Blob;
   aspectRatio?: number;
   minWidth?: number;
   minHeight?: number;
