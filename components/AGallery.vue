@@ -2,6 +2,13 @@
 import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
 import AButton from "./AButton.vue";
+import { useWindowSize } from "@vueuse/core";
+import { useBreakpoints } from "../stores/breakpoint";
+
+const breakpoints = useBreakpoints();
+const isMobile = breakpoints.smaller("md");
+
+const { width } = useWindowSize();
 
 interface AGalleryProps {
   containerWidth: number;
@@ -37,8 +44,9 @@ const activeButtonIndex = ref(0);
 const borderSpace = ref(40);
 
 const dotButtonClick = (index: number) => {
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
   activeButtonIndex.value = index;
 };
 
@@ -65,8 +73,9 @@ const setActiveMedia = (index: number) => {
     throw new Error("Index out of range");
   }
   activeButtonIndex.value = index;
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
 };
 
 const clickMedia = () => {
@@ -269,7 +278,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-back"
       @click="prevMedia"
     >
-      <AIcon icon="keyboard_arrow_left" color="grey" />
+      <AIcon icon="keyboard_arrow_left" color="black" />
     </button>
     <!-- Icon Next -->
     <button
@@ -282,7 +291,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-next"
       @click="nextMedia"
     >
-      <AIcon icon="keyboard_arrow_right" color="grey" />
+      <AIcon icon="keyboard_arrow_right" color="black" />
     </button>
     <slot
       name="actions"
@@ -310,13 +319,16 @@ const mediasAndInspirations = computed((): string[] => {
   width: var(--width);
   position: relative;
   background: transparent;
+  max-width: 100%;
 
   .media-container {
-    width: calc(var(--width) - var(--border-space));
-    margin-left: calc(var(--border-space) / 2);
-    border-radius: 8px;
+    width: var(--width);
     overflow: hidden;
     background: var(--a-white);
+
+    @media screen and (max-width: 767px) {
+      max-width: 100%;
+    }
 
     &.inspi-content {
       .inspi-layer {
@@ -336,12 +348,16 @@ const mediasAndInspirations = computed((): string[] => {
       display: flex;
       overflow: hidden;
       height: calc(var(--height) - var(--border-space));
-      width: calc((var(--width) * var(--index)) - var(--border-space));
+      width: calc((var(--width) * var(--index)));
       transition: transform 0.5s ease-in-out;
+
+      @media screen and (max-width: 767px) {
+        width: calc((100% * var(--index)));
+      }
 
       .upload-container {
         height: calc(var(--height) - var(--border-space));
-        width: calc(var(--width) - var(--border-space));
+        width: var(--width);
         object-fit: contain;
         max-width: inherit;
         overflow: hidden;
@@ -371,7 +387,7 @@ const mediasAndInspirations = computed((): string[] => {
           img {
             height: 100%;
             width: 100%;
-            object-fit: contain;
+            object-fit: cover;
           }
 
           video {
@@ -458,15 +474,12 @@ const mediasAndInspirations = computed((): string[] => {
 
         &.active {
           div {
-            width: 8px;
-            height: 8px;
+            background: var(--a-info);
           }
         }
 
         &.scale-down {
           div {
-            width: 4px;
-            height: 4px;
             transition: height 0.1s ease-in-out, width 0.1s ease-in-out;
           }
         }
@@ -517,13 +530,6 @@ const mediasAndInspirations = computed((): string[] => {
     }
   }
 
-  //ICON
-  .icon-next,
-  .icon-back {
-    background: transparent;
-    border: none;
-  }
-
   //ICON CAROUSEL
   .icon-carousel {
     position: absolute;
@@ -540,17 +546,23 @@ const mediasAndInspirations = computed((): string[] => {
   .icon-back {
     position: absolute;
     top: calc((var(--height) * 0.5) - var(--border-space));
-    height: 30px;
-    width: 20px;
     padding: 0;
     cursor: pointer;
+    background: var(--a-white);
+    border-radius: 50px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.icon-next {
-      right: 0;
+      right: 15px;
     }
 
     &.icon-back {
-      left: 0;
+      left: 15px;
     }
   }
 
