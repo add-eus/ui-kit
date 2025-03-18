@@ -68,18 +68,20 @@ const model = defineModel();
     </template>
   </AModal>
 </template>
-<style>
+<style lang="scss" scoped>
 .container-ratio {
   margin-bottom: 1rem;
   display: flex;
   gap: 10px;
+  align-items: center;
 
   .a-input-radio{
     width: 50px;
     min-width: inherit;
   }
-  label {
+  :deep(.label-text) {
       padding: 0;
+      width: 20px !important;
     }
 }
 
