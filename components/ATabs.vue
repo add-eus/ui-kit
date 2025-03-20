@@ -165,6 +165,10 @@ function toggle(value: string) {
           bottom: -2px;
           left: 0;
           animation: appear 0.25s ease-in-out forwards;
+
+          @media screen and (max-width: 767px) {
+            animation: appearM 0.25s ease-in-out forwards;
+          }
         }
 
         @keyframes appear {
@@ -173,6 +177,15 @@ function toggle(value: string) {
           }
           100% {
             width: calc(100% - 20px);
+          }
+        }
+
+        @keyframes appearM {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: calc(100% - 9px);
           }
         }
 
@@ -231,7 +244,7 @@ function toggle(value: string) {
   @media screen and (max-width: 767px) {
     .a-tab {
       a {
-        padding: 2px 9px 2px 9px;
+        padding: 2px 9px 2px 0;
         font-size: 10px;
 
         span {
