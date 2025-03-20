@@ -19,6 +19,7 @@ interface AGalleryProps {
   title: string;
   subTitle: string;
   action: string;
+  autoHeight: boolean;
 }
 
 const props = withDefaults(defineProps<AGalleryProps>(), {
@@ -30,6 +31,7 @@ const props = withDefaults(defineProps<AGalleryProps>(), {
   title: undefined,
   subTitle: undefined,
   action: undefined,
+  autoHeight: false,
 });
 
 interface AGalleryEmits {
@@ -100,6 +102,9 @@ const mediasAndInspirations = computed((): string[] => {
 <template>
   <div
     class="container-gallery"
+    :class="{
+      'container-gallery-auto-height': autoHeight,
+    }"
     :style="{
       '--width': containerWidth + 'px',
       '--height': containerHeight + 'px',
@@ -320,6 +325,35 @@ const mediasAndInspirations = computed((): string[] => {
   position: relative;
   background: transparent;
   max-width: 100%;
+
+  // AUTO HEIGHT
+  &.container-gallery-auto-height {
+    .media-container {
+      .media-content {
+        height: inherit;
+
+        .upload-container {
+          height: inherit;
+
+          :slotted(img),
+          :slotted(video) {
+            object-fit: contain;
+          }
+
+          :slotted(div) {
+            img {
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }
+
+    .icon-next,
+    .icon-back {
+      top: calc(50% - var(--border-space));
+    }
+  }
 
   .media-container {
     width: var(--width);

@@ -353,6 +353,7 @@ defineExpose({
         padding: 16px 20px;
         max-height: 600px;
         position: relative;
+        overscroll-behavior: contain;
 
         .body-container {
           .a-modal-close {
