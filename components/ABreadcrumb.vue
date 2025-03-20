@@ -3,27 +3,22 @@ import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 import { useVModel } from "@vueuse/core";
 
-const props = defineProps({
-  step: {
-    type: Array,
-    default: () => ["1992", "1993", "1994", "1995"],
-  },
-  point: {
-    type: Array,
-    default: () => [""],
-  },
-  modelValue: {
-    type: Number,
-    default: 2,
-  },
-  color: {
-    type: String as PropType<Colors>,
-    default: "primary",
-  },
-  lastEnabledStep: {
-    type: Number,
-    default: undefined,
-  },
+interface ABreadcrumbProps {
+  step: string[];
+  point: string[];
+  modelValue: number;
+  color: Colors;
+  lastEnabledStep?: number;
+  disabledSteps?: string[];
+}
+
+const props = withDefaults(defineProps<ABreadcrumbProps>(), {
+  step: ["1992", "1993", "1994", "1995"],
+  point: [""],
+  modelValue: 2,
+  color: "primary",
+  lastEnabledStep: undefined,
+  disabledSteps: [],
 });
 
 interface ABreadcrumbEmits {
@@ -38,7 +33,7 @@ const lastEnableStep = computed(
 );
 
 const clickStep = (index) => {
-  if (lastEnableStep.value > index) {
+  if (!props.disabledSteps.includes(index) && lastEnableStep.value >= index) {
     activeStep.value = index;
   }
 };
@@ -60,6 +55,7 @@ const stepLength = props.step.length;
         :class="{
           'active-step': index - 1 == activeStep,
           'previous-step': index <= lastEnableStep,
+          'disabled-step': props.disabledSteps.includes(index - 1),
         }"
       >
         <div
@@ -143,6 +139,24 @@ const stepLength = props.step.length;
       .breadcrumb-point {
         &::after {
           background: var(--color);
+        }
+      }
+    }
+
+    &.disabled-step {
+      pointer-events: none;
+      opacity: 0.5;
+
+      .breadcrumb-elements {
+        .breadcrumb-circle,
+        .breadcrumb-line {
+          background: var(--a-grey-light);
+        }
+      }
+
+      .breadcrumb-point {
+        &::after {
+          background: var(--a-grey-light);
         }
       }
     }

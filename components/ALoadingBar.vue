@@ -1,28 +1,21 @@
 <script setup lang="ts">
-import { defineProps, PropType, computed } from "vue";
+import { defineProps, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  target: {
-    type: Number,
-    default: 25,
-  },
-  colors: {
-    type: Array as PropType<Colors[]>,
-    default: () => ["grey"],
-  },
-  size: {
-    type: Number,
-    default: 20,
-  },
-  margin: {
-    type: Number,
-    default: 8,
-  },
-  borderColor: {
-    type: String,
-    default: "grey-dark",
-  },
+interface ALoadingBarProps {
+  target: number;
+  colors: Colors[];
+  size: number;
+  margin: number;
+  borderColor: string;
+}
+
+const props = withDefaults(defineProps<ALoadingBarProps>(), {
+  target: 25,
+  colors: () => ["grey"],
+  size: 20,
+  margin: 8,
+  borderColor: "grey-dark",
 });
 
 const colorA = useColor(

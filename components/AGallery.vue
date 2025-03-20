@@ -1,33 +1,42 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import AIcon from "./AIcon.vue";
+import AButton from "./AButton.vue";
+import { useWindowSize } from "@vueuse/core";
+import { useBreakpoints } from "../stores/breakpoint";
 
-const props = defineProps({
-  containerWidth: {
-    type: Number,
-    default: 300,
-  },
-  containerHeight: {
-    type: Number,
-    default: 300,
-  },
-  medias: {
-    type: Array<string>,
-    default: [],
-  },
-  inspirations: {
-    type: Array<string>,
-    default: [],
-  },
-  tootlip: {
-    type: String,
-    default: "",
-  },
+const breakpoints = useBreakpoints();
+const isMobile = breakpoints.smaller("md");
+
+const { width } = useWindowSize();
+
+interface AGalleryProps {
+  containerWidth: number;
+  containerHeight: number;
+  medias: string[];
+  inspirations: string[];
+  tootlip: string;
+  title: string;
+  subTitle: string;
+  action: string;
+  autoHeight: boolean;
+}
+
+const props = withDefaults(defineProps<AGalleryProps>(), {
+  containerWidth: 300,
+  containerHeight: 300,
+  medias: [],
+  inspirations: [],
+  tootlip: "",
+  title: undefined,
+  subTitle: undefined,
+  action: undefined,
+  autoHeight: false,
 });
 
 interface AGalleryEmits {
   (e: "click-media", index: number): void;
-  (e: "click-empty"): void;
+  (e: "click-insert"): void;
 }
 
 const emits = defineEmits<AGalleryEmits>();
@@ -37,8 +46,9 @@ const activeButtonIndex = ref(0);
 const borderSpace = ref(40);
 
 const dotButtonClick = (index: number) => {
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
   activeButtonIndex.value = index;
 };
 
@@ -65,16 +75,17 @@ const setActiveMedia = (index: number) => {
     throw new Error("Index out of range");
   }
   activeButtonIndex.value = index;
-  mediaContainerTranslate.value =
-    (-props.containerWidth + borderSpace.value) * index;
+  mediaContainerTranslate.value = isMobile.value
+    ? -width.value * index
+    : -props.containerWidth * index;
 };
 
 const clickMedia = () => {
   emits("click-media", activeButtonIndex.value);
 };
 
-const clickEmpty = () => {
-  emits("click-empty");
+const clickInsert = () => {
+  emits("click-insert");
 };
 
 defineExpose({
@@ -91,6 +102,9 @@ const mediasAndInspirations = computed((): string[] => {
 <template>
   <div
     class="container-gallery"
+    :class="{
+      'container-gallery-auto-height': autoHeight,
+    }"
     :style="{
       '--width': containerWidth + 'px',
       '--height': containerHeight + 'px',
@@ -185,13 +199,27 @@ const mediasAndInspirations = computed((): string[] => {
         <!-- Inspi layer -->
         <div class="inspi-layer"></div>
       </div>
-      <!-- Upload icon -->
-      <AIcon
-        icon="download"
-        class="icon-upload"
-        color="black"
+      <div v-if="medias.length === 0" class="details-container">
+        <!-- Upload icon -->
+        <AIcon icon="download" class="icon-upload" color="black" />
+        <p>
+          {{ title ? title : "Add your photos or videos here" }}
+        </p>
+        <p>
+          {{ subTitle ? subTitle : "OR" }}
+        </p>
+      </div>
+      <AButton
         v-if="medias.length === 0"
-      />
+        color="secondary"
+        @click="clickInsert"
+        class="insert-btn"
+      >
+        <AIcon icon="Landscape" color="white" />
+        <Translate>
+          {{ action ? action : "Insert from media library" }}
+        </Translate>
+      </AButton>
     </div>
     <!-- Tootlip sentence -->
     <transition name="fade-slow">
@@ -255,7 +283,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-back"
       @click="prevMedia"
     >
-      <AIcon icon="keyboard_arrow_left" color="grey" />
+      <AIcon icon="keyboard_arrow_left" color="black" />
     </button>
     <!-- Icon Next -->
     <button
@@ -268,7 +296,7 @@ const mediasAndInspirations = computed((): string[] => {
       class="icon-next"
       @click="nextMedia"
     >
-      <AIcon icon="keyboard_arrow_right" color="grey" />
+      <AIcon icon="keyboard_arrow_right" color="black" />
     </button>
     <slot
       name="actions"
@@ -296,13 +324,45 @@ const mediasAndInspirations = computed((): string[] => {
   width: var(--width);
   position: relative;
   background: transparent;
+  max-width: 100%;
+
+  // AUTO HEIGHT
+  &.container-gallery-auto-height {
+    .media-container {
+      .media-content {
+        height: inherit;
+
+        .upload-container {
+          height: inherit;
+
+          :slotted(img),
+          :slotted(video) {
+            object-fit: contain;
+          }
+
+          :slotted(div) {
+            img {
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }
+
+    .icon-next,
+    .icon-back {
+      top: calc(50% - var(--border-space));
+    }
+  }
 
   .media-container {
-    width: calc(var(--width) - var(--border-space));
-    margin-left: calc(var(--border-space) / 2);
-    border-radius: 8px;
+    width: var(--width);
     overflow: hidden;
-    background: var(--a-black);
+    background: var(--a-white);
+
+    @media screen and (max-width: 767px) {
+      max-width: 100%;
+    }
 
     &.inspi-content {
       .inspi-layer {
@@ -322,12 +382,16 @@ const mediasAndInspirations = computed((): string[] => {
       display: flex;
       overflow: hidden;
       height: calc(var(--height) - var(--border-space));
-      width: calc((var(--width) * var(--index)) - var(--border-space));
+      width: calc((var(--width) * var(--index)));
       transition: transform 0.5s ease-in-out;
+
+      @media screen and (max-width: 767px) {
+        width: calc((100% * var(--index)));
+      }
 
       .upload-container {
         height: calc(var(--height) - var(--border-space));
-        width: calc(var(--width) - var(--border-space));
+        width: var(--width);
         object-fit: contain;
         max-width: inherit;
         overflow: hidden;
@@ -444,15 +508,12 @@ const mediasAndInspirations = computed((): string[] => {
 
         &.active {
           div {
-            width: 8px;
-            height: 8px;
+            background: var(--a-info);
           }
         }
 
         &.scale-down {
           div {
-            width: 4px;
-            height: 4px;
             transition: height 0.1s ease-in-out, width 0.1s ease-in-out;
           }
         }
@@ -503,13 +564,6 @@ const mediasAndInspirations = computed((): string[] => {
     }
   }
 
-  //ICON
-  .icon-next,
-  .icon-back {
-    background: transparent;
-    border: none;
-  }
-
   //ICON CAROUSEL
   .icon-carousel {
     position: absolute;
@@ -526,17 +580,23 @@ const mediasAndInspirations = computed((): string[] => {
   .icon-back {
     position: absolute;
     top: calc((var(--height) * 0.5) - var(--border-space));
-    height: 30px;
-    width: 20px;
     padding: 0;
     cursor: pointer;
+    background: var(--a-white);
+    border-radius: 50px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.icon-next {
-      right: 0;
+      right: 15px;
     }
 
     &.icon-back {
-      left: 0;
+      left: 15px;
     }
   }
 
@@ -585,12 +645,42 @@ const mediasAndInspirations = computed((): string[] => {
     }
   } */
 
-  .icon-upload {
-    color: var(--a-black);
+  .details-container {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 45px);
     left: 50%;
     font-size: 30px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 90px;
+    pointer-events: none;
+
+    p {
+      margin: 0;
+      color: var(--a-black);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .icon-upload {
+      color: var(--a-black);
+      font-size: 30px;
+    }
+  }
+
+  .insert-btn {
+    position: absolute;
+    top: calc(50% + 25px);
+    left: 50%;
+    padding: 10px;
+    width: 260px;
+    max-width: 100%;
     transform: translate(-50%, -50%);
   }
 }

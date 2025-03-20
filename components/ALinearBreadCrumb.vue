@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps({
-  path: {
-    type: String,
-    required: true,
-  },
-  root: {
-    type: String,
-    default: "Home",
-  },
-  splitChar: {
-    type: String,
-    default: "/",
-  },
-  separator: {
-    type: String,
-    default: "/",
-  },
+interface ALineardBreadCrumb {
+  path?: string;
+  root: string;
+  splitChar: string;
+  separator: string;
+}
+
+const props = withDefaults(defineProps<ALineardBreadCrumb>(), {
+  path: "",
+  root: "Home",
+  splitChar: "/",
+  separator: "/",
 });
 
 const emit = defineEmits(["updatePath"]);

@@ -18,7 +18,16 @@ export interface ACropEmits {
     (event: "update:modelValue", value?: any): void;
 }
 
-const props = defineProps<ACropProps>();
+const props = withDefaults(defineProps<ACropProps>(), {
+    aspectRatio: undefined,
+    minWidth: undefined,
+    minHeight: undefined,
+    maxWidth: undefined,
+    maxHeight: undefined,
+    mimeType: undefined,
+    quality: undefined,
+});
+
 const emit = defineEmits<ACropEmits>();
 
 const initialImageBlob = ref<null|Blob>(props.modelValue || null);

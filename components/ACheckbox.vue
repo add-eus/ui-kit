@@ -2,38 +2,24 @@
 import { PropType, computed, watch } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  color: {
-    type: String as PropType<Colors>,
-    default: "grey",
-    validator: (value) => {
-      return ["grey", "primary", "danger", "success"].includes(value);
-    },
-  },
-  type: {
-    type: String as PropType<"checkbox" | "switch" | "hidden">,
-    default: "checkbox",
-    validator: (value) => {
-      return ["checkbox", "switch", "hidden"].includes(value);
-    },
-  },
-  value: {
-    default: false,
-  },
-  valueChecked: {
-    default: true,
-  },
-  valueUnchecked: {
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  indeterminate: {
-    type: Boolean,
-    default: false,
-  },
+interface ACheckboxProps {
+  color: Colors;
+  type: "checkbox" | "switch" | "hidden";
+  value: boolean;
+  valueChecked: boolean;
+  valueUnchecked: boolean;
+  disabled: boolean;
+  indeterminate: boolean;
+}
+
+const props = withDefaults(defineProps<ACheckboxProps>(), {
+  color: "grey",
+  type: "checkbox",
+  value: false,
+  valueChecked: true,
+  valueUnchecked: false,
+  disabled: false,
+  indeterminate: false,
 });
 
 const modelValue = defineModel();
@@ -246,10 +232,6 @@ watch(
 
       &:checked + .slider {
         background-color: v-bind(color);
-      }
-
-      &:focus + .slider {
-        box-shadow: 0 0 1px v-bind(color);
       }
 
       &:checked + .slider:before {

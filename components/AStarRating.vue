@@ -2,31 +2,22 @@
 import { defineProps, PropType, computed } from "vue";
 import { Colors, useColor } from "../stores/color";
 
-const props = defineProps({
-  progress: {
-    type: Number,
-    default: 50,
-  },
-  color: {
-    type: String,
-    default: "warning",
-  },
-  background: {
-    type: String,
-    default: "white",
-  },
-  size: {
-    type: Number,
-    default: 30,
-  },
-  number: {
-    type: Number,
-    default: 5,
-  },
-  mask: {
-    type: String,
-    default: "assets/star-mask.svg",
-  },
+interface ComponentProps {
+  progress: number;
+  color: string;
+  background: string;
+  size: number;
+  number: number;
+  mask: string;
+}
+
+const props = withDefaults(defineProps<ComponentProps>(), {
+  progress: 50,
+  color: "warning",
+  background: "white",
+  size: 30,
+  number: 5,
+  mask: "assets/star-mask.svg",
 });
 
 const color = useColor(
