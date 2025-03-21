@@ -34,9 +34,10 @@ watch(
 
 <template>
 <p>
-  <span v-if="target % 1 === 0">{{ Math.round(target) }}</span>
-  <span v-else>{{ target.toFixed(1) }}</span>
+  <span v-if="decimal && target % 1 !== 0">{{ target.toFixed(1) }}</span>
+  <span v-else>{{ Math.round(target) }}</span>
   <span>{{ suffix }}</span>
 </p>
+
 
 </template>
