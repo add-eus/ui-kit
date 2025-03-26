@@ -131,13 +131,15 @@ defineExpose({
             'no-padding': !hasBodyPadding,
           }"
         >
-          <ACard
-            :has-header="hasHeader"
-            :has-footer="hasFooter"
-            :title-alignement="titleAlignement"
-            :action-alignement="actionAlignement"
-          >
-            <template #header>
+          <div class="a-card">
+            <header
+              class="a-card-head"
+              v-if="hasHeader"
+              :class="[
+                titleAlignement === 'center' && 'is-centered',
+                titleAlignement === 'right' && 'is-end',
+              ]"
+            >
               <div class="header-content">
                 <slot name="icon">
                   <AIcon v-if="icon" :icon="icon" color="black"></AIcon>
@@ -149,9 +151,9 @@ defineExpose({
                     </slot>
                   </h3>
                   <p>
-                    <slot name="sub-title"
-                      ><Translate>{{ subTitle }}</Translate></slot
-                    >
+                    <slot name="sub-title">
+                      <Translate>{{ subTitle }}</Translate>
+                    </slot>
                   </p>
                 </div>
                 <div class="right-content">
@@ -168,8 +170,8 @@ defineExpose({
                   <AIcon icon="close" color="black"></AIcon>
                 </AButton>
               </div>
-            </template>
-            <template #content>
+            </header>
+            <div class="a-card-body">
               <div class="body-container">
                 <AButton
                   v-if="!hasHeader"
@@ -189,11 +191,18 @@ defineExpose({
                 ></slot>
                 <slot name="content"></slot>
               </div>
-            </template>
-            <template #action>
+            </div>
+            <div
+              class="a-card-foot"
+              v-if="hasFooter"
+              :class="[
+                actionAlignement === 'center' && 'is-centered',
+                actionAlignement === 'right' && 'is-end',
+              ]"
+            >
               <slot name="action" :close="() => close()"></slot>
-            </template>
-          </ACard>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -219,9 +228,12 @@ defineExpose({
   }
 
   .a-card {
+    position: relative;
     width: 100%;
     border-radius: 5px;
     max-height: 100vh;
+    background: var(--a-white);
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
 
     > .a-card-body {
       overflow: auto;
@@ -264,6 +276,10 @@ defineExpose({
 
       animation: upScale 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       transform-origin: center;
+
+      @media screen and (max-width: 768px) {
+        max-height: 100svh !important;
+      }
 
       @keyframes upScale {
         0% {
@@ -355,6 +371,10 @@ defineExpose({
         position: relative;
         overscroll-behavior: contain;
 
+        @media screen and (max-width: 768px) {
+          max-height: calc(100svh - 141px) !important;
+        }
+
         .body-container {
           .a-modal-close {
             position: absolute;
@@ -399,6 +419,8 @@ defineExpose({
 
       // FOOTER
       .a-card-foot {
+        display: flex;
+        gap: 10px;
         margin: 0;
         padding: 16px;
         border-top: 1px solid var(--a-grey-light);
@@ -459,8 +481,8 @@ defineExpose({
         height: 100%;
 
         .a-card-body {
-          height: 100%;
-          max-height: 100%;
+          height: calc(100% - 162px);
+          max-height: calc(100% - 162px);
         }
       }
     }
@@ -576,8 +598,8 @@ defineExpose({
         height: 100%;
 
         .a-card-body {
-          height: 100%;
-          max-height: 100%;
+          height: calc(100% - 162px);
+          max-height: calc(100% - 162px);
         }
       }
     }
@@ -617,8 +639,8 @@ defineExpose({
         height: 100%;
 
         .a-card-body {
-          height: 100%;
-          max-height: 100%;
+          height: calc(100% - 162px);
+          max-height: calc(100% - 162px);
         }
       }
     }

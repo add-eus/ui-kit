@@ -404,7 +404,7 @@ const mediasAndInspirations = computed((): string[] => {
         :slotted(img) {
           height: 100%;
           width: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
 
         :slotted(video) {
@@ -421,7 +421,7 @@ const mediasAndInspirations = computed((): string[] => {
           img {
             height: 100%;
             width: 100%;
-            object-fit: cover;
+            object-fit: contain;
           }
 
           video {
