@@ -277,6 +277,10 @@ defineExpose({
       animation: upScale 0.25s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       transform-origin: center;
 
+      @media screen and (max-width: 768px) {
+        max-height: 100svh !important;
+      }
+
       @keyframes upScale {
         0% {
           transform: scale(0.95);
@@ -296,7 +300,7 @@ defineExpose({
       // HEADER
       .a-card-head {
         display: flex;
-        padding: 16px;
+        padding: 16px 44px 16px 16px;
         border-bottom: 1px solid var(--a-grey-light);
         min-height: 87px;
 
@@ -366,6 +370,10 @@ defineExpose({
         max-height: 600px;
         position: relative;
         overscroll-behavior: contain;
+
+        @media screen and (max-width: 768px) {
+          max-height: calc(100svh - 141px) !important;
+        }
 
         .body-container {
           .a-modal-close {

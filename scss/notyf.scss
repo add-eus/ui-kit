@@ -4,28 +4,43 @@
     font-size: 12px;
 
     &.notyf__toast--default {
-      color: var(--a-grey-darker);
-      border: 1px solid var(--a-grey-light);
+      border: 1px solid var(--a-grey-light) !important;
+
+      .notyf__wrapper .notyf__message {
+        color: var(--a-grey-darker) !important;
+      }
     }
 
     &.notyf__toast--warning {
-      color: var(--a-warning-darker);
       border: 1px solid var(--a-warning-light);
+
+      .notyf__wrapper .notyf__message {
+        color: var(--a-warning-darker) !important;
+      }
     }
 
     &.notyf__toast--success {
-      color: var(--a-success-darker);
       border: 1px solid var(--a-success-light);
+
+      .notyf__wrapper .notyf__message {
+        color: var(--a-success-darker) !important;
+      }
     }
 
     &.notyf__toast--info {
-      color: var(--a-info-darker);
       border: 1px solid var(--a-info-light);
+
+      .notyf__wrapper .notyf__message {
+        color: var(--a-info-darker) !important;
+      }
     }
 
     &.notyf__toast--error {
-      color: var(--a-danger-darker);
       border: 1px solid var(--a-danger-light);
+
+      .notyf__wrapper .notyf__message {
+        color: var(--a-danger-darker) !important;
+      }
     }
 
     .notyf__wrapper {

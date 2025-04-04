@@ -15,6 +15,7 @@ export interface ATabsProps {
   slow?: boolean;
   modelValue?: string | number;
   color?: Colors;
+  shadow?: string;
 }
 
 export interface ATabsEmits {
@@ -28,12 +29,13 @@ const props = withDefaults(defineProps<ATabsProps>(), {
   selected: undefined,
   modelValue: undefined,
   color: "tertiary",
+  shadow: "#fafafa",
 });
 
 const mainColor = computed(() => props.color);
 
 const color = useColor(mainColor);
-const colorLight = useColor(mainColor, "lightest");
+// const colorLight = useColor(mainColor, "lightest");
 
 const activeValue = computed({
   get() {
@@ -51,7 +53,7 @@ function toggle(value: string) {
 </script>
 
 <template>
-  <div class="a-tabs">
+  <div class="a-tabs" :style="{ '--shadow': shadow }">
     <div class="a-tabs-container">
       <div
         v-for="(tab, key) in tabs"
@@ -100,177 +102,185 @@ function toggle(value: string) {
 </template>
 
 <style scoped lang="scss">
-.a-tabs-container {
-  display: flex;
-  flex-wrap: wrap;
-
-  .a-tab {
+.a-tabs {
+  .a-tabs-container {
+    position: relative;
     display: flex;
-    outline-offset: 10px;
-    border-bottom: 2px solid var(--a-grey-light);
-    /* transition: background 0.25s ease-in-out; */
+    overflow-x: scroll;
+    flex-wrap: wrap;
 
-    &:nth-last-child(1) {
-      a {
-        padding-right: 0;
-      }
-    }
+    .a-tab {
+      display: flex;
+      outline-offset: 10px;
+      border-bottom: 2px solid var(--a-grey-light);
 
-    a {
-      position: relative;
-      padding: 15px 20px 15px 0;
-      color: var(--a-grey);
-      font-size: 16px;
-      font-weight: 500;
-      transition: color 0.25s ease-in-out;
-
-      //IF IMG OR SVG ADD
-      span {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-
-        :slotted(img),
-        :slotted(svg) {
-          width: 15px;
-
-          path {
-            fill: var(--a-grey);
-            transition: fill 0.25s ease-in-out;
-          }
-        }
-      }
-    }
-
-    &.is-active {
       &:nth-last-child(1) {
         a {
           padding-right: 0;
-
-          &:after {
-            animation: appearLast 0.25s ease-in-out forwards;
-          }
         }
       }
 
       a {
-        color: var(--a-black);
-
-        &:after {
-          content: "";
-          position: absolute;
-          width: 0%;
-          height: 2px;
-          background: v-bind(color);
-          bottom: -2px;
-          left: 0;
-          animation: appear 0.25s ease-in-out forwards;
-
-          @media screen and (max-width: 767px) {
-            animation: appearM 0.25s ease-in-out forwards;
-          }
-        }
-
-        @keyframes appear {
-          0% {
-            width: 0%;
-          }
-          100% {
-            width: calc(100% - 20px);
-          }
-        }
-
-        @keyframes appearM {
-          0% {
-            width: 0%;
-          }
-          100% {
-            width: calc(100% - 9px);
-          }
-        }
-
-        @keyframes appearLast {
-          0% {
-            width: 0%;
-          }
-          100% {
-            width: calc(100%);
-          }
-        }
+        position: relative;
+        padding: 15px 20px 15px 0;
+        color: var(--a-grey);
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.25s ease-in-out;
+        white-space: nowrap;
 
         //IF IMG OR SVG ADD
         span {
-          :slotted(img),
-          :slotted(svg) {
-            path {
-              fill: v-bind(color);
-            }
-          }
-        }
-      }
-    }
-
-    &:hover {
-      /* background: v-bind(colorLight); */
-
-      a {
-        color: v-bind(color);
-
-        //IF IMG OR SVG ADD
-        span {
-          :slotted(img),
-          :slotted(svg) {
-            path {
-              fill: v-bind(color);
-            }
-          }
-        }
-      }
-    }
-
-    &:focus {
-      /* background: v-bind(colorLight); */
-
-      a {
-        -webkit-box-shadow: inset 0px 0px 0px 1px var(--a-info);
-        -moz-box-shadow: inset 0px 0px 0px 1px var(--a-info);
-        box-shadow: inset 0px 0px 0px 1px var(--a-info);
-        border-radius: 5px;
-        color: v-bind(color);
-      }
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    .a-tab {
-      a {
-        padding: 2px 9px 2px 0;
-        font-size: 10px;
-
-        span {
-          height: 14px;
+          display: flex;
+          align-items: center;
           gap: 5px;
 
           :slotted(img),
           :slotted(svg) {
-            width: 9px;
+            width: 15px;
+
+            path {
+              fill: var(--a-grey);
+              transition: fill 0.25s ease-in-out;
+            }
           }
         }
       }
+
+      &.is-active {
+        &:nth-last-child(1) {
+          a {
+            padding-right: 0;
+
+            &:after {
+              animation: appearLast 0.25s ease-in-out forwards;
+            }
+          }
+        }
+
+        a {
+          color: var(--a-black);
+
+          &:after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: v-bind(color);
+            bottom: -2px;
+            left: 0;
+            animation: appear 0.25s ease-in-out forwards;
+
+            @media screen and (max-width: 767px) {
+              animation: appearM 0.25s ease-in-out forwards;
+            }
+          }
+
+          @keyframes appear {
+            0% {
+              width: 0%;
+            }
+            100% {
+              width: calc(100% - 20px);
+            }
+          }
+
+          @keyframes appearM {
+            0% {
+              width: 0%;
+            }
+            100% {
+              width: calc(100% - 9px);
+            }
+          }
+
+          @keyframes appearLast {
+            0% {
+              width: 0%;
+            }
+            100% {
+              width: calc(100%);
+            }
+          }
+
+          //IF IMG OR SVG ADD
+          span {
+            :slotted(img),
+            :slotted(svg) {
+              path {
+                fill: v-bind(color);
+              }
+            }
+          }
+        }
+      }
+
+      &:hover {
+        /* background: v-bind(colorLight); */
+
+        a {
+          color: v-bind(color);
+
+          //IF IMG OR SVG ADD
+          span {
+            :slotted(img),
+            :slotted(svg) {
+              path {
+                fill: v-bind(color);
+              }
+            }
+          }
+        }
+      }
+
+      &:focus {
+        /* background: v-bind(colorLight); */
+
+        a {
+          -webkit-box-shadow: inset 0px 0px 0px 1px var(--a-info);
+          -moz-box-shadow: inset 0px 0px 0px 1px var(--a-info);
+          box-shadow: inset 0px 0px 0px 1px var(--a-info);
+          border-radius: 5px;
+          color: v-bind(color);
+        }
+      }
+    }
+
+    .tab-notif {
+      margin-top: 3px;
+      height: 15px;
+      width: 22px;
+      background: var(--a-primary-lightest);
+      color: var(--a-primary);
+      font-size: 8px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
-  .tab-notif {
-    margin-top: 3px;
-    height: 15px;
-    width: 22px;
-    background: var(--a-primary-lightest);
-    color: var(--a-primary);
-    font-size: 8px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @media screen and (max-width: 1024px) {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 56px;
+      background: linear-gradient(
+        to right,
+        var(--a-transparent),
+        var(--shadow) 100%
+      );
+      top: 0;
+      right: 0;
+    }
+
+    .a-tabs-container {
+      flex-wrap: nowrap;
+      padding-right: 20px;
+    }
   }
 }
 </style>
