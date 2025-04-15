@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import AIcon from "./AIcon.vue";
-import AButton from "./AButton.vue";
 import { useWindowSize } from "@vueuse/core";
+import { computed, ref } from "vue";
 import { useBreakpoints } from "../stores/breakpoint";
+import AButton from "./AButton.vue";
+import AIcon from "./AIcon.vue";
 
 const breakpoints = useBreakpoints();
 const isMobile = breakpoints.smaller("md");
@@ -359,6 +359,7 @@ const mediasAndInspirations = computed((): string[] => {
     width: var(--width);
     overflow: hidden;
     background: var(--a-white);
+    height: var(--height);
 
     @media screen and (max-width: 767px) {
       max-width: 100%;
@@ -417,6 +418,7 @@ const mediasAndInspirations = computed((): string[] => {
         :slotted(div) {
           height: 100%;
           width: 100%;
+          object-fit: contain;
 
           img {
             height: 100%;
