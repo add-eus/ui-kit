@@ -81,6 +81,7 @@ const color = useColor(mainColor);
 
     .textarea {
       font-family: inherit;
+      background-color: inherit;
     }
 
     &::after {
@@ -90,7 +91,7 @@ const color = useColor(mainColor);
       left: 0;
       width: 100%;
       height: 30px;
-      background: var(--a-white);
+      background-color: inherit;
       pointer-events: none;
       border-radius: 10px;
     }

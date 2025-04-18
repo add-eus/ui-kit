@@ -234,10 +234,6 @@ watch(
         background-color: v-bind(color);
       }
 
-      &:focus + .slider {
-        box-shadow: 0 0 1px v-bind(color);
-      }
-
       &:checked + .slider:before {
         transform: translateX(20px);
       }
@@ -290,4 +286,15 @@ watch(
     }
   }
 }
+
+.custom-checkbox input:checked:disabled ~ .checkmark-lab {
+  background-color: var(--a-grey-dark) !important;
+
+  &:after {
+    display: block;
+    border-color: var(--a-white) !important;
+  }
+}
+
+
 </style>
