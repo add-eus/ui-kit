@@ -290,4 +290,15 @@ watch(
     }
   }
 }
+
+.custom-checkbox input:checked:disabled ~ .checkmark-lab {
+  background-color: var(--a-grey-dark) !important;
+
+  &:after {
+    display: block;
+    border-color: var(--a-white) !important;
+  }
+}
+
+
 </style>
