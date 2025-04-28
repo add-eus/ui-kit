@@ -30,6 +30,16 @@ Import a component:
 import AButton from "@addeus/ui-kit/components/AButton.vue";
 ```
 
+## Usage in application
+```
+npm ci
+npm link
+```
+et aller dans le projet application
+```
+npm link @addeus/ui-kit
+```
+
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
