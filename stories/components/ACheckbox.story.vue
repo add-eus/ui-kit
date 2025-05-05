@@ -29,7 +29,7 @@ const valueH = ref(false);
       >
     </Variant>
     <Variant title="indeterminate & caption & color">
-      <ACheckbox color="tertiary" v-model="valueD" indeterminate
+      <ACheckbox color="primary" v-model="valueD" indeterminate
         >Option II
         <template #caption> This is the caption </template>
       </ACheckbox>
