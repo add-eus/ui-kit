@@ -234,10 +234,6 @@ watch(
         background-color: v-bind(color);
       }
 
-      &:focus + .slider {
-        box-shadow: 0 0 1px v-bind(color);
-      }
-
       &:checked + .slider:before {
         transform: translateX(20px);
       }
