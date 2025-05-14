@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<ASelectProps>(), {
   noResults: "No results found",
   noOptions: "The list is empty",
   placeholder: "Type your tag..",
-  color: "grey-light",
+  color: "grey-lighter",
   tagColor: "primary",
   arrowColor: "grey",
   mode: "tags",
@@ -75,12 +75,27 @@ const isInputFilled = computed(() => inputValue?.value?.length > 0);
 const onInputChange = (newValue: string[]) => {
   inputValue.value = newValue;
 };
+
+const isInputFilledToChangeBorderColor = computed(() => {
+  const currentValue = value.value;
+  if (currentValue === null || currentValue === undefined) {
+    return false;
+  }
+  if (typeof currentValue === 'string') {
+    return currentValue.length > 0;
+  }
+  if (Array.isArray(currentValue)) {
+    return currentValue.length > 0;
+  }
+  return true;
+});
+
 </script>
 
 <template>
   <div
     class="a-select"
-    :class="{ labelised: label, 'is-not-empty': isInputFilled }"
+    :class="{ labelised: label, 'is-not-empty': isInputFilledToChangeBorderColor }"
   >
     <Multiselect
       v-model="value"
@@ -185,6 +200,10 @@ const onInputChange = (newValue: string[]) => {
   --ms-spinner-color: transparent; //Spinner color
   --ms-option-py: 14px;
   --ms-option-px: 12px;
+
+  &.is-not-empty {
+    --ms-border-color: var(--a-grey-light);
+  }
 
   &:focus-within {
     --ms-border-color: #0969da;

@@ -67,6 +67,20 @@ const onInputChange = (newValue: string[]) => {
   inputValue.value = newValue;
 };
 
+const isInputFilledToChangeBorderColor = computed(() => {
+  const currentValue = model.value;
+  if (currentValue === null || currentValue === undefined) {
+    return false;
+  }
+  if (typeof currentValue === 'string') {
+    return currentValue.length > 0;
+  }
+  if (Array.isArray(currentValue)) {
+    return currentValue.length > 0;
+  }
+  return true;
+});
+
 //LISTEN KEYDOWN
 const handleKeydown = (event: KeyboardEvent) => {
   if (props.type === "time") {
@@ -88,6 +102,7 @@ const preventClear = (event: KeyboardEvent) => {
     :class="[
       type === 'phone' && 'a-input-phone',
       state !== 'default' && `a-input-${state}`,
+      { 'is-not-empty': isInputFilledToChangeBorderColor },
     ]"
     :style="{
       width: full && '100%',
@@ -256,7 +271,11 @@ const preventClear = (event: KeyboardEvent) => {
   display: flex;
   background: var(--a-white);
   overflow: visible;
-  border: 1px solid var(--a-grey-light);
+  border: 1px solid var(--a-grey-lighter);
+
+  &.is-not-empty {
+      border-color: var(--a-grey-light);
+  }
 
   &:focus-within {
     border-color: #0969da;

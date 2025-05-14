@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFocus } from "@vueuse/core";
-import { computed, ref, watch } from "vue";
+import { computed, ref, vModelCheckbox, watch } from "vue";
 import type { Colors } from "../stores/color";
 import { useColor } from "../stores/color";
 
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<ATextareaProps>(), {
   modelValue: "",
   label: "",
   required: false,
-  color: "grey-light",
+  color: "grey-lighter",
   placeholder: "",
 });
 const value = ref(props.modelValue);
@@ -53,10 +53,25 @@ defineExpose({
 
 const mainColor = computed(() => props.color);
 const color = useColor(mainColor);
+
+const isInputFilledToChangeBorderColor = computed(() => {
+  const currentValue = value.value;
+  if (currentValue === null || currentValue === undefined) {
+    return false;
+  }
+  if (typeof currentValue === 'string') {
+    return currentValue.length > 0;
+  }
+  if (Array.isArray(currentValue)) {
+    return currentValue.length > 0;
+  }
+  return true;
+});
+
 </script>
 
 <template>
-  <div class="a-text-area" :class="{ hasLabel: label }">
+  <div class="a-text-area" :class="[{ hasLabel: label }, { 'is-not-empty': isInputFilledToChangeBorderColor},]">
     <p v-if="label">{{ label }} <span v-if="required">*</span></p>
     <textarea
       ref="textarea"
@@ -75,6 +90,10 @@ const color = useColor(mainColor);
   border: 1px solid v-bind(color);
   border-radius: 5px;
   overflow: hidden;
+
+  &.is-not-empty {
+    border-color: var(--a-grey-light);
+  }
 
   &.hasLabel {
     padding-top: 30px;
