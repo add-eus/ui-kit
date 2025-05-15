@@ -14,7 +14,15 @@ export interface AInputProps {
   label?: string | null;
   full?: boolean;
   required?: boolean;
-  type?: "text" | "phone" | "password" | "time" | "search" | "number" | "email" | "color";
+  type?:
+    | "text"
+    | "phone"
+    | "password"
+    | "time"
+    | "search"
+    | "number"
+    | "email"
+    | "color";
   modelValue?: Array<string> | string;
 }
 
@@ -425,6 +433,22 @@ const preventClear = (event: KeyboardEvent) => {
     display: flex;
     align-items: center;
     padding: 0 16px 0 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 50px;
+
+    // PHONE
+    &.a-input-phone {
+      .phone-label {
+        top: 7px;
+      }
+    }
+
+    // LABEL
+    label {
+      top: 7px;
+    }
   }
 }
 </style>

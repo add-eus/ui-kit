@@ -9,17 +9,15 @@ import "../../index.scss";
     <Variant title="default">
       <ALoader />
     </Variant>
+    <Variant title="color">
+      <ALoader color="tertiary" />
+    </Variant>
     <Variant title="button">
-      <AButton color="tertiary" size="large">
+      <AButton color="tertiary">
         <ALoader />
       </AButton>
     </Variant>
-    <Variant title="color">
-      <AButton color="secondary" full>
-        <ALoader color="secondary" />
-      </AButton>
-    </Variant>
-    <Variant title="color">
+    <Variant title="button/color">
       <AButton color="warning" full>
         <ALoader color="tertiary" />
       </AButton>
