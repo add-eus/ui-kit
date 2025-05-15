@@ -106,7 +106,6 @@ function toggle(value: string) {
   .a-tabs-container {
     position: relative;
     display: flex;
-    overflow-x: scroll;
     flex-wrap: wrap;
 
     .a-tab {
