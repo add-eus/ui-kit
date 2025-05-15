@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import AIcon from "./AIcon.vue";
 import AButton from "./AButton.vue";
 import { useWindowSize } from "@vueuse/core";
@@ -97,6 +97,16 @@ defineExpose({
 const mediasAndInspirations = computed((): string[] => {
   return [...props.inspirations, ...props.medias];
 });
+
+watch(
+  () => props.medias.length,
+  (newLength) => {
+    if (activeButtonIndex.value >= newLength) {
+      activeButtonIndex.value = 0;
+      mediaContainerTranslate.value = 0;
+    }
+  }
+);
 </script>
 
 <template>
