@@ -5,6 +5,7 @@ import {
   shallowRef,
   computed,
   toRaw,
+  ref,
 } from "vue";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
@@ -278,7 +279,11 @@ const dayNames = computed(() => {
   ];
 });
 
+const isOpen = ref(false);
+
 const onOpen = () => {
+  isOpen.value = true;
+
   //MODIFY CLOCK POSITION ON TYPE RANGE
   setTimeout(() => {
     if (props.type === "range") {
@@ -287,10 +292,29 @@ const onOpen = () => {
     }
   }, 100);
 };
+
+const onClose = () => {
+  isOpen.value = false;
+};
+
+const isInputFilledToChangeBorderColor = computed(() => {
+  const curr = date.value;
+  if (!curr) return false;
+  if (Array.isArray(curr)) {
+    return curr.some((d) => !!d);
+  }
+  return true;
+});
 </script>
 
 <template>
-  <div class="a-date-picker">
+  <div
+    class="a-date-picker"
+    :class="[
+      { 'is-not-empty': isInputFilledToChangeBorderColor },
+      { 'is-calendar-open': isOpen },
+    ]"
+  >
     <VueDatePicker
       v-model="date"
       :auto-apply="!hasValidation"
@@ -304,6 +328,7 @@ const onOpen = () => {
       :day-names="dayNames"
       time-picker-inline
       @open="onOpen"
+      @closed="onClose"
       :locale="locale"
       :enable-time-picker="hasTime"
       :range="type === 'range'"
@@ -312,10 +337,25 @@ const onOpen = () => {
       :action-row="{
         showSelect: hasValidation,
         showCancel: hasValidation,
-      }" />
+      }"
+    />
   </div>
 </template>
 <style lang="scss">
+.a-date-picker {
+  &.is-not-empty {
+    .dp__input_wrap .dp__input {
+      border-color: var(--a-grey-dark);
+    }
+  }
+
+  &.is-calendar-open {
+    .dp__input_wrap .dp__input {
+      border-color: #0969da !important;
+    }
+  }
+}
+
 .dp__main {
   .dp__input_wrap {
     .dp__input {
@@ -635,7 +675,7 @@ const onOpen = () => {
   --dp-primary-disabled-color: var(--a-tertiary-light);
   --dp-primary-text-color: #f8f5f5;
   --dp-secondary-color: #c0c4cc;
-  --dp-border-color: var(--a-grey-light);
+  --dp-border-color: var(--a-grey-lighter);
   --dp-menu-border-color: #ddd;
   --dp-border-color-hover: #aaaeb7;
   --dp-border-color-focus: #0969da;

@@ -95,6 +95,10 @@ const isInputFilledToChangeBorderColor = computed(() => {
     border-color: var(--a-grey-light);
   }
 
+  &:focus-within {
+    border-color: #0969da;
+  }
+
   &.hasLabel {
     padding-top: 30px;
 
