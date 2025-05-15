@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFocus } from "@vueuse/core";
-import { computed, ref, vModelCheckbox, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Colors } from "../stores/color";
 import { useColor } from "../stores/color";
 
