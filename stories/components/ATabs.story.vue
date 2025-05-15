@@ -3,7 +3,13 @@ import ATabs from "../../components/ATabs.vue";
 import AIcon from "../../components/AIcon.vue";
 import "../../index.scss";
 
-const tabs = [
+const tabs1 = [
+  { label: "Home", value: "home" },
+  { label: "Profile", value: "profile" },
+  { label: "Settings", value: "settings" },
+  { label: "About", value: "about" },
+];
+const tabs2 = [
   { label: "Home", value: "home", icon: "home", notif: "8" },
   { label: "Profile", value: "profile", icon: "account_circle", notif: "27" },
   { label: "Settings", value: "settings", icon: "settings", notif: "10" },
@@ -14,16 +20,19 @@ const tabs = [
 <template>
   <Story :layout="{ type: 'grid', width: 400 }">
     <Variant title="default">
-      <ATabs :tabs="tabs" />
+      <ATabs :tabs="tabs1" />
     </Variant>
     <Variant title="with initial selection">
-      <ATabs :tabs="tabs" modelValue="profile" />
+      <ATabs :tabs="tabs1" modelValue="profile" />
     </Variant>
     <Variant title="custom color">
-      <ATabs :tabs="tabs" color="primary" modelValue="settings" />
+      <ATabs :tabs="tabs1" color="primary" modelValue="settings" />
     </Variant>
-    <Variant title="slow transition">
-      <ATabs :tabs="tabs" color="success" modelValue="home" slow>
+    <Variant title="with notif">
+      <ATabs :tabs="tabs2" />
+    </Variant>
+    <Variant title="with icon">
+      <ATabs :tabs="tabs2" color="success" modelValue="home" slow>
         <template #tab> </template>
         <template #tab-link-label="{ tab }">
           <AIcon :icon="tab.icon" type="rounded" />

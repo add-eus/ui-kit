@@ -77,4 +77,14 @@ The `ASelect` component accepts the following properties:
 - `placeholder` (string, optional): Placeholder text for the input. Default is "Type your tag..".
 - `color` (string, optional): Specifies the color of the input.
 - `tag-color` (string, optional): Specifies the color of the tag.
+- `mode` (string, optional): Specifies the mode of the select input. Possible values are `single` and `multiple`. Default is `tags`.
+- `disabled` (boolean, optional): Disables the input. Default is `false`.
+- `createOption` (boolean, optional): Allows the creation of new options. Default is `false`.
+- `openDirection` (string, optional): Specifies the direction in which the dropdown should open. Possible values are `top` and `bottom`.
+- `required` (boolean, optional): Marks the input as required. Default is `false`.
+- `searchable` (boolean, optional): Enables search functionality. Default is `true`.
+- `name` (string, optional): Specifies the name attribute of the input.
+- `label` (string, optional): Specifies the label text.
+- `closeOnSelect` (boolean, optional): Determines whether the dropdown should close after selecting an option. Default is `true`.
+- `appendToBody` (boolean, optional): Appends the dropdown to the body. Default is `false`.
 </docs>

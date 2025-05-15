@@ -3,8 +3,7 @@ import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import AButton from "./AButton.vue";
 import ACard from "./ACard.vue";
 import { useColor } from "../stores/color";
-import { defineProps, computed, PropType, withDefaults } from "vue";
-import type { Colors } from "../stores/color";
+import { defineProps, computed, withDefaults } from "vue";
 import { useElementBounding, onClickOutside } from "@vueuse/core";
 
 interface DropdownProps {
