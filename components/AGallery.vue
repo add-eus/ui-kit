@@ -107,6 +107,7 @@ watch(
     }
   }
 );
+
 </script>
 
 <template>
@@ -141,7 +142,7 @@ watch(
       >
         <div
           v-for="(imageSrc, index) in medias"
-          :key="index"
+          :key="imageSrc"
           class="upload-container"
           @click="clickMedia(index)"
         >
@@ -180,7 +181,7 @@ watch(
         <div
           v-if="medias.length === 0"
           v-for="(imageSrc, index) in inspirations"
-          :key="index"
+          :key="imageSrc"
           class="upload-container"
           @click="clickMedia(index)"
         >
