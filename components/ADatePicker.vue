@@ -293,7 +293,7 @@ const onOpen = () => {
   }, 100);
 };
 
-const onClose = () => {
+const close = () => {
   isOpen.value = false;
 };
 
@@ -328,7 +328,7 @@ const isInputFilledToChangeBorderColor = computed(() => {
       :day-names="dayNames"
       time-picker-inline
       @open="onOpen"
-      @closed="onClose"
+      @closed="close"
       :locale="locale"
       :enable-time-picker="hasTime"
       :range="type === 'range'"
