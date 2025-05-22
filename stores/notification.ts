@@ -7,7 +7,7 @@ import { useColor } from "./color";
 const getNotyf = (): Notyf => {
   if ((window as any).notyf === undefined) {
     (window as any).notyf = new Notyf({
-      duration: 50000,
+      duration: 5000,
       dismissible: true,
       position: {
         x: "right",
