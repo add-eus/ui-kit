@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType, watch, ref } from "vue";
+import { defineProps, withDefaults, computed, watch, ref, defineEmits } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
@@ -26,15 +26,16 @@ interface ASelectProps {
   label: string | null;
   closeOnSelect: boolean;
   appendToBody: boolean;
+  hideSelected: boolean;
 }
 
 const props = withDefaults(defineProps<ASelectProps>(), {
-  modelValue: [],
-  options: ["Option 1", "Option 2", "Option 3"],
+  modelValue: () => [],
+  options: () => ["Option 1", "Option 2", "Option 3"],
   noResults: "No results found",
   noOptions: "The list is empty",
   placeholder: "Type your tag..",
-  color: "grey-lighter",
+  color: "grey-light",
   tagColor: "primary",
   arrowColor: "grey",
   mode: "tags",
@@ -47,7 +48,19 @@ const props = withDefaults(defineProps<ASelectProps>(), {
   label: null,
   closeOnSelect: false,
   appendToBody: false,
+  hideSelected: false
 });
+
+// Emit events as per component API
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string[], id?: string): void;
+  (e: 'select', option: any, id?: string): void;
+  (e: 'remove', option: any, id?: string): void;
+  (e: 'search-change', query: string, id?: string): void;
+  (e: 'tag', query: string, id?: string): void;
+  (e: 'open', id?: string): void;
+  (e: 'close', value: string[], id?: string): void;
+}>();
 
 const color = computed(() => {
   return props.color;
@@ -74,6 +87,7 @@ const isInputFilled = computed(() => inputValue?.value?.length > 0);
 
 const onInputChange = (newValue: string[]) => {
   inputValue.value = newValue;
+  emit('update:modelValue', newValue, props.name);
 };
 
 const isInputFilledToChangeBorderColor = computed(() => {
@@ -90,6 +104,12 @@ const isInputFilledToChangeBorderColor = computed(() => {
   return true;
 });
 
+const onSelectOption = (opt: any) => emit('select', opt, props.name);
+const onRemoveOption = (opt: any) => emit('remove', opt, props.name);
+const onSearchChange = (query: string) => emit('search-change', query, props.name);
+const onTagEvent = (query: string) => emit('tag', query, props.name);
+const onOpen = () => emit('open', props.name);
+const onClose = (value: string[]) => emit('close', value, props.name);
 </script>
 
 <template>
@@ -110,7 +130,7 @@ const isInputFilledToChangeBorderColor = computed(() => {
       :clearOnSelect="mode !== 'single' && required"
       :canDeselect="mode !== 'single' && required"
       :clearOnBlur="true"
-      :hide-selected="false"
+      :hide-selected="hideSelected"
       :noOptionsText="noOptions"
       :noResultsText="noResults"
       :placeholder="placeholder"
@@ -119,6 +139,12 @@ const isInputFilledToChangeBorderColor = computed(() => {
       :open-direction="openDirection"
       class="multiselect"
       @change="onInputChange($event)"
+      @select="onSelectOption"
+      @remove="onRemoveOption"
+      @search-change="onSearchChange"
+      @tag="onTagEvent"
+      @open="onOpen"
+      @close="onClose"
     >
       <template #option="{ option, search }">
         <template v-if="mode == 'multiple'">
