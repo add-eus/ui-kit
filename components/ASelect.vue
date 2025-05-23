@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, computed, PropType, watch, ref, defineEmits } from "vue";
+import { defineProps, withDefaults, computed, watch, ref, defineEmits } from "vue";
 import { useColor } from "../stores/color";
 import type { Colors } from "../stores/color";
 import Multiselect from "@vueform/multiselect";
@@ -29,26 +29,26 @@ interface ASelectProps {
   hideSelected: boolean;
 }
 
-const props = defineProps({
-  modelValue: { type: Array as PropType<string[]>, default: () => [] },
-  options: { type: Array as PropType<string[]>, default: () => ["Option 1", "Option 2", "Option 3"] },
-  noResults: { type: String, default: "No results found" },
-  noOptions: { type: String, default: "The list is empty" },
-  placeholder: { type: String, default: "Type your tag.." },
-  color: { type: String as PropType<Colors>, default: "grey-light" },
-  tagColor: { type: String as PropType<Colors>, default: "primary" },
-  arrowColor: { type: String as PropType<Colors>, default: "grey" },
-  mode: { type: String as PropType<"tags"|"single"|"multiple"|undefined>, default: "tags" },
-  disabled: { type: Boolean, default: false },
-  createOption: { type: Boolean, default: false },
-  openDirection: { type: String as PropType<"top"|"bottom"|undefined>, default: undefined },
-  required: { type: Boolean, default: false },
-  searchable: { type: Boolean, default: true },
-  name: { type: String as PropType<string|undefined>, default: undefined },
-  label: { type: String as PropType<string|null>, default: null },
-  closeOnSelect: { type: Boolean, default: false },
-  appendToBody: { type: Boolean, default: false },
-  hideSelected: { type: Boolean, default: false },
+const props = withDefaults(defineProps<ASelectProps>(), {
+  modelValue: () => [],
+  options: () => ["Option 1", "Option 2", "Option 3"],
+  noResults: "No results found",
+  noOptions: "The list is empty",
+  placeholder: "Type your tag..",
+  color: "grey-light",
+  tagColor: "primary",
+  arrowColor: "grey",
+  mode: "tags",
+  disabled: false,
+  createOption: false,
+  openDirection: undefined,
+  required: false,
+  searchable: true,
+  name: undefined,
+  label: null,
+  closeOnSelect: false,
+  appendToBody: false,
+  hideSelected: false
 });
 
 // Emit events as per component API
