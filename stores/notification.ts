@@ -56,6 +56,11 @@ export const useNotification = createGlobalState(() => {
       payloadValue = { message: payloadValue };
     }
 
+    // Set default duration if not specified
+    if (payloadValue.duration === undefined) {
+      payloadValue.duration = 5000;
+    }
+
     // payloadValue.type = type;
     payloadValue.className = `notyf__toast--${type}`;
     payloadValue.background = colors[type].value;
