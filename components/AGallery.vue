@@ -107,6 +107,15 @@ watch(
     }
   }
 );
+
+watch(
+  () => props.medias,
+  (newMedias, oldMedias) => {
+    console.log("medias", newMedias, oldMedias);
+  },
+  { immediate: true }
+);
+
 </script>
 
 <template>
@@ -141,7 +150,7 @@ watch(
       >
         <div
           v-for="(imageSrc, index) in medias"
-          :key="index"
+          :key="imageSrc"
           class="upload-container"
           @click="clickMedia(index)"
         >
@@ -180,7 +189,7 @@ watch(
         <div
           v-if="medias.length === 0"
           v-for="(imageSrc, index) in inspirations"
-          :key="index"
+          :key="imageSrc"
           class="upload-container"
           @click="clickMedia(index)"
         >
@@ -265,7 +274,7 @@ watch(
           <!-- Generate dot for medias & inspirations  -->
           <button
             v-for="(imageSrc, index) in mediasAndInspirations"
-            :key="index"
+            :key="imageSrc"
             class="dot"
             :class="{
               active: activeButtonIndex === index,
@@ -344,6 +353,7 @@ watch(
 
         .upload-container {
           height: inherit;
+          border: 10px solid black;
 
           :slotted(img),
           :slotted(video) {
