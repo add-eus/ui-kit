@@ -99,6 +99,8 @@ function toggle(value: string) {
 
 <style scoped lang="scss">
 .a-tabs {
+    max-width: 100%;
+
     .a-tabs-container {
         position: relative;
         display: flex;
