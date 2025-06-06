@@ -50,34 +50,34 @@ function toggle(value: string) {
     emit("tabSelected", value);
     activeValue.value = value;
 }
+
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+const tabsContainer = ref<HTMLElement | null>(null);
+const showLeftGradient = ref(false);
+
+function handleScroll() {
+    if (tabsContainer.value) {
+        showLeftGradient.value = tabsContainer.value.scrollLeft > 0;
+    }
+}
+
+onMounted(() => {
+    handleScroll();
+});
+
 </script>
 
 <template>
-    <div class="a-tabs" :style="{ '--shadow': shadow }">
-        <div class="a-tabs-container">
-            <div
-                v-for="(tab, key) in tabs"
-                :key="key"
-                class="a-tab"
+    <div class="a-tabs" :style="{ '--shadow': shadow }" :class="{ 'show-left-gradient': showLeftGradient }">
+        <div class="a-tabs-container" ref="tabsContainer" @scroll="handleScroll">
+            <div v-for="(tab, key) in tabs" :key="key" class="a-tab"
                 :class="[activeValue === tab.value && 'is-active']">
-                <slot
-                    name="tab-link"
-                    :active-value="activeValue"
-                    :tab="tab"
-                    :index="key"
-                    :toggle="toggle">
-                    <a
-                        tabindex="0"
-                        role="button"
-                        @keydown.space.prevent="toggle(tab.value)"
-                        @click="toggle(tab.value)">
+                <slot name="tab-link" :active-value="activeValue" :tab="tab" :index="key" :toggle="toggle">
+                    <a tabindex="0" role="button" @keydown.space.prevent="toggle(tab.value)" @click="toggle(tab.value)">
                         <VIcon v-if="tab.icon" :icon="tab.icon" />
                         <span>
-                            <slot
-                                name="tab-link-label"
-                                :active-value="activeValue"
-                                :tab="tab"
-                                :index="key">
+                            <slot name="tab-link-label" :active-value="activeValue" :tab="tab" :index="key">
                                 {{ tab.label }}
                             </slot>
                             <div class="tab-notif" v-if="tab.notif">
@@ -106,6 +106,13 @@ function toggle(value: string) {
         display: flex;
         flex-wrap: wrap;
         overflow: auto;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         .a-tab {
             display: flex;
@@ -178,6 +185,7 @@ function toggle(value: string) {
                         0% {
                             width: 0%;
                         }
+
                         100% {
                             width: calc(100% - 20px);
                         }
@@ -187,6 +195,7 @@ function toggle(value: string) {
                         0% {
                             width: 0%;
                         }
+
                         100% {
                             width: calc(100% - 9px);
                         }
@@ -196,6 +205,7 @@ function toggle(value: string) {
                         0% {
                             width: 0%;
                         }
+
                         100% {
                             width: calc(100%);
                         }
@@ -203,6 +213,7 @@ function toggle(value: string) {
 
                     //IF IMG OR SVG ADD
                     span {
+
                         :slotted(img),
                         :slotted(svg) {
                             path {
@@ -221,6 +232,7 @@ function toggle(value: string) {
 
                     //IF IMG OR SVG ADD
                     span {
+
                         :slotted(img),
                         :slotted(svg) {
                             path {
@@ -264,20 +276,32 @@ function toggle(value: string) {
         &::after {
             content: "";
             position: absolute;
-            width: 20px;
+            width: 25px;
             height: 56px;
-            background: linear-gradient(
-                to right,
-                var(--a-transparent),
-                var(--shadow) 100%
-            );
+            background: linear-gradient(to right,
+                    var(--a-transparent),
+                    var(--a-white) 100%);
             top: 0;
             right: 0;
         }
 
+
         .a-tabs-container {
             flex-wrap: nowrap;
             padding-right: 20px;
+        }
+
+        &.show-left-gradient::before {
+            display: block;
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 56px;
+            background: linear-gradient(to left, var(--a-transparent), var(--a-white) 100%);
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
         }
     }
 }
