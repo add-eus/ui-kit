@@ -25,8 +25,8 @@ interface AGalleryProps {
 const props = withDefaults(defineProps<AGalleryProps>(), {
   containerWidth: 300,
   containerHeight: 300,
-  medias: [],
-  inspirations: [],
+  medias: () => [],
+  inspirations: () => [],
   tootlip: "",
   title: undefined,
   subTitle: undefined,
@@ -80,10 +80,6 @@ const setActiveMedia = (index: number) => {
     : -props.containerWidth * index;
 };
 
-const clickMedia = () => {
-  emits("click-media", activeButtonIndex.value);
-};
-
 const clickInsert = () => {
   emits("click-insert");
 };
@@ -111,12 +107,9 @@ watch(
 </script>
 
 <template>
-  <div
-    class="container-gallery"
-    :class="{
-      'container-gallery-auto-height': autoHeight,
-    }"
-    :style="{
+  <div class="container-gallery" :class="{
+    'container-gallery-auto-height': autoHeight,
+  }" :style="{
       '--width': containerWidth + 'px',
       '--height': containerHeight + 'px',
       '--media-container-translate': mediaContainerTranslate + 'px',
@@ -125,205 +118,106 @@ watch(
         medias.length > 0
           ? medias.length
           : inspirations.length > 0
-          ? inspirations.length
-          : 1,
-    }"
-  >
+            ? inspirations.length
+            : 1,
+    }">
     <!-- Media Container -->
-    <div
-      class="media-container"
-      :class="medias.length === 0 && 'inspi-content'"
-    >
-      <div
-        class="media-content"
-        :style="{
-          transform: `translateX(var(--media-container-translate))`,
-        }"
-      >
-        <div
-          v-for="(imageSrc, index) in medias"
-          :key="imageSrc"
-          class="upload-container"
-          @click="clickMedia(index)"
-        >
+    <div class="media-container" :class="medias.length === 0 && 'inspi-content'">
+      <div class="media-content" :style="{
+        transform: `translateX(var(--media-container-translate))`,
+      }">
+        <div v-for="(imageSrc, index) in medias" :key="imageSrc" class="upload-container">
           <slot name="medias" :imageSrc="imageSrc">
-            <img
-              v-if="imageSrc"
-              class="output"
-              :src="imageSrc"
-              alt="Post img"
-            />
+            <img v-if="imageSrc" class="output" :src="imageSrc" alt="Post img" />
           </slot>
-          <!-- Switch between image and video icon -->
-          <!-- <AIcon
-            v-if="medias.length >= 1"
-            class="icon-carousel media-img"
-            icon="filter_none"
-            color="white"
-          />
-          <AIcon
-            v-if="medias.length >= 1"
-            class="icon-carousel media-video"
-            icon="video_library"
-            color="white"
-          /> -->
         </div>
         <!-- Placeholder -->
         <!-- If no inspiration -->
-        <div
-          class="upload-container"
-          @click="clickMedia(index)"
-          v-if="medias.length === 0 && inspirations.length === 0"
-        >
+        <div class="upload-container" v-if="medias.length === 0 && inspirations.length === 0">
+          
           <slot name="placeholder"> </slot>
         </div>
         <!-- If inspiration array -->
-        <div
-          v-if="medias.length === 0"
-          v-for="(imageSrc, index) in inspirations"
-          :key="imageSrc"
-          class="upload-container"
-          @click="clickMedia(index)"
-        >
+        <div v-if="medias.length === 0" v-for="(imageSrc, index) in inspirations" :key="imageSrc"
+          class="upload-container">
           <slot name="placeholder" :imageSrc="imageSrc">
-            <img
-              v-if="imageSrc"
-              class="output"
-              :src="imageSrc"
-              alt="Post img"
-            />
+            <img v-if="imageSrc" class="output" :src="imageSrc" alt="Post img" />
           </slot>
           <!-- Switch between image and video icon -->
-          <AIcon
-            v-if="inspirations.length >= 1"
-            class="icon-carousel media-img"
-            icon="filter_none"
-            color="white"
-          />
-          <AIcon
-            v-if="inspirations.length >= 1"
-            class="icon-carousel media-video"
-            icon="video_library"
-            color="white"
-          />
+          <AIcon v-if="inspirations.length >= 1" class="icon-carousel media-img" icon="filter_none" color="white" />
+          <AIcon v-if="inspirations.length >= 1" class="icon-carousel media-video" icon="video_library" color="white" />
         </div>
         <!-- Inspi layer -->
         <div class="inspi-layer"></div>
       </div>
-      <div v-if="medias.length === 0" class="details-container">
-        <!-- Upload icon -->
-        <AIcon icon="download" class="icon-upload" color="black" />
-        <p>
-          {{ title ? title : "Add your photos or videos here" }}
-        </p>
-        <p>
-          {{ subTitle ? subTitle : "OR" }}
-        </p>
-      </div>
-      <AButton
-        v-if="medias.length === 0"
-        color="secondary"
-        @click="clickInsert"
-        class="insert-btn"
-      >
-        <AIcon icon="Landscape" color="white" />
+      <AButton v-if="
+        medias.length === 0 && inspirations.length !== 0 
+      " color="secondary" @click="clickInsert(index)" class="insert-btn">
+        <AIcon icon="image" color="white" />
         <Translate>
-          {{ action ? action : "Insert from media library" }}
+          {{ action ? action : "Use the generated image" }}
         </Translate>
       </AButton>
     </div>
-    <!-- Tootlip sentence -->
-    <transition name="fade-slow">
-      <div
-        class="inspiration-sentence"
-        v-if="medias.length === 0 && tootlip !== ''"
-      >
-        <p>{{ tootlip }}</p>
-      </div>
-    </transition>
     <!-- Dot Container -->
-    <div
-      class="dot-container"
-      :style="{
-        width:
-          medias.length > 0
-            ? `${medias.length * 12}px`
-            : inspirations.length > 0
+    <div class="dot-container" :style="{
+      width:
+        medias.length > 0
+          ? `${medias.length * 12}px`
+          : inspirations.length > 0
             ? `${inspirations.length * 12}px`
             : '0px',
-      }"
-    >
+    }">
       <transition name="fade-slow">
-        <div
-          v-if="medias.length >= 2 || inspirations.length >= 2"
-          class="dot-content"
-          :style="{
-            transform:
-              activeButtonIndex >= 2 &&
-              `translateX(-${(activeButtonIndex - 2) * 12}px)`,
-          }"
-        >
+        <div v-if="medias.length >= 2 || inspirations.length >= 2" class="dot-content" :style="{
+          transform:
+            activeButtonIndex >= 2 &&
+            `translateX(-${(activeButtonIndex - 2) * 12}px)`,
+        }">
           <!-- Generate dot for medias & inspirations  -->
-          <button
-            v-for="(imageSrc, index) in mediasAndInspirations"
-            :key="index"
-            class="dot"
-            :class="{
-              active: activeButtonIndex === index,
-              'scale-down':
-                activeButtonIndex >= index + 3 ||
-                (activeButtonIndex !== 0 &&
-                  activeButtonIndex !== 1 &&
-                  activeButtonIndex <= index - 2),
-            }"
-            @click="dotButtonClick(index)"
-          >
+          <button v-for="(imageSrc, index) in mediasAndInspirations" :key="index" class="dot" :class="{
+            active: activeButtonIndex === index,
+            'scale-down':
+              activeButtonIndex >= index + 3 ||
+              (activeButtonIndex !== 0 &&
+                activeButtonIndex !== 1 &&
+                activeButtonIndex <= index - 2),
+          }" @click="dotButtonClick(index)">
             <div></div>
           </button>
         </div>
       </transition>
     </div>
     <!-- Icon Back -->
-    <button
-      v-if="
-        (medias.length >= 2 && activeButtonIndex != 0) ||
-        (medias.length == 0 &&
-          inspirations.length >= 2 &&
-          activeButtonIndex != 0)
-      "
-      class="icon-back"
-      @click="prevMedia"
-    >
+    <button v-if="
+      (medias.length >= 2 && activeButtonIndex != 0) ||
+      (medias.length == 0 &&
+        inspirations.length >= 2 &&
+        activeButtonIndex != 0)
+    " class="icon-back" @click="prevMedia">
       <AIcon icon="keyboard_arrow_left" color="black" />
     </button>
     <!-- Icon Next -->
-    <button
-      v-if="
-        (medias.length >= 2 && activeButtonIndex != medias.length - 1) ||
-        (medias.length == 0 &&
-          inspirations.length >= 2 &&
-          activeButtonIndex != inspirations.length - 1)
-      "
-      class="icon-next"
-      @click="nextMedia"
-    >
+    <button v-if="
+      (medias.length >= 2 && activeButtonIndex != medias.length - 1) ||
+      (medias.length == 0 &&
+        inspirations.length >= 2 &&
+        activeButtonIndex != inspirations.length - 1)
+    " class="icon-next" @click="nextMedia">
       <AIcon icon="keyboard_arrow_right" color="black" />
     </button>
-    <slot
-      name="actions"
-      :index="activeButtonIndex"
-      :setActiveMedia="setActiveMedia"
-    ></slot>
+    <slot name="actions" :index="activeButtonIndex" :setActiveMedia="setActiveMedia"></slot>
   </div>
 </template>
 
 <style lang="scss">
 //If v-image-firebase content video his next brother element media-img is display: none
 .container-gallery {
-  .v-image-firebase:has(> video) + .media-img {
+  .v-image-firebase:has(> video)+.media-img {
     display: none;
   }
-  .v-image-firebase:has(> img) + .media-video {
+
+  .v-image-firebase:has(> img)+.media-video {
     display: none;
   }
 }
@@ -445,30 +339,12 @@ watch(
     }
 
     &:hover {
-      + .inspiration-sentence {
+      +.inspiration-sentence {
         opacity: 1;
       }
     }
   }
 
-  //INSPI SENTENCE
-  .inspiration-sentence {
-    position: absolute;
-    padding: 5px 12px;
-    border-radius: 6px;
-    background: var(--a-white);
-    bottom: 65px;
-    right: 7px;
-    opacity: 0;
-    pointer-events: none;
-    font-size: 9px;
-    box-shadow: 0 0 1rem 0 rgba(10, 10, 10, 0.2);
-    transition: opacity 0.2s ease-in-out;
-
-    p {
-      margin: 0;
-    }
-  }
 
   //DOT
   .dot-container {
@@ -611,51 +487,6 @@ watch(
     }
   }
 
-  /* .inspiration-media {
-    height: 100%;
-    width: 100%;
-    opacity: 0.5;
-    border-radius: 8px;
-    overflow: hidden;
-
-    :has(video) {
-      background: var(--a-black);
-    }
-
-    //DEFAULT
-    :slotted(img) {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    :slotted(video) {
-      height: 100%;
-      width: 100%;
-      object-fit: contain;
-      background: var(--a-black);
-    }
-
-    //FIRESTORE
-    :slotted(div) {
-      height: 100%;
-      width: 100%;
-
-      img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-
-      video {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        background: var(--a-black);
-      }
-    }
-  } */
-
   .details-container {
     position: absolute;
     top: calc(50% - 45px);
@@ -687,7 +518,7 @@ watch(
 
   .insert-btn {
     position: absolute;
-    top: calc(50% + 25px);
+    bottom: 25px;
     left: 50%;
     padding: 10px;
     width: 260px;
