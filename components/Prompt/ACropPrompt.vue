@@ -26,7 +26,7 @@ export interface ACropPromptProps {
   quality?: number;
 }
 
-const selectedOption = ref<string | undefined>("1:1");
+const selectedOption = ref<string | undefined>("4:5");
 const props = defineProps<ACropPromptProps>();
 const model = defineModel();
 </script>
